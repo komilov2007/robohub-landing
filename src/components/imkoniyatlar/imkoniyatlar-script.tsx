@@ -3,15 +3,10 @@
 import { useEffect } from "react";
 import { init } from "./imkoniyatlar.script";
 
-// Asl skript sahifada bir marta ishlashga mo'ljallangan: StrictMode (dev) effektni ikki marta
-// chaqirganda hodisalar ikki marta ulanib qolmasligi uchun bayroq.
-let started = false;
-
+// Sahna mantig'ini komponent o'rnatilganda ishga tushiradi va olib tashlanganda tozalaydi.
+// init() tozalash funksiyasini qaytaradi — shuning uchun StrictMode (dev) effektni ikki marta
+// chaqirsa ham, fayl qayta yuklansa ham sahna bir nusxada, to'g'ri quriladi.
 export default function ImkoniyatlarScript() {
-  useEffect(() => {
-    if (started) return;
-    started = true;
-    init();
-  }, []);
+  useEffect(() => init(), []);
   return null;
 }
