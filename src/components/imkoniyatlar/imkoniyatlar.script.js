@@ -124,13 +124,33 @@ return (function () {
   var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
   // geometriya (layout() hisoblaydi): CW×CH — karta o'lchami
   var W, H, mobile, CW, CH, R, cxL, cxR, cy, step, lead, tail = 0.55, per, span;
+  // mobil: TH — matn blokining eng katta balandligi (karta ostida), topLim — hisoblagich (HUD) osti
+  var TH = 210, topLim = 0, GAP = 16;
+
+  // mobil: hamma matnlarni berilgan kenglikda o'lchab, eng balandini qaytaradi
+  function textMax(w) {
+    var m = 0;
+    items.forEach(function (it) { it.text.style.width = w + "px"; m = Math.max(m, it.text.offsetHeight); });
+    return m;
+  }
 
   function layout() {
     W = stage.clientWidth; H = stage.clientHeight; mobile = W < 820; cy = H / 2;
     if (mobile) {
-      CW = Math.min(W - 48, 330); CH = Math.round(CW * 0.84);
-      R = H * 2.4; cxL = W / 2 + 6 - R; cxR = 0; cy = H * 0.55;
-      step = (CH + 250) / R;                // karta + ostidagi matn bloki
+      // karta + matn bloki HUD osti va "o'tkazib yuborish" tugmasi orasiga sig'ishi kerak:
+      // past ekranlarda karta kichrayadi (ichidagilar cqw bilan birga kichrayadi)
+      topLim = hud.offsetTop + hud.offsetHeight + 14;
+      var botLim = H - 78, room = botLim - topLim;
+      CW = Math.min(W - 48, 330);
+      for (var k = 0; k < 2; k++) {
+        TH = textMax(CW);
+        if (Math.round(CW * 0.84) + GAP + TH <= room) break;
+        CW = Math.max(250, Math.floor((room - GAP - TH) / 0.84));
+      }
+      TH = textMax(CW); CH = Math.round(CW * 0.84);
+      R = H * 2.4; cxL = W / 2 + 6 - R; cxR = 0;
+      cy = topLim + room / 2;               // to'xtagan blok bo'sh joy o'rtasida turadi
+      step = (CH + GAP + TH + 40) / R;      // karta + ostidagi matn bloki + oraliq
       per = H * 0.52;
     } else {
       CW = clamp(W * 0.235, 290, 370); CH = Math.round(CW * 0.84);
@@ -148,7 +168,7 @@ return (function () {
     sec.style.height = Math.round(H + span * per) + "px";
     items.forEach(function (it) {
       it.card.style.width = CW + "px"; it.card.style.height = CH + "px";
-      it.text.style.width = mobile ? CW + "px" : "";
+      if (!mobile) it.text.style.width = "";
     });
   }
 
@@ -177,7 +197,8 @@ return (function () {
   function render(p) {
     var t = -lead + p * span;               // "hozirgi" element indeksi (kasr)
     // kirish sarlavhasi: birinchi karta yaqinlashganda erib, tepaga ketadi
-    var io = clamp(1 - (t + lead - 0.2) / 1.1, 0, 1);
+    // 1-vosita markazga kelguncha to'liq yo'qoladi (orqasida xira qolib ketmaydi)
+    var io = clamp(Math.min(1 - (t + lead - 0.2) / 1.1, -t / 0.6), 0, 1);
     intro.style.opacity = io; intro.style.transform = "translateY(" + (io - 1) * 60 + "px)";
     intro.style.visibility = io ? "visible" : "hidden";
     hud.classList.toggle("is-off", t < -1.3);
@@ -197,11 +218,11 @@ return (function () {
       it.card.style.filter = it.text.style.filter = f;
       it.card.style.zIndex = Math.round(20 - edge * 10);       // markazga yaqin karta ustda turadi
       if (mobile) {
-        var top = y - (CH + 210) / 2;
+        var top = y - (CH + GAP + TH) / 2;
         it.card.style.transform = "translate(" + (dx - CW / 2).toFixed(1) + "px," + top.toFixed(1) + "px)";
-        it.text.style.transform = "translate(" + (dx - CW / 2 + 4).toFixed(1) + "px," + (top + CH + 16).toFixed(1) + "px)";
+        it.text.style.transform = "translate(" + (dx - CW / 2 + 4).toFixed(1) + "px," + (top + CH + GAP).toFixed(1) + "px)";
         // tepada (hisoblagich ostida) karta va matn erib ketadi
-        var fade = clamp((top + CH - H * 0.21) / (H * 0.13), 0, 1);
+        var fade = clamp((top + CH * 0.6 - topLim) / (H * 0.13), 0, 1);
         it.card.style.opacity = show ? ((0.55 + 0.45 * k) * fade).toFixed(3) : 0;
         it.text.style.opacity = show ? ((0.3 + 0.7 * k) * fade).toFixed(3) : 0;
         continue;
@@ -241,6 +262,96 @@ return (function () {
   }
   if (skip) skip.addEventListener("click", onSkip);
 
+  // Qadamli skroll: sahna qotib turganda g'ildirak / klaviatura / svayp bir harakatda faqat bitta vositaga o'tkazadi.
+  // Sahifa darhol kerakli joyga sakraydi, ko'rinadigan silliq harakatni tick() dagi yumshoq ergashish beradi.
+  // 1-vositadan tepaga va 18-vositadan pastga oddiy skroll ishlaydi.
+  var LOCK = 650, QUIET = 160, lockUntil = 0, lastWheel = 0;
+  function pinned(r) { return r.top <= 2 && r.bottom >= H - 2; }
+  // dir (+1/−1) yo'nalishidagi keyingi vosita indeksi; sahna qotmagan yoki chetga yetgan bo'lsa null
+  function nextIdx(dir) {
+    var r = sec.getBoundingClientRect(), room = r.height - H;
+    if (room <= 0 || !pinned(r)) return null;
+    var t = -lead + clamp(-r.top / room, 0, 1) * span;
+    var i = dir > 0 ? Math.max(0, Math.ceil(t + 0.05)) : Math.floor(t - 0.05);
+    return i < 0 || i > N - 1 ? null : i;
+  }
+  function goTo(i) {
+    var room = sec.offsetHeight - H, top = sec.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.round(top + ((i + lead) / span) * room), behavior: "instant" });
+    lockUntil = performance.now() + LOCK;
+  }
+  // qulf: animatsiya tugaguncha va g'ildirak (tachpad inersiyasi ham) to'xtaguncha yangi qadam yo'q
+  function locked(now) { return now < lockUntil || now - lastWheel < QUIET; }
+
+  // Tez skroll bloklanmaydi: uzluksiz bitta harakat (hodisalar orasi BURST ms dan kam) yo'li FAST px dan oshsa —
+  // "erkin" rejim, brauzer oddiy skroll qiladi; g'ildirak SETTLE ms to'xtagach sahna eng yaqin vositaga ohista o'rnashadi.
+  // 2–3 "chiq" tez aylantirilsa ham bitta qadam bo'lib qoladi, undan ko'pi — erkin.
+  var BURST = 150, FAST = 400, SETTLE = 380, run = 0, free = false, settleT = 0;
+  function speed(now, d) {
+    run = now - lastWheel < BURST ? run + d : d;
+    return run;
+  }
+  function settle() {
+    free = false; run = 0;
+    var r = sec.getBoundingClientRect(), room = r.height - H;
+    if (room <= 0 || !pinned(r)) return;
+    var t = -lead + clamp(-r.top / room, 0, 1) * span, i = Math.round(t);
+    if (i >= 0 && i <= N - 1 && Math.abs(t - i) > 0.02) goTo(i);
+  }
+  function armSettle() { clearTimeout(settleT); settleT = setTimeout(settle, SETTLE); }
+
+  function onWheel(e) {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX) || !e.deltaY) return;
+    var now = performance.now(), busy = locked(now);
+    var d = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? H : 1);   // qatorlar/sahifalar → px
+    if (speed(now, d) > FAST) free = true;
+    lastWheel = now;
+    if (free) { armSettle(); return; }                    // tez skroll — brauzerning o'zi aylantiradi
+    if (busy) { if (pinned(sec.getBoundingClientRect())) e.preventDefault(); return; }
+    var i = nextIdx(e.deltaY > 0 ? 1 : -1);
+    if (i === null) return;
+    e.preventDefault(); goTo(i);
+  }
+  var KEYS = { ArrowDown: 1, PageDown: 1, " ": 1, ArrowUp: -1, PageUp: -1 };
+  function onKey(e) {
+    var d = KEYS[e.key];
+    if (!d || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.target.closest && e.target.closest("input,textarea,select,button,[contenteditable]")) return;
+    if (e.key === " " && e.shiftKey) d = -1;
+    var r = sec.getBoundingClientRect();
+    if (locked(performance.now())) { if (pinned(r)) e.preventDefault(); return; }
+    var i = nextIdx(d);
+    if (i === null) return;
+    e.preventDefault(); goTo(i);
+  }
+  // svayp: barmoq 8px siljigach qaror qilinadi — sahnada bo'lsa brauzer skrolli to'xtatiladi,
+  // barmoq 30px dan ko'p surilgan bo'lsa qo'yib yuborilganda bitta vositaga o'tiladi;
+  // tez svayp (FLICK px/ms dan tez) esa tezligiga qarab bir nechta vositadan sakrab o'tadi
+  var ty = 0, tdy = 0, tMode = "", tT0 = 0, FLICK = 0.9;   // "" — hali noma'lum · "free" — oddiy skroll · "hold" — qulf · "step" — qadam
+  var tIdx = -1;
+  function onTouchStart(e) { ty = e.touches[0].clientY; tdy = 0; tMode = ""; tT0 = performance.now(); }
+  function onTouchMove(e) {
+    tdy = ty - e.touches[0].clientY;
+    if (!tMode && Math.abs(tdy) > 8) {
+      if (locked(performance.now()) && pinned(sec.getBoundingClientRect())) tMode = "hold";
+      else { tIdx = nextIdx(tdy > 0 ? 1 : -1); tMode = tIdx === null ? "free" : "step"; }
+    }
+    if (tMode === "hold" || tMode === "step") e.preventDefault();
+  }
+  function onTouchEnd() {
+    if (tMode === "step" && Math.abs(tdy) > 30) {
+      var v = Math.abs(tdy) / Math.max(1, performance.now() - tT0), dir = tdy > 0 ? 1 : -1;
+      var extra = v > FLICK ? Math.round((v - FLICK) * 4) : 0;
+      goTo(clamp(tIdx + dir * extra, 0, N - 1));
+    }
+    tMode = "";
+  }
+  addEventListener("wheel", onWheel, { passive: false });
+  addEventListener("keydown", onKey);
+  addEventListener("touchstart", onTouchStart, { passive: true });
+  addEventListener("touchmove", onTouchMove, { passive: false });
+  addEventListener("touchend", onTouchEnd);
+
   function read() {
     var r = sec.getBoundingClientRect(), room = r.height - H;
     target = room > 0 ? clamp(-r.top / room, 0, 1) : 0;
@@ -269,6 +380,12 @@ return (function () {
   return function cleanup() {
     removeEventListener("scroll", kick);
     removeEventListener("resize", onResize);
+    removeEventListener("wheel", onWheel);
+    clearTimeout(settleT);
+    removeEventListener("keydown", onKey);
+    removeEventListener("touchstart", onTouchStart);
+    removeEventListener("touchmove", onTouchMove);
+    removeEventListener("touchend", onTouchEnd);
     if (raf) cancelAnimationFrame(raf);
     if (skip) { skip.removeEventListener("click", onSkip); skip.classList.remove("is-on"); }
     items.forEach(function (it) { it.card.remove(); it.text.remove(); });

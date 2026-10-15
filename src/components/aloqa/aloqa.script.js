@@ -1,4 +1,4 @@
-// aloqa bo'limining brauzer mantig'i — HTML versiyasidagi <script> ning o'zi (o'zgarishsiz).
+// aloqa bo'limining brauzer mantig'i.
 // aloqa-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
 export function init() {
 (function () {
@@ -9,7 +9,7 @@ export function init() {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var d = new FormData(form);
-    var body = "Ism: " + d.get("name") + "\nTelefon: " + d.get("phone") + "\n\n" + (d.get("message") || "");
+    var body = "Telefon: " + d.get("phone");
     location.href = "mailto:hello@robohub.uz?subject=" + encodeURIComponent("Robohub: sayt orqali murojaat") + "&body=" + encodeURIComponent(body);
   });
 })();
