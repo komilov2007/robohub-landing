@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { idle } from "@/lib/idle";
 import type { messages } from "./tariflar.i18n";
 
 type M = (typeof messages)["uz"];
@@ -15,8 +16,8 @@ export default function TariflarScript({ t }: { t: TariflarScriptText }) {
   useEffect(() => {
     if (started) return;
     started = true;
-    // skript alohida chunk: birinchi ekran JS iga kirmaydi, gidratatsiyadan keyin yuklanadi
-    import("./tariflar.script").then((m) => m.init(t));
+    // skript alohida chunk: birinchi ekran JS iga kirmaydi, brauzer bo'sh qolganda (LCP dan keyin) yuklanadi
+    idle().then(() => import("./tariflar.script")).then((m) => m.init(t));
   }, [t]);
   return null;
 }

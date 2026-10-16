@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-// Chegaralar (~70 KB) alohida chunk: effekt ichida import() bilan yuklanadi — birinchi ekran JS iga kirmaydi
+import { idle } from "@/lib/idle";
+// Chegaralar (~70 KB) alohida chunk: brauzer bo'sh qolganda import() bilan yuklanadi — birinchi ekran JS iga kirmaydi
 type GeoData = typeof import("./globe-data");
 
 // Yer shari: haqiqiy chegaralar bilan chizilgan, to'liq ko'rinadigan globus. Robohub ishlaydigan besh
@@ -301,7 +302,7 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
     };
     stage.addEventListener("globe:pick", onPick);
     let alive = true;
-    import("./globe-data").then((m) => {
+    idle().then(() => import("./globe-data")).then((m) => {
       if (!alive) return;
       geo = m;
       kick();
