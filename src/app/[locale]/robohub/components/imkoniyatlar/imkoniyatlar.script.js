@@ -8,7 +8,7 @@ return (function () {
   var mp = function (k) { return '<img class="mp" src="' + MP[k] + '" alt="">'; };
   var SPARK = '<svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z"/></svg>';
   var row = function (inner, cls) { return '<div class="row' + (cls ? " " + cls : "") + '">' + inner + "</div>"; };
-  var bar = function (w, warn) { return '<div class="bar"><i style="--w:' + w + "%" + (warn ? ";--c:#F2B33D" : "") + '"></i></div>'; };
+  var bar = function (w, warn) { return '<div class="bar"><i style="--w:' + w + "%" + (warn ? ";--c:#FACF00" : "") + '"></i></div>'; };
   var cal = function () { var s = ""; for (var i = 1; i <= 28; i++) s += '<i class="' + (i >= 3 && i <= 6 ? "a" : i >= 11 && i <= 14 ? "b" : i >= 19 && i <= 23 ? "c" : "") + '"></i>'; return s; };
   var stars = function (n) { return '<b class="stars">' + "★★★★★".slice(0, n) + (n < 5 ? "<s>" + "★★★★★".slice(n) + "</s>" : "") + "</b>"; };
 
