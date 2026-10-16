@@ -2,8 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, hasLocale } from "@/i18n/config";
 
 // Bitta loyiha — ikki sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
-//   Sayt domendan: robosell bilan boshlanadigan domen (robosell.uz, robosell-uz.vercel.app,
-//     robosell.localhost) → robosell; qolgan hammasi (robohub.uz, localhost, Vercel preview) → robohub.
+//   Sayt domendan: robosell bilan boshlanadigan domen (hozircha robosell-landing.vercel.app;
+//     lokalda robosell.localhost) → robosell; qolgan hammasi (robohub-landing.vercel.app, localhost) → robohub.
 //   Til yo'lning boshidan: /ru, /en; prefiks bo'lmasa — o'zbekcha.
 // Bu rewrite: brauzer manzili o'zgarmaydi, /uz/robohub kabi ichki yo'l foydalanuvchiga ko'rinmaydi.
 type Site = "robohub" | "robosell";

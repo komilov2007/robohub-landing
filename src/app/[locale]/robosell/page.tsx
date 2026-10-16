@@ -1,42 +1,39 @@
-import type { CSSProperties } from "react";
-import LangSelect from "@/components/lang-select/lang-select";
-import { getLocale } from "@/i18n/server";
-import { messages } from "./robosell.i18n";
+import { onest } from "./fonts";
+import Header from "./components/header/header";
+import Hero from "./components/hero/hero";
+import Muammo from "./components/muammo/muammo";
+import Kanallar from "./components/kanallar/kanallar";
+import Imkoniyatlar from "./components/imkoniyatlar/imkoniyatlar";
+import Analitika from "./components/analitika/analitika";
+import Integratsiyalar from "./components/integratsiyalar/integratsiyalar";
+import QandayIshlaydi from "./components/qanday-ishlaydi/qanday-ishlaydi";
+import Tariflar from "./components/tariflar/tariflar";
+import Sharhlar from "./components/sharhlar/sharhlar";
+import Yakun from "./components/yakun/yakun";
+import Footer from "./components/footer/footer";
+import Reveal from "./components/reveal/reveal";
 
-// Robosell — vaqtinchalik mini landing: kutib olish ekrani.
-function Mark() {
+// Robosell landingi. Konsepsiya — "do'kon chatdagi suhbat": hero'dan keyingi har bo'lim
+// chat pufakchasi (.rs-sec): bir burchagi o'tkir va "dumcha"li, navbatma-navbat chap/o'ng,
+// har biri oldingisi ustiga chiqadi. Uslublar: robosell.css, matnlar: robosell.content.ts.
+export default function Page() {
   return (
-    <svg className="rs-logo__mark" viewBox="0 7.97 33.8675 15.06" aria-hidden="true">
-      <path
-        d="M26.3414 7.97623H7.5261C3.37004 7.97623 0 11.3439 0 15.5C0 19.656 3.37004 23.0261 7.5261 23.0261H26.3414C30.4974 23.0261 33.8675 19.656 33.8675 15.5C33.8675 11.3439 30.4974 7.97388 26.3414 7.97388V7.97623ZM24.4587 20.2067C23.1031 20.2067 21.8841 19.6325 21.0251 18.7147C20.0131 17.6039 18.5564 16.9097 16.9349 16.9097C15.3134 16.9097 13.8543 17.6039 12.8424 18.717C11.9834 19.6325 10.7644 20.2067 9.4088 20.2067C6.81068 20.2067 4.7044 18.1005 4.7044 15.5023C4.7044 12.9042 6.81068 10.7979 9.4088 10.7979C10.7644 10.7979 11.9834 11.3722 12.8424 12.2876C13.8543 13.3984 15.3111 14.0927 16.9349 14.0927C18.5564 14.0927 20.0155 13.3984 21.0274 12.2853C21.8864 11.3698 23.1055 10.7956 24.461 10.7956C27.0591 10.7956 29.1654 12.9018 29.1654 15.5C29.1654 18.0981 27.0591 20.2044 24.461 20.2044L24.4587 20.2067Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-export default async function Page() {
-  const locale = await getLocale();
-  const t = messages[locale];
-  return (
-    <div className="rs" data-theme="brand">
-      <header className="rs__top container">
-        <span className="rs-logo" aria-label="Robosell">
-          <Mark />
-          <span className="rs-logo__word">robosell</span>
-        </span>
-        <LangSelect locale={locale} label={t.lang} />
-      </header>
-
-      <main className="rs__main container">
-        <p className="rs__badge reveal">{t.badge}</p>
-        <h1 className="rs__title reveal" style={{ "--d": "80ms" } as CSSProperties}>
-          {t.title[0]}
-          <span>{t.title[1]}</span>
-        </h1>
+    <div className={`rs ${onest.variable}`} id="top">
+      <Header />
+      <main>
+        <Hero />
+        <Muammo />
+        <Kanallar />
+        <Imkoniyatlar />
+        <Analitika />
+        <Integratsiyalar />
+        <QandayIshlaydi />
+        <Tariflar />
+        <Sharhlar />
+        <Yakun />
       </main>
-
-      <footer className="rs__foot container">© 2026 Robosell</footer>
+      <Footer />
+      <Reveal />
     </div>
   );
 }
