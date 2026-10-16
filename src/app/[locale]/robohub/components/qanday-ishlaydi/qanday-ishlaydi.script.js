@@ -109,13 +109,19 @@ export function init() {
     if (wide.matches) place(len);
   }
 
-  // kartalar o'lchovi keyingi kadrda: hydration effekti ichida offsetLeft/clientWidth o'qish majburiy reflow beradi
-  requestAnimationFrame(function () {
+  /* O'lchash ResizeObserver'da: u layout tayyor bo'lganda chaqiriladi, offsetLeft/clientWidth o'qish reflow bermaydi.
+     Birinchi chaqiruv — boshlang'ich chizish; keyingilari — o'lcham o'zgarganda (oyna, shrift yuklanishi) qayta qurish. */
+  var live = !reduced && canWatch, booted = false;
+  var ro = new ResizeObserver(function () {
+    if (booted) { relayout(); return; }
+    booted = true;
     if (wide.matches) { build(); place(0); }
-    if (reduced || !canWatch) showAll();
+    if (!live) { showAll(); ro.disconnect(); }
   });
+  ro.observe(wave);
+  cards.forEach(function (c) { ro.observe(c); });
 
-  if (reduced || !canWatch) return;   // tayyor holat: yo'l to'liq, hammasi yoniq
+  if (!live) return;   // tayyor holat: yo'l to'liq, hammasi yoniq
 
   sec.classList.add("is-live");
 
@@ -148,7 +154,6 @@ export function init() {
     build();
     place(played ? Math.min(pos, len) : frac * len);
   }
-  window.addEventListener("resize", relayout);
   wide.addEventListener("change", function () {
     /* kenglik rejimi almashsa: ko'rsatuv to'xtaydi va hammasi tayyor holatga o'tadi */
     clearTimeout(timer);
@@ -157,6 +162,5 @@ export function init() {
     if (wide.matches) build();
     showAll();
   });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
 })();
 }

@@ -9,36 +9,42 @@ export function init() {
   /* Header ostidagi section mavzusini oladi: <section data-theme="dark"> ustiga
      chiqqanda header ham yashilga o'tadi. Section mavzuni scroll davomida
      o'zgartirmoqchi bo'lsa, data-header-theme yozadi. */
-  function readTheme() {
+  var cur = null;                       // header ostidagi section (oxirgi o'lchovdan)
+  function findSection() {
     var probe = header.offsetHeight / 2;
     var secs = document.querySelectorAll("main > [data-theme]");
-    var theme = "light";
     for (var i = 0; i < secs.length; i++) {
       var r = secs[i].getBoundingClientRect();
-      if (r.top <= probe && r.bottom > probe) {
-        theme = secs[i].dataset.headerTheme || secs[i].dataset.theme;
-        break;
-      }
+      if (r.top <= probe && r.bottom > probe) return secs[i];
     }
-    return theme;
+    return null;
   }
+  function themeOf(sec) { return sec ? sec.dataset.headerTheme || sec.dataset.theme : "light"; }
 
-  var ticking = false;
-  /* Avval hamma o'lchovlar o'qiladi, keyin yoziladi — yozuvdan keyin o'qish majburiy reflow beradi */
+  /* O'qish va yozish ajratilgan: o'lchov layout toza paytda olinadi (scroll hodisasi, ResizeObserver),
+     klass/atribut esa keyingi kadrda (rAF) yoziladi — yozuvdan keyin o'qish majburiy reflow bermaydi. */
+  var stuck = false, ticking = false;
   function frame() {
     ticking = false;
-    var stuck = window.scrollY > 8, theme = readTheme();
     header.classList.toggle("is-stuck", stuck);
+    var theme = themeOf(cur);
     if (header.dataset.theme !== theme) header.dataset.theme = theme;
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  /* HTML versiyasida bu yerda DOMContentLoaded kutilardi. Next.js da skript sahifa to'liq
-     chizilgandan keyin ishlaydi (hodisa allaqachon o'tgan); birinchi o'lchov keyingi kadrga (rAF) qoldiriladi —
-     hydration effektlari ichida layout o'qilmaydi. */
-  onScroll();
-  document.addEventListener("themechange", onScroll);     // section o'z mavzusini o'zgartirganda
+  function apply() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  function measure() {
+    stuck = window.scrollY > 8;
+    cur = findSection();
+    apply();
+  }
+  window.addEventListener("scroll", measure, { passive: true });
+  /* HTML versiyasida bu yerda DOMContentLoaded kutilardi. Next.js da skript gidratatsiyadan keyin ishlaydi:
+     birinchi o'lchov ResizeObserver'da (observe'dan keyin, layout tayyor bo'lganda) olinadi; u oyna kengligi
+     o'zgarganda ham chaqiriladi. Faqat balandlik o'zgarsa — resize hodisasidan keyingi kadrda o'lchanadi. */
+  var ro = new ResizeObserver(measure);
+  ro.observe(header);
+  window.addEventListener("resize", function () { requestAnimationFrame(measure); });
+  // section o'z mavzusini o'zgartirganda (muammo) — section o'sha, faqat datasetini qayta o'qish yetarli
+  document.addEventListener("themechange", apply);
 
   var burger = document.getElementById("burger");
   var menu = document.getElementById("mobile-menu");

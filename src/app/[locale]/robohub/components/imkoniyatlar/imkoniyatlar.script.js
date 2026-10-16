@@ -235,7 +235,7 @@ return (function () {
 
   // "o'tkazib yuborish" tugmasi: sahna qotib turganda ko'rinadi, yo'nalishi oxirgi skrollga qarab o'zgaradi
   var skip = sec.querySelector(".feat__skip"), skipText = skip ? skip.querySelector("span") : null, skipArrow = skip ? skip.querySelector("i") : null;
-  var lastY = 0, dir = "down";             // lastY birinchi kadrda (boot) o'qiladi
+  var lastY = 0, dir = "down";             // lastY birinchi o'lchovda (ResizeObserver) o'qiladi
   function setDir(d) {
     if (d === dir || !skip) return;
     dir = d; skip.dataset.dir = d;
@@ -359,17 +359,23 @@ return (function () {
   }
   function kick() { if (boot) return; read(); if (!raf) raf = requestAnimationFrame(tick); }
 
-  function onResize() { if (boot) return; layout(); cur = -1; kick(); }
-
-  // Birinchi o'lchov keyingi kadrda: kartalar endigina DOM ga qo'shildi, hydration effekti ichida
-  // o'lchash butun sahifa uchun majburiy reflow beradi
-  var boot = requestAnimationFrame(function () { boot = 0; lastY = window.scrollY; layout(); kick(); });
+  // O'lchash ResizeObserver'da: u layout tayyor bo'lganda chaqiriladi (birinchi marta — observe'dan keyin),
+  // shuning uchun o'qish majburiy reflow bermaydi. layout() o'lchamlarni yozadi — sahnani o'qish (read)
+  // keyingi kadrga qoldiriladi. Sahna (sticky, 100svh) o'lchami oyna o'lchami bilan birga o'zgaradi.
+  var boot = true, kickRaf = 0;
+  var ro = new ResizeObserver(function () {
+    if (boot) { boot = false; lastY = window.scrollY; }
+    layout(); cur = -1;
+    cancelAnimationFrame(kickRaf);
+    kickRaf = requestAnimationFrame(kick);
+  });
+  ro.observe(stage);
   addEventListener("scroll", kick, { passive: true });
-  addEventListener("resize", onResize);
 
   return function cleanup() {
     removeEventListener("scroll", kick);
-    removeEventListener("resize", onResize);
+    ro.disconnect();
+    cancelAnimationFrame(kickRaf);
     removeEventListener("wheel", onWheel);
     clearTimeout(settleT);
     removeEventListener("keydown", onKey);
@@ -377,7 +383,6 @@ return (function () {
     removeEventListener("touchmove", onTouchMove);
     removeEventListener("touchend", onTouchEnd);
     if (raf) cancelAnimationFrame(raf);
-    if (boot) cancelAnimationFrame(boot);
     if (skip) { skip.removeEventListener("click", onSkip); skip.classList.remove("is-on"); }
     items.forEach(function (it) { it.card.remove(); it.text.remove(); });
     sec.style.height = "";
