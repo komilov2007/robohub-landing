@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
 import type { messages } from "./sharhlar.i18n";
 
 // Matnlar server ota komponentdan (sharhlar.tsx) `t` prop orqali keladi.
@@ -23,6 +23,22 @@ export default function SharhlarClient({ t }: { t: T }) {
   }, [at, paused, REVIEWS.length]);
 
   const r = REVIEWS[at];
+
+  // Tablar klaviaturada WAI-ARIA andozasi bo'yicha: Tab bilan faqat tanlangan tabga kiriladi,
+  // ←/→ (Home/End) bilan qo'shnisiga o'tiladi va u darhol ochiladi
+  const onTabKey = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const n = REVIEWS.length;
+    const to =
+      e.key === "ArrowRight" ? (at + 1) % n
+      : e.key === "ArrowLeft" ? (at - 1 + n) % n
+      : e.key === "Home" ? 0
+      : e.key === "End" ? n - 1
+      : -1;
+    if (to < 0) return;
+    e.preventDefault();
+    setAt(to);
+    document.getElementById("revs-tab-" + to)?.focus();
+  };
 
   return (
     <section className="revs" id="sharhlar" data-theme="brand" aria-labelledby="revs-title">
@@ -57,7 +73,9 @@ export default function SharhlarClient({ t }: { t: T }) {
                 id={"revs-tab-" + i}
                 aria-selected={i === at}
                 aria-controls="revs-panel"
+                tabIndex={i === at ? 0 : -1}
                 onClick={() => setAt(i)}
+                onKeyDown={onTabKey}
               >
                 <b>{x.num}</b>
                 <span>{x.label}</span>
@@ -66,7 +84,7 @@ export default function SharhlarClient({ t }: { t: T }) {
               </button>
             ))}
           </div>
-          <article className="revs__spot" id="revs-panel" role="tabpanel" aria-labelledby={"revs-tab-" + at} key={at}>
+          <div className="revs__spot" id="revs-panel" role="tabpanel" aria-labelledby={"revs-tab-" + at} tabIndex={0} key={at}>
             <div>
               <h3>{r.title}</h3>
               <p>{r.text}</p>
@@ -78,7 +96,7 @@ export default function SharhlarClient({ t }: { t: T }) {
                 <span>{r.meta}</span>
               </span>
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </section>
