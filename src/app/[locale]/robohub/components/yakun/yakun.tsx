@@ -1,4 +1,8 @@
-export default function Yakun() {
+import { getMessages } from "@/i18n/server";
+import { messages } from "./yakun.i18n";
+
+export default async function Yakun() {
+  const t = await getMessages(messages);
   return (
     <section className="end" id="boshlash" data-theme="dark" aria-labelledby="end-title">
       <div className="container">
@@ -6,16 +10,16 @@ export default function Yakun() {
           <div>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}{" "}
             <h2 className="end__title" id="end-title">
-              <span>To‘rtta marketpleys.</span>{" "}
-              <span className="accent">Bitta kabinet.</span>
+              <span>{t.title}</span>{" "}
+              <span className="accent">{t.titleAccent}</span>
             </h2>{" "}
-            <p className="end__lead">Buyurtma, qoldiq va foydani bir joydan boshqarishni bugun boshlang.</p>{" "}
+            <p className="end__lead">{t.lead}</p>{" "}
             <div className="end__btns">
               <a className="btn btn--lg btn--primary" href="#kirish">
-                {"Hoziroq boshlash "}
+                {t.start}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>{" "}
-              <a className="btn btn--lg btn--outline" href="#tariflar">Tariflarni koʻrish</a>
+              <a className="btn btn--lg btn--outline" href="#tariflar">{t.pricing}</a>
             </div>
           </div>{" "}
           <div className="end__orbit" aria-hidden="true">
@@ -39,7 +43,7 @@ export default function Yakun() {
               <svg className="foot__logo" viewBox="0 0 127 31" role="img" aria-label="Robohub">
                 <use href="#rh-logo" />
               </svg>{" "}
-              <p className="foot__about">Marketpleys sotuvchilari uchun yagona kabinet.</p>{" "}
+              <p className="foot__about">{t.about}</p>{" "}
               <p className="foot__mps" aria-hidden="true">
                 <img src="/marketplaces/uzum.svg" alt="" width="30" height="30" />
                 <img src="/marketplaces/yandex.svg" alt="" width="30" height="30" />
@@ -47,45 +51,29 @@ export default function Yakun() {
                 <img src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
               </p>
             </div>{" "}
-            <nav aria-label="Sahifa boʻlimlari">
-              <h3>Sahifa</h3>{" "}
+            <nav aria-label={t.pageLabel}>
+              <h3>{t.pageTitle}</h3>{" "}
               <ul>
-                <li>
-                  <a href="#imkoniyatlar">Imkoniyatlar</a>
-                </li>{" "}
-                <li>
-                  <a href="#qanday-ishlaydi">Qanday ishlaydi</a>
-                </li>{" "}
-                <li>
-                  <a href="#integratsiyalar">Integratsiyalar</a>
-                </li>{" "}
-                <li>
-                  <a href="#sharhlar">Sharhlar</a>
-                </li>{" "}
-                <li>
-                  <a href="#tariflar">Tariflar</a>
-                </li>{" "}
-                <li>
-                  <a href="#savollar">Savollar</a>
-                </li>{" "}
-                <li>
-                  <a href="#aloqa">Aloqa</a>
-                </li>
+                {t.page.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href}>{item.label}</a>
+                  </li>
+                ))}
               </ul>
             </nav>{" "}
-            <nav aria-label="Bepul vositalar">
-              <h3>Bepul vositalar</h3>{" "}
+            <nav aria-label={t.tools}>
+              <h3>{t.tools}</h3>{" "}
               <ul>
                 <li>
-                  <a href="/calculator/">Marketpleys kalkulyatori</a>
+                  <a href="/calculator/">{t.calculator}</a>
                 </li>{" "}
                 <li>
-                  <a href="/ai-infografika/">AI infografika</a>
+                  <a href="/ai-infografika/">{t.infographics}</a>
                 </li>
               </ul>
             </nav>{" "}
             <div>
-              <h3>Aloqa</h3>{" "}
+              <h3>{t.contact}</h3>{" "}
               <a className="foot__call" href="tel:+998999857226">
                 <i aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -93,7 +81,7 @@ export default function Yakun() {
                   </svg>
                 </i>{" "}
                 <span>
-                  <span>Qoʻllab-quvvatlash xizmati</span>
+                  <span>{t.support}</span>
                   <b>+998 (99) 985 72 26</b>
                 </span>
               </a>
@@ -102,8 +90,8 @@ export default function Yakun() {
           <div className="foot__bar">
             <p>© 2026 Robohub</p>{" "}
             <span>
-              <a href="#maxfiylik">Maxfiylik siyosati</a>
-              <a href="#qollab-quvvatlash">Qoʻllab-quvvatlash</a>
+              <a href="#maxfiylik">{t.privacy}</a>
+              <a href="#qollab-quvvatlash">{t.help}</a>
             </span>
           </div>
         </footer>

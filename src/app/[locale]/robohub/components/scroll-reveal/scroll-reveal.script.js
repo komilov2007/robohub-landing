@@ -16,5 +16,12 @@ export function init() {
     });
   }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
   els.forEach(function (el) { io.observe(el); });
+
+  /* Ko'rinmayotgan section'ga data-off: uning ichidagi CSS animatsiyalari pauzada (robohub.css oxiri).
+     Ekranga 200px qolganda yana ishga tushadi, foydalanuvchi to'xtab turganini ko'rmaydi. */
+  var off = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { e.target.toggleAttribute("data-off", !e.isIntersecting); });
+  }, { rootMargin: "200px 0px" });
+  document.querySelectorAll("main > section").forEach(function (s) { off.observe(s); });
 })();
 }

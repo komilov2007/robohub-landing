@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { getMessages } from "@/i18n/server";
+import { messages } from "./robosell.i18n";
 import "./robosell.css";
 
-export const metadata: Metadata = {
-  title: "Robosell — tez orada",
-  description: "Robosell — tez orada.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getMessages(messages);
+  return { title: t.metaTitle, description: t.metaDescription };
+}
 
-export default function RobosellLayout({ children }: LayoutProps<"/robosell">) {
+export default function RobosellLayout({ children }: LayoutProps<"/[locale]/robosell">) {
   return children;
 }

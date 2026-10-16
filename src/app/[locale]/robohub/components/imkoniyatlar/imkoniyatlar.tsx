@@ -1,8 +1,11 @@
+import { getMessages } from "@/i18n/server";
 import ImkoniyatlarScript from "./imkoniyatlar-script";
+import { messages } from "./imkoniyatlar.i18n";
 
 // Skroll sahnasi: bo'lim ekranga qotadi, 18 ta vosita yoy bo'ylab o'tadi.
 // Kartalar va matnlar brauzerda chiziladi (imkoniyatlar.script.js) — bu yerda faqat sahna asosi.
-export default function Imkoniyatlar() {
+export default async function Imkoniyatlar() {
+  const t = await getMessages(messages);
   return (
     <>
       <section className="feat" id="imkoniyatlar" data-theme="light" aria-labelledby="feat-title">
@@ -10,16 +13,16 @@ export default function Imkoniyatlar() {
           <div className="feat__rim" aria-hidden="true" />
 
           <div className="feat__intro">
-            <p className="feat__eyebrow">Imkoniyatlar</p>
+            <p className="feat__eyebrow">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="feat__title" id="feat-title">
-              <span>Sotuvchiga kerak hamma narsa —</span>
-              <span className="accent">bitta kabinetda.</span>
+              <span>{t.title[0]}</span>
+              <span className="accent">{t.title[1]}</span>
             </h2>
-            <p className="feat__lead">Buyurtmadan sof foydagacha: Robohub ichida 18 ta tayyor vosita bor. Pastga suring — har biri nima qilishini ko‘rsatamiz.</p>
+            <p className="feat__lead">{t.lead}</p>
             <p className="feat__hint">
               <i aria-hidden="true" />
-              Skroll qiling
+              {t.hint}
             </p>
           </div>
 
@@ -50,11 +53,11 @@ export default function Imkoniyatlar() {
         {/* Sahnani o'tkazib yuborish: pastga ketayotganda keyingi bo'limga, tepaga chiqayotganda oldingisiga olib o'tadi.
             Faqat sahna ekranga qotib turganda ko'rinadi (holatini imkoniyatlar.script.js boshqaradi). */}
         <button className="feat__skip" type="button" data-dir="down">
-          <span>O‘tkazib yuborish</span>
+          <span>{t.script.skipDown}</span>
           <i aria-hidden="true">↓</i>
         </button>
       </section>
-      <ImkoniyatlarScript />
+      <ImkoniyatlarScript t={t.script} />
     </>
   );
 }

@@ -41,18 +41,13 @@ export function init() {
   var menu = document.getElementById("mobile-menu");
   function setMenu(open) {
     burger.setAttribute("aria-expanded", String(open));
-    burger.setAttribute("aria-label", open ? "Menyuni yopish" : "Menyuni ochish");
+    // yozuvlar joriy tilda — header.tsx data-label-* atributlarida
+    burger.setAttribute("aria-label", open ? burger.dataset.labelClose : burger.dataset.labelOpen);
     menu.classList.toggle("is-open", open);
   }
   burger.addEventListener("click", function () { setMenu(burger.getAttribute("aria-expanded") !== "true"); });
   menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
 
-  var langBtns = document.querySelectorAll(".lang__btn");
-  langBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      langBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-    });
-  });
 })();
 }

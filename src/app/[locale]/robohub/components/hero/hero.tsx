@@ -1,5 +1,7 @@
-import type { CSSProperties } from "react";
+import { Fragment, type CSSProperties } from "react";
+import { getMessages } from "@/i18n/server";
 import HeroVideo from "./hero-video";
+import { messages } from "./hero.i18n";
 
 const MARKETPLACES = ["uzum", "wildberries", "ozon", "yandex"];
 
@@ -16,26 +18,33 @@ const SYSTEMS: { name: string; logo?: string }[] = [
   { name: "Apicore" },
 ];
 
-export default function Hero() {
+export default async function Hero() {
+  const t = await getMessages(messages);
+  // Soʻzlar 80ms dan boshlab har 60ms da chiqadi; rangli qism oldidan qoʻshimcha 20ms pauza (asl: 80…320, 400, 460)
+  const accentFrom = 80 + t.title.length * 60 + 20;
   return (
     <>
       <section className="hero" id="hero" data-theme="light" aria-labelledby="hero-title">
         <div className="container hero__grid">
           <div className="hero__text">
-            <p className="hero__pill reveal">Marketpleys sotuvchilari uchun</p>
+            <p className="hero__pill reveal">{t.pill}</p>
             <h1 className="hero__title" id="hero-title">
-              <span className="w" style={{ "--d": "80ms" } as CSSProperties}>Uzum,</span>{" "}
-              <span className="w" style={{ "--d": "140ms" } as CSSProperties}>Wildberries,</span>{" "}
-              <span className="w" style={{ "--d": "200ms" } as CSSProperties}>Ozon</span>{" "}
-              <span className="w" style={{ "--d": "260ms" } as CSSProperties}>va</span>{" "}
-              <span className="w" style={{ "--d": "320ms" } as CSSProperties}>{"Yandex —"}</span>{" "}
+              {t.title.map((w, i) => (
+                <Fragment key={i}>
+                  <span className="w" style={{ "--d": `${80 + i * 60}ms` } as CSSProperties}>{w}</span>{" "}
+                </Fragment>
+              ))}
               <span className="accent">
-                <span className="w" style={{ "--d": "400ms" } as CSSProperties}>bitta</span>{" "}
-                <span className="w" style={{ "--d": "460ms" } as CSSProperties}>kabinetda</span>
+                {t.accent.map((w, i) => (
+                  <Fragment key={i}>
+                    {i > 0 && " "}
+                    <span className="w" style={{ "--d": `${accentFrom + i * 60}ms` } as CSSProperties}>{w}</span>
+                  </Fragment>
+                ))}
               </span>
             </h1>
             <p className="hero__lead reveal" style={{ "--d": "560ms" } as CSSProperties}>
-              Buyurtma, qoldiq va foydani bir joydan boshqaring. Toʻrtta kabinetga alohida kirish shart emas.
+              {t.lead}
             </p>
             <ul className="hero__facts reveal" style={{ "--d": "660ms" } as CSSProperties}>
               <li>
@@ -45,18 +54,18 @@ export default function Hero() {
                   <img className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="22" height="22" style={{ "--d": "880ms" } as CSSProperties} />
                   <img className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="22" height="22" style={{ "--d": "940ms" } as CSSProperties} />
                 </span>
-                4 marketpleys
+                {t.facts.mps}
               </li>
-              <li>10+ integratsiya</li>
-              <li>AI yordamchi</li>
+              <li>{t.facts.integrations}</li>
+              <li>{t.facts.ai}</li>
             </ul>
             <div className="hero__cta reveal" style={{ "--d": "760ms" } as CSSProperties}>
               <a className="btn btn--lg btn--primary" href="#boshlash">
-                {"Hoziroq boshlash "}
+                {`${t.start} `}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>
               {/* ikkinchi tugma — video: bosilganda oynada ochiladi */}
-              <HeroVideo />
+              <HeroVideo t={t.video} />
             </div>
           </div>
 

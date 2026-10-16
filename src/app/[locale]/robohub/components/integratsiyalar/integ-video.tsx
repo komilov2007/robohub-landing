@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { messages } from "./integratsiyalar.i18n";
+
+type T = (typeof messages)["uz"]["video"];
 
 // Bitta kartochka Robohub orqali barcha marketpleyslarga tarqalishini ko'rsatadigan video.
 // Faqat ekranda ko'ringanda o'ynaydi; "harakatni kamaytirish" yoqilgan bo'lsa to'xtab turadi.
-export default function IntegVideo() {
+export default function IntegVideo({ t }: { t: T }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export default function IntegVideo() {
       loop
       playsInline
       preload="metadata"
-      aria-label="Mahsulot kartochkasi Robohub orqali barcha marketpleyslarga tarqaladi"
+      aria-label={t.label}
     />
   );
 }

@@ -1,27 +1,38 @@
 import type { CSSProperties } from "react";
+import { getMessages } from "@/i18n/server";
 import BepulVositalarScript from "./bepul-vositalar-script";
+import { messages } from "./bepul-vositalar.i18n";
 
-export default function BepulVositalar() {
+// Namuna sonlarni joriy til formatida chiqarish (95 000 / 95,000)
+function fmt(n: number, group: string) {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, group);
+}
+
+export default async function BepulVositalar() {
+  const t = await getMessages(messages);
+  const c = t.calc;
+  const g = t.script.group;
+  const cur = t.script.currency;
   return (
     <>
       <section className="tools" id="bepul-vositalar" data-theme="brand" aria-labelledby="tools-title">
         <div className="container">
-          <p className="tools__eyebrow" data-sr="">Bepul vositalar</p>{" "}
+          <p className="tools__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
           {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}{" "}
           <h2 className="tools__title" id="tools-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-            <span>Avval sinab ko‘ring.</span>{" "}
-            <span className="accent">Keyin qaror qilasiz.</span>
+            <span>{t.title}</span>{" "}
+            <span className="accent">{t.titleAccent}</span>
           </h2>{" "}
           <div className="tools__grid">
             {/* ===== 1) Marketpleys kalkulyatori ===== */}{" "}
             <article className="tool" data-sr="" style={{ "--d": "120ms" } as CSSProperties}>
               <div className="tool__head">
                 <div>
-                  <h3 className="tool__name">Marketpleys kalkulyatori</h3>{" "}
-                  <p className="tool__desc">Sotuvdan qancha foyda qoladi? Roʻyxatsiz, bepul.</p>
+                  <h3 className="tool__name">{c.name}</h3>{" "}
+                  <p className="tool__desc">{c.desc}</p>
                 </div>{" "}
                 <a className="tool__go" href="/calculator/">
-                  {"Oʻtish "}
+                  {`${t.go} `}
                   <span className="arrow" aria-hidden="true">→</span>
                 </a>
               </div>{" "}
@@ -33,7 +44,7 @@ export default function BepulVositalar() {
                   <i />
                   <i />
                   <i />
-                  <span>Kalkulyator</span>
+                  <span>{c.win}</span>
                 </div>{" "}
                 <p className="calc__mps" aria-hidden="true">
                   <span className="is-on">
@@ -57,54 +68,54 @@ export default function BepulVositalar() {
                   <div className="calc__form">
                     <p className="calc__step">
                       <b>1</b>
-                      Qaysi mahsulot?
+                      {c.step1}
                     </p>{" "}
                     <label className="fld">
-                      <span>Mahsulot nomi</span>{" "}
+                      <span>{c.productLabel}</span>{" "}
                       <span className="fld__box">
-                        <input id="calc-name" type="text" defaultValue="Termos 500 ml" placeholder="Mahsulot nomini kiriting" autoComplete="off" />
+                        <input id="calc-name" type="text" defaultValue={c.productValue} placeholder={c.productPlaceholder} autoComplete="off" />
                       </span>
                     </label>{" "}
                     <div className="fld" id="calc-catbox">
-                      <span>Kategoriya</span>{" "}
+                      <span>{c.category}</span>{" "}
                       <p className="calc__ai">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z" />
                         </svg>
-                        {" AI tavsiyasi "}
+                        {` ${c.aiHint} `}
                       </p>{" "}
-                      <span className="calc__cat">{"Uy-roʻzgʻor buyumlari > Oshxona buyumlari > Termo…"}</span>
+                      <span className="calc__cat">{c.categoryPath}</span>
                     </div>{" "}
                     <p className="calc__step">
                       <b>2</b>
-                      Narxlar
+                      {c.step2}
                     </p>{" "}
                     <div className="calc__pair">
                       <label className="fld">
-                        <span>Tannarx</span>{" "}
+                        <span>{c.cost}</span>{" "}
                         <span className="fld__box">
-                          <input id="calc-cost" type="text" inputMode="numeric" defaultValue="95 000" placeholder="Tannarx" autoComplete="off" />
-                          <i>soʻm</i>
+                          <input id="calc-cost" type="text" inputMode="numeric" defaultValue={fmt(95000, g)} placeholder={c.costPlaceholder} autoComplete="off" />
+                          <i>{cur}</i>
                         </span>{" "}
-                        <input className="calc__range" id="calc-cost-r" type="range" min="0" max="400000" step="1000" defaultValue="95000" aria-label="Tannarx" />
+                        <input className="calc__range" id="calc-cost-r" type="range" min="0" max="400000" step="1000" defaultValue="95000" aria-label={c.cost} />
                       </label>{" "}
                       <label className="fld">
-                        <span>Narx</span>{" "}
+                        <span>{c.price}</span>{" "}
                         <span className="fld__box">
-                          <input id="calc-price" type="text" inputMode="numeric" defaultValue="189 000" placeholder="Narx" autoComplete="off" />
-                          <i>soʻm</i>
+                          <input id="calc-price" type="text" inputMode="numeric" defaultValue={fmt(189000, g)} placeholder={c.price} autoComplete="off" />
+                          <i>{cur}</i>
                         </span>{" "}
-                        <input className="calc__range" id="calc-price-r" type="range" min="0" max="500000" step="1000" defaultValue="189000" aria-label="Narx" />
+                        <input className="calc__range" id="calc-price-r" type="range" min="0" max="500000" step="1000" defaultValue="189000" aria-label={c.price} />
                       </label>
                     </div>
                   </div>{" "}
                   <div className="calc__res" aria-live="polite">
-                    <p className="calc__res-title">Hisob-kitob</p>{" "}
+                    <p className="calc__res-title">{c.resTitle}</p>{" "}
                     <div className="calc__card">
-                      <p className="calc__q">Bitta sotuvdan qancha qoladi?</p>{" "}
+                      <p className="calc__q">{c.question}</p>{" "}
                       <p className="calc__sum">
-                        <b id="calc-left">65 650</b>
-                        <span id="calc-unit">soʻm</span>
+                        <b id="calc-left">{fmt(65650, g)}</b>
+                        <span id="calc-unit">{cur}</span>
                       </p>{" "}
                       <div className="calc__bar" id="calc-bar" aria-hidden="true">
                         <i className="is-fee" />
@@ -113,51 +124,51 @@ export default function BepulVositalar() {
                       </div>{" "}
                       <p className="calc__kpis">
                         <span>
-                          {"Marja "}
-                          <b id="calc-margin">34,7%</b>
+                          {`${c.margin} `}
+                          <b id="calc-margin">{`34${t.script.decimal}7%`}</b>
                         </span>
                         <span>
-                          {"ROI "}
-                          <b id="calc-roi">69,1%</b>
+                          {`${c.roi} `}
+                          <b id="calc-roi">{`69${t.script.decimal}1%`}</b>
                         </span>
                       </p>
                     </div>{" "}
                     <div className="calc__detail">
-                      <h4>Batafsil hisob</h4>{" "}
+                      <h4>{c.detail}</h4>{" "}
                       <ul>
                         <li style={{ "--i": "0" } as CSSProperties}>
-                          <span>Xaridor toʻlaydi</span>
-                          <b id="calc-r-price">189 000 soʻm</b>
+                          <span>{c.buyerPays}</span>
+                          <b id="calc-r-price">{`${fmt(189000, g)} ${cur}`}</b>
                         </li>{" "}
                         <li style={{ "--i": "1" } as CSSProperties}>
-                          <span>Marketpleys komissiyasi</span>
-                          <b id="calc-r-fee">− 28 350 soʻm</b>
+                          <span>{c.fee}</span>
+                          <b id="calc-r-fee">{`− ${fmt(28350, g)} ${cur}`}</b>
                         </li>{" "}
                         <li className="is-total" style={{ "--i": "2" } as CSSProperties}>
-                          <span>Hisobingizga tushadi</span>
-                          <b id="calc-r-pay">160 650 soʻm</b>
+                          <span>{c.payout}</span>
+                          <b id="calc-r-pay">{`${fmt(160650, g)} ${cur}`}</b>
                         </li>{" "}
                         <li style={{ "--i": "3" } as CSSProperties}>
-                          <span>Mahsulot tannarxi</span>
-                          <b id="calc-r-cost">− 95 000 soʻm</b>
+                          <span>{c.productCost}</span>
+                          <b id="calc-r-cost">{`− ${fmt(95000, g)} ${cur}`}</b>
                         </li>
                       </ul>
                     </div>{" "}
-                    <p className="calc__foot">Saqlash, qaytarishlar va reklama hisobga kirmaydi</p>
+                    <p className="calc__foot">{c.foot}</p>
                   </div>
                 </div>{" "}
-                <p className="win__note">Namuna hisob: komissiya 15% deb olingan. Aniq tarif kalkulyatorda.</p>
+                <p className="win__note">{c.note}</p>
               </div>
             </article>{" "}
             {/* ===== 2) AI infografika ===== */}{" "}
             <article className="tool" data-sr="" style={{ "--d": "220ms" } as CSSProperties}>
               <div className="tool__head">
                 <div>
-                  <h3 className="tool__name">AI infografika</h3>{" "}
-                  <p className="tool__desc">Mahsulot rasmi ~30 soniyada, 750×1000.</p>
+                  <h3 className="tool__name">{t.ai.name}</h3>{" "}
+                  <p className="tool__desc">{t.ai.desc}</p>
                 </div>{" "}
                 <a className="tool__go" href="/ai-infografika/">
-                  {"Oʻtish "}
+                  {`${t.go} `}
                   <span className="arrow" aria-hidden="true">→</span>
                 </a>
               </div>{" "}
@@ -173,21 +184,21 @@ export default function BepulVositalar() {
                   <ol className="ai__steps" aria-hidden="true">
                     <li className="is-done">
                       <b>✓</b>
-                      Rasm yuklang
+                      {t.ai.steps[0]}
                     </li>{" "}
                     <li className="is-done">
                       <b>✓</b>
-                      Uslubni tanlang
+                      {t.ai.steps[1]}
                     </li>{" "}
                     <li className="is-done">
                       <b>✓</b>
-                      Tayyor rasm
+                      {t.ai.steps[2]}
                     </li>
                   </ol>{" "}
                   <div className="ai__stage">
                     <figure className="ai__src">
-                      <img src="/ai/base_cosmetics.jpg" alt="Yuklangan oddiy mahsulot rasmi: oq banka" width="360" height="480" loading="lazy" />{" "}
-                      <figcaption>Sizning rasmingiz</figcaption>
+                      <img src="/ai/base_cosmetics.webp" alt={t.ai.srcAlt} width="360" height="480" loading="lazy" />{" "}
+                      <figcaption>{t.ai.yourPhoto}</figcaption>
                     </figure>{" "}
                     <span className="ai__arrow" aria-hidden="true">{" "}
                       <svg viewBox="0 0 60 34" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -199,15 +210,15 @@ export default function BepulVositalar() {
                       <div className="ai__shot">
                         <span className="ai__ring" aria-hidden="true" />{" "}
                         <div className="cmp" id="cmp">
-                          <img src="/ai/base_cosmetics.jpg" alt="" width="360" height="480" loading="lazy" />{" "}
-                          <span className="cmp__tag cmp__tag--l">Sizning rasmingiz</span>{" "}
+                          <img src="/ai/base_cosmetics.webp" alt="" width="360" height="480" loading="lazy" />{" "}
+                          <span className="cmp__tag cmp__tag--l">{t.ai.yourPhoto}</span>{" "}
                           <div className="cmp__after">
-                            <img id="cmp-result" src="/ai/cosmetics_composition.jpg" alt="AI tayyorlagan rasm" width="360" height="480" loading="lazy" />{" "}
+                            <img id="cmp-result" src="/ai/cosmetics_composition.webp" alt={t.ai.resultAlt} width="360" height="480" loading="lazy" />{" "}
                             <span className="cmp__tag cmp__tag--r">{" "}
                               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z" />
                               </svg>
-                              {" AI natija "}
+                              {` ${t.ai.resultTag} `}
                             </span>{" "}
                             <span className="cmp__size">750×1000</span>
                           </div>{" "}
@@ -219,37 +230,37 @@ export default function BepulVositalar() {
                               </svg>{" "}
                               <p>
                                 <b id="cmp-count">30</b>
-                                soniya
+                                {t.ai.seconds}
                               </p>
                             </div>
                           </div>{" "}
                           <span className="cmp__handle" aria-hidden="true" />{" "}
-                          <input className="cmp__range" id="cmp-range" type="range" min="0" max="100" defaultValue="0" aria-label="Asl rasm bilan solishtirish" />
+                          <input className="cmp__range" id="cmp-range" type="range" min="0" max="100" defaultValue="0" aria-label={t.ai.compare} />
                         </div>
                       </div>{" "}
                       <p className="ai__cap" aria-hidden="true">
                         <b>‹ ›</b>
-                        Asl rasm bilan solishtirish
+                        {t.ai.compare}
                       </p>
                     </div>
                   </div>{" "}
-                  <p className="ai__label">Uslubni tanlang</p>{" "}
-                  <div className="ai__styles" role="group" aria-label="Uslubni tanlang">
-                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/cosmetics_composition.jpg">
-                      <img src="/ai/cosmetics_composition.jpg" alt="" width="360" height="480" loading="lazy" />
-                      <span>Kompozitsiya bilan</span>
+                  <p className="ai__label">{t.ai.chooseStyle}</p>{" "}
+                  <div className="ai__styles" role="group" aria-label={t.ai.chooseStyle}>
+                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/cosmetics_composition.webp">
+                      <img src="/ai/cosmetics_composition.webp" alt="" width="360" height="480" loading="lazy" />
+                      <span>{t.ai.styles[0]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_in_use.jpg">
-                      <img src="/ai/cosmetics_in_use.jpg" alt="" width="360" height="480" loading="lazy" />
-                      <span>Ishlatilishda</span>
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_in_use.webp">
+                      <img src="/ai/cosmetics_in_use.webp" alt="" width="360" height="480" loading="lazy" />
+                      <span>{t.ai.styles[1]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_everyday.jpg">
-                      <img src="/ai/cosmetics_everyday.jpg" alt="" width="360" height="480" loading="lazy" />
-                      <span>Kundalik sahna</span>
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_everyday.webp">
+                      <img src="/ai/cosmetics_everyday.webp" alt="" width="360" height="480" loading="lazy" />
+                      <span>{t.ai.styles[2]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_studio.jpg">
-                      <img src="/ai/cosmetics_studio.jpg" alt="" width="360" height="480" loading="lazy" />
-                      <span>Katalog (studiya)</span>
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/cosmetics_studio.webp">
+                      <img src="/ai/cosmetics_studio.webp" alt="" width="360" height="480" loading="lazy" />
+                      <span>{t.ai.styles[3]}</span>
                     </button>
                   </div>
                 </div>
@@ -258,7 +269,7 @@ export default function BepulVositalar() {
           </div>
         </div>
       </section>
-      <BepulVositalarScript />
+      <BepulVositalarScript t={t.script} />
     </>
   );
 }

@@ -1,8 +1,9 @@
 // Imkoniyatlar bo'limining brauzer mantig'i: 18 ta vosita kartasi va matnini chizadi,
 // skrollga qarab ularni yoy bo'ylab joylashtiradi. imkoniyatlar-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
 // NAMUNA MA'LUMOT: kartalardagi son va nomlar shartli.
+// msg — joriy tildagi matnlar (imkoniyatlar.i18n.ts → script): nomlar, izohlar, karta yozuvlari, tugma matnlari.
 // Tozalash funksiyasini qaytaradi (hodisalarni uzadi, chizilgan karta va matnlarni olib tashlaydi).
-export function init() {
+export function init(msg) {
 return (function () {
   var MP = { u: "/marketplaces/uzum.svg", w: "/marketplaces/wildberries.svg", o: "/marketplaces/ozon.svg", y: "/marketplaces/yandex.svg" };
   var mp = function (k) { return '<img class="mp" src="' + MP[k] + '" alt="">'; };
@@ -11,90 +12,75 @@ return (function () {
   var bar = function (w, warn) { return '<div class="bar"><i style="--w:' + w + "%" + (warn ? ";--c:#FACF00" : "") + '"></i></div>'; };
   var cal = function () { var s = ""; for (var i = 1; i <= 28; i++) s += '<i class="' + (i >= 3 && i <= 6 ? "a" : i >= 11 && i <= 14 ? "b" : i >= 19 && i <= 23 ? "c" : "") + '"></i>'; return s; };
   var stars = function (n) { return '<b class="stars">' + "★★★★★".slice(0, n) + (n < 5 ? "<s>" + "★★★★★".slice(n) + "</s>" : "") + "</b>"; };
+  // sonni joriy til ajratuvchisi bilan guruhlaydi: 1000000 → "1 000 000" (uz/ru) · "1,000,000" (en)
+  var group = function (v) { return String(v).replace(/\B(?=(\d{3})+$)/g, msg.sep); };
 
-  var CATS = ["Hamma marketpleys bitta ekranda", "Foydangizni aniq biling", "Qoldiqni nazorat qiling", "Savdoni o‘stiring", "Mijozlar bilan ishlang"];
+  var CATS = msg.cats;
 
-  // c — toifa (1..5), n — nom, t — bir qatorli izoh, m — karta sarlavhasidagi kichik yozuv, r — tanasi yonma-yon, v — karta ichi
+  // c — toifa (1..5), r — tanasi yonma-yon, v(s) — karta ichi (s — shu vositaning msg.tools[i].v yozuvlari).
+  // Nom, izoh, kichik yozuv, xulosa va bandlar — msg.tools[i] dan.
   var TOOLS = [
-    { c: 1, n: "Dashboard", t: "Tushum, foyda, marja va qaytarishlar — barcha do‘konlar bo‘yicha bitta ekranda.", m: "Bugun",
-      v: '<div class="kpis"><div class="kpi"><span class="cap">Buyurtmalar</span><b data-n="128">128</b></div><div class="kpi"><span class="cap">Sof foyda</span><b>4,86 mln</b></div><div class="kpi"><span class="cap">Qoldiq</span><b data-n="2314">2 314</b></div></div><div class="bars"><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:66%"></i><i style="--h:60%"></i><i style="--h:84%"></i><i style="--h:100%"></i></div>' },
-    { c: 1, n: "Buyurtmalar", t: "Yagona buyurtmalar lentasidan yig‘ing, belgilang va jo‘nating — holati barcha marketpleyslarda sinxron.", m: "4 marketpleys",
-      v: row(mp("u") + '<span>#48213 · Simsiz quloqchin</span><b class="tag">Yangi</b>') + row(mp("w") + '<span>#48212 · Termos 500 ml</span><b class="tag tag--warn">Yig‘ilmoqda</b>') + row(mp("o") + '<span>#48211 · Telefon g‘ilofi</span><b class="tag tag--soft">Yo‘lda</b>') },
-    { c: 1, n: "FBO ta’minlash", t: "Tovar qachon tugashini aytadi va omborga nechta jo‘natishni hisoblab beradi.", m: "Qoldiq necha kunga yetadi",
-      v: row("<span>Termos 500 ml</span><em>4 kun</em>" + bar(18, 1) + '<b class="tag">+120 dona</b>') + row("<span>Simsiz quloqchin</span><em>9 kun</em>" + bar(40, 1) + '<b class="tag">+60 dona</b>') + row("<span>Sport sumka</span><em>21 kun</em>" + bar(78) + '<b class="tag tag--soft">yetarli</b>') },
+    { c: 1,
+      v: function (s) { return '<div class="kpis"><div class="kpi"><span class="cap">' + s[0] + '</span><b data-n="128">128</b></div><div class="kpi"><span class="cap">' + s[1] + "</span><b>" + s[2] + '</b></div><div class="kpi"><span class="cap">' + s[3] + '</span><b data-n="2314">' + group(2314) + '</b></div></div><div class="bars"><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:66%"></i><i style="--h:60%"></i><i style="--h:84%"></i><i style="--h:100%"></i></div>'; } },
+    { c: 1,
+      v: function (s) { return row(mp("u") + "<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>") + row(mp("w") + "<span>" + s[2] + '</span><b class="tag tag--warn">' + s[3] + "</b>") + row(mp("o") + "<span>" + s[4] + '</span><b class="tag tag--soft">' + s[5] + "</b>"); } },
+    { c: 1,
+      v: function (s) { return row("<span>" + s[0] + "</span><em>" + s[1] + "</em>" + bar(18, 1) + '<b class="tag">' + s[2] + "</b>") + row("<span>" + s[3] + "</span><em>" + s[4] + "</em>" + bar(40, 1) + '<b class="tag">' + s[5] + "</b>") + row("<span>" + s[6] + "</span><em>" + s[7] + "</em>" + bar(78) + '<b class="tag tag--soft">' + s[8] + "</b>"); } },
 
-    { c: 2, n: "Sof foyda va marja", t: "Tushum, foyda va marja — komissiya, logistika va reklama hisobga olingan holda.", m: "Marja 26%",
-      v: '<div class="line"><span>Tushum</span>' + bar(100) + "<b>1 000 000</b></div>" + '<div class="line"><span>Tannarx</span>' + bar(40, 1) + "<b>−400 000</b></div>" + '<div class="line"><span>Komissiya</span>' + bar(18, 1) + "<b>−180 000</b></div>" + '<div class="line"><span>Logistika</span>' + bar(9, 1) + "<b>−90 000</b></div>" + '<div class="line"><span>Reklama</span>' + bar(7, 1) + "<b>−70 000</b></div>" + '<div class="line line--sum"><span>Sof foyda</span>' + bar(26) + "<b data-n='260000'>260 000</b></div>" },
-    { c: 2, n: "ROI", t: "Reklamaga sarflagan pulingiz foyda keltirdimi yoki yo‘q — aniq ko‘rasiz.", m: "Reklama", r: 1,
-      v: '<div class="ring"><b><em data-n="148" data-suf="%">148%</em></b></div><div class="col"><div class="line"><span>Sarflandi</span><b style="flex:1">500 000</b></div>' + bar(40, 1) + '<div class="line"><span>Qaytdi</span><b style="flex:1">1 240 000</b></div>' + bar(100) + "</div>" },
-    { c: 2, n: "ABC/XYZ tahlil", t: "AI-tahlil xarajatlarni hisobga olib, eng foydali mahsulotlarni aniqlaydi.", m: "Tovarlar soni",
-      v: '<div class="mx"><span></span><span>X</span><span>Y</span><span>Z</span><span>A</span><b class="is-top">24</b><b class="is-mid">11</b><b>6</b><span>B</span><b class="is-mid">18</b><b>15</b><b>9</b><span>C</span><b>12</b><b>20</b><b class="is-bad">31</b></div>' },
-    { c: 2, n: "AI tavsiyalar", t: "Nimaga e’tibor berish kerakligini sun’iy intellekt o‘zi aytib turadi.", m: "3 ta tavsiya",
-      v: row(SPARK + "<span>Termos 500 ml — qoldiq 3 kunda tugaydi</span>") + row(SPARK + "<span>Sport sumka — reklama o‘zini oqlamayapti</span>") + row(SPARK + "<span>Blender — talab oshdi, narxni ko‘ring</span>") },
+    { c: 2,
+      v: function (s) { return '<div class="line"><span>' + s[0] + "</span>" + bar(100) + "<b>" + group(1000000) + "</b></div>" + '<div class="line"><span>' + s[1] + "</span>" + bar(40, 1) + "<b>−" + group(400000) + "</b></div>" + '<div class="line"><span>' + s[2] + "</span>" + bar(18, 1) + "<b>−" + group(180000) + "</b></div>" + '<div class="line"><span>' + s[3] + "</span>" + bar(9, 1) + "<b>−" + group(90000) + "</b></div>" + '<div class="line"><span>' + s[4] + "</span>" + bar(7, 1) + "<b>−" + group(70000) + "</b></div>" + '<div class="line line--sum"><span>' + s[5] + "</span>" + bar(26) + "<b data-n='260000'>" + group(260000) + "</b></div>"; } },
+    { c: 2, r: 1,
+      v: function (s) { return '<div class="ring"><b><em data-n="148" data-suf="%">148%</em></b></div><div class="col"><div class="line"><span>' + s[0] + '</span><b style="flex:1">' + group(500000) + "</b></div>" + bar(40, 1) + '<div class="line"><span>' + s[1] + '</span><b style="flex:1">' + group(1240000) + "</b></div>" + bar(100) + "</div>"; } },
+    { c: 2,
+      v: function () { return '<div class="mx"><span></span><span>X</span><span>Y</span><span>Z</span><span>A</span><b class="is-top">24</b><b class="is-mid">11</b><b>6</b><span>B</span><b class="is-mid">18</b><b>15</b><b>9</b><span>C</span><b>12</b><b>20</b><b class="is-bad">31</b></div>'; } },
+    { c: 2,
+      v: function (s) { return row(SPARK + "<span>" + s[0] + "</span>") + row(SPARK + "<span>" + s[1] + "</span>") + row(SPARK + "<span>" + s[2] + "</span>"); } },
 
-    { c: 3, n: "Ombor sinxronizatsiyasi", t: "Qoldiqlar barcha marketpleyslarda sinxronlanadi — ortiqcha sotuvsiz.", m: "Sinxron", r: 1,
-      v: '<div style="flex:none;text-align:center"><span class="cap">Omborda</span><b class="big" style="display:block;margin-top:.1em">24</b></div><div class="col">' + row(mp("u") + '<span>Uzum</span><b>24</b><b class="tag">✓</b>') + row(mp("w") + '<span>Wildberries</span><b>24</b><b class="tag">✓</b>') + row(mp("o") + '<span>Ozon</span><b>24</b><b class="tag">✓</b>') + row(mp("y") + '<span>Yandex Market</span><b>24</b><b class="tag">✓</b>') + "</div>" },
-    { c: 3, n: "Tovarlarni guruhlash", t: "Bir xil tovarning turli marketpleysdagi kartochkalarini bittaga birlashtiradi.", m: "1 guruh · 4 kartochka",
-      v: '<div class="grid2">' + row(mp("u") + "<span>Termos 500 ml</span>") + row(mp("w") + "<span>Термос 500 мл</span>") + row(mp("o") + "<span>Термос, 0.5 л</span>") + row(mp("y") + "<span>Termos 0,5 l</span>") + "</div>" + row('<span>Umumiy qoldiq</span><b>120 dona</b><b class="tag">bitta guruh</b>', "is-me") },
-    { c: 3, n: "Excel import", t: "Tovarlarni bittalab kiritmaysiz — Excel faylni yuklaysiz, bo‘ldi.", m: "128 ta tovar ✓",
-      v: row('<i class="file">XLS</i><span>tovarlar.xlsx</span>' + bar(100) + '<b class="tag">yuklandi</b>') + row("<span>Termos 500 ml</span><em>89 000 so‘m</em><b>120</b>") + row("<span>Simsiz quloqchin</span><em>164 000 so‘m</em><b>60</b>") },
-    { c: 3, n: "Yo‘qotilgan mahsulotlar", t: "Marketpleys omborida yo‘qolgan tovaringizni topib ko‘rsatadi.", m: "Shu oy", r: 1,
-      v: '<div style="flex:none;text-align:center"><b class="big" data-n="5">5</b><span class="cap" style="display:block;margin-top:.3em">dona topilmadi</span></div><div class="col">' + row(mp("w") + '<span>Termos 500 ml</span><b class="tag tag--warn">−2</b>') + row(mp("o") + '<span>Telefon g‘ilofi</span><b class="tag tag--warn">−1</b>') + row(mp("u") + '<span>Simsiz quloqchin</span><b class="tag tag--warn">−2</b>') + "</div>" },
+    { c: 3, r: 1,
+      v: function (s) { return '<div style="flex:none;text-align:center"><span class="cap">' + s[0] + '</span><b class="big" style="display:block;margin-top:.1em">24</b></div><div class="col">' + row(mp("u") + '<span>Uzum</span><b>24</b><b class="tag">✓</b>') + row(mp("w") + '<span>Wildberries</span><b>24</b><b class="tag">✓</b>') + row(mp("o") + '<span>Ozon</span><b>24</b><b class="tag">✓</b>') + row(mp("y") + '<span>Yandex Market</span><b>24</b><b class="tag">✓</b>') + "</div>"; } },
+    { c: 3,
+      v: function (s) { return '<div class="grid2">' + row(mp("u") + "<span>" + s[0] + "</span>") + row(mp("w") + "<span>" + s[1] + "</span>") + row(mp("o") + "<span>" + s[2] + "</span>") + row(mp("y") + "<span>" + s[3] + "</span>") + "</div>" + row("<span>" + s[4] + "</span><b>" + s[5] + '</b><b class="tag">' + s[6] + "</b>", "is-me"); } },
+    { c: 3,
+      v: function (s) { return row('<i class="file">XLS</i><span>' + s[0] + "</span>" + bar(100) + '<b class="tag">' + s[1] + "</b>") + row("<span>" + s[2] + "</span><em>" + s[3] + "</em><b>120</b>") + row("<span>" + s[4] + "</span><em>" + s[5] + "</em><b>60</b>"); } },
+    { c: 3, r: 1,
+      v: function (s) { return '<div style="flex:none;text-align:center"><b class="big" data-n="5">5</b><span class="cap" style="display:block;margin-top:.3em">' + s[0] + '</span></div><div class="col">' + row(mp("w") + "<span>" + s[1] + '</span><b class="tag tag--warn">−2</b>') + row(mp("o") + "<span>" + s[2] + '</span><b class="tag tag--warn">−1</b>') + row(mp("u") + "<span>" + s[3] + '</span><b class="tag tag--warn">−2</b>') + "</div>"; } },
 
-    { c: 4, n: "Avtobidder", t: "Reklama narxini o‘zi boshqaradi — tovaringiz siz xohlagan o‘rinda turadi.", m: "Avto rejim",
-      v: row('<span>Maqsad</span><b>3-o‘rin</b><b class="tag">Avto</b>') + '<div><span class="cap">Stavka o‘zi moslashadi</span><div class="slider"></div></div>' + row('<span>Hozirgi o‘rin</span><b class="tag">3</b>') },
-    { c: 4, n: "Promokodlar", t: "Chegirma kodi yaratasiz va uni nechta odam ishlatganini ko‘rasiz.", m: "3 ta faol",
-      v: '<div class="ticket"><code>YOZ10</code><span>42 marta ishlatildi</span><b>−10%</b></div><div class="ticket"><code>YANGI15</code><span>17 marta ishlatildi</span><b>−15%</b></div><div class="ticket"><code>DOIMIY5</code><span>96 marta ishlatildi</span><b>−5%</b></div>' },
-    { c: 4, n: "Aksiyalar taqvimi", t: "Qaysi marketpleysda qachon aksiya bo‘lishini bitta taqvimda ko‘rasiz.", m: "Shu oy",
-      v: '<div class="cal">' + cal() + "</div>" + row(mp("u") + '<span>Uzum · Katta chegirmalar</span><em>3–6</em>') + row(mp("w") + '<span>Wildberries · Mavsumiy</span><em>11–14</em>') + row(mp("o") + '<span>Ozon · Hafta aksiyasi</span><em>19–23</em>') },
-    { c: 4, n: "Bust TOP", t: "Kartochkalarni yaxshilang — xaridorlar sizni qidiruvda yuqoriroq topadi.", m: "Qidiruvdagi o‘rin",
-      v: row('<span>Sizning tovaringiz</span><b class="tag">↑ 1-o‘rin</b>', "is-me rank-me") + row("<span>Raqobatchi tovar</span>", "is-dim rank-o") + row("<span>Raqobatchi tovar</span>", "is-dim rank-o") },
+    { c: 4,
+      v: function (s) { return row("<span>" + s[0] + "</span><b>" + s[1] + '</b><b class="tag">' + s[2] + "</b>") + '<div><span class="cap">' + s[3] + '</span><div class="slider"></div></div>' + row("<span>" + s[4] + '</span><b class="tag">3</b>'); } },
+    { c: 4,
+      v: function (s) { return '<div class="ticket"><code>' + s[0] + "</code><span>" + s[1] + '</span><b>−10%</b></div><div class="ticket"><code>' + s[2] + "</code><span>" + s[3] + '</span><b>−15%</b></div><div class="ticket"><code>' + s[4] + "</code><span>" + s[5] + "</span><b>−5%</b></div>"; } },
+    { c: 4,
+      v: function (s) { return '<div class="cal">' + cal() + "</div>" + row(mp("u") + "<span>" + s[0] + "</span><em>3–6</em>") + row(mp("w") + "<span>" + s[1] + "</span><em>11–14</em>") + row(mp("o") + "<span>" + s[2] + "</span><em>19–23</em>"); } },
+    { c: 4,
+      v: function (s) { return row("<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>", "is-me rank-me") + row("<span>" + s[2] + "</span>", "is-dim rank-o") + row("<span>" + s[2] + "</span>", "is-dim rank-o"); } },
 
-    { c: 5, n: "Chat", t: "Hamma marketpleysdagi xaridorlarga bitta oynadan javob berasiz.", m: "2 ta yangi",
-      v: '<div class="msg">' + mp("u") + 'Yetkazib berish qachon bo‘ladi?</div><div class="msg msg--me">Ertaga yetkaziladi</div><div class="msg">' + mp("w") + "Qora rangi bormi?</div>" },
-    { c: 5, n: "Sharhlar", t: "Hamma sharhlar bir joyda — birortasi javobsiz qolmaydi.", m: "O‘rtacha 4,8",
-      v: row(mp("u") + stars(5) + "<span>Sifati zo‘r, tez yetib keldi</span>") + row(mp("o") + stars(4) + "<span>Yaxshi, qadog‘i biroz ezilgan</span>") + row(mp("w") + stars(2) + "<span>Rangi rasmdagidan farq qiladi</span>") },
-    { c: 5, n: "Yulduz bo‘yicha avtojavob", t: "Sharhlarga avto-javob — har bir bahoga mos javob qo‘lda ishsiz ketadi.", m: "Yoqilgan",
-      v: row(stars(5) + '<span>Xaridingiz uchun rahmat!</span><i class="sw"></i>') + row(stars(3) + '<span>Nimani yaxshilashimiz mumkin?</span><i class="sw"></i>') + row(stars(1) + '<span>Uzr so‘raymiz, yordam beramiz</span><i class="sw"></i>') }
+    { c: 5,
+      v: function (s) { return '<div class="msg">' + mp("u") + s[0] + '</div><div class="msg msg--me">' + s[1] + '</div><div class="msg">' + mp("w") + s[2] + "</div>"; } },
+    { c: 5,
+      v: function (s) { return row(mp("u") + stars(5) + "<span>" + s[0] + "</span>") + row(mp("o") + stars(4) + "<span>" + s[1] + "</span>") + row(mp("w") + stars(2) + "<span>" + s[2] + "</span>"); } },
+    { c: 5,
+      v: function (s) { return row(stars(5) + "<span>" + s[0] + '</span><i class="sw"></i>') + row(stars(3) + "<span>" + s[1] + '</span><i class="sw"></i>') + row(stars(1) + "<span>" + s[2] + '</span><i class="sw"></i>'); } }
   ];
-  // x — karta tanasiga qo'shimcha, f — karta pastidagi xulosa satri, b — o'ngdagi matn ostidagi 3 ta band
+  // x(s) — karta tanasiga qo'shimcha (s — o'sha vositaning yozuvlari, TOOLS dagi v(s) bilan bir xil)
   var MORE = [
-    { x: '<div class="legend"><span>' + mp("u") + "42%</span><span>" + mp("w") + "27%</span><span>" + mp("o") + "19%</span><span>" + mp("y") + "12%</span></div>", f: "Kechagidan +12% ko‘p · 4 ta do‘kon",
-      b: ["Hamma do‘kon bitta ekranda", "Sotuv, foyda va qoldiq bir joyda", "Kunlik o‘zgarish darhol ko‘rinadi"] },
-    { x: row(mp("y") + '<span>#48210 · Sport sumka</span><b class="tag tag--soft">Topshirildi</b>'), f: "Bugun 128 ta · 6 tasi yig‘ilishni kutmoqda",
-      b: ["Barcha marketpleys buyurtma va statuslari bitta oynada", "Etiketkalarni to‘plab chop etasiz", "Yig‘ing, belgilang va jo‘nating — bitta lentadan"] },
-    { x: row("<span>Blender</span><em>30 kun</em>" + bar(100) + '<b class="tag tag--soft">yetarli</b>'), f: "2 ta tovarni shu hafta jo‘natish kerak",
-      b: ["Qoldiq necha kunga yetishini ko‘rasiz", "Nechta jo‘natishni o‘zi hisoblaydi", "Tovar tugab, sotuv to‘xtab qolmaydi"] },
-    { f: "Har 1 000 so‘mdan 260 so‘m sizga qoladi",
-      b: ["Komissiya, logistika va reklama hisobga olinadi", "Har bir buyurtma, mahsulot va do‘kon bo‘yicha", "Tushum, foyda, marja va qaytarishlar bir joyda"] },
-    { f: "Har 1 so‘m reklama 2,48 so‘m bo‘lib qaytdi",
-      b: ["Qancha sarflab, qancha qaytganini ko‘rasiz", "Foydasiz reklamani o‘chirasiz", "Pulni ishlayotgan joyga yo‘naltirasiz"] },
-    { f: "24 ta tovar asosiy daromadni beryapti · 31 tasi sotilmayapti",
-      b: ["A — eng ko‘p pul keltiradigan tovarlar", "C — deyarli sotilmayotganlari", "Komissiya, logistika va reklama xarajati hisobga olinadi"] },
-    { x: row(SPARK + "<span>Quloqchin — 4 ta sharh javobsiz turibdi</span>"), f: "Tavsiyalar har kuni yangilanadi",
-      b: ["Tugayotgan tovar haqida ogohlantiradi", "Zarar qilayotgan reklamani ko‘rsatadi", "Narxni qachon o‘zgartirishni aytadi"] },
-    { f: "Bir joyda sotilsa — hamma joyda birga kamayadi",
-      b: ["Barcha marketpleyslar bilan qoldiqni bir zumda almashadi", "FBS va DBS qoldiqlari sinxron", "Ortiqcha sotuv bo‘lmaydi"] },
-    { f: "4 ta kartochka — bitta qoldiq, bitta hisobot",
-      b: ["Bir tovar — bitta umumiy qoldiq", "Bir marta o‘zgartirasiz — hamma joyda yangilanadi", "Narx va qoldiqni ommaviy tahrirlaysiz"] },
-    { x: row("<span>Sport sumka</span><em>347 000 so‘m</em><b>35</b>"), f: "128 ta tovar bitta fayl bilan qo‘shildi",
-      b: ["Nom, narx va qoldiq birga yuklanadi", "Marketpleys kabinetidan ham to‘g‘ridan-to‘g‘ri import", "Bir necha bosishda moslab olasiz"] },
-    { f: "Jami 5 dona · 3 ta tovar bo‘yicha",
-      b: ["Qaysi tovardan nechta yo‘qolganini ko‘rasiz", "Qaysi marketpleysda ekani ko‘rinadi", "Pulingiz e’tiborsiz yo‘qolib ketmaydi"] },
-    { x: row("<span>Kunlik byudjet</span><b>150 000 so‘m</b>"), f: "Kerakli o‘rin uchun yetarli stavka — ortig‘i emas",
-      b: ["Kerakli o‘rinni o‘zingiz belgilaysiz", "Stavka kun bo‘yi o‘zi moslashadi", "Reklamaga ortiqcha pul ketmaydi"] },
-    { f: "Jami 155 marta ishlatildi",
-      b: ["Kodni tez yaratasiz", "Har bir kod natijasi alohida", "Qaysi chegirma ishlaganini bilasiz"] },
-    { f: "Bu oyda 3 ta aksiya rejalashtirilgan",
-      b: ["Hamma aksiya bitta taqvimda", "Oldindan tayyorlanishga vaqt qoladi", "Muhim aksiyani o‘tkazib yubormaysiz"] },
-    { x: row("<span>Raqobatchi tovar</span>", "is-dim rank-o"), f: "Ko‘rishlar +38% · shu hafta",
-      b: ["Xususiyatlarni to‘ldirib, kartochkani yaxshilaysiz", "Xaridorlar sizni qidiruvda yuqoriroq topadi", "Natija o‘rin bo‘yicha ko‘rinib turadi"] },
-    { x: '<div class="msg msg--me">Ha, omborda bor</div>', f: "O‘rtacha javob vaqti — 2 daqiqa",
-      b: ["Hamma yozishma bitta oynada", "Qaysi marketpleysdan ekani ko‘rinadi", "Tez javob — ko‘proq sotuv"] },
-    { x: row(mp("y") + stars(5) + "<span>Tavsiya qilaman</span>"), f: "312 ta sharh · 4 tasi javob kutmoqda",
-      b: ["Yangi sharh darhol ko‘rinadi", "Yomon bahoga tez javob berasiz", "Reyting tushib ketmaydi"] },
-    { x: row(stars(4) + '<span>Fikringiz uchun rahmat!</span><i class="sw"></i>'), f: "Bu oy 86 ta javob avtomatik ketdi",
-      b: ["Har bir yulduz uchun alohida javob", "Bir marta sozlaysiz — qo‘lda ish qolmaydi", "Xaridor javobsiz qolmaydi"] }
+    { x: function () { return '<div class="legend"><span>' + mp("u") + "42%</span><span>" + mp("w") + "27%</span><span>" + mp("o") + "19%</span><span>" + mp("y") + "12%</span></div>"; } },
+    { x: function (s) { return row(mp("y") + "<span>" + s[6] + '</span><b class="tag tag--soft">' + s[7] + "</b>"); } },
+    { x: function (s) { return row("<span>" + s[9] + "</span><em>" + s[10] + "</em>" + bar(100) + '<b class="tag tag--soft">' + s[11] + "</b>"); } },
+    {},
+    {},
+    {},
+    { x: function (s) { return row(SPARK + "<span>" + s[3] + "</span>"); } },
+    {},
+    {},
+    { x: function (s) { return row("<span>" + s[6] + "</span><em>" + s[7] + "</em><b>35</b>"); } },
+    {},
+    { x: function (s) { return row("<span>" + s[5] + "</span><b>" + s[6] + "</b>"); } },
+    {},
+    {},
+    { x: function (s) { return row("<span>" + s[2] + "</span>", "is-dim rank-o"); } },
+    { x: function (s) { return '<div class="msg msg--me">' + s[3] + "</div>"; } },
+    { x: function (s) { return row(mp("y") + stars(5) + "<span>" + s[3] + "</span>"); } },
+    { x: function (s) { return row(stars(4) + "<span>" + s[3] + '</span><i class="sw"></i>'); } }
   ];
   var N = TOOLS.length;
   var CARD_BG = { 1: "#07605A", 2: "#F5F1E7", 3: "#063B38", 4: "#E3ECE7", 5: "#12665A" };
@@ -110,10 +96,11 @@ return (function () {
     var card = document.createElement("div");
     card.className = "feat-card"; card.dataset.c = t.c; card.setAttribute("aria-hidden", "true");
     card.style.setProperty("--card", CARD_BG[t.c]);
-    card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + t.n + "</span><em>" + t.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v + (MORE[i].x || "") + '</div><div class="fd__f">' + MORE[i].f + "</div></div>";
+    var L = msg.tools[i], s = L.v;   // shu vositaning joriy tildagi matnlari
+    card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + L.n + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
     var text = document.createElement("article");
     text.className = "feat-text";
-    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + t.n + "</h3><p>" + t.t + "</p><ul>" + MORE[i].b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p><ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
     // ketma-ket chiqadigan mayda elementlar uchun tartib raqami
     [".mx b", ".cal i", ".bars i"].forEach(function (q) { [].forEach.call(card.querySelectorAll(q), function (el, j) { el.style.setProperty("--j", j); }); });
     stage.appendChild(card); stage.appendChild(text);
@@ -173,7 +160,6 @@ return (function () {
   }
 
   // karta faollashganda sonlar 0 dan sanab chiqadi
-  var group = function (v) { return String(v).replace(/\B(?=(\d{3})+$)/g, " "); };
   function count(card) {
     [].forEach.call(card.querySelectorAll("[data-n]"), function (el) {
       var to = +el.dataset.n, suf = el.dataset.suf || "", t0 = performance.now(), dur = 1100;
@@ -251,7 +237,7 @@ return (function () {
   function setDir(d) {
     if (d === dir || !skip) return;
     dir = d; skip.dataset.dir = d;
-    skipText.textContent = d === "down" ? "O‘tkazib yuborish" : "Tepaga qaytish";
+    skipText.textContent = d === "down" ? msg.skipDown : msg.skipUp;
     skipArrow.textContent = d === "down" ? "↓" : "↑";
   }
   function onSkip() {

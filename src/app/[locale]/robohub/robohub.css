@@ -24,7 +24,7 @@
 .header__inner{height:var(--header-h);display:flex;align-items:center;gap:var(--sp-3)}
 
 /* logotip */
-.logo{display:inline-flex;align-items:center;flex:none;border-radius:var(--r-sm)}
+.logo{display:inline-flex;align-items:center;flex:none;padding-block:7px;border-radius:var(--r-sm)}
 .logo svg{display:block;height:26px;width:auto;color:var(--hl);transition:transform var(--t-mid) var(--ease-soft),color 450ms var(--ease)}
 .logo:hover svg{transform:scale(1.03)}
 .logo:active svg{transform:scale(.99)}
@@ -32,7 +32,7 @@
 .nav{margin-inline:auto}
 .nav__list{display:flex;align-items:center;gap:var(--sp-4)}
 .nav__link{
-  position:relative;display:inline-block;padding:var(--sp-1) 2px;
+  position:relative;display:inline-block;white-space:nowrap;padding:var(--sp-1) 2px;
   font-size:15px;font-weight:500;color:var(--text-dim);
   transition:color var(--t-mid) var(--ease);
 }
@@ -47,22 +47,6 @@
 
 .header__actions{display:flex;align-items:center;gap:var(--sp-2)}
 
-.lang{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:var(--r-pill)}
-.lang__btn{
-  position:relative;padding:5px 11px;border-radius:var(--r-pill);
-  font-size:13px;font-weight:600;color:var(--text-dim);
-  transition:color var(--t-mid) var(--ease),transform var(--t-fast) var(--ease);
-}
-.lang__btn::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;background:var(--line);
-  opacity:0;transform:scale(.85);
-  transition:opacity var(--t-mid) var(--ease),transform var(--t-mid) var(--ease-soft);
-}
-.lang__btn span{position:relative}
-.lang__btn:hover{color:var(--text)}
-.lang__btn:active{transform:scale(.97)}
-.lang__btn[aria-pressed="true"]{color:var(--hl)}
-.lang__btn[aria-pressed="true"]::before{opacity:1;transform:scale(1)}
 
 .burger{display:none;width:40px;height:40px;flex:none;border:1px solid var(--line-strong);border-radius:var(--r-md);position:relative;transition:border-color var(--t-fast) var(--ease)}
 .burger:hover{border-color:var(--hl)}
@@ -98,8 +82,10 @@
 .mobile-menu__actions .btn{width:100%}
 
 @media (max-width:1100px){.nav__list{gap:var(--sp-3)}}
-@media (max-width:768px){
+/* planshetda ham burger: 5 ta band + til + 2 tugma 1024 da (ayniqsa ruschada) sig'maydi */
+@media (max-width:1080px){
   .nav,.header__actions .btn{display:none}
+  .header__actions{margin-left:auto}
   .burger{display:block;margin-left:auto}
   .mobile-menu__actions .btn{display:inline-flex}
 }
@@ -130,6 +116,9 @@
 }
 @keyframes mark-in{from{background-size:0 40%}}
 
+/* LCP elementi: opacity animatsiyasi LCP ni animatsiya oxirigacha kechiktirardi — faqat siljish */
+.hero__lead.reveal{animation-name:rise-y}
+@keyframes rise-y{from{transform:translate3d(0,14px,0)}to{transform:none}}
 .hero__lead{max-width:36ch;margin-bottom:var(--sp-3);font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--text-dim)}
 .hero__facts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:var(--sp-4);font-size:13.5px;font-weight:700;white-space:nowrap}
 .hero__facts li{display:flex;align-items:center;gap:10px}
@@ -147,8 +136,9 @@
 .hero__play{gap:10px;padding-left:10px;font-family:inherit;color:var(--text);cursor:pointer}
 .hero__play-ico{position:relative;width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:#fff;transition:transform 300ms var(--ease-soft)}
 .hero__play-ico svg{margin-left:2px}
-.hero__play-ico::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(0,82,79,.35);animation:hero-play 2.4s var(--ease) infinite}
-@keyframes hero-play{to{box-shadow:0 0 0 10px rgba(0,82,79,0)}}
+/* puls: kengayuvchi halqa — faqat transform/opacity (GPU), sahifa qayta chizilmaydi */
+.hero__play-ico::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:rgba(0,82,79,.35);animation:hero-play 2.4s var(--ease) infinite}
+@keyframes hero-play{from{transform:scale(1);opacity:1}to{transform:scale(1.62);opacity:0}}
 .hero__play:hover .hero__play-ico{transform:scale(1.08)}
 @media (prefers-reduced-motion:reduce){.hero__play-ico::after{animation:none}}
 
@@ -332,7 +322,7 @@
   border-radius:var(--r-lg);border:1px solid var(--line);background:var(--bg-dark);overflow:hidden;
 }
 .a-cap,.a-res{position:relative;z-index:1;display:flex;align-items:center;gap:.65em;font-size:.95em;font-weight:700;line-height:1.3}
-.a-cap::before{content:"Hozir";flex:none;padding:.2em .75em;border-radius:var(--r-pill);background:var(--accent);color:var(--ink);font-size:.82em;font-weight:800}
+.a-cap::before{content:attr(data-label);flex:none;padding:.2em .75em;border-radius:var(--r-pill);background:var(--accent);color:var(--ink);font-size:.82em;font-weight:800}
 /* oqibat: shu holat sotuvchiga nimaga tushishi */
 .a-res{padding:.65em .9em;border-radius:.9em;border:1px dashed rgba(250,207,0,.55);background:rgba(250,207,0,.07)}
 .a-res::before{content:"!";flex:none;width:1.55em;height:1.55em;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:var(--ink);font-size:.85em;font-weight:800}
@@ -787,8 +777,13 @@
 
 .tools__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:var(--sp-4);align-items:stretch}
 .tool{display:flex;flex-direction:column;gap:var(--sp-3);min-width:0}
-.tool__head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-2);min-height:90px}
-.tool__name{font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em}
+.tool__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--sp-2);min-height:90px}
+/* nomi (masalan "AI-инфографика") defisda bo'linmasin: sig'masa tugma pastki qatorga o'tadi */
+.tool__name{font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em;white-space:nowrap}
+/* ruschada nomlar uzunroq ("AI-инфографика") — tor ustunda tugma bilan bir qatorga sig'ishi uchun biroz kichikroq */
+:lang(ru) .tool__name{font-size:clamp(18px,1.55vw,21px)}
+/* matn bloki tavsif uzunligiga qarab kengaymasin: faqat nomgacha qisqaradi, tavsif ichida o'raladi */
+.tool__head>div{flex:1 1 0;min-width:min-content}
 .tool__desc{margin-top:6px;font-size:15.5px;color:var(--text-dim)}
 .tool__go{
   flex:none;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r-pill);
@@ -801,7 +796,7 @@
 /* oyna: haqiqiy vosita interfeysi shu ramka ichida. Interfeys shrifti — Inter (asl vositadagidek) */
 .win{
   display:flex;flex-direction:column;flex:1;
-  border-radius:24px;overflow:hidden;font-family:"Inter",var(--font-body);font-weight:500;
+  border-radius:24px;overflow:hidden;font-family:var(--ff-inter),var(--font-body);font-weight:500;
   box-shadow:0 30px 70px rgba(0,25,23,.45),0 0 0 1px rgba(241,255,240,.1);
 }
 .win__bar{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;background:rgba(0,54,52,.06);border-bottom:1px solid var(--line)}
@@ -994,7 +989,7 @@
   outline:2px solid transparent;outline-offset:2px;opacity:.7;
   transition:outline-color var(--t-fast) var(--ease),opacity var(--t-fast) var(--ease);
 }
-.ai__style span{display:block;margin-top:7px;font-size:10.5px;font-weight:600;line-height:1.25}
+.ai__style span{display:block;margin-top:7px;font-size:10.5px;font-weight:600;line-height:1.25;overflow-wrap:anywhere;hyphens:auto}
 .ai__style:hover{color:var(--text);transform:translateY(-2px)}
 .ai__style:hover img{opacity:1}
 .ai__style.is-on{color:var(--mint)}
@@ -1133,7 +1128,7 @@
   background:
     radial-gradient(rgba(0,82,79,.1) 1px,transparent 1.3px) 0 0/14px 14px,
     linear-gradient(160deg,#EEF7EC,#E3F1E0);
-  font-family:"Inter",var(--font-body);font-weight:600;font-size:12.5px;
+  font-family:var(--ff-inter),var(--font-body);font-weight:600;font-size:12.5px;
 }
 .how-card--help .mini{background:radial-gradient(rgba(0,82,79,.12) 1px,transparent 1.3px) 0 0/14px 14px,#F3F9F1}
 .mini__fld{
@@ -1700,7 +1695,7 @@
 .contact__note{margin-top:12px;font-size:13px;color:var(--text-dim)}
 
 .contact__ways{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;margin-top:var(--sp-3);font-size:14.5px;font-weight:700}
-.contact__ways a{display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color 300ms var(--ease)}
+.contact__ways a{display:flex;align-items:center;gap:8px;padding-block:6px;white-space:nowrap;transition:color 300ms var(--ease)}
 .contact__ways a:hover{color:var(--brand)}
 .contact__ways svg{width:17px;height:17px;flex:none;color:var(--brand)}
 
@@ -1764,9 +1759,9 @@
 .foot__mps img{width:30px;height:30px;border-radius:9px;transition:transform var(--t-mid) var(--ease-soft)}
 .foot__mps img:hover{transform:translateY(-4px)}
 .foot h3{margin-bottom:14px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--text-dim)}
-.foot ul{display:grid;gap:10px;font-size:15px;font-weight:500}
-.foot ul a{position:relative;transition:color var(--t-fast) var(--ease)}
-.foot ul a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--t-mid) var(--ease)}
+.foot ul{display:grid;gap:2px;font-size:15px;font-weight:500}
+.foot ul a{position:relative;display:inline-block;padding-block:5px;transition:color var(--t-fast) var(--ease)}
+.foot ul a::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1.5px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--t-mid) var(--ease)}
 .foot ul a:hover{color:#fff}
 .foot ul a:hover::after{transform:scaleX(1)}
 /* aloqa kartasi */
@@ -1777,7 +1772,12 @@
 .foot__call b{display:block;font-family:var(--font-head);font-size:16px;letter-spacing:-.01em;white-space:nowrap}
 .foot__bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:1px solid var(--line);font-size:13.5px;color:var(--text-dim)}
 .foot__bar span{display:flex;gap:20px}
+.foot__bar a{display:inline-block;padding-block:6px}
 .foot__bar a:hover{color:#fff}
+@media (max-width:1100px) and (min-width:769px){
+  .foot__grid{grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,1fr))}
+  .foot__grid > :last-child{grid-column:1 / -1;max-width:380px}
+}
 
 
 @media (max-width:900px){
@@ -1795,3 +1795,11 @@
   .end__btns .btn{width:100%}
   .foot__bar{flex-direction:column}
 }
+
+/* ============================================================
+   EKRANDAN TASHQARIDAGI BO'LIM — animatsiyalar pauzada.
+   scroll-reveal.script.js ko'rinmayotgan section'ga data-off qo'yadi; kirganda olib tashlaydi.
+   Cheksiz animatsiyalar (orbita, marquee, bozor plitkalari...) ko'rinmasa protsessorni band qilmaydi.
+   ============================================================ */
+.js main > [data-off] *,.js main > [data-off] *::before,.js main > [data-off] *::after{animation-play-state:paused !important}
+

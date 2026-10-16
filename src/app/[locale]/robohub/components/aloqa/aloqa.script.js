@@ -1,6 +1,7 @@
 // aloqa bo'limining brauzer mantig'i.
 // aloqa-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
-export function init() {
+// t — xat matni joriy tilda: { subject, phone }
+export function init(t) {
 (function () {
   "use strict";
   var form = document.getElementById("contact-form");
@@ -9,8 +10,8 @@ export function init() {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var d = new FormData(form);
-    var body = "Telefon: " + d.get("phone");
-    location.href = "mailto:hello@robohub.uz?subject=" + encodeURIComponent("Robohub: sayt orqali murojaat") + "&body=" + encodeURIComponent(body);
+    var body = t.phone + d.get("phone");
+    location.href = "mailto:hello@robohub.uz?subject=" + encodeURIComponent(t.subject) + "&body=" + encodeURIComponent(body);
   });
 })();
 }

@@ -6,20 +6,23 @@ import { LAND, TARGETS } from "./globe-data";
 // Yer shari: haqiqiy chegaralar bilan chizilgan, to'liq ko'rinadigan globus. Robohub ishlaydigan besh
 // mamlakat o'z shakli va o'z joyida yashil bilan bo'yalgan; navbat bilan bittasi yonadi va globus sekin
 // o'sha tomonga buriladi. Sichqoncha bilan tortib aylantirsa ham bo'ladi.
+// Nomlar — bozor.i18n.ts da; server ota komponent (bozor.tsx) `names` prop orqali uzatadi.
 // lon/lat — yorliq bog'lanadigan nuqta (mamlakat ichida); side — yorliq nuqtaning qaysi tomonida turishi.
 const COUNTRIES = [
-  { id: "uz", name: "Oʻzbekiston", lon: 63.5, lat: 41.6, side: "left" },
-  { id: "ru", name: "Rossiya", lon: 60, lat: 60.5, side: "top" },
-  { id: "kz", name: "Qozogʻiston", lon: 67.5, lat: 48.4, side: "right" },
-  { id: "kg", name: "Qirgʻiziston", lon: 74.8, lat: 41.4, side: "right" },
-  { id: "tj", name: "Tojikiston", lon: 71, lat: 38.6, side: "bottom" },
+  { id: "uz", lon: 63.5, lat: 41.6, side: "left" },
+  { id: "ru", lon: 60, lat: 60.5, side: "top" },
+  { id: "kz", lon: 67.5, lat: 48.4, side: "right" },
+  { id: "kg", lon: 74.8, lat: 41.4, side: "right" },
+  { id: "tj", lon: 71, lat: 38.6, side: "bottom" },
 ] as const;
+
+export type CountryId = (typeof COUNTRIES)[number]["id"];
 
 const BASE = { lon: 68, lat: 40 };   // globus shu nuqtaga qarab turadi
 const HOLD = 4600;                    // har mamlakat shuncha vaqt yonib turadi (ms) — shoshmasdan
 const RAD = Math.PI / 180;
 
-export default function Globe() {
+export default function Globe({ names }: { names: Record<CountryId, string> }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pinRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -330,7 +333,7 @@ export default function Globe() {
             <i />
             <b>
               <img src={`/flags/${c.id}.svg`} alt="" width="14" height="14" />
-              {c.name}
+              {names[c.id]}
             </b>
           </span>
         ))}
@@ -340,7 +343,7 @@ export default function Globe() {
           <li key={c.id}>
             <button type="button" className={i === active ? "is-on" : undefined} aria-pressed={i === active} onClick={(e) => pick(i, e.timeStamp)}>
               <img src={`/flags/${c.id}.svg`} alt="" width="16" height="16" />
-              {c.name}
+              {names[c.id]}
             </button>
           </li>
         ))}

@@ -1,6 +1,11 @@
+import LangSelect from "@/components/lang-select/lang-select";
+import { getLocale } from "@/i18n/server";
 import HeaderScript from "./header-script";
+import { messages } from "./header.i18n";
 
-export default function Header() {
+export default async function Header() {
+  const locale = await getLocale();
+  const t = messages[locale];
   return (
     <>
       {/* Brend logotipi (rasmiy SVG) */}
@@ -17,42 +22,25 @@ export default function Header() {
       </svg>
       <header className="header" id="header" data-theme="light">
         <div className="container header__inner">
-          <a className="logo" href="#" aria-label="Robohub — bosh sahifa">
+          <a className="logo" href="#" aria-label={t.home}>
             <svg viewBox="0 0 127 31" role="img" aria-hidden="true">
               <use href="#rh-logo" />
             </svg>
           </a>{" "}
-          <nav className="nav" aria-label="Asosiy menyu">
+          <nav className="nav" aria-label={t.navLabel}>
             <ul className="nav__list">
-              <li>
-                <a className="nav__link" href="#imkoniyatlar">Imkoniyatlar</a>
-              </li>{" "}
-              <li>
-                <a className="nav__link" href="#qanday-ishlaydi">Qanday ishlaydi</a>
-              </li>{" "}
-              <li>
-                <a className="nav__link" href="#sharhlar">Sharhlar</a>
-              </li>{" "}
-              <li>
-                <a className="nav__link" href="#tariflar">Tariflar</a>
-              </li>{" "}
-              <li>
-                <a className="nav__link" href="#savollar">Savollar</a>
-              </li>
+              {t.nav.map((item) => (
+                <li key={item.href}>
+                  <a className="nav__link" href={item.href}>{item.label}</a>
+                </li>
+              ))}
             </ul>
           </nav>{" "}
           <div className="header__actions">
-            <div className="lang" role="group" aria-label="Til tanlash">
-              <button className="lang__btn" type="button" aria-pressed="true">
-                <span>UZ</span>
-              </button>{" "}
-              <button className="lang__btn" type="button" aria-pressed="false">
-                <span>RU</span>
-              </button>
-            </div>{" "}
-            <a className="btn btn--ghost" href="#kirish">Kirish</a>{" "}
-            <a className="btn btn--accent" href="#boshlash">Hoziroq boshlash</a>{" "}
-            <button className="burger" id="burger" type="button" aria-label="Menyuni ochish" aria-expanded="false" aria-controls="mobile-menu">
+            <LangSelect locale={locale} label={t.lang} />{" "}
+            <a className="btn btn--ghost" href="#kirish">{t.login}</a>{" "}
+            <a className="btn btn--accent" href="#boshlash">{t.start}</a>{" "}
+            <button className="burger" id="burger" type="button" aria-label={t.menuOpen} data-label-open={t.menuOpen} data-label-close={t.menuClose} aria-expanded="false" aria-controls="mobile-menu">
               <span />
               <span />
               <span />
@@ -62,25 +50,15 @@ export default function Header() {
         <div className="mobile-menu" id="mobile-menu">
           <div className="container">
             <ul className="mobile-menu__list">
-              <li>
-                <a href="#imkoniyatlar">Imkoniyatlar</a>
-              </li>{" "}
-              <li>
-                <a href="#qanday-ishlaydi">Qanday ishlaydi</a>
-              </li>{" "}
-              <li>
-                <a href="#sharhlar">Sharhlar</a>
-              </li>{" "}
-              <li>
-                <a href="#tariflar">Tariflar</a>
-              </li>{" "}
-              <li>
-                <a href="#savollar">Savollar</a>
-              </li>
+              {t.nav.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
             </ul>{" "}
             <div className="mobile-menu__actions">
-              <a className="btn btn--ghost" href="#kirish">Kirish</a>{" "}
-              <a className="btn btn--accent" href="#boshlash">Hoziroq boshlash</a>
+              <a className="btn btn--ghost" href="#kirish">{t.login}</a>{" "}
+              <a className="btn btn--accent" href="#boshlash">{t.start}</a>
             </div>
           </div>
         </div>

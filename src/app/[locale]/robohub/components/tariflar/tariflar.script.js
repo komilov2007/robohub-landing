@@ -1,6 +1,7 @@
 // tariflar bo'limining brauzer mantig'i — HTML versiyasidagi <script> ning o'zi (o'zgarishsiz).
 // tariflar-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
-export function init() {
+// t — joriy tildagi matnlar: sep (minglik ajratgich), cur (valyuta qo'shimchasi), terms[i].text/save.
+export function init(t) {
 (function () {
   "use strict";
 
@@ -9,7 +10,7 @@ export function init() {
 
   var BASE = 500000;      // oylik narx, so'm
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+  function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, t.sep); }
   function byId(id) { return document.getElementById(id); }
 
   /* ---------- hisoblagich: har raqam uchun 0–9 ustuni ---------- */
@@ -18,7 +19,7 @@ export function init() {
     var text = fmt(BASE);
     odo.textContent = "";
     text.split("").forEach(function (ch) {
-      if (!/\d/.test(ch)) { var gap = document.createElement("span"); gap.className = "odo__gap"; odo.appendChild(gap); return; }
+      if (!/\d/.test(ch)) { var gap = document.createElement("span"); gap.className = "odo__gap"; if (!/\s/.test(ch)) gap.textContent = ch; /* en: vergul koʻrinadi */ odo.appendChild(gap); return; }
       var d = document.createElement("span"), strip = document.createElement("i");
       d.className = "odo__d";
       for (var n = 0; n <= 9; n++) { var s = document.createElement("span"); s.textContent = n; strip.appendChild(s); }
@@ -65,14 +66,14 @@ export function init() {
     ind.style.setProperty("--at", i);
     setOdo(monthly);
     was.classList.toggle("is-off", off === 0);
-    byId("plan-term-text").textContent = n + " oyda bir toʻlov · jami";
-    byId("plan-save-text").textContent = off ? n + " oyda tejaysiz" : "Tejaysiz";
-    countTo(total, monthly * n, " soʻm");
+    byId("plan-term-text").textContent = t.terms[i].text;
+    byId("plan-save-text").textContent = t.terms[i].save;
+    countTo(total, monthly * n, t.cur);
 
     var saved = (BASE - monthly) * n;
     byId("plan-sums").classList.toggle("is-none", !saved);
     if (saved) {
-      countTo(save, saved, " soʻm");
+      countTo(save, saved, t.cur);
       if (!reduced) {
         saveBox.classList.remove("is-bump");
         void saveBox.offsetWidth;                         // animatsiyani qayta ishga tushirish

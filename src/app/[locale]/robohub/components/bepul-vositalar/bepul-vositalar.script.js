@@ -1,14 +1,15 @@
 // bepul-vositalar bo'limining brauzer mantig'i — HTML versiyasidagi <script> ning o'zi (o'zgarishsiz).
 // bepul-vositalar-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
-export function init() {
+// t — joriy til: { currency, group, decimal } (bepul-vositalar.i18n.ts dagi script).
+export function init(t) {
 (function () {
   "use strict";
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canWatch = "IntersectionObserver" in window;
   function byId(id) { return document.getElementById(id); }
-  function fmt(n) { return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
-  function pct(n) { return (n < 0 ? "−" : "") + (Math.round(Math.abs(n) * 10) / 10).toFixed(1).replace(".", ",") + "%"; }
+  function fmt(n) { return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, t.group); }
+  function pct(n) { return (n < 0 ? "−" : "") + (Math.round(Math.abs(n) * 10) / 10).toFixed(1).replace(".", t.decimal) + "%"; }
   function digits(s) { return Number(String(s).replace(/\D/g, "")) || 0; }
   function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
 
@@ -58,10 +59,10 @@ export function init() {
 
     byId("calc-left").textContent = wait ? "—" : (shown < 0 ? "−" : "") + fmt(shown);
     byId("calc-unit").hidden = wait;
-    byId("calc-r-price").textContent = p ? fmt(p) + " soʻm" : "—";
-    byId("calc-r-fee").textContent = wait ? "—" : "− " + fmt(fee) + " soʻm";
-    byId("calc-r-pay").textContent = wait ? "—" : fmt(pay) + " soʻm";
-    byId("calc-r-cost").textContent = c ? "− " + fmt(c) + " soʻm" : "—";
+    byId("calc-r-price").textContent = p ? fmt(p) + " " + t.currency : "—";
+    byId("calc-r-fee").textContent = wait ? "—" : "− " + fmt(fee) + " " + t.currency;
+    byId("calc-r-pay").textContent = wait ? "—" : fmt(pay) + " " + t.currency;
+    byId("calc-r-cost").textContent = c ? "− " + fmt(c) + " " + t.currency : "—";
     byId("calc-margin").textContent = !wait && p ? pct(left / p * 100) : "—";
     byId("calc-roi").textContent = !wait && c ? pct(left / c * 100) : "—";
     calc.classList.toggle("is-loss", left < 0);

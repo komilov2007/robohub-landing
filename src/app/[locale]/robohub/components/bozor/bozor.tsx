@@ -1,37 +1,40 @@
 import type { CSSProperties } from "react";
+import { getMessages } from "@/i18n/server";
 import Globe from "./globe";
 import { CATEGORIES } from "./categories";
+import { messages } from "./bozor.i18n";
 
-export default function Bozor() {
+export default async function Bozor() {
+  const t = await getMessages(messages);
   return (
     <section className="mkt" id="hududlar" data-theme="light" aria-labelledby="mkt-title">
       <div className="container mkt__grid">
         <div>
-          <p className="mkt__eyebrow" data-sr="">Kimlar uchun</p>{" "}
+          <p className="mkt__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
           <h2 className="mkt__title" id="mkt-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-            {"Robohub "}
-            <span className="accent">har qanday biznesga</span>
-            {" mos keladi"}
+            {t.titleStart}
+            <span className="accent">{t.titleAccent}</span>
+            {t.titleEnd}
           </h2>{" "}
           <p className="mkt__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
-            Kichik butikdan yirik brendgacha — Uzum, Yandex Market, Wildberries yoki Ozonda nima sotsangiz ham, Robohub uni bitta kabinetdan yuritadi.
+            {t.lead}
           </p>{" "}
           {/* toifalar: haqiqiy rasmli plitkalar, navbat bilan bittasi ajralib turadi */}
           <ul className="mkt__cats" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
             {CATEGORIES.map((c, i) => (
               <li key={c.img} style={{ "--i": i } as CSSProperties}>
-                <img src={`/categories/${c.img}.jpg`} alt="" loading="lazy" />
-                <span>{c.name}</span>
+                <img src={`/categories/${c.img}.webp`} alt="" loading="lazy" />
+                <span>{t.categories[c.img]}</span>
               </li>
             ))}
           </ul>
         </div>{" "}
         <div className="mkt__map" data-theme="dark" data-sr="" style={{ "--d": "160ms" } as CSSProperties}>
-          <p className="mkt__map-label">Yagona platforma — barcha bozorlar</p>{" "}
-          <h3>Butun mintaqa boʻylab soting</h3>{" "}
-          <p>Moskvadan Toshkentgacha — besh mamlakatdagi savdoni yagona Robohub kabinetidan yuriting.</p>{" "}
+          <p className="mkt__map-label">{t.mapLabel}</p>{" "}
+          <h3>{t.mapTitle}</h3>{" "}
+          <p>{t.mapText}</p>{" "}
           {/* Yer shari: besh mamlakat belgilangan, navbat bilan yonadi */}{" "}
-          <Globe />
+          <Globe names={t.countries} />
         </div>
       </div>
     </section>

@@ -1,10 +1,13 @@
+import { getMessages } from "@/i18n/server";
 import { COMPANIES } from "./companies";
+import { messages } from "./ishonch.i18n";
 
-export default function Ishonch() {
+export default async function Ishonch() {
+  const t = await getMessages(messages);
   return (
     <>
-      <section className="trust" id="ishonch" data-theme="light" aria-label="Bizga ishongan sotuvchilar">
-        <div className="trusted" aria-label="Bizga ishongan sotuvchilar" role="group">
+      <section className="trust" id="ishonch" data-theme="light" aria-label={t.label}>
+        <div className="trusted" aria-label={t.label} role="group">
           {/* ekran o'quvchilar uchun: har bir nom bir marta (JS to'ldiradi) */}{" "}
           <p className="sr-only" id="trusted-names">{COMPANIES.map((c) => c.name).filter(Boolean).join(", ")}</p>{" "}
           {/* harakatlanuvchi lenta bezak: elementlarni JS chizadi, har nom ikki marta takrorlanadi */}{" "}

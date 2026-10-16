@@ -1,33 +1,27 @@
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import type { Viewport } from "next";
+import { locales } from "@/i18n/config";
+import { getLocale } from "@/i18n/server";
+import { inter, manrope, unbounded } from "../fonts";
+import "../globals.css";
 
-export const metadata: Metadata = {
-  title: "Robohub — 4 marketpleys. 1 kabinet.",
-  description:
-    "Uzum Market, Wildberries, Ozon va Yandex Market doʻkonlaringizni bitta kabinetdan boshqaring: buyurtmalar, kartochkalar, narxlar va analitika.",
-};
-
+// Ikkala sayt uchun umumiy qobiq. Manzil proxy'da quriladi (src/proxy.ts):
+//   til — yo'lning boshidan (/ru, /en; prefikssiz — uz), sayt — domendan.
+//   robohub.uz/ru → /ru/robohub, robosell.uz → /uz/robosell. Metadata har saytning o'z layout'ida.
 export const viewport: Viewport = {
   themeColor: "#00524F",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+// Har til oldindan statik yig'iladi (cacheComponents bilan root parametr uchun majburiy).
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({ children }: LayoutProps<"/[locale]">) {
+  const lang = await getLocale();
   return (
     // suppressHydrationWarning: pastdagi skript <html> ga "js" klassini React'dan oldin qo'shadi
-    <html lang="uz" suppressHydrationWarning>
+    <html lang={lang} className={`${unbounded.variable} ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
-        {/* Shriftlar HTML versiyasidagidek Google Fonts'dan ulanadi (next/font emas — ko'rinish o'zgarmasligi uchun) */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap"
-          rel="stylesheet"
-        />
         {/* ".js" klassi: JS ishlayotganini bildiradi (globals.css dagi ".js ..." qoidalari shunga tayanadi).
             Birinchi chizishdan oldin qo'shilishi kerak, shuning uchun inline skript. */}
         <script

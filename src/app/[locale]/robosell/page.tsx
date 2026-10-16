@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react";
+import LangSelect from "@/components/lang-select/lang-select";
+import { getLocale } from "@/i18n/server";
+import { messages } from "./robosell.i18n";
 
 // Robosell — vaqtinchalik mini landing: kutib olish ekrani.
 function Mark() {
@@ -12,7 +15,9 @@ function Mark() {
   );
 }
 
-export default function Page() {
+export default async function Page() {
+  const locale = await getLocale();
+  const t = messages[locale];
   return (
     <div className="rs" data-theme="brand">
       <header className="rs__top container">
@@ -20,13 +25,14 @@ export default function Page() {
           <Mark />
           <span className="rs-logo__word">robosell</span>
         </span>
+        <LangSelect locale={locale} label={t.lang} />
       </header>
 
       <main className="rs__main container">
-        <p className="rs__badge reveal">Tez orada</p>
+        <p className="rs__badge reveal">{t.badge}</p>
         <h1 className="rs__title reveal" style={{ "--d": "80ms" } as CSSProperties}>
-          Robosell&apos;ga
-          <span>xush kelibsiz</span>
+          {t.title[0]}
+          <span>{t.title[1]}</span>
         </h1>
       </main>
 

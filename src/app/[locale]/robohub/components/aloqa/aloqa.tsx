@@ -1,33 +1,36 @@
 import type { CSSProperties } from "react";
+import { getMessages } from "@/i18n/server";
 import AloqaScript from "./aloqa-script";
+import { messages } from "./aloqa.i18n";
 
-export default function Aloqa() {
+export default async function Aloqa() {
+  const t = await getMessages(messages);
   return (
     <>
       <section className="contact" id="aloqa" data-theme="light" aria-labelledby="contact-title">
         <div className="container">
           {/* Ixcham, oʻrtada: sarlavha, bitta maydonli forma (telefon) va pastida aloqa havolalari */}
           <div className="contact__in">
-            <p className="contact__eyebrow" data-sr="">Aloqa</p>
+            <p className="contact__eyebrow" data-sr="">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="contact__title" id="contact-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-              Robohub jamoasi bilan <span className="accent">bog‘laning</span>
+              {t.title}<span className="accent">{t.titleAccent}</span>
             </h2>
             <p className="contact__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
-              Savolingiz bormi yoki demo kerakmi? Raqamingizni qoldiring — tez javob beramiz.
+              {t.lead}
             </p>
 
             {/* Forma serverga yubormaydi: aloqa.script.js kiritilgan raqamdan tayyor xat (mailto) ochadi */}
             <form className="contact__form" id="contact-form" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
-              <input type="tel" name="phone" autoComplete="tel" inputMode="tel" placeholder="Telefon raqamingiz" aria-label="Telefon raqamingiz" required />
-              <button type="submit" aria-label="Yuborish">
+              <input type="tel" name="phone" autoComplete="tel" inputMode="tel" placeholder={t.phone} aria-label={t.phone} required />
+              <button type="submit" aria-label={t.send}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M4 12h15M13 6l6 6-6 6" />
                 </svg>
               </button>
             </form>
             <p className="contact__note" data-sr="" style={{ "--d": "240ms" } as CSSProperties}>
-              Yuborish bosilganda pochta dasturingizda tayyor xat ochiladi.
+              {t.note}
             </p>
 
             <p className="contact__ways" data-sr="" style={{ "--d": "280ms" } as CSSProperties}>
@@ -54,7 +57,7 @@ export default function Aloqa() {
           </div>
         </div>
       </section>
-      <AloqaScript />
+      <AloqaScript t={t.mail} />
     </>
   );
 }

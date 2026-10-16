@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
 import IntegVideo from "./integ-video";
 import IntegModels from "./integ-models";
+import { getMessages } from "@/i18n/server";
+import { messages } from "./integratsiyalar.i18n";
 
 // logo: public/integrations/ dagi fayl; logotipi yo'q tizim bosh harfi bilan chiqadi
 type System = { name: string; logo?: string };
@@ -23,45 +25,45 @@ const Chip = ({ name, logo }: System) => (
   </li>
 );
 
-export default function Integratsiyalar() {
+export default async function Integratsiyalar() {
+  const t = await getMessages(messages);
   return (
     <section className="integ" id="integratsiyalar" data-theme="brand" aria-labelledby="integ-title">
       <div className="container">
         <div className="integ__top">
           <div>
-            <p className="integ__eyebrow" data-sr="">Integratsiyalar</p>
+            <p className="integ__eyebrow" data-sr="">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="integ__title" id="integ-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-              <span>Marketpleysdan omborgacha —</span> <span className="accent">hammasi ulangan.</span>
+              <span>{t.title}</span> <span className="accent">{t.titleAccent}</span>
             </h2>
             <p className="integ__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
-              Robohub siz bilan Uzum, Yandex Market, Wildberries va Ozon oʻrtasida turadi — barcha buyurtmalarni oʻzi qabul qiladi va
-              qoldiqlarni qaytarib yuboradi, shunda hammasini bitta oynadan, ortiqcha sotuvsiz boshqarasiz.
+              {t.lead}
             </p>
 
             <div className="integ__groups" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
               <div>
-                <h3 className="integ__label">Ombor va hisob</h3>
+                <h3 className="integ__label">{t.stock}</h3>
                 <ul className="integ__chips">
                   {STOCK.map((s) => <Chip key={s.name} {...s} />)}
                 </ul>
               </div>
               <div>
-                <h3 className="integ__label">CRM</h3>
+                <h3 className="integ__label">{t.crm}</h3>
                 <ul className="integ__chips">
                   {CRM.map((s) => <Chip key={s.name} {...s} />)}
                 </ul>
               </div>
             </div>
-            <p className="integ__note">Baʼzilari menejer bilan sozlanadi.</p>
+            <p className="integ__note">{t.note}</p>
           </div>
 
           <div className="integ__media" data-sr="" style={{ "--d": "160ms" } as CSSProperties}>
-            <IntegVideo />
+            <IntegVideo t={t.video} />
           </div>
         </div>
 
-        <IntegModels />
+        <IntegModels t={t.models} />
       </div>
     </section>
   );

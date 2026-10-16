@@ -2,12 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import type { messages } from "./hero.i18n";
+
+type T = (typeof messages)["uz"]["video"];
 
 // "Qanday ishlaydi" tugmasi: bosilganda YouTube videosi oynada ochiladi.
 // iframe faqat oyna ochilganda yuklanadi — sahifa ochilishini sekinlashtirmaydi.
 const VIDEO_SRC = "https://www.youtube.com/embed/9KU4G1TY5tE?si=Cu50nYmTy0KMdP-7&autoplay=1&rel=0";
 
-export default function HeroVideo() {
+// Matnlar server komponent (hero.tsx) dan prop orqali keladi
+export default function HeroVideo({ t }: { t: T }) {
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLButtonElement>(null);
@@ -38,18 +42,18 @@ export default function HeroVideo() {
             <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
           </svg>
         </span>
-        Qanday ishlaydi
+        {t.button}
       </button>
       {open &&
         createPortal(
-          <div className="vmodal" role="dialog" aria-modal="true" aria-label="Robohub qanday ishlaydi — video" onClick={() => setOpen(false)}>
+          <div className="vmodal" role="dialog" aria-modal="true" aria-label={t.dialog} onClick={() => setOpen(false)}>
             <div className="vmodal__box" onClick={(e) => e.stopPropagation()}>
-              <button className="vmodal__x" type="button" ref={closeRef} onClick={() => setOpen(false)} aria-label="Yopish">
+              <button className="vmodal__x" type="button" ref={closeRef} onClick={() => setOpen(false)} aria-label={t.close}>
                 ✕
               </button>
               <iframe
                 src={VIDEO_SRC}
-                title="Robohub qanday ishlaydi"
+                title={t.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
