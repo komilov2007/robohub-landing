@@ -101,11 +101,12 @@
 .hero__pill{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;padding:6px 14px;border-radius:var(--r-pill);background:#fff;border:1px solid var(--line-strong);font-size:13.5px;font-weight:600}
 .hero__pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand)}
 .hero__title{margin:0 0 var(--sp-3);font-size:clamp(28px,2.95vw,40px);line-height:1.16;letter-spacing:-.035em}
-.hero__title .w{display:inline-block;animation:word-in 820ms var(--ease-soft) var(--d,0ms) backwards}
+/* LCP: so'zlar darhol ko'rinadi — opacity 0 dan emas va kechikishsiz, faqat siljish va xiralik */
+.hero__title .w{display:inline-block;animation:word-in 820ms var(--ease-soft) backwards}
 @keyframes word-in{
-  from{opacity:0;transform:translate3d(0,28px,0) rotate(1deg);filter:blur(7px)}
+  from{transform:translate3d(0,28px,0) rotate(1deg);filter:blur(7px)}
   50% {filter:blur(0)}
-  to  {opacity:1;transform:none;filter:blur(0)}
+  to  {transform:none;filter:blur(0)}
 }
 /* urg'u: so'zlar ostidan marker chizig'i chapdan o'ngga tortiladi */
 .hero__title .accent{
@@ -116,8 +117,8 @@
 }
 @keyframes mark-in{from{background-size:0 40%}}
 
-/* LCP elementi: opacity animatsiyasi LCP ni animatsiya oxirigacha kechiktirardi — faqat siljish */
-.hero__lead.reveal{animation-name:rise-y}
+/* hero matn bloklari (pill, lead, faktlar, CTA): .reveal o'rniga — opacity'siz, kechikishsiz, faqat siljish */
+.hero__rise{animation:rise-y 760ms var(--ease-soft) backwards}
 @keyframes rise-y{from{transform:translate3d(0,14px,0)}to{transform:none}}
 .hero__lead{max-width:36ch;margin-bottom:var(--sp-3);font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--text-dim)}
 .hero__facts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:var(--sp-4);font-size:13.5px;font-weight:700;white-space:nowrap}

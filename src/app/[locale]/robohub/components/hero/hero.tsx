@@ -20,33 +20,32 @@ const SYSTEMS: { name: string; logo?: string }[] = [
 
 export default async function Hero() {
   const t = await getMessages(messages);
-  // Soʻzlar 80ms dan boshlab har 60ms da chiqadi; rangli qism oldidan qoʻshimcha 20ms pauza (asl: 80…320, 400, 460)
-  const accentFrom = 80 + t.title.length * 60 + 20;
   return (
     <>
       <section className="hero" id="hero" data-theme="light" aria-labelledby="hero-title">
         <div className="container hero__grid">
+          {/* Birinchi ekran matni darhol koʻrinadi (LCP): .reveal va --d kechikishi yoʻq, kirish faqat siljish bilan */}
           <div className="hero__text">
-            <p className="hero__pill reveal">{t.pill}</p>
+            <p className="hero__pill hero__rise">{t.pill}</p>
             <h1 className="hero__title" id="hero-title">
               {t.title.map((w, i) => (
                 <Fragment key={i}>
-                  <span className="w" style={{ "--d": `${80 + i * 60}ms` } as CSSProperties}>{w}</span>{" "}
+                  <span className="w">{w}</span>{" "}
                 </Fragment>
               ))}
               <span className="accent">
                 {t.accent.map((w, i) => (
                   <Fragment key={i}>
                     {i > 0 && " "}
-                    <span className="w" style={{ "--d": `${accentFrom + i * 60}ms` } as CSSProperties}>{w}</span>
+                    <span className="w">{w}</span>
                   </Fragment>
                 ))}
               </span>
             </h1>
-            <p className="hero__lead reveal" style={{ "--d": "560ms" } as CSSProperties}>
+            <p className="hero__lead hero__rise">
               {t.lead}
             </p>
-            <ul className="hero__facts reveal" style={{ "--d": "660ms" } as CSSProperties}>
+            <ul className="hero__facts hero__rise">
               <li>
                 <span className="hero__mps" aria-hidden="true">
                   <img className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="22" height="22" style={{ "--d": "760ms" } as CSSProperties} />
@@ -59,7 +58,7 @@ export default async function Hero() {
               <li>{t.facts.integrations}</li>
               <li>{t.facts.ai}</li>
             </ul>
-            <div className="hero__cta reveal" style={{ "--d": "760ms" } as CSSProperties}>
+            <div className="hero__cta hero__rise">
               <a className="btn btn--lg btn--primary" href="#boshlash">
                 {`${t.start} `}
                 <span className="arrow" aria-hidden="true">→</span>
