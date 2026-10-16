@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { LAND, TARGETS } from "./globe-data";
+// Chegaralar (~70 KB) alohida chunk: effekt ichida import() bilan yuklanadi — birinchi ekran JS iga kirmaydi
+type GeoData = typeof import("./globe-data");
 
 // Yer shari: haqiqiy chegaralar bilan chizilgan, to'liq ko'rinadigan globus. Robohub ishlaydigan besh
 // mamlakat o'z shakli va o'z joyida yashil bilan bo'yalgan; navbat bilan bittasi yonadi va globus sekin
@@ -51,6 +52,7 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
     let userLat = 0;
     let drag: { x: number; y: number; lon: number; lat: number } | null = null;
     let lastSwitch = 0;
+    let geo: GeoData | null = null;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -112,6 +114,8 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
     };
 
     const draw = (now: number) => {
+      if (!geo) return; // chegaralar hali yuklanmagan
+      const { LAND, TARGETS } = geo;
       const R = Math.min(w, h) / 2 - 10; // shar to'liq ko'rinadi
       const cx = w / 2;
       const cy = h / 2;
@@ -296,11 +300,18 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
       kick();
     };
     stage.addEventListener("globe:pick", onPick);
+    let alive = true;
+    import("./globe-data").then((m) => {
+      if (!alive) return;
+      geo = m;
+      kick();
+    });
     // o'lcham ResizeObserver'ning birinchi chaqiruvida olinadi (layout tayyor bo'lganda) —
     // effekt ichida clientWidth o'qish majburiy reflow berardi
     kick();
 
     return () => {
+      alive = false;
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();

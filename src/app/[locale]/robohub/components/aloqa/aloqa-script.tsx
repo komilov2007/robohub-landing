@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { init } from "./aloqa.script";
 import type { messages } from "./aloqa.i18n";
 
 // Xat (mailto) matni joriy tilda — aloqa.tsx dan prop orqali keladi
@@ -15,7 +14,8 @@ export default function AloqaScript({ t }: { t: MailText }) {
   useEffect(() => {
     if (started) return;
     started = true;
-    init(t);
+    // skript alohida chunk: birinchi ekran JS iga kirmaydi, gidratatsiyadan keyin yuklanadi
+    import("./aloqa.script").then((m) => m.init(t));
   }, [t]);
   return null;
 }

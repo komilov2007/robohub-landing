@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { init } from "./imkoniyatlar.script";
 import type { messages } from "./imkoniyatlar.i18n";
 
 type T = (typeof messages)["uz"]["script"];
@@ -11,6 +10,18 @@ type T = (typeof messages)["uz"]["script"];
 // chaqirsa ham, fayl qayta yuklansa ham sahna bir nusxada, to'g'ri quriladi.
 // t — joriy tildagi karta va tugma matnlari (server ota komponentdan keladi).
 export default function ImkoniyatlarScript({ t }: { t: T }) {
-  useEffect(() => init(t), [t]);
+  // Skript (~25 KB) alohida chunk: birinchi ekran JS iga kirmaydi, gidratatsiyadan keyin yuklanadi.
+  // Yuklanguncha effekt tozalansa, sahna umuman qurilmaydi.
+  useEffect(() => {
+    let alive = true;
+    let cleanup: (() => void) | undefined;
+    import("./imkoniyatlar.script").then((m) => {
+      if (alive) cleanup = m.init(t);
+    });
+    return () => {
+      alive = false;
+      cleanup?.();
+    };
+  }, [t]);
   return null;
 }

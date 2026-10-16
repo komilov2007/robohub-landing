@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { init } from "./tariflar.script";
 import type { messages } from "./tariflar.i18n";
 
 type M = (typeof messages)["uz"];
@@ -16,7 +15,8 @@ export default function TariflarScript({ t }: { t: TariflarScriptText }) {
   useEffect(() => {
     if (started) return;
     started = true;
-    init(t);
+    // skript alohida chunk: birinchi ekran JS iga kirmaydi, gidratatsiyadan keyin yuklanadi
+    import("./tariflar.script").then((m) => m.init(t));
   }, [t]);
   return null;
 }
