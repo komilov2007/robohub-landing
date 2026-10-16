@@ -9,7 +9,7 @@ export function init() {
   /* Header ostidagi section mavzusini oladi: <section data-theme="dark"> ustiga
      chiqqanda header ham yashilga o'tadi. Section mavzuni scroll davomida
      o'zgartirmoqchi bo'lsa, data-header-theme yozadi. */
-  function syncTheme() {
+  function readTheme() {
     var probe = header.offsetHeight / 2;
     var secs = document.querySelectorAll("main > [data-theme]");
     var theme = "light";
@@ -20,21 +20,24 @@ export function init() {
         break;
       }
     }
-    if (header.dataset.theme !== theme) header.dataset.theme = theme;
+    return theme;
   }
 
   var ticking = false;
+  /* Avval hamma o'lchovlar o'qiladi, keyin yoziladi — yozuvdan keyin o'qish majburiy reflow beradi */
   function frame() {
     ticking = false;
-    header.classList.toggle("is-stuck", window.scrollY > 8);
-    syncTheme();
+    var stuck = window.scrollY > 8, theme = readTheme();
+    header.classList.toggle("is-stuck", stuck);
+    if (header.dataset.theme !== theme) header.dataset.theme = theme;
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   /* HTML versiyasida bu yerda DOMContentLoaded kutilardi. Next.js da skript sahifa to'liq
-     chizilgandan keyin ishlaydi (hodisa allaqachon o'tgan), shuning uchun to'g'ridan-to'g'ri chaqiriladi. */
-  frame();
+     chizilgandan keyin ishlaydi (hodisa allaqachon o'tgan); birinchi o'lchov keyingi kadrga (rAF) qoldiriladi —
+     hydration effektlari ichida layout o'qilmaydi. */
+  onScroll();
   document.addEventListener("themechange", onScroll);     // section o'z mavzusini o'zgartirganda
 
   var burger = document.getElementById("burger");

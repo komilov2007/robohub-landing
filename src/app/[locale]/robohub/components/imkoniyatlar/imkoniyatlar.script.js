@@ -115,9 +115,11 @@ return (function () {
   var TH = 210, topLim = 0, GAP = 16;
 
   // mobil: hamma matnlarni berilgan kenglikda o'lchab, eng balandini qaytaradi
+  // avval hamma kengliklar yoziladi, keyin balandliklar o'qiladi — har element uchun alohida reflow bo'lmaydi
   function textMax(w) {
     var m = 0;
-    items.forEach(function (it) { it.text.style.width = w + "px"; m = Math.max(m, it.text.offsetHeight); });
+    items.forEach(function (it) { it.text.style.width = w + "px"; });
+    items.forEach(function (it) { m = Math.max(m, it.text.offsetHeight); });
     return m;
   }
 
@@ -233,7 +235,7 @@ return (function () {
 
   // "o'tkazib yuborish" tugmasi: sahna qotib turganda ko'rinadi, yo'nalishi oxirgi skrollga qarab o'zgaradi
   var skip = sec.querySelector(".feat__skip"), skipText = skip ? skip.querySelector("span") : null, skipArrow = skip ? skip.querySelector("i") : null;
-  var lastY = window.scrollY, dir = "down";
+  var lastY = 0, dir = "down";             // lastY birinchi kadrda (boot) o'qiladi
   function setDir(d) {
     if (d === dir || !skip) return;
     dir = d; skip.dataset.dir = d;
@@ -355,11 +357,13 @@ return (function () {
     render(cur);
     if (cur !== target) raf = requestAnimationFrame(tick);
   }
-  function kick() { read(); if (!raf) raf = requestAnimationFrame(tick); }
+  function kick() { if (boot) return; read(); if (!raf) raf = requestAnimationFrame(tick); }
 
-  function onResize() { layout(); cur = -1; kick(); }
+  function onResize() { if (boot) return; layout(); cur = -1; kick(); }
 
-  layout(); kick();
+  // Birinchi o'lchov keyingi kadrda: kartalar endigina DOM ga qo'shildi, hydration effekti ichida
+  // o'lchash butun sahifa uchun majburiy reflow beradi
+  var boot = requestAnimationFrame(function () { boot = 0; lastY = window.scrollY; layout(); kick(); });
   addEventListener("scroll", kick, { passive: true });
   addEventListener("resize", onResize);
 
@@ -373,6 +377,7 @@ return (function () {
     removeEventListener("touchmove", onTouchMove);
     removeEventListener("touchend", onTouchEnd);
     if (raf) cancelAnimationFrame(raf);
+    if (boot) cancelAnimationFrame(boot);
     if (skip) { skip.removeEventListener("click", onSkip); skip.classList.remove("is-on"); }
     items.forEach(function (it) { it.card.remove(); it.text.remove(); });
     sec.style.height = "";

@@ -86,7 +86,7 @@ export function init() {
       delete sec.dataset.headerTheme;
       document.dispatchEvent(new Event("themechange"));
     }
-    update();
+    onScroll();   // o'lchov keyingi kadrda: klass yozilgandan keyin darhol getBoundingClientRect reflow beradi
   }
 
   wide.addEventListener("change", setMode);

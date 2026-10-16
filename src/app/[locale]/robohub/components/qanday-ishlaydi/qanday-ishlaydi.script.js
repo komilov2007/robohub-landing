@@ -109,9 +109,13 @@ export function init() {
     if (wide.matches) place(len);
   }
 
-  if (wide.matches) { build(); place(0); }
+  // kartalar o'lchovi keyingi kadrda: hydration effekti ichida offsetLeft/clientWidth o'qish majburiy reflow beradi
+  requestAnimationFrame(function () {
+    if (wide.matches) { build(); place(0); }
+    if (reduced || !canWatch) showAll();
+  });
 
-  if (reduced || !canWatch) { showAll(); return; }   // tayyor holat: yo'l to'liq, hammasi yoniq
+  if (reduced || !canWatch) return;   // tayyor holat: yo'l to'liq, hammasi yoniq
 
   sec.classList.add("is-live");
 

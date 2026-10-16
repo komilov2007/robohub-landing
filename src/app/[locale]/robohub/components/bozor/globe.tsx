@@ -296,7 +296,8 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
       kick();
     };
     stage.addEventListener("globe:pick", onPick);
-    resize();
+    // o'lcham ResizeObserver'ning birinchi chaqiruvida olinadi (layout tayyor bo'lganda) —
+    // effekt ichida clientWidth o'qish majburiy reflow berardi
     kick();
 
     return () => {
