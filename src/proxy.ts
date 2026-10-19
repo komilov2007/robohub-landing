@@ -1,15 +1,25 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, hasLocale } from "@/i18n/config";
 
-// Bitta loyiha — ikki sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
-//   Sayt domendan: robosell bilan boshlanadigan domen (hozircha robosell-landing.vercel.app;
+// Bitta loyiha — uch sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
+//   Sayt domendan: robohub-academy-two bilan boshlanadigan domen (lokalda robohub-academy-two.localhost)
+//     → robohub-academy-two (faqat o'zbekcha; quyidagidan OLDIN tekshiriladi — prefiks umumiy);
+//   robohub-academy bilan boshlanadigan domen (robohub-academy.vercel.app;
+//     lokalda robohub-academy.localhost) → robohub-academy (faqat o'zbekcha);
+//   robosell bilan boshlanadigan domen (hozircha robosell-landing.vercel.app;
 //     lokalda robosell.localhost) → robosell; qolgan hammasi (robohub-landing.vercel.app, localhost) → robohub.
+//   robohub-landing-two (robohub-landing-two.vercel.app) yoki robohub-two (lokalda robohub-two.localhost)
+//     bilan boshlanadigan domen → robohub-two (robohub nusxasi, TT Fors shriftida).
 //   Til yo'lning boshidan: /ru, /en; prefiks bo'lmasa — o'zbekcha.
 // Bu rewrite: brauzer manzili o'zgarmaydi, /uz/robohub kabi ichki yo'l foydalanuvchiga ko'rinmaydi.
-type Site = "robohub" | "robosell";
+type Site = "robohub" | "robohub-two" | "robosell" | "robohub-academy" | "robohub-academy-two";
 
 function siteFromHost(host: string): Site {
-  return host.toLowerCase().startsWith("robosell") ? "robosell" : "robohub";
+  const h = host.toLowerCase();
+  if (h.startsWith("robohub-landing-two") || h.startsWith("robohub-two")) return "robohub-two";
+  if (h.startsWith("robohub-academy-two")) return "robohub-academy-two";
+  if (h.startsWith("robohub-academy")) return "robohub-academy";
+  return h.startsWith("robosell") ? "robosell" : "robohub";
 }
 
 export function proxy(request: NextRequest) {

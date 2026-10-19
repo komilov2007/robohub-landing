@@ -23,7 +23,7 @@ export default function Hero() {
               <span className="rs-btn__arrow" aria-hidden="true">→</span>
             </a>
             {/* NAMUNA: video demo hali yo'q — "Qanday ishlaydi" bo'limidagi video joyiga olib boradi */}
-            <a className="rs-btn rs-btn--line rs-btn--lg" href="#qanday-ishlaydi">
+            <a className="rs-btn rs-btn--line rs-btn--lg" href="#how-it-works">
               <span className="rs-play" aria-hidden="true" />
               {HERO.demo}
             </a>

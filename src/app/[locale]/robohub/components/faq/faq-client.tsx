@@ -17,7 +17,7 @@ export default function FaqClient({ t }: { t: T }) {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="faq" id="savollar" data-theme="light" aria-labelledby="faq-title">
+    <section className="faq" id="faq" data-theme="light" aria-labelledby="faq-title">
       <div className="container">
         <p className="faq__eyebrow" data-sr="">{t.eyebrow}</p>
         {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}

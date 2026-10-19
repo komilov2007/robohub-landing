@@ -1,15 +1,17 @@
 import { defineMessages } from "@/i18n/config";
+import { ACADEMY_URL } from "@/lib/sites";
 
 export const messages = defineMessages({
   uz: {
     home: "Robohub — bosh sahifa",
     navLabel: "Asosiy menyu",
     nav: [
-      { href: "#imkoniyatlar", label: "Imkoniyatlar" },
-      { href: "#qanday-ishlaydi", label: "Qanday ishlaydi" },
-      { href: "#sharhlar", label: "Sharhlar" },
-      { href: "#tariflar", label: "Tariflar" },
-      { href: "#savollar", label: "Savollar" },
+      { href: "#features", label: "Imkoniyatlar" },
+      { href: "#how-it-works", label: "Qanday ishlaydi" },
+      { href: "#reviews", label: "Sharhlar" },
+      { href: "#pricing", label: "Tariflar" },
+      { href: "#faq", label: "Savollar" },
+      { href: ACADEMY_URL, label: "Academy" },
     ],
     lang: "Til tanlash",
     login: "Kirish",
@@ -21,11 +23,12 @@ export const messages = defineMessages({
     home: "Robohub — главная",
     navLabel: "Главное меню",
     nav: [
-      { href: "#imkoniyatlar", label: "Возможности" },
-      { href: "#qanday-ishlaydi", label: "Как это работает" },
-      { href: "#sharhlar", label: "Отзывы" },
-      { href: "#tariflar", label: "Тарифы" },
-      { href: "#savollar", label: "Вопросы" },
+      { href: "#features", label: "Возможности" },
+      { href: "#how-it-works", label: "Как это работает" },
+      { href: "#reviews", label: "Отзывы" },
+      { href: "#pricing", label: "Тарифы" },
+      { href: "#faq", label: "Вопросы" },
+      { href: ACADEMY_URL, label: "Академия" },
     ],
     lang: "Выбор языка",
     login: "Войти",
@@ -37,11 +40,12 @@ export const messages = defineMessages({
     home: "Robohub — home",
     navLabel: "Main menu",
     nav: [
-      { href: "#imkoniyatlar", label: "Features" },
-      { href: "#qanday-ishlaydi", label: "How it works" },
-      { href: "#sharhlar", label: "Reviews" },
-      { href: "#tariflar", label: "Pricing" },
-      { href: "#savollar", label: "FAQ" },
+      { href: "#features", label: "Features" },
+      { href: "#how-it-works", label: "How it works" },
+      { href: "#reviews", label: "Reviews" },
+      { href: "#pricing", label: "Pricing" },
+      { href: "#faq", label: "FAQ" },
+      { href: ACADEMY_URL, label: "Academy" },
     ],
     lang: "Choose language",
     login: "Log in",

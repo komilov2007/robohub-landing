@@ -42,7 +42,7 @@ export default function Header() {
   // pastki tugma: hero ekrandan chiqqach ko'rinadi, yakuniy CTA ko'ringanda yashirinadi
   useEffect(() => {
     const hero = document.getElementById("hero");
-    const final = document.getElementById("boshlash");
+    const final = document.getElementById("start");
     if (!hero || !final) return;
     const seen = new Map<Element, boolean>();
     const io = new IntersectionObserver((entries) => {

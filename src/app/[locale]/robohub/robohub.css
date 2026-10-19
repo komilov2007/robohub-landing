@@ -81,9 +81,9 @@
 .mobile-menu__actions{display:grid;gap:var(--sp-1);margin-top:var(--sp-2)}
 .mobile-menu__actions .btn{width:100%}
 
-@media (max-width:1100px){.nav__list{gap:var(--sp-3)}}
-/* planshetda ham burger: 5 ta band + til + 2 tugma 1024 da (ayniqsa ruschada) sig'maydi */
-@media (max-width:1080px){
+@media (max-width:1280px){.nav__list{gap:var(--sp-3)}}
+/* planshetda ham burger: 6 ta band (Academy bilan) + til + 2 tugma 1180 dan torda (ayniqsa ruschada) sig'maydi */
+@media (max-width:1180px){
   .nav,.header__actions .btn{display:none}
   .header__actions{margin-left:auto}
   .burger{display:block;margin-left:auto}
@@ -508,7 +508,7 @@
    chetdagilari xira. Har karta — vositaning kichik oynasi; markazga kelganda bir marta jonlanadi.
    Chapda: Robohub belgisi, "08 / 18" hisoblagichi va joriy yo'nalish nomi.
    Telefonda: karta tepada, matn uning ostida.
-   Joylashuvni (transform, opacity, filter) JS skrollga qarab beradi — imkoniyatlar.script.js.
+   Joylashuvni (transform, opacity, filter) JS skrollga qarab beradi — features.script.js.
 
    Avvalgi ko'rinish (markazda Robohub, atrofida beshta karta) — rootdagi imkoniyatlar-eski.html da.
    ============================================================ */
@@ -1412,7 +1412,7 @@
    SHARHLAR — yashil fonda (integratsiyalar bo'limi rangi) natijalar tablosi.
    Tepada oltita natija raqami (tugma), pastda tanlangan raqam ortidagi sotuvchining gapi.
    Faol raqam mint rangda, ostida vaqt chizig'i to'ladi — to'lganda navbatdagi sharhga o'tadi.
-   Sichqoncha ustida turganda almashish to'xtaydi. Holat sharhlar.tsx da.
+   Sichqoncha ustida turganda almashish to'xtaydi. Holat reviews.tsx da.
    ============================================================ */
 .revs{
   position:relative;z-index:5;margin-top:-40px;padding:var(--sp-10) 0 calc(var(--sp-8) + 40px);
@@ -1664,7 +1664,7 @@
 /* ============================================================
    ALOQA — ixcham, o'rtada: sarlavha, bitta maydonli forma va aloqa havolalari.
    Forma: to'q yashil "kapsula" — ichida telefon maydoni va o'ngda dumaloq oq strelka tugma.
-   Forma serverga yubormaydi: aloqa.script.js tayyor xat (mailto) ochadi.
+   Forma serverga yubormaydi: contact.script.js tayyor xat (mailto) ochadi.
    ============================================================ */
 .contact{
   position:relative;z-index:6;margin-top:-40px;padding:var(--sp-8) 0 calc(var(--sp-8) + 40px);
@@ -1711,7 +1711,7 @@
    Tepada: brend yashili karta — chapda chaqiriq va tugmalar, o'ngda Robohub belgisi
    atrofida aylanayotgan to'rt marketpleys (orbita). Pastda: ixcham footer.
    Och yashil (salat) rang bu yerda ishlatilmaydi: urg'ular oq rangda.
-   Bu section #boshlash langari: sahifadagi "Hoziroq boshlash" tugmalari shu yerga olib keladi.
+   Bu section #start langari: sahifadagi "Hoziroq boshlash" tugmalari shu yerga olib keladi.
    ============================================================ */
 .end{
   position:relative;z-index:7;margin-top:-40px;padding:var(--sp-6) 0 var(--sp-3);

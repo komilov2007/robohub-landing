@@ -6,16 +6,16 @@
 // havolalar) haqiqiy ma'lumot kelganda almashtiriladi.
 
 // NAMUNA: ro'yxatdan o'tish va kirish sahifalari manzili hali yo'q
-export const SIGNUP_HREF = "#tariflar";
+export const SIGNUP_HREF = "#pricing";
 export const LOGIN_HREF = "#";
 export const PHONE = "+998 78 113 82 12";
 export const PHONE_HREF = "tel:+998781138212";
 
 export const NAV = [
-  { href: "#imkoniyatlar", label: "Imkoniyatlar" },
-  { href: "#kanallar", label: "Platformalar" },
-  { href: "#integratsiyalar", label: "Integratsiyalar" },
-  { href: "#tariflar", label: "Tariflar" },
+  { href: "#features", label: "Imkoniyatlar" },
+  { href: "#channels", label: "Platformalar" },
+  { href: "#integrations", label: "Integratsiyalar" },
+  { href: "#pricing", label: "Tariflar" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -289,9 +289,9 @@ export const FINAL = {
 export const FOOTER = {
   about: "Telegram bot, veb-sayt va QR menyu orqali onlayn savdo platformasi.",
   cols: [
-    { title: "Mahsulot", links: [{ label: "Imkoniyatlar", href: "#imkoniyatlar" }, { label: "Platformalar", href: "#kanallar" }, { label: "Integratsiyalar", href: "#integratsiyalar" }, { label: "Tariflar", href: "#tariflar" }] },
+    { title: "Mahsulot", links: [{ label: "Imkoniyatlar", href: "#features" }, { label: "Platformalar", href: "#channels" }, { label: "Integratsiyalar", href: "#integrations" }, { label: "Tariflar", href: "#pricing" }] },
     // NAMUNA: video darslar va ijtimoiy tarmoqlar manzillari hali yo'q
-    { title: "Yordam", links: [{ label: "Video darslar", href: "#qanday-ishlaydi" }, { label: "FAQ", href: "#faq" }, { label: "Qo‘llab-quvvatlash", href: PHONE_HREF }] },
+    { title: "Yordam", links: [{ label: "Video darslar", href: "#how-it-works" }, { label: "FAQ", href: "#faq" }, { label: "Qo‘llab-quvvatlash", href: PHONE_HREF }] },
     { title: "Aloqa", links: [{ label: PHONE, href: PHONE_HREF }, { label: "Telegram", href: "#" }, { label: "Instagram", href: "#" }, { label: "YouTube", href: "#" }] },
   ],
   legal: [{ label: "Oferta", href: "#" }, { label: "Maxfiylik siyosati", href: "#" }],

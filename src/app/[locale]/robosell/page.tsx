@@ -1,15 +1,15 @@
 import { onest } from "./fonts";
 import Header from "./components/header/header";
 import Hero from "./components/hero/hero";
-import Muammo from "./components/muammo/muammo";
-import Kanallar from "./components/kanallar/kanallar";
-import Imkoniyatlar from "./components/imkoniyatlar/imkoniyatlar";
-import Analitika from "./components/analitika/analitika";
-import Integratsiyalar from "./components/integratsiyalar/integratsiyalar";
-import QandayIshlaydi from "./components/qanday-ishlaydi/qanday-ishlaydi";
-import Tariflar from "./components/tariflar/tariflar";
-import Sharhlar from "./components/sharhlar/sharhlar";
-import Yakun from "./components/yakun/yakun";
+import Problem from "./components/problem/problem";
+import Channels from "./components/channels/channels";
+import Features from "./components/features/features";
+import Analytics from "./components/analytics/analytics";
+import Integrations from "./components/integrations/integrations";
+import HowItWorks from "./components/how-it-works/how-it-works";
+import Pricing from "./components/pricing/pricing";
+import Reviews from "./components/reviews/reviews";
+import FinalCta from "./components/final-cta/final-cta";
 import Footer from "./components/footer/footer";
 import Reveal from "./components/reveal/reveal";
 
@@ -22,15 +22,15 @@ export default function Page() {
       <Header />
       <main>
         <Hero />
-        <Muammo />
-        <Kanallar />
-        <Imkoniyatlar />
-        <Analitika />
-        <Integratsiyalar />
-        <QandayIshlaydi />
-        <Tariflar />
-        <Sharhlar />
-        <Yakun />
+        <Problem />
+        <Channels />
+        <Features />
+        <Analytics />
+        <Integrations />
+        <HowItWorks />
+        <Pricing />
+        <Reviews />
+        <FinalCta />
       </main>
       <Footer />
       <Reveal />

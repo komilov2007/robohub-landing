@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[locale]">)
   const lang = await getLocale();
   return (
     // suppressHydrationWarning: pastdagi skript <html> ga "js" klassini React'dan oldin qo'shadi
-    <html lang={lang} className={`${unbounded.variable} ${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${unbounded.variable} ${manrope.variable} ${inter.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* ".js" klassi: JS ishlayotganini bildiradi (globals.css dagi ".js ..." qoidalari shunga tayanadi).
             Birinchi chizishdan oldin qo'shilishi kerak, shuning uchun inline skript. */}

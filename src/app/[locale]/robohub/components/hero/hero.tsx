@@ -59,7 +59,7 @@ export default async function Hero() {
               <li>{t.facts.ai}</li>
             </ul>
             <div className="hero__cta hero__rise">
-              <a className="btn btn--lg btn--primary" href="#boshlash">
+              <a className="btn btn--lg btn--primary" href="#start">
                 {`${t.start} `}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>
