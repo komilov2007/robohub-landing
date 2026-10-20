@@ -1,12 +1,19 @@
 // Havolalar — bitta joyda.
+import { getLesson, getTopic } from "./academy";
 
 // Academy — Robohub saytining /academy sahifasi (robohub.uz/academy, robohub-landing.vercel.app/academy).
 // Academy ichidagi barcha havolalar shu yordamchilar orqali quriladi.
 export const ACADEMY_BASE = "/academy";
 export const academyHref = (hash = "") => `${ACADEMY_BASE}${hash}`; // "/academy", "/academy#help"
 export const topicHref = (topic: string) => `${ACADEMY_BASE}/${topic}`; // "/academy/order"
-export const lessonHref = (topic: string, n: number) => `${ACADEMY_BASE}/${topic}?lesson=${n}`; // "/academy/order?lesson=11"
-// URL'dagi tanlangan dars parametri: /academy/order?lesson=11 (player-context)
+// Har bir darsning o'z sahifasi (SEO: Google'da alohida natija): "/academy/analytics/abc-analysis".
+// Mavzuning asosiy darsi — mavzu sahifasining o'zi ("/academy/analytics"), bir xil sahifaga ikki manzil bo'lmasin.
+export const lessonHref = (topic: string, n: number) => {
+  const lesson = getLesson(n);
+  if (!lesson || lesson.topic !== topic || getTopic(topic)?.mainLesson === n) return topicHref(topic);
+  return `${topicHref(topic)}/${lesson.slug}`;
+};
+// Eski havolalar (/academy/order?lesson=11) uchun — player-context ularni yangi manzilga almashtiradi
 export const LESSON_PARAM = "lesson";
 
 // Robohub landingi — shu saytning o'zi

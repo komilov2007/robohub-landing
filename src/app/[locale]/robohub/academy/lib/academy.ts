@@ -15,8 +15,10 @@ export type TopicSlug =
 export type Lesson = {
   n: number; // dars raqami (YouTube’dagi raqam)
   topic: TopicSlug;
+  slug: string; // dars manzili: /academy/{mavzu}/{slug} (inglizcha, mavzu ichida yagona)
   title: string; // savol yoki qisqa nom; "Dars N." va "| Robohub Academy" qismlarisiz
   youtubeId: string;
+  uploadDate?: string; // YouTube'ga yuklangan sana (ISO 8601) — JSON-LD VideoObject uchun (Google talab qiladi)
   durationSec: number;
   summary: string; // 1–2 jumla, video tavsifidan
   points: string[]; // "Ushbu darsda" bandlari, video tavsifidan
@@ -49,7 +51,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 1,
     topic: "analytics",
+    slug: "dashboard",
     youtubeId: "geJGHvgNYSU",
+    uploadDate: "2026-08-28T03:04:18-07:00",
     durationSec: 204,
     title: "Dashboard: savdo va analitikani qanday kuzatish mumkin?",
     summary:
@@ -66,7 +70,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 2,
     topic: "analytics",
+    slug: "expenses",
     youtubeId: "yQntyQz0ae8",
+    uploadDate: "2026-08-28T03:16:36-07:00",
     durationSec: 40,
     title: "Barcha xarajatlarni qanday kuzatish mumkin?",
     summary:
@@ -84,7 +90,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 3,
     topic: "analytics",
+    slug: "top-products",
     youtubeId: "yFDhiVW2dTA",
+    uploadDate: "2026-08-28T03:43:30-07:00",
     durationSec: 107,
     title: "TOP mahsulotlarni qanday aniqlash mumkin?",
     summary:
@@ -100,7 +108,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 4,
     topic: "analytics",
+    slug: "abc-analysis",
     youtubeId: "M5GKdIVX4Us",
+    uploadDate: "2026-08-28T03:59:11-07:00",
     durationSec: 141,
     title: "ABC tahlili: qaysi mahsulotlar ko‘proq foyda keltiradi?",
     summary: "Mahsulotlarni natijasiga qarab A, B va C guruhlarga ajratish.",
@@ -114,7 +124,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 5,
     topic: "analytics",
+    slug: "xyz-analysis",
     youtubeId: "hw371gPXUTo",
+    uploadDate: "2026-08-28T04:02:12-07:00",
     durationSec: 122,
     title: "XYZ tahlili: mahsulotlarga talabni qanday aniqlash mumkin?",
     summary:
@@ -130,7 +142,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 6,
     topic: "analytics",
+    slug: "abc-xyz-analysis",
     youtubeId: "CWADO6bBMnU",
+    uploadDate: "2026-08-28T04:08:54-07:00",
     durationSec: 131,
     title: "ABC × XYZ tahlili: mahsulotlarni qanday boshqarish kerak?",
     summary:
@@ -145,7 +159,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 7,
     topic: "analytics",
+    slug: "operating-expenses",
     youtubeId: "z0EQOhbSbuU",
+    uploadDate: "2026-08-28T04:13:20-07:00",
     durationSec: 99,
     title: "Operatsion xarajatlarni qanday kiritish mumkin?",
     summary:
@@ -161,7 +177,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 8,
     topic: "analytics",
+    slug: "cost-price",
     youtubeId: "-iB19I6UtwQ",
+    uploadDate: "2026-09-15T05:10:16-07:00",
     durationSec: 70,
     title: "Mahsulot tannarxini qanday kiritish mumkin?",
     summary: "Tannarxni Robohub’ga yuklab, savdoning real natijasini ko‘rish.",
@@ -178,7 +196,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 9,
     topic: "order",
+    slug: "order-dynamics",
     youtubeId: "vwJhmZPC4Wo",
+    uploadDate: "2026-09-15T05:20:06-07:00",
     durationSec: 82,
     title: "Buyurtmalar dinamikasini qanday tahlil qilish mumkin?",
     summary:
@@ -193,7 +213,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 10,
     topic: "order",
+    slug: "yandex-market-orders",
     youtubeId: "y0Xe8qDqHro",
+    uploadDate: "2026-09-15T05:27:11-07:00",
     durationSec: 136,
     title: "Yandex Market buyurtmalarini qanday boshqarish mumkin?",
     summary:
@@ -208,7 +230,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 11,
     topic: "order",
+    slug: "wildberries-orders",
     youtubeId: "ZRE4M_iS7H8",
+    uploadDate: "2026-09-18T06:33:12-07:00",
     durationSec: 165,
     title: "Wildberries buyurtmalarini qanday qayta ishlash mumkin?",
     summary:
@@ -223,7 +247,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 12,
     topic: "order",
+    slug: "uzum-market-orders",
     youtubeId: "FtW23fKXnN4",
+    uploadDate: "2026-09-18T06:37:48-07:00",
     durationSec: 84,
     title: "Uzum Market buyurtmalarini qanday qayta ishlash mumkin?",
     summary:
@@ -238,7 +264,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 13,
     topic: "order",
+    slug: "fbo-supply",
     youtubeId: "W6QBxo4Jm-E",
+    uploadDate: "2026-09-18T06:44:13-07:00",
     durationSec: 63,
     title: "FBO ta’minlashni qanday yaratish mumkin?",
     summary:
@@ -254,7 +282,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 14,
     topic: "order",
+    slug: "uzum-market-order-status",
     youtubeId: "usn42-uteE0",
+    uploadDate: "2026-10-07T11:59:20-07:00",
     durationSec: 84,
     title: "Uzum Market buyurtmalari: holatni boshqarish",
     summary:
@@ -272,7 +302,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 15,
     topic: "product",
+    slug: "price-update",
     youtubeId: "USw1TXNTxVU",
+    uploadDate: "2026-10-07T12:04:09-07:00",
     durationSec: 52,
     title: "Narxlarni qanday yangilash mumkin?",
     summary:
@@ -287,7 +319,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 16,
     topic: "product",
+    slug: "product-card",
     youtubeId: "ouMMqJbYhGw",
+    uploadDate: "2026-10-07T12:10:31-07:00",
     durationSec: 126,
     title: "Tovar kartochkasini qanday yaratish mumkin?",
     summary: "Marketpleys uchun yangi tovar kartochkasini yaratib, yuborish.",
@@ -303,7 +337,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 17,
     topic: "warehouse",
+    slug: "warehouse-grouping-short",
     youtubeId: "xCjFvvMies4",
+    uploadDate: "2026-10-07T12:13:24-07:00",
     durationSec: 11,
     title: "Omborni guruhlash (qisqa)",
     summary: "Omborlarni guruhlash bo‘yicha qisqa ko‘rinish.",
@@ -317,7 +353,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 18,
     topic: "warehouse",
+    slug: "warehouse-grouping",
     youtubeId: "8_HqpQ2liF4",
+    uploadDate: "2026-10-07T12:18:00-07:00",
     durationSec: 88,
     title: "Omborlarni qanday guruhlash mumkin?",
     summary:
@@ -333,7 +371,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 19,
     topic: "warehouse",
+    slug: "missing",
     youtubeId: "BYVgxVWHqbY",
+    uploadDate: "2026-10-07T12:21:16-07:00",
     durationSec: 36,
     title: "Missing nima va u bilan qanday ishlash kerak?",
     summary:
@@ -350,7 +390,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 20,
     topic: "marketing",
+    slug: "promo-codes",
     youtubeId: "acDq6mpcpOQ",
+    uploadDate: "2026-10-07T12:25:08-07:00",
     durationSec: 26,
     title: "Promokodlar va aksiyalar taqvimini qanday boshqarish mumkin?",
     summary:
@@ -365,7 +407,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 21,
     topic: "marketing",
+    slug: "boost-top",
     youtubeId: "88BmPwiPbQg",
+    uploadDate: "2026-10-07T12:37:37-07:00",
     durationSec: 157,
     title: "Boost TOP bilan qanday ishlash mumkin?",
     summary: "Boost TOP funksiyasi orqali mahsulotlarni boshqarish.",
@@ -381,7 +425,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 22,
     topic: "integration",
+    slug: "connect-uzum-market",
     youtubeId: "BNVMZkfh1Kw",
+    uploadDate: "2026-10-07T12:43:53-07:00",
     durationSec: 122,
     title: "Uzum Market’ni qanday ulash mumkin?",
     summary:
@@ -397,7 +443,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 23,
     topic: "integration",
+    slug: "connect-wildberries",
     youtubeId: "7YS6oz2mfmg",
+    uploadDate: "2026-10-07T12:46:21-07:00",
     durationSec: 41,
     title: "Wildberries’ni qanday ulash mumkin?",
     summary:
@@ -413,7 +461,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 24,
     topic: "integration",
+    slug: "connect-yandex-market",
     youtubeId: "Sjm7IY0vEEw",
+    uploadDate: "2026-10-07T12:49:40-07:00",
     durationSec: 33,
     title: "Yandex Market’ni qanday ulash mumkin?",
     summary:
@@ -429,7 +479,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 25,
     topic: "integration",
+    slug: "connect-ozon",
     youtubeId: "kEdebBEmSE8",
+    uploadDate: "2026-10-08T02:05:20-07:00",
     durationSec: 63,
     title: "Ozon’ni qanday ulash mumkin?",
     summary:
@@ -447,7 +499,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 26,
     topic: "communication",
+    slug: "chat",
     youtubeId: "A-zrwNSJ4CI",
+    uploadDate: "2026-10-08T02:09:53-07:00",
     durationSec: 14,
     title: "Chat bo‘limi qanday ishlaydi?",
     summary:
@@ -463,7 +517,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 27,
     topic: "communication",
+    slug: "review-auto-reply",
     youtubeId: "tVftiOSqyRU",
+    uploadDate: "2026-10-08T02:13:28-07:00",
     durationSec: 63,
     title: "Sharhlarga avtomatik javob qanday ishlaydi?",
     summary:
@@ -480,7 +536,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 28,
     topic: "management",
+    slug: "documents",
     youtubeId: "vVKsmqrH5G8",
+    uploadDate: "2026-10-08T02:17:07-07:00",
     durationSec: 41,
     title: "Hujjatlar bo‘limi qanday ishlaydi?",
     summary:
@@ -495,7 +553,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 29,
     topic: "management",
+    slug: "employee-roles",
     youtubeId: "-ARIBJe5Yp0",
+    uploadDate: "2026-10-08T02:22:57-07:00",
     durationSec: 108,
     title: "Xodimlar uchun rollarni qanday qo‘shish mumkin?",
     summary: "Xodimlarga rol va kirish huquqlarini berish.",
@@ -510,7 +570,9 @@ export const LESSONS: Lesson[] = [
   {
     n: 30,
     topic: "management",
+    slug: "infographics",
     youtubeId: "K8Umz2xReGs",
+    uploadDate: "2026-10-08T02:45:16-07:00",
     durationSec: 176,
     title: "Infografika: savdo ma’lumotlarini qanday vizual ko‘rish mumkin?",
     summary:
@@ -1199,6 +1261,11 @@ export function getTopic(slug: string): Topic | undefined {
 
 export function getLesson(n: number): Lesson | undefined {
   return LESSONS.find((l) => l.n === n);
+}
+
+// Dars sahifasi manzilidan: /academy/{topic}/{slug}
+export function getLessonBySlug(topic: string, slug: string): Lesson | undefined {
+  return LESSONS.find((l) => l.topic === topic && l.slug === slug);
 }
 
 export function lessonsByTopic(slug: TopicSlug): Lesson[] {

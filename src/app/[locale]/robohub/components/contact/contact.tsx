@@ -5,6 +5,7 @@ import { messages } from "./contact.i18n";
 
 export default async function Contact() {
   const t = await getMessages(messages);
+  const first = t.quiz.steps[0];
   return (
     <>
       <section className="contact" id="contact" data-theme="light" aria-labelledby="contact-title">
@@ -20,14 +21,39 @@ export default async function Contact() {
               {t.lead}
             </p>
 
-            {/* Forma serverga yubormaydi: contact.script.js kiritilgan raqamdan tayyor xat (mailto) ochadi */}
+            {/* Quiz: bitta input, savollar ketma-ket almashadi (contact.script.js). Forma serverga yubormaydi —
+                oxirgi savoldan keyin javoblardan tayyor xat (mailto) ochiladi. Boshida birinchi savol render qilinadi */}
             <form className="contact__form" id="contact-form" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
-              <input type="tel" name="phone" autoComplete="tel" inputMode="tel" placeholder={t.phone} aria-label={t.phone} required />
+              <input
+                type={first.type}
+                name={first.name}
+                autoComplete={first.autoComplete}
+                placeholder={first.placeholder}
+                aria-label={first.placeholder}
+                required
+              />
               <button type="submit" aria-label={t.send}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M4 12h15M13 6l6 6-6 6" />
                 </svg>
               </button>
+              {/* Tasdiq: oxirgi javobdan keyin forma doiraga "yopilib", shu holatga ochiladi (.is-done) */}
+              <div className="contact__done" role="status" aria-hidden="true">
+                <span className="contact__done-ico">
+                  <svg viewBox="0 0 33.8675 15.06" aria-hidden="true">
+                    <use href="#rh-mark" />
+                  </svg>
+                  <i>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                  </i>
+                </span>
+                <span className="contact__done-text">
+                  <b>{t.done}</b>
+                  <small>{t.doneSub}</small>
+                </span>
+              </div>
             </form>
             <p className="contact__note" data-sr="" style={{ "--d": "240ms" } as CSSProperties}>
               {t.note}
@@ -57,7 +83,7 @@ export default async function Contact() {
           </div>
         </div>
       </section>
-      <ContactScript t={t.mail} />
+      <ContactScript t={t.quiz} />
     </>
   );
 }

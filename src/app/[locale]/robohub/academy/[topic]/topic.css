@@ -59,6 +59,19 @@
 .acx-pl__sub{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--text-dim)}
 .acx-pl__sub em{font-style:normal;padding:1px 7px;border-radius:var(--r-pill);background:rgba(241,255,240,.08);font-size:10.5px;font-weight:700}
 .acx-pl__sub em.is-done{background:rgba(184,255,176,.16);color:var(--mint)}
+/* pleylist pastidagi doimiy "Keyingi dars / Keyingi mavzu" paneli — ro'yxat scroll bo'lsa ham joyida turadi */
+.acx-pl__next{
+  position:relative;flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;margin:6px;padding:10px 12px 10px 10px;
+  border-radius:16px;background:linear-gradient(135deg,rgba(184,255,176,.18),rgba(52,229,230,.08));border:1px solid rgba(184,255,176,.28);
+  box-shadow:0 -14px 24px -10px rgba(0,30,28,.55);transition:background 250ms var(--ease),border-color 250ms var(--ease);
+}
+.acx-pl__next:hover{background:linear-gradient(135deg,rgba(184,255,176,.28),rgba(52,229,230,.14));border-color:rgba(184,255,176,.5)}
+.acx-pl__next-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:rgba(184,255,176,.16);color:var(--mint)}
+.acx-pl__next-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.acx-pl__next-text small{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mint)}
+.acx-pl__next-text b{font-size:13.5px;font-weight:700;line-height:1.3;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acx-pl__next-go{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--mint);color:var(--brand);transition:transform 300ms var(--ease-soft)}
+.acx-pl__next:hover .acx-pl__next-go{transform:translateX(3px)}
 
 /* ---------- savollar + bog'liq mavzular ---------- */
 .acx-qa-sec{padding:clamp(56px,7vw,96px) 0;background:#fff}
@@ -154,6 +167,8 @@
 .acx-about__wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,4vw,52px);max-width:980px}
 
 /* 1. sarlavha — oddiy, tugmasiz */
+/* dars bloki ota grid'ga "eriydi" (key bilan almashadi — animatsiya qayta o'ynaydi) */
+.acx-about__lesson{display:contents}
 .acx-about__head{max-width:860px;animation:acx-in 550ms var(--ease-soft) backwards}
 .acx-about__title{margin-top:14px;font-size:clamp(26px,3vw,42px);line-height:1.12;letter-spacing:-.04em;text-wrap:balance}
 .acx-about__meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px;font-size:14.5px;font-weight:600;color:var(--text-dim)}

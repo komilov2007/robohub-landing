@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
 import Globe from "./globe";
-import { CATEGORIES } from "./categories";
+import Launch from "./launch";
 import { messages } from "./market.i18n";
 
 export default async function Market() {
@@ -19,15 +19,10 @@ export default async function Market() {
           <p className="mkt__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
             {t.lead}
           </p>{" "}
-          {/* toifalar: haqiqiy rasmli plitkalar, navbat bilan bittasi ajralib turadi */}
-          <ul className="mkt__cats" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
-            {CATEGORIES.map((c, i) => (
-              <li key={c.img} style={{ "--i": i } as CSSProperties}>
-                <img src={`/categories/${c.img}.webp`} alt="" loading="lazy" />
-                <span>{t.categories[c.img]}</span>
-              </li>
-            ))}
-          </ul>
+          {/* bo‘lim savoliga javob: Robohub’siz ↔ Robohub bilan */}
+          <div data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
+            <Launch t={t.launch} />
+          </div>
         </div>{" "}
         <div className="mkt__map" data-theme="dark" data-sr="" style={{ "--d": "160ms" } as CSSProperties}>
           <p className="mkt__map-label">{t.mapLabel}</p>{" "}

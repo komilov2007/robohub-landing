@@ -1,6 +1,6 @@
 import { defineMessages } from "@/i18n/config";
-import type { CategoryId } from "./categories";
 import type { CountryId } from "./globe";
+import type { LaunchText } from "./launch";
 
 type MarketMessages = {
   eyebrow: string;
@@ -8,7 +8,7 @@ type MarketMessages = {
   titleAccent: string;
   titleEnd: string;
   lead: string;
-  categories: Record<CategoryId, string>;
+  launch: LaunchText;
   mapLabel: string;
   mapTitle: string;
   mapText: string;
@@ -17,24 +17,24 @@ type MarketMessages = {
 
 export const messages = defineMessages<MarketMessages>({
   uz: {
-    eyebrow: "Kimlar uchun",
-    titleStart: "Robohub ",
-    titleAccent: "har qanday biznesga",
-    titleEnd: " mos keladi",
-    lead: "Kichik butikdan yirik brendgacha — Uzum, Yandex Market, Wildberries yoki Ozonda nima sotsangiz ham, Robohub uni bitta kabinetdan yuritadi.",
-    categories: {
-      clothing: "Kiyim-kechak",
-      shoes: "Poyabzal",
-      electronics: "Elektronika",
-      beauty: "Goʻzallik va kosmetika",
-      home: "Uy va mebel",
-      kids: "Bolalar tovarlari",
-      accessories: "Aksessuarlar",
-      sport: "Sport va hordiq",
-      food: "Oziq-ovqat",
-      auto: "Avto va ehtiyot qism",
-      health: "Salomatlik va dorixona",
-      books: "Kitob va media",
+    eyebrow: "Mintaqaviy savdo",
+    titleStart: "Bitta mahsulot — ",
+    titleAccent: "besh mamlakatda",
+    titleEnd: " savdo",
+    lead: "Mahsulotni Robohub’da bir marta tayyorlang va Oʻzbekiston, Rossiya, Qozogʻiston, Qirgʻiziston hamda Tojikistondagi xaridorlarga chiqaring — narxlar, buyurtmalar va qoldiqlar bitta kabinetda.",
+    launch: {
+      without: {
+        label: "Robohub’siz",
+        num: "4",
+        unit: "ta alohida kabinet",
+        items: ["Har bir marketpleysga alohida kirish", "Narxni har birida qo‘lda o‘zgartirish", "Qoldiq mos kelmay, ortiqcha sotuv bo‘ladi", "Hisobotlarni Excel’da qo‘lda yig‘ish"],
+      },
+      with: {
+        label: "Robohub bilan",
+        num: "1",
+        unit: "ta kabinet",
+        items: ["Barcha marketpleyslar bitta oynada", "Narx bir joydan o‘zgartiriladi va yuboriladi", "Qoldiq avtomatik sinxron — ortiqcha sotuv yo‘q", "Besh mamlakat bo‘yicha bitta hisobot"],
+      },
     },
     mapLabel: "Yagona platforma — barcha bozorlar",
     mapTitle: "Butun mintaqa boʻylab soting",
@@ -48,24 +48,24 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   ru: {
-    eyebrow: "Для кого",
-    titleStart: "Robohub ",
-    titleAccent: "подходит любому бизнесу",
+    eyebrow: "Продажи по региону",
+    titleStart: "Один товар — ",
+    titleAccent: "продажи в пяти странах",
     titleEnd: "",
-    lead: "От небольшого бутика до крупного бренда — что бы вы ни продавали на Uzum, Yandex Market, Wildberries или Ozon, Robohub ведёт всё из одного кабинета.",
-    categories: {
-      clothing: "Одежда",
-      shoes: "Обувь",
-      electronics: "Электроника",
-      beauty: "Красота и косметика",
-      home: "Дом и мебель",
-      kids: "Детские товары",
-      accessories: "Аксессуары",
-      sport: "Спорт и отдых",
-      food: "Продукты питания",
-      auto: "Авто и запчасти",
-      health: "Здоровье и аптека",
-      books: "Книги и медиа",
+    lead: "Подготовьте товар в Robohub один раз и выведите его к покупателям в Узбекистане, России, Казахстане, Кыргызстане и Таджикистане — цены, заказы и остатки в одном кабинете.",
+    launch: {
+      without: {
+        label: "Без Robohub",
+        num: "4",
+        unit: "отдельных кабинета",
+        items: ["Отдельный вход в каждый маркетплейс", "Цены меняются вручную в каждом", "Остатки расходятся — продажи сверх наличия", "Отчёты собираются вручную в Excel"],
+      },
+      with: {
+        label: "С Robohub",
+        num: "1",
+        unit: "кабинет",
+        items: ["Все маркетплейсы в одном окне", "Цена меняется в одном месте и отправляется", "Остатки синхронизируются — без продаж сверх наличия", "Один отчёт по пяти странам"],
+      },
     },
     mapLabel: "Одна платформа — все рынки",
     mapTitle: "Продавайте по всему региону",
@@ -79,24 +79,24 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   en: {
-    eyebrow: "Who it’s for",
-    titleStart: "Robohub ",
-    titleAccent: "fits any business",
+    eyebrow: "Regional selling",
+    titleStart: "One product — ",
+    titleAccent: "sold in five countries",
     titleEnd: "",
-    lead: "From a small boutique to a major brand — whatever you sell on Uzum, Yandex Market, Wildberries or Ozon, Robohub runs it all from one dashboard.",
-    categories: {
-      clothing: "Clothing",
-      shoes: "Footwear",
-      electronics: "Electronics",
-      beauty: "Beauty & cosmetics",
-      home: "Home & furniture",
-      kids: "Kids’ products",
-      accessories: "Accessories",
-      sport: "Sports & leisure",
-      food: "Groceries",
-      auto: "Auto & spare parts",
-      health: "Health & pharmacy",
-      books: "Books & media",
+    lead: "Prepare a product in Robohub once and bring it to buyers in Uzbekistan, Russia, Kazakhstan, Kyrgyzstan and Tajikistan — prices, orders and stock in one dashboard.",
+    launch: {
+      without: {
+        label: "Without Robohub",
+        num: "4",
+        unit: "separate dashboards",
+        items: ["A separate login for every marketplace", "Prices changed by hand in each one", "Stock drifts out of sync — overselling", "Reports pieced together in Excel"],
+      },
+      with: {
+        label: "With Robohub",
+        num: "1",
+        unit: "dashboard",
+        items: ["Every marketplace in one window", "Change a price in one place and send it out", "Stock syncs automatically — no overselling", "One report across five countries"],
+      },
     },
     mapLabel: "One platform — every market",
     mapTitle: "Sell across the whole region",

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, hasLocale } from "@/i18n/config";
+import { siteFromHost } from "@/lib/site-host";
 
 // Bitta loyiha — bir necha sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
 //   Sayt domendan: robohub.uz va robohub-landing.vercel.app (lokalda localhost) → robohub;
@@ -13,15 +14,7 @@ import { defaultLocale, hasLocale } from "@/i18n/config";
 //     bilan boshlanadigan domen → robohub-two (robohub nusxasi, TT Fors shriftida).
 //   Til yo'lning boshidan: /ru, /en; prefiks bo'lmasa — o'zbekcha.
 // Bu rewrite: brauzer manzili o'zgarmaydi, /uz/robohub kabi ichki yo'l foydalanuvchiga ko'rinmaydi.
-type Site = "robohub" | "robohub-two" | "robosell" | "robohub-academy";
-
-function siteFromHost(host: string): Site {
-  const h = host.toLowerCase();
-  if (h.startsWith("robohub-landing-two") || h.startsWith("robohub-two")) return "robohub-two";
-  if (h.startsWith("robohub-academy-two")) return "robohub";
-  if (h.startsWith("robohub-academy")) return "robohub-academy";
-  return h.startsWith("robosell") ? "robosell" : "robohub";
-}
+// Domen → sayt: src/lib/site-host.ts (sitemap/robots ham shuni ishlatadi)
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

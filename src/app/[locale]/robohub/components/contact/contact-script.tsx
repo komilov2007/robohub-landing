@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import { idle } from "@/lib/idle";
 import type { messages } from "./contact.i18n";
 
-// Xat (mailto) matni joriy tilda — contact.tsx dan prop orqali keladi
-type MailText = (typeof messages)["uz"]["mail"];
+// Quiz savollari va xat (mailto) mavzusi joriy tilda — contact.tsx dan prop orqali keladi
+type QuizText = (typeof messages)["uz"]["quiz"];
 
 // Asl skript sahifada bir marta ishlashga mo'ljallangan: StrictMode (dev) effektni ikki marta
 // chaqirganda hodisalar ikki marta ulanib qolmasligi uchun bayroq.
 let started = false;
 
-export default function ContactScript({ t }: { t: MailText }) {
+export default function ContactScript({ t }: { t: QuizText }) {
   useEffect(() => {
     if (started) return;
     started = true;

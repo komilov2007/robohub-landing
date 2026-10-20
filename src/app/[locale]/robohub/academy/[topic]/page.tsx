@@ -1,21 +1,15 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getTopic, lessonsByTopic, TOPICS, type Topic } from "../lib/academy";
-import { isoDuration, yt } from "../lib/youtube";
-import { PlayerProvider } from "../components/player/player-context";
-import Stage from "./components/stage/stage";
-import StageSkeleton from "./components/stage/stage-skeleton";
-import LessonInfo from "./components/lesson-info/lesson-info";
-import TopicsRail from "./components/topics-rail/topics-rail";
-import Questions from "./components/questions/questions";
-import Cta from "./components/cta/cta";
-import "./topic.css";
-import MobileNextBar from "./components/mobile-next-bar/mobile-next-bar";
+import { getTopic, lessonsByTopic, TOPICS } from "../lib/academy";
+import { yt } from "../lib/youtube";
 import { ACADEMY_BASE, topicHref } from "../lib/links";
+import StageSkeleton from "./components/stage/stage-skeleton";
+import TopicView from "./components/topic-view/topic-view";
+import "./topic.css";
 
-// Mavzu sahifasi: /{topic} (Robohub_academy.md, 5-bo'lim). 8 ta mavzu oldindan statik yig'iladi.
-// ?lesson=N client tomonda o'qiladi (player-context) — sahifa statik qoladi.
+// Mavzu sahifasi: /academy/{topic} — asosiy dars ochiq. Boshqa darslarning o'z sahifasi bor: [lesson]/page.tsx.
+// 8 ta mavzu oldindan statik yig'iladi.
 export function generateStaticParams() {
   return TOPICS.map((t) => ({ topic: t.slug }));
 }
@@ -34,27 +28,6 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/robohub/
   };
 }
 
-// Har bir dars uchun VideoObject (11-bo'lim)
-function JsonLd({ topic }: { topic: Topic }) {
-  const data = lessonsByTopic(topic.slug).map((l) => ({
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    name: l.title,
-    description: l.summary,
-    thumbnailUrl: yt.thumb(l.youtubeId),
-    embedUrl: `https://www.youtube-nocookie.com/embed/${l.youtubeId}`,
-    contentUrl: yt.watch(l.youtubeId),
-    duration: isoDuration(l.durationSec),
-    inLanguage: "uz",
-  }));
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
-    />
-  );
-}
-
 // params (URL ma'lumoti) <Suspense> ichida o'qiladi: App Shell (header + skelet) hamma mavzu uchun bitta,
 // sahifalar orasida o'tish darhol bo'ladi. Ma'lum 8 mavzu build'da to'liq HTML bo'lib yig'iladi.
 export default function TopicPage({ params }: PageProps<"/[locale]/robohub/academy/[topic]">) {
@@ -69,17 +42,5 @@ async function TopicContent({ params }: { params: PageProps<"/[locale]/robohub/a
   const topic = getTopic((await params).topic);
   // Mavjud bo'lmagan slug → Academy bosh sahifasi
   if (!topic) redirect(ACADEMY_BASE);
-
-  return (
-    <PlayerProvider topic={topic.slug} mainLesson={topic.mainLesson}>
-      <JsonLd topic={topic} />
-      {/* Hero = sarlavha, pleyer va mavzu darslari (YouTube kabi); pastda — tanlangan dars haqida matn, savollar va CTA */}
-      <Stage topic={topic} />
-      <LessonInfo topic={topic} />
-      <TopicsRail topic={topic} />
-      <Questions topic={topic} />
-      <Cta topic={topic} />
-      <MobileNextBar />
-    </PlayerProvider>
-  );
+  return <TopicView topic={topic} />;
 }

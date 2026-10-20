@@ -13,6 +13,7 @@ import Faq from "../components/faq/faq";
 import Contact from "../components/contact/contact";
 import FinalCta from "../components/final-cta/final-cta";
 import ScrollReveal from "../components/scroll-reveal/scroll-reveal";
+import ToTop from "../components/to-top/to-top";
 
 export default function Page() {
   return (
@@ -34,6 +35,7 @@ export default function Page() {
         <FinalCta />
       </main>
       <ScrollReveal />
+      <ToTop />
     </>
   );
 }

@@ -1,14 +1,21 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
-import { getLesson, lessonsByTopic, type Topic } from "../../../lib/academy";
+import { useEffect, useRef, type CSSProperties, type MouseEvent } from "react";
+import Link from "next/link";
+import {
+  getLesson,
+  lessonsByTopic,
+  nextTopic,
+  type Topic,
+} from "../../../lib/academy";
+import { lessonHref, topicHref } from "../../../lib/links";
 import { useWatched } from "../../../lib/progress";
 import { fmt, yt } from "../../../lib/youtube";
 import { usePlayer } from "../../../components/player/player-context";
 import VideoPlayer from "../../../components/video-player/video-player";
 import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
 
-// Hero'dagi pleyer qismlari (YouTube kabi: pleyer va pleylist). Tanlangan dars URL ?lesson= da (player-context) — havola bilan ulashsa, shu dars ochiladi.
+// Hero'dagi pleyer qismlari (YouTube kabi: pleyer va pleylist). Tanlangan dars — URL yo'lida (/academy/{mavzu}/{dars}, player-context).
 
 // Katta pleyer — oddiy shisha ramkada
 // "Kino" rejimi: video o'ynayotganda sahifaning qolgan qismi xiralashadi (pleyer va pleylist tiniq qoladi).
@@ -41,7 +48,11 @@ export function HeroScreen() {
         active={playing?.n === selected}
         eager
         onPlay={() => play(lesson.n, "section")}
-        badge={lesson.n === mainLesson ? `Asosiy dars · ${lesson.n}` : `${lesson.n}-dars`}
+        badge={
+          lesson.n === mainLesson
+            ? `Asosiy dars · ${lesson.n}`
+            : `${lesson.n}-dars`
+        }
         // ijro paytida sahifaning qolgan qismi xiralashadi (topic.css → .acx-cinema)
         onPlayingChange={setCinema}
       />
@@ -51,6 +62,9 @@ export function HeroScreen() {
 
 // Pleylist — shu mavzuning barcha darslari (YouTube'dagi o'ng ustun kabi): raqam, muqova, nom, davomiylik.
 // Tanlangani ajratilgan va ro'yxat ichida ko'rinib turadi; bosilsa — dars pleyerda ochiladi va ijro boshlanadi.
+// Har qator — haqiqiy havola (dars sahifasiga): Google dars sahifalarini shu orqali topadi; oddiy bosishda sahifa
+// qayta yuklanmaydi (select), Ctrl/Cmd+bosish — yangi oynada ochiladi.
+// Pastda — doim ko'rinib turadigan "Keyingi mavzu" paneli (ro'yxat scroll bo'lsa ham joyida).
 export function Playlist({ topic }: { topic: Topic }) {
   const { selected, mainLesson, playing, select } = usePlayer();
   const watched = useWatched();
@@ -58,13 +72,23 @@ export function Playlist({ topic }: { topic: Topic }) {
   const pos = lessons.findIndex((l) => l.n === selected) + 1;
   const done = lessons.filter((l) => watched.has(l.n)).length;
   const listRef = useRef<HTMLOListElement>(null);
+  const upcoming = nextTopic(topic.slug);
+  const open = (e: MouseEvent<HTMLAnchorElement>, n: number) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
+      return;
+    e.preventDefault();
+    select(n, { play: true, scroll: true });
+  };
 
   // Tanlangan dars ro'yxat ichida ko'rinib tursin (faqat ro'yxat scroll'i — sahifa joyida qoladi)
   useEffect(() => {
     const list = listRef.current;
     const el = list?.querySelector<HTMLElement>(".is-selected");
     if (!list || !el || list.scrollHeight <= list.clientHeight) return;
-    list.scrollTo({ top: el.offsetTop - list.offsetTop - 8, behavior: "smooth" });
+    list.scrollTo({
+      top: el.offsetTop - list.offsetTop - 8,
+      behavior: "smooth",
+    });
   }, [selected]);
 
   return (
@@ -75,7 +99,13 @@ export function Playlist({ topic }: { topic: Topic }) {
           {pos} / {lessons.length} · {done} ta ko‘rildi
         </p>
         <span className="acx-pl__bar" aria-hidden="true">
-          <i style={{ "--p": lessons.length ? done / lessons.length : 0 } as CSSProperties} />
+          <i
+            style={
+              {
+                "--p": lessons.length ? done / lessons.length : 0,
+              } as CSSProperties
+            }
+          />
         </span>
       </div>
       <ol className="acx-pl__list" ref={listRef}>
@@ -84,11 +114,11 @@ export function Playlist({ topic }: { topic: Topic }) {
           const isPlaying = playing?.n === l.n;
           return (
             <li key={l.n}>
-              <button
-                type="button"
+              <a
+                href={lessonHref(topic.slug, l.n)}
                 className={`acx-pl__item${isSel ? " is-selected" : ""}`}
                 aria-current={isSel ? "true" : undefined}
-                onClick={() => select(l.n, { play: true, scroll: true })}
+                onClick={(e) => open(e, l.n)}
               >
                 <span className="acx-pl__n">
                   {isPlaying ? (
@@ -104,7 +134,14 @@ export function Playlist({ topic }: { topic: Topic }) {
                   )}
                 </span>
                 <span className="acx-pl__thumb">
-                  <img src={yt.thumbMq(l.youtubeId)} width={320} height={180} alt="" loading="lazy" decoding="async" />
+                  <img
+                    src={yt.thumbMq(l.youtubeId)}
+                    width={320}
+                    height={180}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <span className="acx-pl__dur">{fmt(l.durationSec)}</span>
                 </span>
                 <span className="acx-pl__text">
@@ -115,11 +152,50 @@ export function Playlist({ topic }: { topic: Topic }) {
                     {!watched.has(l.n) && l.n === mainLesson && <em>asosiy</em>}
                   </span>
                 </span>
-              </button>
+              </a>
             </li>
           );
         })}
       </ol>
+      {/* doim — keyingi mavzu */}
+      {
+        <Link href={topicHref(upcoming.slug)} className="acx-pl__next">
+          <span className="acx-pl__next-ico" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d={upcoming.icon} />
+            </svg>
+          </span>
+          <span className="acx-pl__next-text">
+            <small>Keyingi mavzu</small>
+            <b>
+              {upcoming.name} · {lessonsByTopic(upcoming.slug).length} dars
+            </b>
+          </span>
+          <span className="acx-pl__next-go" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </Link>
+      }
     </aside>
   );
 }
