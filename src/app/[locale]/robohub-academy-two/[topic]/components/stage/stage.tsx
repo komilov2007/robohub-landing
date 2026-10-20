@@ -2,39 +2,50 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { lessonsByTopic, readingTime, topicMinutes, type Topic } from "../../../lib/academy";
 import Icon from "../../../components/svg-icon/svg-icon";
-import StagePlayer from "./stage-player";
+import Aurora from "../../../components/aurora/aurora";
+import { HeroScreen, NowPlaying } from "./stage-player";
 
-// Mavzu hero'si — to'q "sahna": markazda sarlavha, ostida katta pleyer (video shu yerning o'zida ko'riladi),
-// "hozir ijroda" paneli va mavzu darslari. Fon — brandbook'dagi bir xil to'q #002B29, urg'u — mint va cyan.
+// Mavzu hero'si — bosh sahifa bilan bir xil to'q aurora sahna, ikki ustun: chapda yo'l, sarlavha, tavsif va
+// ixcham "tanlangan dars" kartochkasi; o'ngda katta pleyer. Darslar ro'yxati hero'da emas — ostidagi
+// "Mavzu darslari" bo'limida (lessons.tsx).
 export default function Stage({ topic }: { topic: Topic }) {
   const count = lessonsByTopic(topic.slug).length;
   return (
-    <section id="videos" className="ac-stage" data-theme="dark" aria-labelledby="ac-stage-title">
-      <div className="container">
-        <div className="ac-stage__head">
-          <div className="ac-stage__top ac-rise">
-            <nav className="ac-crumbs" aria-label="Breadcrumb">
+    <section id="videos" className="acx-hero acx-hero--topic" data-theme="dark" data-glow aria-labelledby="ac-stage-title">
+      <Aurora />
+      <div className="container acx-thero">
+        <div className="acx-thero__text">
+          <div className="acx-thead__top acx-in">
+            <nav className="acx-crumbs" aria-label="Breadcrumb">
               <Link href="/">Academy</Link>
               <span aria-hidden="true">/</span>
               <span aria-current="page">{topic.name}</span>
             </nav>
-            <p className="ac-glass-pill">
-              <Icon d={topic.icon} size={15} />
+            <p className="acx-badge acx-badge--topic">
+              <span className="acx-badge__ico" aria-hidden="true">
+                <Icon d={topic.icon} size={15} />
+              </span>
               {count} ta video dars · {topicMinutes(topic.slug)} daqiqa · {readingTime(topic)} daqiqa o‘qish
             </p>
           </div>
-          <h1 id="ac-stage-title" className="ac-stage__title">
-            <span className="ac-w">{topic.hero.title}</span>{" "}
-            <span className="ac-w" style={{ "--d": "90ms" } as CSSProperties}>
-              <span className="ac-grad">{topic.hero.highlight}</span>
+          <h1 id="ac-stage-title" className="acx-title acx-title--topic">
+            <span className="acx-word" style={{ "--d": "60ms" } as CSSProperties}>
+              {topic.hero.title}
+            </span>{" "}
+            <span className="acx-word acx-word--grad" style={{ "--d": "200ms" } as CSSProperties}>
+              {topic.hero.highlight}
             </span>
           </h1>
-          <p className="ac-stage__lead ac-rise" style={{ "--d": "140ms" } as CSSProperties}>
+          <p className="acx-lead acx-in" style={{ "--d": "320ms" } as CSSProperties}>
             {topic.hero.subtitle}
           </p>
+          <div className="acx-in" style={{ "--d": "420ms" } as CSSProperties}>
+            <NowPlaying />
+          </div>
         </div>
-        <div className="ac-stage__media ac-pop">
-          <StagePlayer topic={topic.slug} />
+        {/* kirish animatsiyasi opacity'siz (topic.css) — pleyer muqovasi LCP, darhol chiziladi */}
+        <div className="acx-thero__media">
+          <HeroScreen />
         </div>
       </div>
     </section>

@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../logo/logo";
-import Icon, { ICONS } from "../svg-icon/svg-icon";
-import { TOPICS, lessonsByTopic, topicMinutes } from "../../lib/academy";
+import TopicsMenu from "./topics-menu";
+import Icon from "../svg-icon/svg-icon";
+import { TOPICS, lessonsByTopic } from "../../lib/academy";
 import { LOGIN_URL, START_URL, YOUTUBE_CHANNEL } from "../../lib/links";
 
 // Academy header — Robohub landingi header'i uslubida: sticky, oq + blur, scroll'da soya.
@@ -112,33 +113,7 @@ export default function Header() {
                 Mavzular
                 <Icon d="M6 9l6 6 6-6" size={15} className="ac-nav__caret" />
               </button>
-              <div id="ac-topics-menu" className="ac-drop" inert={!drop}>
-                <ul className="ac-drop__grid">
-                  {TOPICS.map((t) => (
-                    <li key={t.slug}>
-                      <Link
-                        href={`/${t.slug}`}
-                        className={`ac-drop__item${t.slug === currentTopic ? " is-current" : ""}`}
-                        aria-current={t.slug === currentTopic ? "page" : undefined}
-                      >
-                        <span className="ac-drop__ico">
-                          <Icon d={t.icon} size={18} />
-                        </span>
-                        <span className="ac-drop__text">
-                          <strong>{t.name}</strong>
-                          <small>
-                            {lessonsByTopic(t.slug).length} dars · {topicMinutes(t.slug)} daq
-                          </small>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/#topics" className="ac-drop__all">
-                  Barcha mavzular kartochkalarda
-                  <Icon d={ICONS.arrowRight} size={16} />
-                </Link>
-              </div>
+              <TopicsMenu open={drop} current={currentTopic} />
             </li>
             <li>
               <Link href="/#help" className="ac-nav__link">
@@ -156,8 +131,8 @@ export default function Header() {
           <a href={LOGIN_URL} className="btn btn--ghost">
             Kirish
           </a>
-          <a href={START_URL} className="btn btn--accent">
-            Bepul boshlash
+          <a href={START_URL} target="_blank" rel="noopener" className="btn btn--accent">
+            Hoziroq boshlash
           </a>
         </div>
         <button
@@ -201,8 +176,8 @@ export default function Header() {
             <a href={LOGIN_URL} className="btn btn--lg btn--outline">
               Kirish
             </a>
-            <a href={START_URL} className="btn btn--lg btn--primary">
-              Bepul boshlash
+            <a href={START_URL} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
+              Hoziroq boshlash
             </a>
           </div>
         </div>

@@ -1,18 +1,22 @@
-// Mavzu sahifasi yuklanayotgandagi ko'rinish (App Shell): to'q hero foni, sarlavha va pleyer o'rnida
-// yumshoq "skelet" bloklar. Sahifalar orasida o'tishda bir lahza ko'rinadi.
+import Aurora from "../../../components/aurora/aurora";
+
+// Mavzu sahifasi yuklanayotgandagi ko'rinish (App Shell): aurora hero, chapda sarlavha, o'ngda pleyer o'rnida
+// yaltiroq "skelet" bloklar. Sahifalar orasida o'tishda bir lahza ko'rinadi.
 export default function StageSkeleton() {
   return (
-    <section className="ac-stage" data-theme="dark" aria-busy="true" aria-label="Yuklanmoqda">
-      <div className="container">
-        <div className="ac-stage__head">
-          <span className="ac-skel ac-skel--pill" />
-          <span className="ac-skel ac-skel--title" />
-          <span className="ac-skel ac-skel--title ac-skel--short" />
-          <span className="ac-skel ac-skel--lead" />
+    <section className="acx-hero acx-hero--topic" data-theme="dark" aria-busy="true" aria-label="Yuklanmoqda">
+      <Aurora />
+      <div className="container acx-thero">
+        <div className="acx-thero__text">
+          <span className="acx-skel acx-skel--pill" />
+          <span className="acx-skel acx-skel--title" />
+          <span className="acx-skel acx-skel--title acx-skel--short" />
+          <span className="acx-skel acx-skel--lead" />
+          <span className="acx-skel acx-skel--card" />
         </div>
-        <div className="ac-stage__media">
-          <div className="ac-screen">
-            <span className="ac-skel ac-skel--video" />
+        <div className="acx-thero__media">
+          <div className="acx-screen">
+            <span className="acx-skel acx-skel--video" />
           </div>
         </div>
       </div>

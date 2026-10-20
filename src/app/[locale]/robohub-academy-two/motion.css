@@ -1,0 +1,215 @@
+/* ============================================================
+   ROBOHUB ACADEMY — UMUMIY HARAKAT TILI ("tirik aurora").
+   Bosh sahifa va mavzu sahifalari uchun umumiy: to'q aurora hero, sarlavhalar, brend tasma,
+   yakuniy CTA blok, magnit tugmalar va barcha keyframes. Hamma klass acx- prefiksli.
+   Animatsiyalar transform/opacity'da (kompozitor); kursor effektlari — components/fx (--mx/--my, --tx/--ty).
+   Sahifaga xos uslublar: home.css (bosh sahifa), [topic]/topic.css (mavzu sahifasi).
+   ============================================================ */
+@property --acx-ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+
+.acx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* ---------- umumiy: sarlavhalar ---------- */
+.acx-head{max-width:760px;margin:0 auto clamp(40px,5vw,64px);text-align:center}
+.acx-kicker{display:inline-flex;align-items:center;gap:12px;font-size:12.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.acx-kicker::before,.acx-kicker::after{content:"";width:28px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,currentColor)}
+.acx-kicker::after{transform:scaleX(-1)}
+[data-theme="dark"] .acx-kicker,.acx-kicker--dark{color:var(--mint)}
+.acx-h2{margin-top:14px;font-size:clamp(28px,3.5vw,50px);line-height:1.08;letter-spacing:-.045em;text-wrap:balance}
+.acx-head__note{margin-top:14px;font-size:14.5px;font-weight:600;color:var(--text-dim)}
+/* marker bilan chizilgan urg'u — scroll bilan "bo'yaladi" */
+.acx-mark{padding:0 .08em;background:linear-gradient(transparent 58%,rgba(184,255,176,.95) 58%,rgba(184,255,176,.95) 90%,transparent 90%) no-repeat 0 0/100% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* aylanuvchi gradient matn */
+.acx-grad{background:linear-gradient(95deg,var(--mint) 0%,var(--cyan) 35%,#EFFFF0 50%,var(--cyan) 65%,var(--mint) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:acx-shine 6s linear infinite}
+
+/* progress chizig'i (yorqin + yuguruvchi yaltirash) */
+.acx-meter{position:relative;display:block;flex:1;height:8px;border-radius:var(--r-pill);background:rgba(0,82,79,.1);overflow:hidden}
+.acx-meter i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--brand),#00A39C);transform-origin:left;transform:scaleX(var(--p,0));transition:transform 1.2s var(--ease-soft)}
+.acx-meter::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);width:40%;transform:translateX(-120%);animation:acx-sweep 3.2s ease-in-out infinite}
+[data-theme="dark"] .acx-meter,.acx-cc .acx-meter{background:rgba(241,255,240,.1)}
+[data-theme="dark"] .acx-meter i,.acx-cc .acx-meter i{background:linear-gradient(90deg,var(--mint),var(--cyan))}
+[data-theme="dark"] .acx-meter::after,.acx-cc .acx-meter::after{background:linear-gradient(90deg,transparent,rgba(241,255,240,.22),transparent)}
+
+/* ============================================================
+   HERO — to'liq kenglikdagi to'q sahna
+   ============================================================ */
+.acx-hero{
+  position:relative;isolation:isolate;z-index:5;color:var(--text);
+  padding:clamp(56px,7vw,104px) 0 clamp(80px,9vw,136px);
+  background:linear-gradient(180deg,#001C1A 0%,#002523 60%,#002B29 100%);
+  border-radius:0 0 clamp(32px,4vw,56px) clamp(32px,4vw,56px);
+}
+.acx-hero__bg{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none}
+.acx-aurora{position:absolute;border-radius:50%;will-change:transform}
+.acx-aurora--1{width:780px;height:780px;left:-260px;top:-360px;background:radial-gradient(circle,rgba(184,255,176,.32) 0%,rgba(184,255,176,.08) 38%,transparent 66%);animation:acx-drift-1 19s ease-in-out infinite alternate}
+.acx-aurora--2{width:900px;height:900px;right:-320px;top:-300px;background:radial-gradient(circle,rgba(52,229,230,.3) 0%,rgba(52,229,230,.07) 40%,transparent 64%);animation:acx-drift-2 23s ease-in-out infinite alternate}
+.acx-aurora--3{width:760px;height:760px;left:30%;bottom:-520px;background:radial-gradient(circle,rgba(0,163,156,.42) 0%,transparent 62%);animation:acx-drift-3 17s ease-in-out infinite alternate}
+/* perspektivali "pol" — to'r chiziqlari tomoshabin tomon oqadi */
+.acx-floor{position:absolute;left:-40%;right:-40%;bottom:-6%;height:62%;transform:perspective(520px) rotateX(64deg);transform-origin:50% 100%;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.6) 35%,transparent 80%);mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.6) 35%,transparent 80%)}
+.acx-floor::before{content:"";position:absolute;left:0;right:0;top:-72px;bottom:0;
+  background-image:linear-gradient(rgba(184,255,176,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(184,255,176,.16) 1px,transparent 1px);background-size:72px 72px;
+  animation:acx-floor 3.2s linear infinite}
+/* kursor yorug'ligi (--mx/--my — hero'ga Fx yozadi) */
+.acx-spot{position:absolute;left:0;top:0;width:640px;height:640px;margin:-320px 0 0 -320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(52,229,230,.16),rgba(184,255,176,.05) 40%,transparent 65%);
+  transform:translate(var(--mx,72vw),var(--my,260px));transition:transform 900ms var(--ease-soft)}
+.acx-noise{position:absolute;inset:0;opacity:.07;mix-blend-mode:overlay;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+.acx-hero{overflow-x:clip} /* uchuvchi logolar va 3D varaqlar gorizontal scroll bermasin; pastga (qidiruv oynasi) ochiq */
+
+/* kirish animatsiyalari: so'zlar 3D'da "ochiladi", qolganlari xiralikdan chiqadi */
+.acx-in{animation:acx-in 900ms var(--ease-soft) var(--d,0ms) backwards}
+
+.acx-badge{
+  position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:12px;padding:6px 18px 6px 8px;border-radius:var(--r-pill);
+  background:rgba(241,255,240,.06);border:1px solid rgba(241,255,240,.14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-size:13.5px;font-weight:700;color:#fff;
+}
+.acx-badge::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(241,255,240,.18) 50%,transparent 70%);transform:translateX(-100%);animation:acx-sweep 4.5s ease-in-out 1.2s infinite}
+.acx-badge__mps{display:inline-flex}
+.acx-badge__mps img{width:24px;height:24px;border-radius:7px;margin-right:-7px;box-shadow:0 0 0 2px #00211F;animation:acx-hop 3.6s var(--ease-soft) infinite}
+.acx-badge__mps img:nth-child(2){animation-delay:.15s}
+.acx-badge__mps img:nth-child(3){animation-delay:.3s}
+.acx-badge__mps img:nth-child(4){animation-delay:.45s;margin-right:0}
+
+.acx-title{margin-top:26px;font-size:clamp(36px,4.2vw,60px);line-height:1;letter-spacing:-.05em;color:#fff;perspective:900px;text-wrap:balance}
+.acx-word{position:relative;display:inline-block;transform-origin:50% 100%;animation:acx-word 1100ms cubic-bezier(.2,.9,.2,1) var(--d,0ms) backwards}
+.acx-word--grad{
+  background:linear-gradient(95deg,var(--mint) 0%,var(--cyan) 35%,#EFFFF0 50%,var(--cyan) 65%,var(--mint) 100%);background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;padding-bottom:.06em;
+  animation:acx-word 1100ms cubic-bezier(.2,.9,.2,1) var(--d,0ms) backwards,acx-shine 6s linear infinite;
+}
+/* so'z ostida qo'lda chizilgandek to'lqin — chapdan o'ngga chiziladi */
+.acx-word--grad::after{
+  content:"";position:absolute;left:2%;right:2%;bottom:-.1em;height:.16em;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C 30 2, 50 2, 75 7 S 125 12, 150 6 S 185 2, 198 5' fill='none' stroke='%23B8FFB0' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  clip-path:inset(0 100% 0 0);animation:acx-draw 1200ms var(--ease-soft) 1100ms forwards;
+}
+.acx-lead{margin-top:22px;max-width:46ch;font-size:clamp(16px,1.3vw,19px);line-height:1.6;color:var(--text-dim);text-wrap:pretty}
+
+/* ============================================================
+   MAVZULAR LENTASI — hero ostidan chiqib turgan, biroz og'gan brend tasma
+   ============================================================ */
+.acx-ticker{position:relative;z-index:4;overflow:hidden;margin-top:-40px;padding:52px 0 36px}
+/* og'ish — ekran kengligidagi tasmada (uzun trekni og'dirsa, uchlari pastga tushib ketadi) */
+.acx-ticker__band{margin:0 -3%;padding:20px 0;background:var(--brand);transform:rotate(-1.8deg);box-shadow:0 30px 50px -30px rgba(0,54,52,.6)}
+.acx-ticker__track{display:flex;width:max-content;animation:acx-marq 46s linear infinite}
+.acx-ticker__row{display:flex;flex:none}
+.acx-ticker__item{display:inline-flex;align-items:center;gap:18px;padding-right:30px;font-family:var(--font-head);font-weight:700;font-size:clamp(26px,3.4vw,46px);letter-spacing:-.035em;white-space:nowrap;color:transparent;-webkit-text-stroke:1.4px rgba(241,255,240,.55)}
+.acx-ticker__item:nth-child(odd){color:var(--mint);-webkit-text-stroke:0}
+.acx-ticker__item svg{flex:none;color:var(--cyan)}
+.acx-ticker__item i{font-style:normal;font-size:.55em;color:var(--cyan);-webkit-text-stroke:0;display:inline-block;animation:acx-spin 6s linear infinite}
+
+
+/* ============================================================
+   YORDAM — harakatlanuvchi gradient "mesh", halqalar, magnit tugmalar
+   ============================================================ */
+.acx-help{padding:var(--ac-sec) 0;background:#fff}
+.acx-end{
+  position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:32px;
+  padding:clamp(32px,5vw,68px);border-radius:44px;background:#00403D;color:var(--text);
+}
+.acx-end__mesh{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.acx-end__mesh span{position:absolute;border-radius:50%;will-change:transform}
+.acx-end__mesh span:nth-child(1){width:560px;height:560px;left:-160px;bottom:-300px;background:radial-gradient(circle,rgba(184,255,176,.38),transparent 64%);animation:acx-drift-1 14s ease-in-out infinite alternate}
+.acx-end__mesh span:nth-child(2){width:620px;height:620px;right:-200px;top:-280px;background:radial-gradient(circle,rgba(52,229,230,.4),transparent 62%);animation:acx-drift-2 17s ease-in-out infinite alternate}
+.acx-end__mesh span:nth-child(3){width:420px;height:420px;left:40%;top:-140px;background:radial-gradient(circle,rgba(0,163,156,.55),transparent 64%);animation:acx-drift-3 12s ease-in-out infinite alternate}
+.acx-end::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(420px circle at var(--mx,30%) var(--my,50%),rgba(241,255,240,.1),transparent 60%)}
+.acx-end__text{position:relative}
+.acx-end .acx-h2{color:#fff}
+.acx-end__text > p:not(.acx-kicker){margin-top:16px;max-width:46ch;font-size:17.5px;color:#C9E6E1}
+.acx-end__btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.acx-btn{
+  position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:58px;padding:0 28px;border-radius:var(--r-pill);
+  font-size:16px;font-weight:700;transform:translate(var(--tx,0),var(--ty,0));
+  transition:transform 450ms var(--ease-soft),background 300ms var(--ease),color 300ms,border-color 300ms,box-shadow 400ms;
+}
+.acx-btn--light{background:#fff;color:var(--ink);box-shadow:0 18px 40px -16px rgba(0,0,0,.55)}
+.acx-btn--light::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(184,255,176,.7) 50%,transparent 70%);transform:translateX(-110%);animation:acx-sweep 3.8s ease-in-out 1s infinite}
+.acx-btn--light:hover{background:var(--mint);box-shadow:0 22px 46px -14px rgba(184,255,176,.55)}
+.acx-btn--ghost{border:1px solid rgba(241,255,240,.32);color:#fff}
+.acx-btn--ghost:hover{background:rgba(241,255,240,.12);border-color:rgba(241,255,240,.6)}
+.acx-end__orbit{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:320px;width:100%;justify-self:center}
+.acx-end__orbit > span{grid-area:1/1}
+.acx-end__ring{position:relative;border-radius:50%;aspect-ratio:1}
+.acx-end__ring--1{width:100%;border:1.5px dashed rgba(241,255,240,.32);animation:acx-spin 36s linear infinite}
+.acx-end__ring--2{width:72%;border:1px solid rgba(241,255,240,.16);animation:acx-spin 24s linear infinite reverse;background:rgba(241,255,240,.03)}
+.acx-end__ring--2::before{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
+.acx-end__ring--3{width:46%;border:1px solid rgba(241,255,240,.1);animation:acx-breathe 4s ease-in-out infinite}
+.acx-end__ring--1 img{position:absolute;width:56px;height:56px;margin:-28px;border-radius:16px;box-shadow:0 14px 28px -10px rgba(0,0,0,.55);animation:acx-spin 36s linear infinite reverse}
+.acx-end__ring--1 img:nth-child(1){left:50%;top:0}
+.acx-end__ring--1 img:nth-child(2){left:100%;top:50%}
+.acx-end__ring--1 img:nth-child(3){left:50%;top:100%}
+.acx-end__ring--1 img:nth-child(4){left:0;top:50%}
+.acx-end__mark{position:relative;width:100px;height:100px;border-radius:30px;background:#fff;color:var(--brand);display:grid;place-items:center;box-shadow:0 22px 44px -14px rgba(0,0,0,.5);animation:acx-glow 3s ease-in-out infinite}
+.acx-end__mark svg{width:60px;height:auto}
+
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes acx-in{from{opacity:0;transform:translate3d(0,22px,0);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes acx-word{from{transform:translate3d(0,.55em,0) rotateX(-75deg);filter:blur(12px)}60%{filter:blur(0)}to{transform:none;filter:none}}
+@keyframes acx-card-in{from{transform:translate3d(0,80px,0) scale(.92);filter:blur(12px)}to{transform:none;filter:none}}
+@keyframes acx-rise{from{opacity:0;transform:translate3d(0,48px,0) scale(.96)}to{opacity:1;transform:none}}
+@keyframes acx-shine{to{background-position:-250% 0}}
+@keyframes acx-draw{to{clip-path:inset(0 0 0 0)}}
+@keyframes acx-sweep{0%{transform:translateX(-120%)}55%,100%{transform:translateX(260%)}}
+@keyframes acx-hop{0%,70%,100%{transform:none}80%{transform:translateY(-5px)}90%{transform:translateY(1px)}}
+@keyframes acx-turn{to{--acx-ang:360deg}}
+@keyframes acx-odo{from{transform:translateY(0)}}
+@keyframes acx-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes acx-sheet{0%,100%{rotate:0deg}50%{rotate:1.5deg}}
+@keyframes acx-bob{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -14px;rotate:-6deg}}
+@keyframes acx-bob-sm{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes acx-scan{0%{transform:translateX(-110%)}35%,100%{transform:translateX(110%)}}
+@keyframes acx-ping{from{transform:scale(1);opacity:.8}to{transform:scale(2.8);opacity:0}}
+@keyframes acx-ripple{from{transform:scale(1);opacity:.9}to{transform:scale(1.75);opacity:0}}
+@keyframes acx-drift-1{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(140px,90px,0) scale(1.12)}100%{transform:translate3d(60px,180px,0) scale(.95)}}
+@keyframes acx-drift-2{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-160px,120px,0) scale(.9)}100%{transform:translate3d(-60px,40px,0) scale(1.1)}}
+@keyframes acx-drift-3{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-120px,-70px,0) scale(1.15)}100%{transform:translate3d(120px,-30px,0) scale(1)}}
+@keyframes acx-floor{to{transform:translateY(72px)}}
+@keyframes acx-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes acx-travel{0%{left:-90px}100%{left:100%}}
+@keyframes acx-fill-x{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes acx-mark{from{background-size:0% 100%}to{background-size:100% 100%}}
+@keyframes acx-spin{to{transform:rotate(360deg)}}
+@keyframes acx-breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.6}}
+@keyframes acx-glow{0%,100%{box-shadow:0 22px 44px -14px rgba(0,0,0,.5),0 0 0 0 rgba(184,255,176,.45)}50%{box-shadow:0 22px 44px -14px rgba(0,0,0,.5),0 0 0 18px rgba(184,255,176,0)}}
+
+/* progress halqasi (--p: 0..1), ustidan aylanuvchi yaltirash */
+.acx-ring{position:relative;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--mint) calc(var(--p,0) * 360deg),rgba(241,255,240,.12) 0);
+  -webkit-mask:radial-gradient(circle,transparent 56%,#000 58%);mask:radial-gradient(circle,transparent 56%,#000 58%)}
+.acx-ring::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from var(--acx-ang),transparent 0 80%,rgba(52,229,230,.9) 95%,transparent);animation:acx-turn 3s linear infinite}
+
+/* marker scroll bilan "bo'yaladi" */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .acx-mark{animation:acx-mark linear both;animation-timeline:view();animation-range:entry 40% cover 45%}
+  }
+}
+
+@media (max-width:1023px){
+  .acx-end{grid-template-columns:minmax(0,1fr)}
+  .acx-end__orbit{display:none}
+}
+@media (max-width:767px){
+  .acx-hide-sm{display:none}
+  .acx-hero{padding:36px 0 72px;border-radius:0 0 32px 32px}
+  .acx-title{margin-top:20px;font-size:clamp(28px,8.6vw,44px)}
+  .acx-lead{margin-top:16px;font-size:16px}
+  .acx-ticker{margin-top:-34px;padding:44px 0 24px}
+  .acx-ticker__band{padding:14px 0}
+  .acx-head{text-align:left;margin-bottom:32px}
+  .acx-end{border-radius:30px}
+  .acx-end__btns{flex-direction:column}
+  .acx-btn{width:100%}
+}
+
+/* harakat cheklangan — hamma narsa joyida */
+@media (prefers-reduced-motion:reduce){
+  .ac [class*="acx-"],.ac [class*="acx-"]::before,.ac [class*="acx-"]::after{animation:none!important;transition:none!important}
+  .acx-word--grad::after{clip-path:none}
+}

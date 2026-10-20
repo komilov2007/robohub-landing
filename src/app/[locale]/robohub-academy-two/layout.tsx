@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { getLocale } from "@/i18n/server";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
+import Fx from "./components/fx/fx";
 import "./academy.css";
+import "./motion.css";
 
 // Robohub Academy — alohida sayt (robohub-academy-two domeni, proxy: src/proxy.ts).
 // Kodi Robohub va Robosell bilan aralashmaydi: hamma narsa shu papkada, uslublar .ac ildiziga bog'langan.
@@ -33,6 +35,7 @@ export default async function AcademyLayout({ children }: LayoutProps<"/[locale]
       <Header />
       <main id="ac-main">{children}</main>
       <Footer />
+      <Fx />
     </div>
   );
 }

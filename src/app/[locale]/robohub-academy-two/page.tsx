@@ -1,91 +1,111 @@
 import type { CSSProperties } from "react";
-import Link from "next/link";
-import { LESSONS, TOPICS, TOTAL_LESSONS, TOTAL_TOPICS, lessonsByTopic } from "./lib/academy";
+import { LESSONS, TOPICS, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
 import { PHONE, PHONE_TEL, START_URL } from "./lib/links";
 import AcademySearch from "./components/academy-search/academy-search";
-import ContinueChip from "./components/continue-chip/continue-chip";
+import ContinueCard from "./components/continue-card/continue-card";
+import StartPath from "./components/start-path/start-path";
 import TopicCard from "./components/topic-card/topic-card";
 import LessonFeed from "./components/lesson-feed/lesson-feed";
+import Odometer from "./components/odometer/odometer";
+import Aurora from "./components/aurora/aurora";
+import MpPeek from "./components/mp-peek/mp-peek";
 import Icon, { ICONS } from "./components/svg-icon/svg-icon";
 import { RobohubMark } from "./components/logo/logo";
+import "./home.css";
 
-// Academy bosh sahifasi. Hero — to'q "sahna": sarlavha, "davom ettirish" havolasi va mavzular qatori;
-// qidiruv hero'ning pastki chetida — yarmi hero'da, yarmi Mavzular bo'limida.
-// Video mavzu sahifalarining hero'sida — bosh sahifa yo'naltiruvchi. Pastda — mavzu kartochkalari va yordam bloki.
+// Academy bosh sahifasi ("tirik aurora" dizayni, uslublar — home.css):
+//   Hero — to'liq kenglikdagi to'q sahna: harakatlanuvchi aurora, oqib keluvchi to'r, kursor yorug'ligi;
+//   chapda sarlavha, qidiruv va odometr-statistika, o'ngda 3D "Shu yerdan boshlang / Davom ettiring" kartochkasi.
+//   Keyin mavzular nomlari lentasi, Boshlang'ich yo'l, bento-mavzular, jonli darslar lentasi va yordam bloki.
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
 export default function AcademyHome() {
   const totalMinutes = Math.round(LESSONS.reduce((s, l) => s + l.durationSec, 0) / 60);
+  const stats = [
+    { value: TOTAL_LESSONS, label: "video dars" },
+    { value: TOTAL_TOPICS, label: "mavzu" },
+    { value: totalMinutes, label: "daqiqa jami" },
+  ];
   return (
     <>
-      <section className="ac-stage ac-stage--home" data-theme="dark" aria-labelledby="ac-home-title">
-        <div className="container">
-          <div className="ac-stage__head">
-            <div className="ac-stage__top ac-rise">
-              <p className="ac-glass-pill">
-                <span className="ac-glass-pill__mps" aria-hidden="true">
-                  {MARKETPLACES.map((m) => (
-                    <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={18} height={18} />
-                  ))}
-                </span>
-                Robohub Academy · {TOTAL_LESSONS} dars · {TOTAL_TOPICS} mavzu<span className="ac-hide-sm"> · {totalMinutes} daqiqa</span>
-              </p>
-            </div>
-            <h1 id="ac-home-title" className="ac-stage__title">
-              <span className="ac-w">Robohub’ni</span>{" "}
-              <span className="ac-w" style={{ "--d": "80ms" } as CSSProperties}>
-                <span className="ac-grad">qisqa darslarda</span>
+      <section className="acx-hero" data-theme="dark" data-glow aria-labelledby="ac-home-title">
+        <Aurora />
+
+        <div className="container acx-hero__inner">
+          <div className="acx-hero__text">
+            {/* kapsula: logolar ustiga kelinsa yoyiladi, har biri — o'sha marketpleysni ulash videosi (kichik oyna) */}
+            <MpPeek style={{ "--d": "0ms" } as CSSProperties} />
+            <h1 id="ac-home-title" className="acx-title">
+              <span className="acx-word" style={{ "--d": "60ms" } as CSSProperties}>
+                Robohub’ni
               </span>{" "}
-              <span className="ac-w" style={{ "--d": "160ms" } as CSSProperties}>
+              <span className="acx-word acx-word--grad" style={{ "--d": "180ms" } as CSSProperties}>
+                qisqa darslarda
+              </span>{" "}
+              <span className="acx-word" style={{ "--d": "300ms" } as CSSProperties}>
                 o‘rganing
               </span>
             </h1>
-            <p className="ac-stage__lead ac-rise" style={{ "--d": "140ms" } as CSSProperties}>
-              Har mavzuda qisqa matn, sxema va video. O‘qing yoki ko‘ring — qaysi biri qulay bo‘lsa.
+            <p className="acx-lead acx-in" style={{ "--d": "380ms" } as CSSProperties}>
+              Har bir dars — bitta vazifa va bir necha daqiqa. Savolingizni yozing yoki boshlang‘ich yo‘ldan boring.
             </p>
-            <div className="ac-stage__continue ac-rise" style={{ "--d": "220ms" } as CSSProperties}>
-              <ContinueChip />
+            <div className="acx-search acx-in" style={{ "--d": "480ms" } as CSSProperties}>
+              <AcademySearch />
             </div>
-          </div>
-
-          <nav className="ac-rail" aria-label="Mavzular">
-            <ul>
-              {TOPICS.map((t, i) => (
-                <li key={t.slug} style={{ "--d": `${500 + i * 50}ms` } as CSSProperties}>
-                  <Link href={`/${t.slug}`}>
-                    <Icon d={t.icon} size={16} />
-                    {t.name}
-                    <small>{lessonsByTopic(t.slug).length}</small>
-                  </Link>
+            <ul className="acx-stats acx-in" style={{ "--d": "580ms" } as CSSProperties}>
+              {stats.map((s, i) => (
+                <li key={s.label}>
+                  <b>
+                    <Odometer value={s.value} delay={700 + i * 150} />
+                  </b>
+                  <span>{s.label}</span>
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
+
+          <div className="acx-hero__visual">
+            <span className="acx-orbit" aria-hidden="true">
+              {MARKETPLACES.map((m, i) => (
+                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={52} height={52} style={{ "--i": i } as CSSProperties} />
+              ))}
+            </span>
+            <ContinueCard />
+          </div>
         </div>
       </section>
 
-      <section className="ac-section ac-topics" id="topics" data-theme="light" aria-labelledby="ac-topics-title">
-        {/* Qidiruv hero bilan mavzular orasidagi "ko'prik": yarmi to'q hero ustida, yarmi shu bo'limda */}
-        <div className="container ac-dock">
-          <div className="ac-dock__inner ac-rise" style={{ "--d": "300ms" } as CSSProperties}>
-            <AcademySearch />
-          </div>
+      <div className="acx-ticker" aria-hidden="true">
+        <div className="acx-ticker__band">
+        <div className="acx-ticker__track">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="acx-ticker__row">
+              {TOPICS.map((t) => (
+                <span key={t.slug} className="acx-ticker__item">
+                  <Icon d={t.icon} size={30} />
+                  {t.name}
+                  <i>✦</i>
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
+        </div>
+      </div>
+
+      <StartPath />
+
+      <section className="acx-topics" id="topics" data-theme="light" aria-labelledby="ac-topics-title">
         <div className="container">
-          <div className="ac-head ac-head--split" data-reveal>
-            <div>
-              <p className="ac-eyebrow">Mavzular</p>
-              <h2 id="ac-topics-title" className="ac-h2">
-                Nimani <span className="ac-accent">o‘rganmoqchisiz?</span>
-              </h2>
-            </div>
-            <p className="ac-head__note">
-              {TOTAL_TOPICS} mavzu · {TOTAL_LESSONS} dars · {totalMinutes} daqiqa video
-            </p>
+          <div className="acx-head" data-reveal>
+            <p className="acx-kicker">Mavzular</p>
+            <h2 id="ac-topics-title" className="acx-h2">
+              Nimani <span className="acx-mark">o‘rganmoqchisiz?</span>
+            </h2>
           </div>
-          <ul className="ac-tgrid">
+          <ul className="acx-bento">
             {TOPICS.map((t, i) => (
-              <TopicCard key={t.slug} topic={t} index={i} />
+              <TopicCard key={t.slug} topic={t} index={i} featured={i === 0} />
             ))}
           </ul>
         </div>
@@ -93,33 +113,39 @@ export default function AcademyHome() {
 
       <LessonFeed />
 
-      <section className="ac-section ac-section--last" id="help" data-theme="light" aria-labelledby="ac-help-title">
+      <section className="acx-help" id="help" data-theme="light" aria-labelledby="ac-help-title">
         <div className="container">
-          <div className="ac-end" data-theme="brand" data-reveal>
-            <div className="ac-end__text">
-              <p className="ac-eyebrow ac-eyebrow--on-dark">Yordam</p>
-              <h2 id="ac-help-title" className="ac-h2">
-                Javob <span className="ac-accent">topilmadimi?</span>
+          <div className="acx-end" data-theme="brand" data-glow data-reveal>
+            <div className="acx-end__mesh" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <div className="acx-end__text">
+              <p className="acx-kicker acx-kicker--dark">Yordam</p>
+              <h2 id="ac-help-title" className="acx-h2">
+                Javob <span className="acx-grad">topilmadimi?</span>
               </h2>
               <p>Savolingizni yozing yoki qo‘ng‘iroq qiling — jamoamiz yordam beradi.</p>
               {/* TODO (14-bo'lim, 7-savol): Telegram linki bo'lsa — shu yerga uchinchi tugma */}
-              <div className="ac-end__btns">
-                <a href={PHONE_TEL} className="btn btn--lg btn--primary">
+              <div className="acx-end__btns">
+                <a href={PHONE_TEL} className="acx-btn acx-btn--light" data-magnet>
                   <Icon d={ICONS.phone} size={18} /> {PHONE}
                 </a>
-                <a href={START_URL} className="btn btn--lg btn--outline">
-                  Bepul boshlash
+                <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--ghost" data-magnet>
+                  Hoziroq boshlash
                 </a>
               </div>
             </div>
-            <div className="ac-end__orbit" aria-hidden="true">
-              <span className="ac-end__ring ac-end__ring--in" />
-              <span className="ac-end__ring">
+            <div className="acx-end__orbit" aria-hidden="true">
+              <span className="acx-end__ring acx-end__ring--3" />
+              <span className="acx-end__ring acx-end__ring--2" />
+              <span className="acx-end__ring acx-end__ring--1">
                 {MARKETPLACES.map((m) => (
                   <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={54} height={54} loading="lazy" />
                 ))}
               </span>
-              <span className="ac-end__mark">
+              <span className="acx-end__mark">
                 <RobohubMark />
               </span>
             </div>

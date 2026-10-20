@@ -49,7 +49,7 @@ export default function Footer() {
                 <a href={`${ROBOHUB_URL}/#pricing`}>Tariflar</a>
               </li>
               <li>
-                <a href={START_URL}>Bepul boshlash</a>
+                <a href={START_URL} target="_blank" rel="noopener">Hoziroq boshlash</a>
               </li>
             </ul>
           </nav>

@@ -1,55 +1,57 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { getLesson, lessonsByTopic, topicMinutes, type Topic } from "../../lib/academy";
-import { fmt, yt } from "../../lib/youtube";
+import { lessonsByTopic, topicMinutes, type Topic } from "../../lib/academy";
+import { fmt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
 import TopicProgress from "./topic-progress";
 
-// Mavzu kartochkasi — butun kartochka link. Tepada asosiy dars muqovasi (hover'da play),
-// ostida nom, qisqa tavsif, birinchi darslar ro'yxati va progress (localStorage'dan).
-export default function TopicCard({ topic, index }: { topic: Topic; index: number }) {
+// Mavzu kartochkasi (bento): ikon, nom, qisqa tavsif, darslar ro'yxati va progress (localStorage'dan).
+// Kartochkaning bo'sh joyi — mavzu sahifasiga (nom havolasi ::after bilan butun kartochkani qoplaydi),
+// har bir dars qatori — o'sha darsning o'ziga (/{mavzu}?dars=N). Havola ichida havola bo'lmasligi uchun shunday.
+// data-glow — kursor ortidan yuradigan yorug'lik va chegara. featured — gridda katta (2×2), barcha darslar ko'rinadi.
+export default function TopicCard({ topic, index, featured = false }: { topic: Topic; index: number; featured?: boolean }) {
   const lessons = lessonsByTopic(topic.slug);
-  const main = getLesson(topic.mainLesson) ?? lessons[0];
-  const shown = lessons.slice(0, 3);
+  const shown = featured ? lessons : lessons.slice(0, 3);
   const more = lessons.length - shown.length;
 
   return (
-    <li data-reveal style={{ "--ri": index % 4 } as CSSProperties}>
-      <Link href={`/${topic.slug}`} className="ac-tcard">
-        <span className="ac-tcard__cover">
-          <img src={yt.thumbMq(main.youtubeId)} width={320} height={180} alt="" loading="lazy" decoding="async" />
-          <span className="ac-tcard__ico">
-            <Icon d={topic.icon} size={20} />
+    <li className={featured ? "is-featured" : undefined} data-reveal style={{ "--ri": index % 4, "--i": index } as CSSProperties}>
+      <div className="acx-tcard" data-glow>
+        <span className="acx-tcard__head">
+          <span className="acx-tcard__ico">
+            <Icon d={topic.icon} size={featured ? 28 : 22} />
           </span>
-          <span className="ac-tcard__count">
+          <span className="acx-tcard__count">
             {lessons.length} dars · {topicMinutes(topic.slug)} daq
           </span>
-          <span className="ac-tcard__play" aria-hidden="true">
-            <PlayGlyph size={16} />
-          </span>
         </span>
 
-        <span className="ac-tcard__body">
-          <span className="ac-tcard__name">
+        <span className="acx-tcard__name">
+          <Link href={`/${topic.slug}`} className="acx-tcard__link">
             {topic.name}
-            <Icon d={ICONS.arrowRight} size={18} className="ac-tcard__go" />
+          </Link>
+          <span className="acx-tcard__go" aria-hidden="true">
+            <Icon d={ICONS.arrowRight} size={16} />
           </span>
-          <span className="ac-tcard__short">{topic.short}</span>
-
-          <span className="ac-tcard__lessons">
-            {shown.map((l) => (
-              <span key={l.n} className="ac-tcard__lesson">
-                <b>{l.n}</b>
-                <span>{l.title}</span>
-                <em>{fmt(l.durationSec)}</em>
-              </span>
-            ))}
-            {more > 0 && <span className="ac-tcard__more">+ yana {more} ta dars</span>}
-          </span>
-
-          <TopicProgress lessons={lessons.map((l) => l.n)} />
         </span>
-      </Link>
+        <span className="acx-tcard__short">{topic.short}</span>
+
+        <span className="acx-tcard__lessons">
+          {shown.map((l, i) => (
+            <Link key={l.n} href={`/${topic.slug}?dars=${l.n}`} className="acx-tcard__lesson" style={{ "--j": i } as CSSProperties}>
+              <b>
+                <span>{l.n}</span>
+                <PlayGlyph size={10} />
+              </b>
+              <span>{l.title}</span>
+              <em>{fmt(l.durationSec)}</em>
+            </Link>
+          ))}
+          {more > 0 && <span className="acx-tcard__more">+ yana {more} ta dars</span>}
+        </span>
+
+        <TopicProgress lessons={lessons.map((l) => l.n)} />
+      </div>
     </li>
   );
 }

@@ -7,10 +7,11 @@ import { PlayerProvider } from "../components/player/player-context";
 import Stage from "./components/stage/stage";
 import StageSkeleton from "./components/stage/stage-skeleton";
 import Marquee from "./components/marquee/marquee";
-import SectionNav from "./components/section-nav/section-nav";
+import Lessons from "./components/lessons/lessons";
 import Showcase from "./components/showcase/showcase";
 import Questions from "./components/questions/questions";
 import Cta from "./components/cta/cta";
+import "./topic.css";
 import MobileNextBar from "./components/mobile-next-bar/mobile-next-bar";
 
 // Mavzu sahifasi: /{topic} (Robohub_academy.md, 5-bo'lim). 8 ta mavzu oldindan statik yig'iladi.
@@ -72,10 +73,10 @@ async function TopicContent({ params }: { params: PageProps<"/[locale]/robohub-a
   return (
     <PlayerProvider topic={topic.slug} mainLesson={topic.mainLesson}>
       <JsonLd topic={topic} />
-      {/* Hero = asosiy video; pastda — mavzuga xos vizual (har sahifada boshqacha), savollar va CTA */}
+      {/* Hero = sarlavha va asosiy video; pastda — mavzu darslari, mavzuga xos vizual, savollar va CTA */}
       <Stage topic={topic} />
       <Marquee />
-      <SectionNav lessonCount={lessonsByTopic(topic.slug).length} />
+      <Lessons topic={topic} />
       <Showcase topic={topic} />
       <Questions topic={topic} />
       <Cta topic={topic} />

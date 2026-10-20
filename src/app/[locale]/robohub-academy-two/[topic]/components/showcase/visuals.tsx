@@ -4,15 +4,15 @@ import type { TopicSlug } from "../../../lib/academy";
 // Har bir mavzuning o'ziga xos animatsiyali vizuali — video mavzusini bir qarashda ko'rsatadi.
 // Hammasi illyustratsiya (aria-hidden): raqam va nomlar namunaviy, ostida "namuna" yozuvi.
 // Animatsiyalar faqat CSS (transform/opacity), academy.css → "VIZUALLAR".
-const v = (vars: Record<string, string | number>) => vars as CSSProperties;
-const MP = { uzum: "Uzum Market", wildberries: "Wildberries", yandex: "Yandex Market", ozon: "Ozon" } as const;
-type Mp = keyof typeof MP;
-const Logo = ({ mp, size = 20 }: { mp: Mp; size?: number }) => (
+export const v = (vars: Record<string, string | number>) => vars as CSSProperties;
+export const MP = { uzum: "Uzum Market", wildberries: "Wildberries", yandex: "Yandex Market", ozon: "Ozon" } as const;
+export type Mp = keyof typeof MP;
+export const Logo = ({ mp, size = 20 }: { mp: Mp; size?: number }) => (
   <img src={`/marketplaces/${mp}.svg`} alt="" width={size} height={size} loading="lazy" />
 );
 
 // Oyna ramkasi: yuqorida 3 nuqta va sarlavha
-function Win({ title, dark, children, className }: { title: string; dark?: boolean; children: ReactNode; className?: string }) {
+export function Win({ title, dark, children, className }: { title: string; dark?: boolean; children: ReactNode; className?: string }) {
   return (
     <div className={`ac-win${dark ? " ac-win--dark" : ""}${className ? ` ${className}` : ""}`}>
       <div className="ac-win__bar">
@@ -27,7 +27,7 @@ function Win({ title, dark, children, className }: { title: string; dark?: boole
 }
 
 // ───────── Analitika: KPI, o'suvchi grafik, ABC × XYZ matritsa ─────────
-function Analitika() {
+export function Analitika() {
   const bars = [38, 52, 44, 66, 58, 74, 62, 81, 70, 88, 79, 94];
   const cells = ["AX", "AY", "AZ", "BX", "BY", "BZ", "CX", "CY", "CZ"];
   return (
@@ -67,7 +67,7 @@ function Analitika() {
 }
 
 // ───────── Buyurtmalar: kanban, bitta buyurtma ustunlar bo'ylab yuradi ─────────
-function Buyurtmalar() {
+export function Buyurtmalar() {
   const cols: { t: string; cards: [Mp, string][] }[] = [
     { t: "Yangi", cards: [["wildberries", "#5531"], ["yandex", "#778"]] },
     { t: "Yig‘ilmoqda", cards: [["uzum", "#1038"]] },
@@ -107,7 +107,7 @@ function Buyurtmalar() {
 }
 
 // ───────── Mahsulotlar: narx o'zgaradi va marketpleyslarga yuboriladi ─────────
-function Mahsulotlar() {
+export function Mahsulotlar() {
   const mps: Mp[] = ["uzum", "wildberries", "yandex", "ozon"];
   return (
     <div className="ac-v ac-v--product">
@@ -145,7 +145,7 @@ function Mahsulotlar() {
 }
 
 // ───────── Ombor: omborlar guruhlarga yig'iladi, Missing ogohlantirishi ─────────
-function Ombor() {
+export function Ombor() {
   const items: [string, number][] = [
     ["Uzum FBO", 0],
     ["WB Koledino", 1],
@@ -297,7 +297,7 @@ function Muloqot() {
 }
 
 // ───────── Boshqaruv: rollar va huquqlar jadvali ─────────
-function Boshqaruv() {
+export function Boshqaruv() {
   const cols = ["Buyurtma", "Narx", "Analitika", "Hujjat"];
   const rows: [string, number[]][] = [
     ["Menejer", [1, 1, 1, 1]],

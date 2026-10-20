@@ -1,0 +1,412 @@
+/* ============================================================
+   ROBOHUB ACADEMY — BOSH SAHIFA. Umumiy hero, sarlavhalar, tasma, CTA va keyframes — motion.css.
+   Bu yerda faqat bosh sahifaga xos bloklar: hero tarkibi, qidiruv, odometr, 3D kartochka,
+   Boshlang'ich yo'l, bento-mavzular, jonli darslar lentasi.
+   ============================================================ */
+.acx-hero__inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,5vw,72px);align-items:center}
+.acx-hero__text{min-width:0}
+
+
+/* qidiruv — aylanuvchi gradient chegara va yumshoq nur */
+.acx-search{position:relative;z-index:2;margin-top:34px;max-width:620px}
+.acx-search .ac-search__box{border-radius:24px;box-shadow:0 40px 80px -36px rgba(0,0,0,.8)}
+.acx-search .ac-search__box::before,.acx-search .ac-search__box::after{
+  content:"";position:absolute;inset:-2px;z-index:-1;border-radius:26px;
+  background:conic-gradient(from var(--acx-ang),var(--mint),var(--cyan),rgba(52,229,230,0) 28%,rgba(52,229,230,0) 62%,var(--mint));
+  animation:acx-turn 4.5s linear infinite;
+}
+.acx-search .ac-search__box::after{inset:-6px;border-radius:30px;filter:blur(16px);opacity:.55}
+.acx-search .ac-search__box:focus-within{box-shadow:0 0 0 3px rgba(184,255,176,.5),0 40px 80px -36px rgba(0,0,0,.8)}
+.acx-search .ac-search__box:focus-within::before,.acx-search .ac-search__box:focus-within::after{animation-duration:1.6s}
+.acx-search .ac-search__btn{position:relative;overflow:hidden;background:var(--brand);border-color:var(--brand);transition:background 250ms var(--ease),transform 250ms var(--ease-soft)}
+.acx-search .ac-search__btn:hover{background:#003634;transform:scale(1.04)}
+.acx-search .ac-search__popular{justify-content:flex-start;margin-top:18px;color:rgba(241,255,240,.6)}
+.acx-search .ac-chip{background:rgba(241,255,240,.06);border-color:rgba(241,255,240,.16);color:#fff;transition:background 250ms var(--ease),color 250ms,border-color 250ms,transform 350ms cubic-bezier(.3,1.6,.5,1)}
+.acx-search .ac-chip:hover{background:var(--mint);border-color:var(--mint);color:var(--ink);translate:none;transform:translateY(-3px) rotate(-2deg)}
+
+/* statistika — odometr */
+.acx-stats{display:flex;flex-wrap:wrap;gap:16px clamp(24px,3.4vw,52px);margin-top:40px}
+.acx-stats li{position:relative;padding-left:18px}
+.acx-stats li::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:2px;border-radius:2px;background:linear-gradient(var(--mint),rgba(52,229,230,0))}
+.acx-stats b{display:block;font-family:var(--font-head);font-size:clamp(30px,2.8vw,44px);font-weight:700;line-height:1;letter-spacing:-.04em;color:#fff}
+.acx-stats li > span{display:block;margin-top:8px;font-size:13.5px;font-weight:600;color:var(--text-dim)}
+.acx-odo{--h:1.25em;display:inline-block;margin-block:-.085em} /* Unbounded raqamlari 1em dan baland — ustun kengroq, tashqi balandlik o'zgarmaydi */
+.acx-odo__row{display:inline-flex;font-variant-numeric:tabular-nums}
+.acx-odo__col{display:inline-block;height:var(--h);overflow:hidden}
+.acx-odo__col > span{display:flex;flex-direction:column;transform:translateY(calc(var(--v) * -1 * var(--h)));animation:acx-odo 1900ms cubic-bezier(.16,.9,.12,1) calc(var(--d) + var(--i) * 160ms) backwards}
+.acx-odo__col > span > span{display:block;height:var(--h);line-height:var(--h)}
+
+/* o'ng tomon: suzuvchi 3D kartochka va uchib yuruvchi marketpleys logolari */
+.acx-hero__visual{position:relative;min-width:0}
+.acx-orbit img{
+  position:absolute;z-index:3;width:54px;height:54px;border-radius:16px;
+  box-shadow:0 18px 34px -12px rgba(0,0,0,.7),0 0 0 4px rgba(241,255,240,.06);
+  animation:acx-in 900ms var(--ease-soft) calc(900ms + var(--i) * 140ms) backwards,acx-bob 6s ease-in-out calc(var(--i) * -1.4s) infinite;
+}
+.acx-orbit img:nth-child(1){left:-26px;top:16%}
+.acx-orbit img:nth-child(2){right:-20px;top:-26px;width:46px;height:46px}
+.acx-orbit img:nth-child(3){right:-30px;top:56%}
+.acx-orbit img:nth-child(4){left:10%;bottom:-30px;width:46px;height:46px}
+
+.acx-cc{perspective:1500px;animation:acx-card-in 1300ms cubic-bezier(.2,.9,.2,1) 250ms backwards,acx-float 7s ease-in-out 1600ms infinite}
+.acx-cc__float{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,5deg)) rotateY(var(--ry,-10deg));transition:transform 900ms var(--ease-soft)}
+.acx-cc:hover .acx-cc__float{transition-duration:300ms}
+.acx-cc__sheet{position:absolute;inset:0;border-radius:32px;background:rgba(241,255,240,.05);border:1px solid rgba(241,255,240,.1)}
+.acx-cc__sheet--1{transform:translate3d(20px,18px,-50px) rotate(2.5deg);animation:acx-sheet 7s ease-in-out infinite}
+.acx-cc__sheet--2{transform:translate3d(40px,36px,-100px) rotate(5deg);opacity:.55;animation:acx-sheet 7s ease-in-out -1.2s infinite}
+.acx-cc__card{
+  position:relative;isolation:isolate;overflow:hidden;padding:10px;border-radius:32px;
+  background:linear-gradient(160deg,rgba(14,78,72,.95),rgba(0,33,31,.97) 60%);
+  border:1px solid rgba(241,255,240,.16);box-shadow:0 90px 120px -60px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.acx-cc__card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(420px circle at var(--mx,80%) var(--my,0%),rgba(184,255,176,.16),transparent 45%);transition:opacity 300ms}
+.acx-cc__main{display:block;border-radius:24px}
+.acx-cc__thumb{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-radius:24px;background:#00332F;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.acx-cc__thumb img{width:100%;height:100%;object-fit:cover;transition:transform 1200ms var(--ease-soft)}
+.acx-cc__thumb::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,40,38,0),rgba(0,40,38,.5));transition:opacity 400ms}
+.acx-cc__main:hover .acx-cc__thumb img{transform:scale(1.06)}
+.acx-cc__main:hover .acx-cc__thumb::after{opacity:.5}
+.acx-cc__scan{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.2) 50%,transparent 62%);transform:translateX(-110%);animation:acx-scan 5.5s ease-in-out 2.2s infinite}
+.acx-cc__badge{position:absolute;left:12px;top:12px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:6px 13px 6px 10px;border-radius:var(--r-pill);background:rgba(255,255,255,.95);color:var(--brand);font-size:12.5px;font-weight:800;box-shadow:0 8px 20px -8px rgba(0,0,0,.5)}
+.acx-cc__badge i{position:relative;width:8px;height:8px;border-radius:50%;background:#00A39C}
+.acx-cc__badge i::after{content:"";position:absolute;inset:0;border-radius:50%;background:#00A39C;animation:acx-ping 1.8s ease-out infinite}
+.acx-cc__dur{position:absolute;right:12px;bottom:12px;z-index:2;padding:3px 10px;border-radius:var(--r-pill);background:rgba(0,20,19,.85);color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.acx-cc__play{position:absolute;left:50%;top:50%;z-index:2;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--brand);box-shadow:0 22px 50px -12px rgba(0,27,26,.8);transition:transform 450ms cubic-bezier(.3,1.6,.5,1)}
+.acx-cc__play svg{position:relative;margin-left:4px}
+.acx-cc__play i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,255,255,.7);animation:acx-ripple 2.6s var(--ease) infinite}
+.acx-cc__play i + i{animation-delay:1.3s}
+.acx-cc__main:hover .acx-cc__play{transform:scale(1.12)}
+.acx-cc__info{display:flex;flex-direction:column;gap:6px;padding:18px 12px 4px}
+.acx-cc__info small{font-size:13px;font-weight:700;color:var(--cyan)}
+.acx-cc__info strong{font-size:clamp(17px,1.5vw,21px);line-height:1.3;letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.acx-cc__next{margin-top:14px;padding:14px 2px 0;border-top:1px solid rgba(241,255,240,.1)}
+.acx-cc__next p{padding:0 10px 6px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)}
+.acx-cc__next li{animation:acx-in 700ms var(--ease-soft) calc(1100ms + var(--i) * 120ms) backwards}
+.acx-cc__next a{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px 10px;border-radius:14px;font-size:14px;font-weight:600;color:#fff;transition:background 250ms var(--ease),transform 350ms var(--ease-soft)}
+.acx-cc__next a:hover{background:rgba(241,255,240,.08);transform:translateX(4px)}
+.acx-cc__n{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:rgba(241,255,240,.08);font-size:12px;font-weight:800;color:var(--mint);transition:background 250ms,color 250ms}
+.acx-cc__next a:hover .acx-cc__n{background:var(--mint);color:var(--ink)}
+.acx-cc__n.is-done{background:rgba(184,255,176,.2)}
+.acx-cc__title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acx-cc__next em{font-style:normal;font-size:12.5px;font-weight:600;color:var(--text-dim);font-variant-numeric:tabular-nums}
+.acx-cc__foot{display:flex;align-items:center;gap:14px;margin-top:10px;padding:14px 10px 8px;border-top:1px solid rgba(241,255,240,.1);font-size:12.5px;font-weight:700;color:var(--text-dim);white-space:nowrap}
+
+/* ============================================================
+   BOSHLANG'ICH YO'L — tugunli chiziq + kartochkalar
+   ============================================================ */
+.acx-path{position:relative;isolation:isolate;padding:clamp(40px,5vw,72px) 0 var(--ac-sec);background:#fff}
+.acx-path::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(rgba(0,82,79,.14) 1.2px,transparent 1.6px) 0 0/24px 24px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000,transparent 75%)}
+.acx-path__track{position:relative}
+.acx-path__rail{position:absolute;left:12.5%;right:12.5%;top:22px;height:3px;border-radius:3px;background:rgba(0,82,79,.12);overflow:hidden}
+.acx-path__rail i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--brand),#00A39C,var(--cyan));transform-origin:left}
+.acx-path__rail::after{content:"";position:absolute;top:-3px;bottom:-3px;width:90px;background:linear-gradient(90deg,transparent,rgba(184,255,176,.95),transparent);animation:acx-travel 3.4s ease-in-out infinite}
+.acx-path__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.acx-path__list > li{display:flex;flex-direction:column;align-items:center;gap:24px}
+.acx-path__node{position:relative;z-index:1;flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid rgba(0,82,79,.2);font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--brand);box-shadow:0 0 0 6px #fff;transition:transform 400ms cubic-bezier(.3,1.6,.5,1)}
+.acx-path__list > li:hover .acx-path__node{transform:scale(1.15)}
+.acx-path__list > li.is-current .acx-path__node{background:var(--brand);border-color:var(--brand);color:#fff}
+.acx-path__list > li.is-current .acx-path__node::before,.acx-path__list > li.is-current .acx-path__node::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--brand);animation:acx-ripple 2.4s var(--ease) infinite}
+.acx-path__list > li.is-current .acx-path__node::after{animation-delay:1.2s}
+.acx-path__list > li.is-done .acx-path__node{background:var(--mint);border-color:var(--mint);color:var(--ink)}
+
+.acx-step{
+  position:relative;isolation:isolate;overflow:hidden;width:100%;flex:1;display:flex;flex-direction:column;gap:6px;padding:22px 22px 18px;
+  border-radius:28px;background:#fff;border:1px solid var(--line);
+  transition:transform 550ms var(--ease-soft),box-shadow 550ms var(--ease-soft),border-color 300ms var(--ease);
+}
+.acx-step::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),rgba(184,255,176,.5),transparent 60%);opacity:0;transition:opacity 400ms var(--ease)}
+.acx-step:hover{transform:translateY(-10px);box-shadow:0 46px 70px -44px rgba(0,54,52,.55);border-color:rgba(0,82,79,.3)}
+.acx-step:hover::before{opacity:1}
+.acx-path__list > li.is-current .acx-step{
+  border:2px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--acx-ang),var(--brand),var(--cyan),var(--mint),var(--brand)) border-box;
+  animation:acx-turn 5s linear infinite;box-shadow:0 30px 60px -40px rgba(0,82,79,.6);
+}
+.acx-step__top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.acx-step__ico{flex:none;width:54px;height:54px;border-radius:17px;background:var(--ac-mint-soft);color:var(--brand);display:grid;place-items:center;transition:transform 500ms cubic-bezier(.3,1.6,.5,1),background 300ms,color 300ms}
+.acx-step:hover .acx-step__ico{transform:rotate(-10deg) scale(1.1);background:var(--brand);color:#fff}
+.acx-path__list > li.is-current .acx-step__ico{background:var(--brand);color:#fff}
+.acx-path__list > li.is-done .acx-step__ico{background:var(--mint);color:var(--ink)}
+.acx-step__status{padding:5px 11px;border-radius:var(--r-pill);font-size:12px;font-weight:800;white-space:nowrap;background:var(--brand);color:#fff}
+.acx-path__list > li.is-done .acx-step__status{background:var(--ac-mint-soft);color:var(--brand)}
+.acx-step__n{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
+.acx-step__name{font-family:var(--font-head);font-size:20px;font-weight:700;letter-spacing:-.03em}
+.acx-step__text{flex:1;font-size:14.5px;line-height:1.5;color:var(--text-dim)}
+.acx-step__meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-strong);font-size:13px;font-weight:700;color:var(--brand)}
+.acx-step__go{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-strong);transition:background 300ms,color 300ms,border-color 300ms,transform 400ms var(--ease-soft)}
+.acx-step:hover .acx-step__go{background:var(--brand);border-color:var(--brand);color:#fff;transform:rotate(-45deg)}
+
+/* ============================================================
+   MAVZULAR — bento grid, kursor nuri va porlovchi chegara
+   ============================================================ */
+.acx-topics{padding:var(--ac-sec) 0;background:linear-gradient(180deg,#fff 0%,var(--ac-soft) 100%)}
+.acx-bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.acx-bento > li{display:flex}
+.acx-bento > li.is-featured{grid-column:span 2;grid-row:span 2}
+.acx-bento > li:last-child{grid-column:span 2}
+.acx-tcard{
+  position:relative;isolation:isolate;overflow:hidden;width:100%;display:flex;flex-direction:column;gap:6px;padding:22px 22px 20px;
+  border-radius:28px;background:#fff;border:1px solid var(--line);
+  transition:transform 550ms var(--ease-soft),box-shadow 550ms var(--ease-soft),border-color 300ms;
+}
+.acx-tcard::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(184,255,176,.45),transparent 60%);opacity:0;transition:opacity 400ms var(--ease)}
+.acx-tcard::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,0%),var(--brand),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  opacity:0;transition:opacity 400ms var(--ease);
+}
+.acx-tcard:hover{transform:translateY(-8px);box-shadow:0 46px 70px -44px rgba(0,54,52,.5);border-color:transparent}
+.acx-tcard:hover::before,.acx-tcard:hover::after{opacity:1}
+.acx-tcard__head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
+.acx-tcard__ico{flex:none;width:52px;height:52px;border-radius:16px;background:var(--ac-mint-soft);color:var(--brand);display:grid;place-items:center;
+  animation:acx-bob-sm 5s ease-in-out calc(var(--i) * -.7s) infinite;transition:transform 500ms cubic-bezier(.3,1.6,.5,1),background 300ms,color 300ms}
+.acx-tcard:hover .acx-tcard__ico{transform:rotate(-10deg) scale(1.1);background:var(--brand);color:#fff}
+.acx-tcard__count{padding:5px 11px;border-radius:var(--r-pill);background:var(--ac-soft);font-size:12px;font-weight:700;color:var(--text-dim);white-space:nowrap}
+.acx-tcard__name{display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:var(--font-head);font-size:19px;font-weight:700;letter-spacing:-.03em}
+/* nom havolasi butun kartochkani qoplaydi (dars qatorlari z-index:2 bilan uning ustida) */
+.acx-tcard__link{color:inherit}
+.acx-tcard__link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
+.ac .acx-tcard__link:focus-visible{outline:none}
+.acx-tcard:has(.acx-tcard__link:focus-visible){outline:2px solid var(--hl);outline-offset:3px}
+.acx-tcard__go{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--line-strong);color:var(--brand);transition:background 300ms,color 300ms,border-color 300ms,transform 400ms var(--ease-soft)}
+.acx-tcard:hover .acx-tcard__go{background:var(--brand);border-color:var(--brand);color:#fff;transform:rotate(-45deg)}
+.acx-tcard__short{min-height:2.9em;font-size:14px;line-height:1.45;color:var(--text-dim)}
+.acx-tcard__lessons{display:flex;flex-direction:column;flex:1;margin-top:10px;padding-top:12px;border-top:1px dashed var(--line-strong)}
+.acx-tcard__lesson{position:relative;z-index:2;display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:10px;margin:0 -8px;padding:5px 8px;border-radius:11px;font-size:13px;font-weight:600;color:inherit;transition:background 250ms var(--ease),transform 350ms var(--ease-soft)}
+.acx-tcard__lesson:hover,.acx-tcard__lesson:focus-visible{background:var(--ac-soft);transform:translateX(4px)}
+.acx-tcard__lesson b{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--ac-soft);color:var(--brand);font-size:11px;font-weight:800}
+.acx-tcard__lesson b svg{display:none;margin-left:1px}
+.acx-tcard__lesson:hover b,.acx-tcard__lesson:focus-visible b{background:var(--brand);color:#fff}
+.acx-tcard__lesson:hover b span,.acx-tcard__lesson:focus-visible b span{display:none}
+.acx-tcard__lesson:hover b svg,.acx-tcard__lesson:focus-visible b svg{display:block}
+.acx-tcard__lesson span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acx-tcard__lesson em{font-style:normal;font-size:12px;font-weight:600;color:var(--text-dim);font-variant-numeric:tabular-nums}
+.acx-tcard__more{padding:6px 0 0 34px;font-size:12.5px;font-weight:700;color:var(--brand)}
+.acx-tcard__progress{display:flex;align-items:center;gap:12px;margin-top:14px}
+.acx-tcard__pct{font-size:12.5px;font-weight:800;color:var(--brand);white-space:nowrap}
+.acx-tcard__pct.is-started{color:var(--text-dim)}
+
+/* katta (featured) kartochka — to'q, aylanuvchi halqalar bilan */
+.is-featured .acx-tcard{padding:30px;background:radial-gradient(120% 90% at 100% 0%,#0B5E57 0%,#003B38 45%,#002523 100%);border-color:rgba(241,255,240,.1);color:#F1FFF0}
+.is-featured .acx-tcard::before{background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(52,229,230,.22),transparent 60%)}
+.is-featured .acx-tcard::after{background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),var(--mint),transparent 70%)}
+.is-featured .acx-tcard__ico{width:68px;height:68px;border-radius:22px;background:rgba(184,255,176,.14);color:var(--mint)}
+.is-featured .acx-tcard:hover .acx-tcard__ico{background:var(--mint);color:var(--ink)}
+.is-featured .acx-tcard__count{background:rgba(241,255,240,.1);color:#B4D8D3}
+.is-featured .acx-tcard__name{font-size:clamp(26px,2.4vw,34px)}
+.is-featured .acx-tcard__go{width:44px;height:44px;border-color:rgba(241,255,240,.25);color:#fff}
+.is-featured .acx-tcard:hover .acx-tcard__go{background:var(--mint);border-color:var(--mint);color:var(--ink)}
+.is-featured .acx-tcard__short{font-size:15.5px;color:#B4D8D3}
+.is-featured .acx-tcard__lessons{border-color:rgba(241,255,240,.18)}
+.is-featured .acx-tcard__lesson{padding:8px 0;font-size:14.5px}
+.is-featured .acx-tcard__lesson b{background:rgba(241,255,240,.1);color:var(--mint)}
+.is-featured .acx-tcard__lesson:hover,.is-featured .acx-tcard__lesson:focus-visible{background:rgba(241,255,240,.08)}
+.is-featured .acx-tcard__lesson:hover b,.is-featured .acx-tcard__lesson:focus-visible b{background:var(--mint);color:var(--ink)}
+.is-featured .acx-tcard__lesson em,.is-featured .acx-tcard__pct.is-started{color:#B4D8D3}
+.is-featured .acx-tcard__more,.is-featured .acx-tcard__pct{color:var(--mint)}
+.is-featured .acx-meter{background:rgba(241,255,240,.12)}
+.is-featured .acx-meter i{background:linear-gradient(90deg,var(--mint),var(--cyan))}
+.is-featured .acx-tcard__head::after{
+  content:"";position:absolute;right:-90px;top:-90px;z-index:-1;width:300px;height:300px;border-radius:50%;
+  border:1.5px dashed rgba(184,255,176,.22);box-shadow:0 0 0 46px rgba(184,255,176,.03),0 0 0 47px rgba(184,255,176,.1);
+  animation:acx-spin 40s linear infinite;
+}
+
+/* ============================================================
+   BARCHA DARSLAR — to'q bo'lim, ikki qatorli jonli lenta
+   ============================================================ */
+.acx-feed{position:relative;isolation:isolate;overflow:hidden;padding:var(--ac-sec) 0;background:#00211F;color:var(--text)}
+.acx-feed__bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.acx-feed__bg span{position:absolute;border-radius:50%;will-change:transform}
+.acx-feed__bg span:nth-child(1){width:720px;height:720px;left:-240px;top:-280px;background:radial-gradient(circle,rgba(52,229,230,.2),transparent 62%);animation:acx-drift-2 21s ease-in-out infinite alternate}
+.acx-feed__bg span:nth-child(2){width:680px;height:680px;right:-220px;bottom:-320px;background:radial-gradient(circle,rgba(184,255,176,.18),transparent 62%);animation:acx-drift-1 18s ease-in-out infinite alternate}
+.acx-feed__head{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;margin-bottom:30px}
+.acx-feed .acx-h2{color:#fff}
+.acx-feed__lead{margin-top:12px;max-width:470px;font-size:16px;color:var(--text-dim)}
+.acx-feed__stat{display:flex;align-items:center;gap:16px;padding:12px 22px 12px 12px;border-radius:28px;background:rgba(241,255,240,.05);border:1px solid rgba(241,255,240,.12)}
+.acx-feed__stat-text{display:flex;flex-direction:column;gap:4px}
+.acx-feed__stat-text b{font-family:var(--font-head);font-size:30px;line-height:1;color:#fff}
+.acx-feed__stat-text b small{font-size:15px;color:var(--text-dim)}
+.acx-feed__stat-text > span{font-size:13px;font-weight:600;color:var(--text-dim)}
+.acx-feed__filters{display:flex;flex-wrap:wrap;gap:10px}
+.acx-pill{
+  display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 18px;border-radius:var(--r-pill);
+  border:1px solid rgba(241,255,240,.16);background:rgba(241,255,240,.05);font-size:14px;font-weight:700;color:#fff;
+  transition:background 300ms var(--ease),color 300ms,border-color 300ms,box-shadow 300ms,transform 400ms cubic-bezier(.3,1.6,.5,1);
+}
+.acx-pill small{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 7px;border-radius:var(--r-pill);background:rgba(241,255,240,.1);font-size:12px}
+.acx-pill:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.acx-pill[aria-pressed="true"]{background:linear-gradient(95deg,var(--mint),var(--cyan));border-color:transparent;color:var(--ink);box-shadow:0 14px 30px -12px rgba(52,229,230,.65)}
+.acx-pill[aria-pressed="true"] small{background:var(--ink);color:var(--mint)}
+.acx-feed__rows{display:grid;gap:6px;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);animation:acx-in 700ms var(--ease-soft) backwards}
+.acx-marquee{overflow:hidden;padding:12px 0 14px}
+.acx-marquee__track{display:flex;width:max-content;animation:acx-marq var(--dur,60s) linear infinite}
+.acx-marquee.is-reverse .acx-marquee__track{animation-direction:reverse}
+.acx-marquee:hover .acx-marquee__track,.acx-marquee:focus-within .acx-marquee__track{animation-play-state:paused}
+.acx-marquee__track > li{flex:none;padding-right:16px}
+.acx-lc{
+  display:flex;flex-direction:column;gap:10px;width:288px;height:100%;padding:8px 8px 16px;border-radius:24px;
+  background:rgba(241,255,240,.05);border:1px solid rgba(241,255,240,.1);
+  transition:transform 500ms var(--ease-soft),background 300ms var(--ease),border-color 300ms,box-shadow 500ms;
+}
+.acx-lc:hover{transform:translateY(-6px) rotate(-1.2deg);background:rgba(241,255,240,.09);border-color:rgba(184,255,176,.45);box-shadow:0 34px 50px -30px rgba(0,0,0,.85)}
+.is-reverse .acx-lc:hover{transform:translateY(-6px) rotate(1.2deg)}
+.acx-lc__thumb{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-radius:17px;background:#00332F}
+.acx-lc__thumb img{width:100%;height:100%;object-fit:cover;transition:transform 700ms var(--ease-soft)}
+.acx-lc:hover .acx-lc__thumb img{transform:scale(1.08)}
+.acx-lc__play{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--brand);box-shadow:0 12px 26px -10px rgba(0,0,0,.6);opacity:0;transform:scale(.6);transition:opacity 300ms,transform 450ms cubic-bezier(.3,1.6,.5,1)}
+.acx-lc__play svg{margin-left:2px}
+.acx-lc:hover .acx-lc__play{opacity:1;transform:none}
+.acx-lc__dur{position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:var(--r-pill);background:rgba(0,20,19,.85);color:#fff;font-size:11.5px;font-weight:700}
+.acx-lc__meta{display:flex;align-items:center;gap:8px;padding:0 6px;font-size:12px;font-weight:700;color:var(--text-dim)}
+.acx-lc__meta em{font-style:normal;padding:1px 8px;border-radius:var(--r-pill);background:rgba(184,255,176,.16);color:var(--mint);font-size:11px}
+.acx-lc__title{padding:0 6px;font-size:14.5px;font-weight:700;line-height:1.35;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ============================================================
+   SCROLL BILAN — yo'l chizig'i to'ladi, marker bo'yaladi, kartochkalar navbat bilan chiqadi
+   ============================================================ */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .acx-path__rail i{animation:acx-fill-x linear both;animation-timeline:view();animation-range:entry 40% cover 55%}
+    .acx-path__list > li{animation:acx-rise linear both;animation-timeline:view();animation-range:entry calc(var(--i) * 8%) entry calc(75% + var(--i) * 8%)}
+    .acx-mark{animation:acx-mark linear both;animation-timeline:view();animation-range:entry 40% cover 45%}
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1199px){
+  .acx-bento{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .acx-bento > li:last-child{grid-column:span 1}
+  .acx-bento > li.is-featured{grid-column:span 2}
+}
+@media (max-width:1023px){
+  .acx-hero__inner{grid-template-columns:minmax(0,1fr)}
+  .acx-hero__visual{max-width:600px;width:100%;margin:12px auto 0}
+  .acx-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .acx-bento > li.is-featured{grid-column:span 2;grid-row:span 1}
+  .acx-bento > li:last-child{grid-column:span 2}
+  .acx-path__list{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+  .acx-path__rail{display:none}
+}
+@media (max-width:767px){
+  .acx-search{margin-top:24px}
+  .acx-search .ac-search__popular{flex-wrap:nowrap}
+  .acx-search .ac-search__popular > span{display:none}
+  .acx-search .ac-search__popular ul{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:4px 20px;scrollbar-width:none}
+  .acx-search .ac-search__popular ul::-webkit-scrollbar{display:none}
+  .acx-search .ac-search__popular li{flex:none}
+  .acx-search .ac-chip{white-space:nowrap}
+  .acx-stats{margin-top:28px;gap:12px 26px}
+  .acx-stats b{font-size:30px}
+  .acx-hero__visual{margin-top:20px}
+  .acx-orbit img{width:42px!important;height:42px!important;border-radius:12px}
+  .acx-orbit img:nth-child(odd){display:none}
+  .acx-orbit img:nth-child(2){right:-6px;top:-18px}
+  .acx-cc__float{transform:rotateX(var(--rx,3deg)) rotateY(var(--ry,-4deg))}
+  .acx-cc__sheet--1{transform:translate3d(10px,12px,-40px) rotate(2deg)}
+  .acx-cc__sheet--2{transform:translate3d(20px,24px,-80px) rotate(4deg)}
+  .acx-cc__card{padding:6px;border-radius:26px}
+  .acx-cc__thumb{border-radius:20px}
+  .acx-cc__play{width:62px;height:62px;margin:-31px 0 0 -31px}
+  .acx-cc__info{padding:14px 8px 2px}
+  .acx-cc__next li:nth-child(3){display:none}
+
+
+  .acx-path__list{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .acx-path__list > li{flex-direction:row;align-items:stretch;gap:14px}
+  .acx-path__track::before{content:"";position:absolute;left:22px;top:24px;bottom:24px;width:3px;margin-left:-1.5px;border-radius:3px;background:linear-gradient(var(--brand),var(--cyan));opacity:.25}
+  .acx-path__node{width:44px;height:44px;margin-top:18px}
+  .acx-step{padding:18px}
+  .acx-step__top{margin-bottom:10px}
+  .acx-step__ico{width:46px;height:46px;border-radius:14px}
+  .acx-step__name{font-size:18px}
+  .acx-step:hover{transform:none}
+
+  .acx-bento{grid-template-columns:minmax(0,1fr);gap:12px}
+  .acx-bento > li.is-featured,.acx-bento > li:last-child{grid-column:auto;grid-row:auto}
+  .acx-tcard{padding:18px}
+  .acx-tcard__lessons{display:none}
+  .acx-tcard__head{margin-bottom:12px}
+  .acx-tcard__short{min-height:0}
+  .is-featured .acx-tcard{padding:22px}
+  .acx-tcard:hover{transform:none}
+
+  .acx-feed__stat{width:100%}
+  .acx-feed__filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:4px 20px;scrollbar-width:none}
+  .acx-feed__filters::-webkit-scrollbar{display:none}
+  .acx-pill{flex:none}
+  .acx-lc{width:236px}
+  .acx-feed__rows{-webkit-mask-image:none;mask-image:none}
+
+}
+
+/* ============================================================
+   HARAKAT CHEKLANGAN — hamma narsa joyida, lenta oddiy scroll
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  .acx-hero *,.acx-hero *::before,.acx-hero *::after,
+  .acx-ticker *,.acx-path *,.acx-path *::before,.acx-path *::after,
+  .acx-topics *,.acx-topics *::before,.acx-topics *::after,
+  .acx-feed *,.acx-feed *::before,.acx-feed *::after,
+  .acx-help *,.acx-help *::before,.acx-help *::after{animation:none!important;transition:none!important}
+  .acx-word--grad::after{clip-path:none}
+  .acx-marquee{overflow-x:auto}
+}
+
+
+/* ============================================================
+   HERO KAPSULASI: marketpleys logolari → kichik video oynasi (mp-peek.tsx)
+   Oddiy holatda logolar ustma-ust; ustiga kelinsa (yoki oyna ochiq bo'lsa) — yoyiladi.
+   ============================================================ */
+.acx-mpb{position:relative;z-index:20;display:inline-block}
+.acx-badge--mp{overflow:visible}
+.acx-badge--mp::after{display:none} /* yaltirash kapsuladan chiqib ketmasin (overflow ochiq — logolar kattalashadi) */
+.acx-mps{display:inline-flex;align-items:center;padding:2px 0}
+.acx-mps__item{
+  position:relative;display:block;width:26px;height:26px;margin-right:-8px;padding:0;border-radius:8px;
+  box-shadow:0 0 0 2px #00211F;cursor:pointer;
+  transition:margin 450ms cubic-bezier(.3,1.4,.5,1),transform 400ms cubic-bezier(.3,1.6,.5,1),box-shadow 250ms;
+}
+.acx-mps__item:last-child{margin-right:2px}
+.acx-mps__item img{width:100%;height:100%;border-radius:inherit;animation:acx-hop 3.6s var(--ease-soft) calc(var(--k) * .15s) infinite}
+.acx-mps:hover .acx-mps__item,.acx-mpb.is-open .acx-mps__item,.acx-mps:focus-within .acx-mps__item{margin-right:6px}
+.acx-mps:hover .acx-mps__item:last-child,.acx-mpb.is-open .acx-mps__item:last-child,.acx-mps:focus-within .acx-mps__item:last-child{margin-right:8px}
+.acx-mps:hover .acx-mps__item img,.acx-mpb.is-open .acx-mps__item img{animation:none}
+.acx-mps__item:hover,.acx-mps__item.is-active{z-index:1;transform:translateY(-3px) scale(1.12);box-shadow:0 0 0 2px var(--mint),0 10px 20px -8px rgba(0,0,0,.6)}
+.acx-mps__item:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* kichik oyna — bosilgan/ustidagi logo tagida, strelka logoga qaraydi */
+.acx-mppop{position:absolute;left:var(--x);top:calc(100% + 14px);z-index:30;width:300px;margin-left:-150px}
+.acx-mppop::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px} /* sichqoncha o'tadigan ko'prik */
+.acx-mppop__card{
+  position:relative;display:block;padding:8px 8px 10px;border-radius:20px;color:var(--text);
+  /* tepasi bir xil rangda — strelka (::before) shu rang bilan oynaning davomi bo'lib ko'rinadi */
+  background:linear-gradient(180deg,#0B4F4A 0%,#0B4F4A 18%,#003633 60%,#00211F 100%);border:1px solid rgba(241,255,240,.16);
+  box-shadow:0 40px 70px -30px rgba(0,0,0,.85);animation:acx-mppop-in 380ms cubic-bezier(.2,1.2,.3,1);transform-origin:50% 0;
+}
+.acx-mppop__card::before{content:"";position:absolute;left:calc(50% + var(--ax,0px));top:-7px;width:13px;height:13px;margin-left:-6.5px;transform:rotate(45deg);background:#0B4F4A;border:1px solid rgba(241,255,240,.16);border-right:0;border-bottom:0;border-radius:3px 0 0 0;clip-path:polygon(0 0,100% 0,0 100%)}
+@keyframes acx-mppop-in{from{opacity:0;transform:translateY(-6px) scale(.95)}}
+.acx-mppop__meta{display:flex;align-items:center;gap:7px;padding:2px 2px 8px 4px;font-size:12.5px;font-weight:800;color:#fff}
+.acx-mppop__meta img{width:18px;height:18px;border-radius:5px}
+.acx-mppop__meta span{font-size:11.5px;font-weight:700;color:var(--cyan)}
+.acx-mppop__thumb{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-radius:13px;background:#00332F;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.acx-mppop__thumb img{width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--ease-soft)}
+.acx-mppop__thumb::after{content:"";position:absolute;inset:0;background:rgba(0,40,38,.2);transition:background 300ms}
+.acx-mppop__card:hover .acx-mppop__thumb img{transform:scale(1.06)}
+.acx-mppop__card:hover .acx-mppop__thumb::after{background:rgba(0,40,38,.35)}
+.acx-mppop__play{position:absolute;left:50%;top:50%;z-index:1;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--brand);box-shadow:0 12px 24px -10px rgba(0,0,0,.6);transition:transform 400ms cubic-bezier(.3,1.6,.5,1)}
+.acx-mppop__play svg{margin-left:2px}
+.acx-mppop__play::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,255,255,.7);animation:acx-ripple 2.2s var(--ease) infinite}
+.acx-mppop__card:hover .acx-mppop__play{transform:scale(1.12)}
+.acx-mppop__title{display:block;margin-top:9px;padding:0 4px;font-size:13.5px;font-weight:800;line-height:1.3;color:#fff}
+.acx-mppop__more{display:inline-flex;align-items:center;gap:6px;margin:6px 4px 0;font-size:12px;font-weight:700;color:var(--mint)}
+.acx-mppop__more svg{transition:transform 300ms var(--ease-soft)}
+.acx-mppop__card:hover .acx-mppop__more svg{transform:translateX(3px)}
+@media (max-width:767px){
+  .acx-mppop{width:270px;margin-left:-135px}
+}

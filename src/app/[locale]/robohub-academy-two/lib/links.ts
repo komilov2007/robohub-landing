@@ -1,7 +1,7 @@
 // Tashqi havolalar — bitta joyda.
-// TODO (14-bo'lim, 8-savol): "Bepul boshlash" qayerga olib borishi — ro'yxatdan o'tish URL'i kontent jamoasidan.
 export const ROBOHUB_URL = "https://robohub-landing.vercel.app";
-export const START_URL = `${ROBOHUB_URL}/#start`;
+// "Hoziroq boshlash" tugmalari (header, footer, bosh sahifa va mavzu CTA'lari) — sotuvchi kabineti
+export const START_URL = "https://seller.robohub.uz";
 export const LOGIN_URL = `${ROBOHUB_URL}/#login`;
 export const YOUTUBE_CHANNEL = "https://www.youtube.com/@robohub_ai";
 export const PHONE = "+998 78 113 82 12";

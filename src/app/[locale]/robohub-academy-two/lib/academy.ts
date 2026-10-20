@@ -173,9 +173,11 @@ export const LESSONS: Lesson[] = [
       "Mahsulotning real natijasini aniqlash",
     ],
   },
+
+  // ───────── BUYURTMALAR ─────────
   {
     n: 9,
-    topic: "analitika",
+    topic: "buyurtmalar",
     youtubeId: "vwJhmZPC4Wo",
     durationSec: 82,
     title: "Buyurtmalar dinamikasini qanday tahlil qilish mumkin?",
@@ -188,8 +190,6 @@ export const LESSONS: Lesson[] = [
       "O‘sish va pasayishlarni aniqlash",
     ],
   },
-
-  // ───────── BUYURTMALAR ─────────
   {
     n: 10,
     topic: "buyurtmalar",
@@ -1075,6 +1075,15 @@ export const TOPICS: Topic[] = [
     faqs: [{ q: "[TODO: savol]", a: "[TODO: javob]" }],
     related: ["analitika", "muloqot"],
   },
+];
+
+// Bosh sahifadagi "Boshlang'ich yo'l": yangi foydalanuvchi mavzularni shu tartibda ko'radi.
+// Birinchi qadamning birinchi darsi — tarix bo'lmasa hero'dagi "Shu yerdan boshlang" darsi.
+export const START_PATH: { topic: TopicSlug; step: string }[] = [
+  { topic: "integratsiya", step: "Marketpleys do‘koningizni Robohub’ga ulang" },
+  { topic: "mahsulotlar", step: "Tovar kartochkalari va narxlarni bir joydan yangilang" },
+  { topic: "buyurtmalar", step: "Barcha marketpleys buyurtmalarini bitta oynada qayta ishlang" },
+  { topic: "analitika", step: "Savdo, xarajat va foydani raqamlarda ko‘ring" },
 ];
 
 // ───────── Hisoblanadigan qiymatlar ─────────

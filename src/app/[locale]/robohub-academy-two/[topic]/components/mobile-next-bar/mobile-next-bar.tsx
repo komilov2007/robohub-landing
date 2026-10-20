@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { nextLesson } from "../../../lib/academy";
 import { usePlayer } from "../../../components/player/player-context";
+import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
 
-// Mobil pastki sticky panel: "Keyingi dars" + [Ko'rish]. Hero (pleyer) va footer ko'ringanda yashirinadi.
+// Mobil pastki sticky panel (shisha kapsula): "Keyingi dars" + [Ko'rish]. Hero (pleyer) va footer ko'ringanda yashirinadi.
 export default function MobileNextBar() {
   const { selected, topic, select } = usePlayer();
   const [hidden, setHidden] = useState(true);
   const next = nextLesson(selected);
 
   useEffect(() => {
-    const targets = [document.querySelector(".ac-stage"), document.getElementById("ac-footer")].filter(
+    const targets = [document.querySelector(".acx-hero"), document.getElementById("ac-footer")].filter(
       (el): el is Element => el !== null,
     );
     const visible = new Map<Element, boolean>();
@@ -26,20 +27,25 @@ export default function MobileNextBar() {
 
   if (!next) return null;
   const sameTopic = next.topic === topic;
+  const btn = (
+    <>
+      <PlayGlyph size={14} /> Ko‘rish
+    </>
+  );
 
   return (
-    <div className={`ac-nextbar${hidden ? " is-hidden" : ""}`} data-theme="dark" inert={hidden}>
-      <div className="ac-nextbar__text">
+    <div className={`acx-nextbar${hidden ? " is-hidden" : ""}`} data-theme="dark" inert={hidden}>
+      <div className="acx-nextbar__text">
         <span>Keyingi dars · {next.n}</span>
         <strong>{next.title}</strong>
       </div>
       {sameTopic ? (
-        <button type="button" className="btn btn--primary ac-nextbar__btn" onClick={() => select(next.n, { play: true, scroll: true })}>
-          Ko‘rish
+        <button type="button" className="acx-nextbar__btn" onClick={() => select(next.n, { play: true, scroll: true })}>
+          {btn}
         </button>
       ) : (
-        <Link href={`/${next.topic}?dars=${next.n}`} className="btn btn--primary ac-nextbar__btn">
-          Ko‘rish
+        <Link href={`/${next.topic}?dars=${next.n}`} className="acx-nextbar__btn">
+          {btn}
         </Link>
       )}
     </div>

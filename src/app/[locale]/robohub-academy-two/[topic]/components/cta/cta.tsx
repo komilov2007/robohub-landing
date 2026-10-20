@@ -5,36 +5,43 @@ import { RobohubMark } from "../../../components/logo/logo";
 
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
-// CTA — Robohub'ning yakuniy kartochkasi kabi: brend fon, o'ngda marketpleyslar orbitasi
+// CTA — bosh sahifadagi "Yordam" bloki uslubida: harakatlanuvchi gradient fon, aylanuvchi halqalar
+// va marketpleyslar orbitasi, magnit tugmalar (data-magnet).
 export default function Cta({ topic }: { topic: Topic }) {
   const next = nextTopic(topic.slug);
   return (
-    <section className="ac-section ac-section--last" data-theme="light" aria-labelledby="ac-cta-title">
+    <section className="acx-help" data-theme="light" aria-labelledby="ac-cta-title">
       <div className="container">
-        <div className="ac-end" data-theme="brand" data-reveal>
-          <div className="ac-end__text">
-            <p className="ac-eyebrow ac-eyebrow--on-dark">Amalda sinab ko‘ring</p>
-            <h2 id="ac-cta-title" className="ac-h2">
-              {topic.name}ni bugun <span className="ac-accent">o‘z kabinetingizda</span> sinab ko‘ring
+        <div className="acx-end" data-theme="brand" data-glow data-reveal>
+          <div className="acx-end__mesh" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="acx-end__text">
+            <p className="acx-kicker acx-kicker--dark">Amalda sinab ko‘ring</p>
+            <h2 id="ac-cta-title" className="acx-h2">
+              {topic.name}ni bugun <span className="acx-grad">o‘z kabinetingizda</span> sinab ko‘ring
             </h2>
             <p>Darsdagi har bir qadamni o‘z kabinetingizda takrorlang.</p>
-            <div className="ac-end__btns">
-              <a href={START_URL} className="btn btn--lg btn--primary">
-                Bepul boshlash <span className="arrow" aria-hidden="true">→</span>
+            <div className="acx-end__btns">
+              <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--light" data-magnet>
+                Hoziroq boshlash <span aria-hidden="true">→</span>
               </a>
-              <Link href={`/${next.slug}`} className="btn btn--lg btn--outline">
+              <Link href={`/${next.slug}`} className="acx-btn acx-btn--ghost" data-magnet>
                 Keyingi mavzu: {next.name}
               </Link>
             </div>
           </div>
-          <div className="ac-end__orbit" aria-hidden="true">
-            <span className="ac-end__ring ac-end__ring--in" />
-            <span className="ac-end__ring">
+          <div className="acx-end__orbit" aria-hidden="true">
+            <span className="acx-end__ring acx-end__ring--3" />
+            <span className="acx-end__ring acx-end__ring--2" />
+            <span className="acx-end__ring acx-end__ring--1">
               {MARKETPLACES.map((m) => (
                 <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={54} height={54} loading="lazy" />
               ))}
             </span>
-            <span className="ac-end__mark">
+            <span className="acx-end__mark">
               <RobohubMark />
             </span>
           </div>
