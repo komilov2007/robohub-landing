@@ -1,3 +1,6 @@
+import type { ContactIconName } from "@/components/contact-icon/contact-icon";
+import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+
 // Robosell landingining barcha matnlari va ma'lumotlari — bitta joyda.
 // Hozircha faqat o'zbekcha (lotin): RU/EN tugmalari faqat interfeysda turadi.
 // Imlo: o‘/g‘ uchun ‘ (U+2018), tutuq belgisi uchun ’ (U+2019) — ikkalasi ham Onest shriftida bor.
@@ -286,13 +289,25 @@ export const FINAL = {
   start: "Bepul boshlash",
 };
 
-export const FOOTER = {
+// icon — footer "Aloqa" ustunida havola oldida ikon; external — yangi oynada ochiladi
+export type FooterLink = { label: string; href: string; icon?: ContactIconName; external?: boolean };
+
+export const FOOTER: { about: string; cols: { title: string; links: FooterLink[] }[]; legal: FooterLink[] } = {
   about: "Telegram bot, veb-sayt va QR menyu orqali onlayn savdo platformasi.",
   cols: [
     { title: "Mahsulot", links: [{ label: "Imkoniyatlar", href: "#features" }, { label: "Platformalar", href: "#channels" }, { label: "Integratsiyalar", href: "#integrations" }, { label: "Tariflar", href: "#pricing" }] },
-    // NAMUNA: video darslar va ijtimoiy tarmoqlar manzillari hali yo'q
+    // NAMUNA: video darslar manzili hali yo'q
     { title: "Yordam", links: [{ label: "Video darslar", href: "#how-it-works" }, { label: "FAQ", href: "#faq" }, { label: "Qo‘llab-quvvatlash", href: PHONE_HREF }] },
-    { title: "Aloqa", links: [{ label: PHONE, href: PHONE_HREF }, { label: "Telegram", href: "#" }, { label: "Instagram", href: "#" }, { label: "YouTube", href: "#" }] },
+    {
+      title: "Aloqa",
+      links: [
+        { label: PHONE, href: PHONE_HREF, icon: "phone" },
+        { label: EMAIL, href: EMAIL_HREF, icon: "email" },
+        { label: "Telegram", href: TELEGRAM_URL, icon: "telegram", external: true },
+        { label: "Instagram", href: INSTAGRAM_URL.robosell, icon: "instagram", external: true },
+        { label: "YouTube", href: YOUTUBE_URL, icon: "youtube", external: true },
+      ],
+    },
   ],
   legal: [{ label: "Oferta", href: "#" }, { label: "Maxfiylik siyosati", href: "#" }],
 };

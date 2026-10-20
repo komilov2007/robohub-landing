@@ -1,5 +1,5 @@
 import { defineMessages } from "@/i18n/config";
-import { ACADEMY_URL } from "@/lib/sites";
+import { ACADEMY_PATH } from "@/lib/sites";
 
 export const messages = defineMessages({
   uz: {
@@ -20,13 +20,12 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Tariflar" },
       { href: "#faq", label: "Savollar" },
       { href: "#contact", label: "Aloqa" },
-      { href: ACADEMY_URL, label: "Video darslar (Academy)" },
+      { href: ACADEMY_PATH, label: "Video darslar (Academy)" },
     ],
     tools: "Bepul vositalar",
     calculator: "Marketpleys kalkulyatori",
     infographics: "AI infografika",
     contact: "Aloqa",
-    support: "Qoʻllab-quvvatlash xizmati",
     privacy: "Maxfiylik siyosati",
     help: "Qoʻllab-quvvatlash",
   },
@@ -47,13 +46,12 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифы" },
       { href: "#faq", label: "Вопросы" },
       { href: "#contact", label: "Контакты" },
-      { href: ACADEMY_URL, label: "Видеоуроки (Academy)" },
+      { href: ACADEMY_PATH, label: "Видеоуроки (Academy)" },
     ],
     tools: "Бесплатные инструменты",
     calculator: "Калькулятор маркетплейсов",
     infographics: "AI-инфографика",
     contact: "Контакты",
-    support: "Служба поддержки",
     privacy: "Политика конфиденциальности",
     help: "Поддержка",
   },
@@ -74,13 +72,12 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Pricing" },
       { href: "#faq", label: "FAQ" },
       { href: "#contact", label: "Contact" },
-      { href: ACADEMY_URL, label: "Video lessons (Academy)" },
+      { href: ACADEMY_PATH, label: "Video lessons (Academy)" },
     ],
     tools: "Free tools",
     calculator: "Marketplace calculator",
     infographics: "AI infographics",
     contact: "Contact",
-    support: "Support service",
     privacy: "Privacy policy",
     help: "Support",
   },

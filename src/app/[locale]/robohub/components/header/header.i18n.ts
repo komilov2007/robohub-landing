@@ -1,5 +1,5 @@
 import { defineMessages } from "@/i18n/config";
-import { ACADEMY_URL } from "@/lib/sites";
+import { ACADEMY_PATH } from "@/lib/sites";
 
 export const messages = defineMessages({
   uz: {
@@ -11,7 +11,7 @@ export const messages = defineMessages({
       { href: "#reviews", label: "Sharhlar" },
       { href: "#pricing", label: "Tariflar" },
       { href: "#faq", label: "Savollar" },
-      { href: ACADEMY_URL, label: "Academy" },
+      { href: ACADEMY_PATH, label: "Academy" },
     ],
     lang: "Til tanlash",
     login: "Kirish",
@@ -28,7 +28,7 @@ export const messages = defineMessages({
       { href: "#reviews", label: "Отзывы" },
       { href: "#pricing", label: "Тарифы" },
       { href: "#faq", label: "Вопросы" },
-      { href: ACADEMY_URL, label: "Академия" },
+      { href: ACADEMY_PATH, label: "Академия" },
     ],
     lang: "Выбор языка",
     login: "Войти",
@@ -45,7 +45,7 @@ export const messages = defineMessages({
       { href: "#reviews", label: "Reviews" },
       { href: "#pricing", label: "Pricing" },
       { href: "#faq", label: "FAQ" },
-      { href: ACADEMY_URL, label: "Academy" },
+      { href: ACADEMY_PATH, label: "Academy" },
     ],
     lang: "Choose language",
     login: "Log in",

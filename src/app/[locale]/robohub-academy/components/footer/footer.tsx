@@ -1,7 +1,18 @@
 import Link from "next/link";
 import { RobohubLogo } from "../logo/logo";
 import { TOPICS } from "../../lib/academy";
-import { PHONE, PHONE_TEL, ROBOHUB_URL, START_URL, YOUTUBE_CHANNEL } from "../../lib/links";
+import { PHONE, PHONE_TEL, ROBOHUB_URL, START_URL } from "../../lib/links";
+import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
+import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+
+// Footer "Aloqa": ikon + oddiy matn (chegarasiz)
+const CONTACTS: { icon: ContactIconName; label: string; href: string; external?: boolean }[] = [
+  { icon: "phone", label: PHONE, href: PHONE_TEL },
+  { icon: "email", label: EMAIL, href: EMAIL_HREF },
+  { icon: "telegram", label: "Telegram", href: TELEGRAM_URL, external: true },
+  { icon: "instagram", label: "Instagram", href: INSTAGRAM_URL.robohub, external: true },
+  { icon: "youtube", label: "YouTube", href: YOUTUBE_URL, external: true },
+];
 
 // Joriy yil — keshlangan (cacheComponents: prerender'da new Date() to'g'ridan-to'g'ri ishlatilmaydi)
 async function Year() {
@@ -55,15 +66,15 @@ export default function Footer() {
           </nav>
           <div>
             <h3>Aloqa</h3>
-            <ul>
-              <li>
-                <a href={PHONE_TEL}>{PHONE}</a>
-              </li>
-              <li>
-                <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener">
-                  YouTube: @robohub_ai
-                </a>
-              </li>
+            <ul className="ac-footer__contacts">
+              {CONTACTS.map((c) => (
+                <li key={c.icon}>
+                  <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener" } : {})}>
+                    <ContactIcon name={c.icon} />
+                    {c.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

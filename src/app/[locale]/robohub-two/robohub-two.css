@@ -1775,12 +1775,12 @@
 .foot ul a::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1.5px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--t-mid) var(--ease)}
 .foot ul a:hover{color:#fff}
 .foot ul a:hover::after{transform:scaleX(1)}
+/* aloqa: ikon + oddiy matn, chegarasiz */
+.foot ul.foot__contacts a{display:inline-flex;align-items:center;gap:10px}
+.foot ul.foot__contacts a::after{left:28px}
+.foot__contacts svg{flex:none;color:var(--text-dim);transition:color var(--t-fast) var(--ease)}
+.foot__contacts a:hover svg{color:#fff}
 /* aloqa kartasi */
-.foot__call{display:flex;align-items:center;gap:14px;padding:16px;border-radius:20px;border:1px solid var(--line);background:rgba(241,255,240,.05);transition:border-color var(--t-mid) var(--ease),background var(--t-mid) var(--ease)}
-.foot__call:hover{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.08)}
-.foot__call i{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:14px;background:#fff;color:var(--ink)}
-.foot__call span span{display:block;font-size:13px;color:var(--text-dim)}
-.foot__call b{display:block;font-family:var(--font-head);font-size:16px;letter-spacing:-.01em;white-space:nowrap}
 .foot__bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:1px solid var(--line);font-size:13.5px;color:var(--text-dim)}
 .foot__bar span{display:flex;gap:20px}
 .foot__bar a{display:inline-block;padding-block:6px}

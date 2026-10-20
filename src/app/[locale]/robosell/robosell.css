@@ -872,6 +872,9 @@
 .rs-foot__col h2{margin-bottom:10px;font-size:14px;font-weight:700;color:#fff}
 .rs-foot__col a{display:inline-flex;align-items:center;min-height:36px;font-size:15px;transition:color .2s}
 .rs-foot__col a:hover,.rs-foot__bottom a:hover{color:#fff}
+/* aloqa: ikon + oddiy matn */
+.rs-foot__ico{flex:none;margin-right:10px;opacity:.7;transition:opacity .2s}
+.rs-foot__col a:hover .rs-foot__ico{opacity:1}
 .rs-foot__bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:14px;color:#8E99A8}
 .rs-foot__bottom ul{display:flex;flex-wrap:wrap;gap:6px 18px}
 @media (min-width:900px){

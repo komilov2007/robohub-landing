@@ -1,5 +1,6 @@
 import { FOOTER } from "../../robosell.content";
 import Logo from "../logo/logo";
+import ContactIcon from "@/components/contact-icon/contact-icon";
 
 // Footer — oxirgi, eng to'q "pufakcha" (#000211): logo, uch ustun havolalar, huquqiy qator.
 export default function Footer() {
@@ -17,7 +18,10 @@ export default function Footer() {
               <ul>
                 {c.links.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href}>{l.label}</a>
+                    <a href={l.href} {...(l.external ? { target: "_blank", rel: "noopener" } : {})}>
+                      {l.icon && <ContactIcon name={l.icon} className="rs-foot__ico" />}
+                      {l.label}
+                    </a>
                   </li>
                 ))}
               </ul>

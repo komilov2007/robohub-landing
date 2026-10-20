@@ -1,0 +1,189 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Logo from "../logo/logo";
+import TopicsMenu from "./topics-menu";
+import Icon from "../svg-icon/svg-icon";
+import { TOPICS, lessonsByTopic } from "../../lib/academy";
+import { LOGIN_URL, START_URL, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
+
+// Academy header — Robohub landingi header'i uslubida: sticky, oq + blur, scroll'da soya.
+// Menyu — Academy'ning o'z bo'limlari: bosh sahifa, Mavzular (8 mavzu ochiladigan panelda), Yordam, YouTube.
+export default function Header() {
+  const pathname = usePathname();
+  // Menyular qaysi sahifada ochilganini eslaydi — boshqa sahifaga o'tilsa o'zi yopiq hisoblanadi
+  const [openAt, setOpenAt] = useState<string | null>(null); // mobil menyu
+  const [dropAt, setDropAt] = useState<string | null>(null); // "Mavzular" paneli (desktop)
+  const open = openAt === pathname;
+  const drop = dropAt === pathname;
+  const setOpen = (v: boolean | ((p: boolean) => boolean)) =>
+    setOpenAt((cur) => ((typeof v === "function" ? v(cur === pathname) : v) ? pathname : null));
+  const setDrop = (v: boolean | ((p: boolean) => boolean)) =>
+    setDropAt((cur) => ((typeof v === "function" ? v(cur === pathname) : v) ? pathname : null));
+  const [stuck, setStuck] = useState(false);
+  const [corners, setCorners] = useState(false);
+  const dropRef = useRef<HTMLLIElement>(null);
+  const hoverTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  // Academy — /academy ostida: "/academy" — bosh sahifa, "/academy/order" — mavzu
+  const sub = pathname.startsWith(ACADEMY_BASE) ? pathname.slice(ACADEMY_BASE.length) : pathname;
+  const slug = sub.split("/")[1] ?? "";
+  const isHome = sub === "" || sub === "/";
+  const currentTopic = TOPICS.find((t) => t.slug === slug)?.slug;
+
+  useEffect(() => {
+    let raf = 0;
+    const measure = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setStuck(window.scrollY > 8);
+        // Header'ning pastki cheti to'q yumaloq hero ustida bo'lsa — "teskari burchak"lar
+        // yoqiladi: blok scroll qilinganda ham yuqori burchaklari yumaloq ko'rinadi.
+        const edge = document.querySelector(".ac-header")?.getBoundingClientRect().bottom ?? 72;
+        const over = [...document.querySelectorAll(".ac-stage")].some((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top < edge - 1 && r.bottom > edge;
+        });
+        setCorners(over);
+      });
+    };
+    measure();
+    window.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", measure);
+      window.removeEventListener("resize", measure);
+      cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
+
+  // Esc va tashqariga bosish — menyu va panelni yopadi
+  useEffect(() => {
+    if (!open && !drop) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenAt(null);
+        setDropAt(null);
+      }
+    };
+    const onDown = (e: PointerEvent) => {
+      if (drop && dropRef.current && !dropRef.current.contains(e.target as Node)) setDropAt(null);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [open, drop]);
+
+  // Sichqoncha bilan: ustiga kelganda ochiladi, chiqib ketganda biroz kutib yopiladi
+  const hover = (on: boolean) => {
+    clearTimeout(hoverTimer.current);
+    hoverTimer.current = setTimeout(() => setDrop(on), on ? 60 : 180);
+  };
+
+  return (
+    <header
+      className={`ac-header${stuck ? " is-stuck" : ""}${corners ? " has-corners" : ""}${open ? " is-open" : ""}`}
+      data-theme="light"
+    >
+      <div className="container ac-header__inner">
+        <Logo />
+        <nav className="ac-nav" aria-label="Asosiy menyu">
+          <ul>
+            <li>
+              <Link href={ACADEMY_BASE} className={`ac-nav__link${isHome ? " is-active" : ""}`} aria-current={isHome ? "page" : undefined}>
+                Academy
+              </Link>
+            </li>
+            <li
+              ref={dropRef}
+              className={`ac-nav__drop${drop ? " is-open" : ""}`}
+              onPointerEnter={(e) => e.pointerType === "mouse" && hover(true)}
+              onPointerLeave={(e) => e.pointerType === "mouse" && hover(false)}
+            >
+              <button
+                type="button"
+                className={`ac-nav__link${currentTopic ? " is-active" : ""}`}
+                aria-expanded={drop}
+                aria-controls="ac-topics-menu"
+                onClick={() => setDrop((v) => !v)}
+              >
+                Mavzular
+                <Icon d="M6 9l6 6 6-6" size={15} className="ac-nav__caret" />
+              </button>
+              <TopicsMenu open={drop} current={currentTopic} />
+            </li>
+            <li>
+              <Link href={academyHref("#help")} className="ac-nav__link">
+                Yordam
+              </Link>
+            </li>
+            <li>
+              <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener" className="ac-nav__link">
+                YouTube <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div className="ac-header__actions">
+          <a href={LOGIN_URL} className="btn btn--ghost">
+            Kirish
+          </a>
+          <a href={START_URL} target="_blank" rel="noopener" className="btn btn--accent">
+            Hoziroq boshlash
+          </a>
+        </div>
+        <button
+          type="button"
+          className="ac-burger"
+          aria-label={open ? "Menyuni yopish" : "Menyuni ochish"}
+          aria-expanded={open}
+          aria-controls="ac-mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      <div id="ac-mobile-menu" className="ac-mmenu" inert={!open}>
+        <div className="container">
+          <Link href={ACADEMY_BASE} className="ac-mmenu__link" aria-current={isHome ? "page" : undefined}>
+            Academy — bosh sahifa
+          </Link>
+          <p className="ac-mmenu__label">Mavzular</p>
+          <ul className="ac-mmenu__topics">
+            {TOPICS.map((t) => (
+              <li key={t.slug}>
+                <Link href={topicHref(t.slug)} aria-current={t.slug === currentTopic ? "page" : undefined}>
+                  <Icon d={t.icon} size={16} />
+                  {t.name}
+                  <small>{lessonsByTopic(t.slug).length}</small>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link href={academyHref("#help")} className="ac-mmenu__link">
+            Yordam
+          </Link>
+          <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener" className="ac-mmenu__link">
+            YouTube ↗
+          </a>
+          <div className="ac-mmenu__actions">
+            <a href={LOGIN_URL} className="btn btn--lg btn--outline">
+              Kirish
+            </a>
+            <a href={START_URL} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
+              Hoziroq boshlash
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

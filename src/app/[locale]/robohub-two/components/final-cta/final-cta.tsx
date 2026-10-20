@@ -1,5 +1,16 @@
 import { getMessages } from "@/i18n/server";
 import { messages } from "./final-cta.i18n";
+import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
+import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+
+// Footer "Aloqa": ikon + oddiy matn (chegarasiz)
+const CONTACTS: { icon: ContactIconName; label: string; href: string; external?: boolean }[] = [
+  { icon: "phone", label: PHONE, href: PHONE_HREF },
+  { icon: "email", label: EMAIL, href: EMAIL_HREF },
+  { icon: "telegram", label: "Telegram", href: TELEGRAM_URL, external: true },
+  { icon: "instagram", label: "Instagram", href: INSTAGRAM_URL.robohub, external: true },
+  { icon: "youtube", label: "YouTube", href: YOUTUBE_URL, external: true },
+];
 
 export default async function FinalCta() {
   const t = await getMessages(messages);
@@ -74,17 +85,16 @@ export default async function FinalCta() {
             </nav>{" "}
             <div>
               <h3>{t.contact}</h3>{" "}
-              <a className="foot__call" href="tel:+998999857226">
-                <i aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
-                  </svg>
-                </i>{" "}
-                <span>
-                  <span>{t.support}</span>
-                  <b>+998 (99) 985 72 26</b>
-                </span>
-              </a>
+              <ul className="foot__contacts">
+                {CONTACTS.map((c) => (
+                  <li key={c.icon}>
+                    <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener" } : {})}>
+                      <ContactIcon name={c.icon} />
+                      {c.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>{" "}
           <div className="foot__bar">
