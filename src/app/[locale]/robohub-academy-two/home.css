@@ -28,13 +28,14 @@
 .acx-stats{display:flex;flex-wrap:wrap;gap:16px clamp(24px,3.4vw,52px);margin-top:40px}
 .acx-stats li{position:relative;padding-left:18px}
 .acx-stats li::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:2px;border-radius:2px;background:linear-gradient(var(--mint),rgba(52,229,230,0))}
-.acx-stats b{display:block;font-family:var(--font-head);font-size:clamp(30px,2.8vw,44px);font-weight:700;line-height:1;letter-spacing:-.04em;color:#fff}
+.acx-stats b{display:block;font-family:var(--font-head);font-size:clamp(30px,2.8vw,44px);font-weight:700;line-height:1;letter-spacing:-.01em;color:#fff}
 .acx-stats li > span{display:block;margin-top:8px;font-size:13.5px;font-weight:600;color:var(--text-dim)}
 .acx-odo{--h:1.25em;display:inline-block;margin-block:-.085em} /* Unbounded raqamlari 1em dan baland — ustun kengroq, tashqi balandlik o'zgarmaydi */
-.acx-odo__row{display:inline-flex;font-variant-numeric:tabular-nums}
+.acx-odo__row{display:inline-flex;gap:.045em;font-variant-numeric:tabular-nums} /* raqamlar bir-biriga yopishmasin */
 .acx-odo__col{display:inline-block;height:var(--h);overflow:hidden}
 .acx-odo__col > span{display:flex;flex-direction:column;transform:translateY(calc(var(--v) * -1 * var(--h)));animation:acx-odo 1900ms cubic-bezier(.16,.9,.12,1) calc(var(--d) + var(--i) * 160ms) backwards}
-.acx-odo__col > span > span{display:block;height:var(--h);line-height:var(--h)}
+/* raqam katakda vertikal markazda — Unbounded glifi line-height bilan tepaga yopishib, kesilib qolardi */
+.acx-odo__col > span > span{display:flex;align-items:center;justify-content:center;height:var(--h);line-height:1}
 
 /* o'ng tomon: suzuvchi 3D kartochka va uchib yuruvchi marketpleys logolari */
 .acx-hero__visual{position:relative;min-width:0}
