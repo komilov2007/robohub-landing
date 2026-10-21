@@ -4,7 +4,10 @@ import type { CSSProperties } from "react";
 import { getLesson, lessonsByTopic, type Topic } from "../../../lib/academy";
 import { fmt } from "../../../lib/youtube";
 import { useWatched } from "../../../lib/progress";
-import { LESSON_NOTES } from "../../../lib/lesson-notes";
+import { getLessonNote } from "../../../lib/lesson-notes";
+import { common } from "../../../lib/common.i18n";
+import { useAcademyLocale } from "../../../components/locale/locale";
+import { messages } from "./lesson-info.i18n";
 import { usePlayer } from "../../../components/player/player-context";
 import Icon, { ICONS } from "../../../components/svg-icon/svg-icon";
 
@@ -14,11 +17,14 @@ import Icon, { ICONS } from "../../../components/svg-icon/svg-icon";
 // Pleylistda tanlangan darsga qarab almashadi. Ma'lumot — lib/academy.ts (summary, points).
 // SEO: har darsning o'z sahifasi bor (/academy/{mavzu}/{dars}) — server shu dars matnini HTML'da beradi (player-context → initialLesson).
 export default function LessonInfo({ topic }: { topic: Topic }) {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
+  const c = common[locale];
   const { selected, mainLesson } = usePlayer();
   const watched = useWatched();
-  const lessons = lessonsByTopic(topic.slug);
-  const lesson = getLesson(selected)!;
-  const note = LESSON_NOTES[lesson.n];
+  const lessons = lessonsByTopic(topic.slug, locale);
+  const lesson = getLesson(selected, locale)!;
+  const note = getLessonNote(lesson.n, locale);
   const idx = lessons.findIndex((l) => l.n === lesson.n);
 
   return (
@@ -33,43 +39,45 @@ export default function LessonInfo({ topic }: { topic: Topic }) {
         <div key={lesson.n} className="acx-about__lesson">
           {/* 1. Sarlavha — oddiy, tugmasiz */}
           <header className="acx-about__head">
-            <p className="acx-kicker">Amaliy video · {lesson.n}-dars</p>
+            <p className="acx-kicker">{t.kicker(c.lessonN(lesson.n))}</p>
             <h2 id="ac-about-title" className="acx-about__title">
               {lesson.title}
             </h2>
             <p className="acx-about__meta">
-              {topic.name} · {idx + 1} / {lessons.length} dars ·{" "}
+              {topic.name} · {t.position(idx + 1, lessons.length)} ·{" "}
               {fmt(lesson.durationSec)}
+              {/* videolar o'zbekcha — ru/en da eslatma */}
+              {c.videoLang && <span className="is-lang">{c.videoLang}</span>}
               {lesson.n === mainLesson && (
-                <span className="is-main">Asosiy dars</span>
+                <span className="is-main">{t.main}</span>
               )}
               {watched.has(lesson.n) && (
                 <span className="is-done">
                   <Icon d={ICONS.check} size={13} />
-                  Ko‘rildi
+                  {t.watched}
                 </span>
               )}
             </p>
           </header>
 
           {/* 2. Nazariy qism — maqola: qisqa xulosa, "Bu nima?", "Nega kerak?", videoda ko'rsatiladiganlar, maslahat */}
-          <article className="acx-read" aria-label="Nazariy qism">
+          <article className="acx-read" aria-label={t.theory}>
             <p className="acx-read__lead">{lesson.summary}</p>
             {note && (
               <>
                 <section className="acx-read__row">
-                  <h3>Bu nima?</h3>
+                  <h3>{t.what}</h3>
                   <p>{note.concept}</p>
                 </section>
                 <section className="acx-read__row">
-                  <h3>Nega kerak?</h3>
+                  <h3>{t.why}</h3>
                   <p>{note.why}</p>
                 </section>
               </>
             )}
             {lesson.points.length > 0 && (
               <section className="acx-read__row">
-                <h3>Videoda</h3>
+                <h3>{t.inVideo}</h3>
                 <ul className="acx-read__list">
                   {lesson.points.map((p, i) => (
                     <li key={p} style={{ "--i": i } as CSSProperties}>
@@ -89,7 +97,7 @@ export default function LessonInfo({ topic }: { topic: Topic }) {
                   />
                 </span>
                 <p>
-                  <b>Maslahat.</b> {note.tip}
+                  <b>{t.tip}</b> {note.tip}
                 </p>
               </aside>
             )}

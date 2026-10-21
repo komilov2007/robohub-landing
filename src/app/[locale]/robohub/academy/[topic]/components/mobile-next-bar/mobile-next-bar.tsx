@@ -6,12 +6,16 @@ import { nextLesson } from "../../../lib/academy";
 import { usePlayer } from "../../../components/player/player-context";
 import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
 import { lessonHref } from "../../../lib/links";
+import { useAcademyLocale } from "../../../components/locale/locale";
+import { messages } from "./mobile-next-bar.i18n";
 
 // Mobil pastki sticky panel (shisha kapsula): "Keyingi dars" + [Ko'rish]. Hero (pleyer) va footer ko'ringanda yashirinadi.
 export default function MobileNextBar() {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
   const { selected, topic, select } = usePlayer();
   const [hidden, setHidden] = useState(true);
-  const next = nextLesson(selected);
+  const next = nextLesson(selected, locale);
 
   useEffect(() => {
     const targets = [document.querySelector(".acx-hero"), document.getElementById("ac-footer")].filter(
@@ -30,14 +34,14 @@ export default function MobileNextBar() {
   const sameTopic = next.topic === topic;
   const btn = (
     <>
-      <PlayGlyph size={14} /> Ko‘rish
+      <PlayGlyph size={14} /> {t.watch}
     </>
   );
 
   return (
     <div className={`acx-nextbar${hidden ? " is-hidden" : ""}`} data-theme="dark" inert={hidden}>
       <div className="acx-nextbar__text">
-        <span>Keyingi dars · {next.n}</span>
+        <span>{t.next(next.n)}</span>
         <strong>{next.title}</strong>
       </div>
       {sameTopic ? (
@@ -45,7 +49,7 @@ export default function MobileNextBar() {
           {btn}
         </button>
       ) : (
-        <Link href={lessonHref(next.topic, next.n)} className="acx-nextbar__btn">
+        <Link href={lessonHref(locale, next.topic, next.n)} className="acx-nextbar__btn">
           {btn}
         </Link>
       )}

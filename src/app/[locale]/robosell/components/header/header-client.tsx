@@ -1,42 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
+import LangSelect from "@/components/lang-select/lang-select";
+import type { Locale } from "@/i18n/config";
 import Logo from "../logo/logo";
 import { LOGIN_HREF, NAV, PHONE_HREF, SIGNUP_HREF } from "../../robosell.content";
 
-const LANGS = ["UZ", "RU", "EN"] as const;
-
-// Til tugmalari — hozircha faqat interfeys (sahifa matni o'zbekcha). Tanlov holati aria-pressed bilan.
-function LangSwitch({ className }: { className?: string }) {
-  const [lang, setLang] = useState<(typeof LANGS)[number]>("UZ");
-  return (
-    <div className={`rs-lang${className ? " " + className : ""}`} role="group" aria-label="Til">
-      {LANGS.map((l) => (
-        <button key={l} type="button" aria-pressed={lang === l} onClick={() => setLang(l)}>
-          {l}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-// Sticky navbar + to'liq ekranli mobil menyu + mobilda pastdagi yopishqoq "Bepul boshlash".
-// Holatlar IntersectionObserver bilan: scroll'da layout o'qilmaydi.
-export default function Header() {
+// Header — Robohub Academy va AI Studio header'lari bilan bir xil dizayn: sticky, qog'oz fon + blur,
+// scroll'da chegara va soya; o'rtada menyu (faol/hover — sariq chiziq); o'ngda til tanlagich
+// (Robohub landingidagi umumiy LangSelect), "Kirish" va "Bepul boshlash". Mobilda — header ostidan ochiladigan panel.
+// Mobilda pastda yopishqoq "Bepul boshlash" + qo'ng'iroq tugmasi (hero va yakuniy CTA ko'rinmaganda).
+export default function HeaderClient({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const [dock, setDock] = useState(false);
-  const probeRef = useRef<HTMLDivElement>(null);
-  const burgerRef = useRef<HTMLButtonElement>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
 
-  // tepadan biroz tushilganda header soya oladi
   useEffect(() => {
-    const probe = probeRef.current;
-    if (!probe) return;
-    const io = new IntersectionObserver(([e]) => setStuck(!e.isIntersecting));
-    io.observe(probe);
-    return () => io.disconnect();
+    let raf = 0;
+    const measure = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setStuck(window.scrollY > 8);
+        let cur: string | null = null;
+        for (const n of NAV) {
+          const el = n.href.startsWith("#") ? document.querySelector(n.href) : null;
+          if (el && el.getBoundingClientRect().top < window.innerHeight * 0.35) cur = n.href;
+        }
+        setActive(cur);
+      });
+    };
+    measure();
+    window.addEventListener("scroll", measure, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", measure);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   // pastki tugma: hero ekrandan chiqqach ko'rinadi, yakuniy CTA ko'ringanda yashirinadi
@@ -54,100 +53,82 @@ export default function Header() {
     return () => io.disconnect();
   }, []);
 
-  // menyu ochiq: fon aylanmaydi, Esc yopadi, fokus "yopish" tugmasida
   useEffect(() => {
     if (!open) return;
-    const burger = burgerRef.current;
-    document.documentElement.classList.add("rs-lock");
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.documentElement.classList.remove("rs-lock");
-      document.removeEventListener("keydown", onKey);
-      burger?.focus();
-    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
     <>
-      <div className="rs-probe" ref={probeRef} aria-hidden="true" />
-      <header className={"rs-hd" + (stuck ? " is-stuck" : "")}>
-        <div className="rs-wrap rs-hd__bar">
-          <a className="rs-hd__logo" href="#top" aria-label="Robosell — sahifa boshi">
+      <header className={`rs-header${stuck ? " is-stuck" : ""}${open ? " is-open" : ""}`} data-theme="light">
+        <div className="rs-wrap rs-header__inner">
+          <a href="#top" className="rs-header__logo" aria-label="Robosell — sahifa boshi">
             <Logo />
           </a>
-          <nav className="rs-hd__nav" aria-label="Asosiy menyu">
+          <nav className="rs-nav" aria-label="Asosiy menyu">
+            <ul>
+              {NAV.map((n) => (
+                <li key={n.href}>
+                  <a
+                    href={n.href}
+                    className={`rs-nav__link${active === n.href ? " is-active" : ""}`}
+                    aria-current={active === n.href ? "location" : undefined}
+                  >
+                    {n.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="rs-header__actions">
+            <LangSelect locale={locale} label="Til tanlash" />
+            <a href={LOGIN_HREF} className="rs-hbtn rs-hbtn--ghost">
+              Kirish
+            </a>
+            <a href={SIGNUP_HREF} className="rs-hbtn rs-hbtn--accent">
+              Bepul boshlash
+            </a>
+          </div>
+          <div className="rs-header__mlang">
+            <LangSelect locale={locale} label="Til tanlash" />
+          </div>
+          <button
+            type="button"
+            className="rs-burger"
+            aria-label={open ? "Menyuni yopish" : "Menyuni ochish"}
+            aria-expanded={open}
+            aria-controls="rs-mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+
+        <div id="rs-mobile-menu" className="rs-mmenu" inert={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
+          <div className="rs-wrap">
             {NAV.map((n) => (
-              <a key={n.href} href={n.href}>
+              <a key={n.href} href={n.href} className="rs-mmenu__link" aria-current={active === n.href ? "location" : undefined}>
                 {n.label}
               </a>
             ))}
-          </nav>
-          <div className="rs-hd__end">
-            <LangSwitch className="rs-hd__lang" />
-            <a className="rs-hd__login" href={LOGIN_HREF}>
-              Kirish
-            </a>
-            <a className="rs-btn rs-btn--yellow rs-btn--sm rs-hd__cta" href={SIGNUP_HREF}>
-              Bepul boshlash
-            </a>
-            <button
-              ref={burgerRef}
-              className="rs-hd__burger"
-              type="button"
-              aria-expanded={open}
-              aria-controls="rs-menu"
-              aria-label="Menyuni ochish"
-              onClick={() => setOpen(true)}
-            >
-              <i />
-              <i />
-            </button>
+            <div className="rs-mmenu__actions">
+              <a href={LOGIN_HREF} className="rs-hbtn rs-hbtn--lg rs-hbtn--outline">
+                Kirish
+              </a>
+              <a href={SIGNUP_HREF} className="rs-hbtn rs-hbtn--lg rs-hbtn--accent">
+                Bepul boshlash
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
-      <div
-        id="rs-menu"
-        className={"rs-menu" + (open ? " is-open" : "")}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menyu"
-        hidden={!open}
-        onClick={(e) => {
-          if ((e.target as HTMLElement).closest("a")) setOpen(false);
-        }}
-      >
-        <div className="rs-menu__top">
-          <Logo />
-          <button ref={closeRef} className="rs-menu__close" type="button" aria-label="Menyuni yopish" onClick={() => setOpen(false)}>
-            <i />
-            <i />
-          </button>
-        </div>
-        <nav className="rs-menu__nav" aria-label="Mobil menyu">
-          {NAV.map((n, i) => (
-            <a key={n.href} href={n.href} style={{ "--i": i } as CSSProperties}>
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <div className="rs-menu__foot">
-          <LangSwitch />
-          <a className="rs-btn rs-btn--line rs-btn--lg" href={LOGIN_HREF}>
-            Kirish
-          </a>
-          <a className="rs-btn rs-btn--yellow rs-btn--lg" href={SIGNUP_HREF}>
-            Bepul boshlash
-          </a>
-        </div>
-      </div>
-
       <div className={"rs-dock" + (dock ? " is-on" : "")} aria-hidden={!dock}>
-        <a className="rs-btn rs-btn--yellow rs-btn--lg" href={SIGNUP_HREF} tabIndex={dock ? 0 : -1}>
+        <a className="rs-btn rs-btn--teal rs-btn--lg" href={SIGNUP_HREF} tabIndex={dock ? 0 : -1}>
           Bepul boshlash
         </a>
         <a className="rs-dock__call" href={PHONE_HREF} aria-label="Qo‘ng‘iroq qilish" tabIndex={dock ? 0 : -1}>

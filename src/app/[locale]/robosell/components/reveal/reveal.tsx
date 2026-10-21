@@ -23,7 +23,7 @@ export default function Reveal() {
       (entries) => entries.forEach((e) => e.target.toggleAttribute("data-off", !e.isIntersecting)),
       { rootMargin: "150px 0px" },
     );
-    document.querySelectorAll(".rs-sec").forEach((s) => off.observe(s));
+    document.querySelectorAll(".rs-sec, .rs [data-pause]").forEach((s) => off.observe(s));
     return () => {
       io.disconnect();
       off.disconnect();

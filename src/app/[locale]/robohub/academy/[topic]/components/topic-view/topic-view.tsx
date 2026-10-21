@@ -1,7 +1,9 @@
+import type { Locale } from "@/i18n/config";
+import { getLocale } from "@/i18n/server";
 import { getLesson, type Lesson, type Topic } from "../../../lib/academy";
 import { isoDuration, yt } from "../../../lib/youtube";
-import { ACADEMY_BASE, lessonHref, topicHref } from "../../../lib/links";
-import { LESSON_NOTES } from "../../../lib/lesson-notes";
+import { academyHref, lessonHref, topicHref } from "../../../lib/links";
+import { getLessonNote } from "../../../lib/lesson-notes";
 import { PlayerProvider } from "../../../components/player/player-context";
 import Stage from "../stage/stage";
 import LessonInfo from "../lesson-info/lesson-info";
@@ -15,8 +17,8 @@ import MobileNextBar from "../mobile-next-bar/mobile-next-bar";
 export const SITE = "https://robohub.uz";
 
 // Darsning qisqa tavsifi (meta description, VideoObject): xulosa + "Bu nima?"; ~160 belgigacha
-export function lessonDescription(l: Lesson, max = 160): string {
-  const text = [l.summary, LESSON_NOTES[l.n]?.concept]
+export function lessonDescription(l: Lesson, locale: Locale, max = 160): string {
+  const text = [l.summary, getLessonNote(l.n, locale)?.concept]
     .filter(Boolean)
     .join(" ");
   return text.length <= max
@@ -24,19 +26,19 @@ export function lessonDescription(l: Lesson, max = 160): string {
     : `${text.slice(0, text.lastIndexOf(" ", max - 1))}…`;
 }
 
-function videoLd(topic: Topic, l: Lesson) {
+function videoLd(topic: Topic, l: Lesson, locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     name: l.title,
-    description: lessonDescription(l, 500),
+    description: lessonDescription(l, locale, 500),
     thumbnailUrl: [yt.thumb(l.youtubeId), yt.thumbHq(l.youtubeId)],
     ...(l.uploadDate && { uploadDate: l.uploadDate }),
     embedUrl: `https://www.youtube-nocookie.com/embed/${l.youtubeId}`,
     contentUrl: yt.watch(l.youtubeId),
-    url: `${SITE}${lessonHref(topic.slug, l.n)}`,
+    url: `${SITE}${lessonHref(locale, topic.slug, l.n)}`,
     duration: isoDuration(l.durationSec),
-    inLanguage: "uz",
+    inLanguage: "uz", // video o'zbekcha (sahifa matni joriy tilda)
   };
 }
 
@@ -44,20 +46,20 @@ function videoLd(topic: Topic, l: Lesson) {
 //   BreadcrumbList — natijada "robohub.uz › Academy › Mavzu (› Dars)" yo'li;
 //   VideoObject    — sahifadagi asosiy video (uploadDate — Google talab qiladigan maydon, YouTube'dagi sana);
 //   FAQPage        — "Savollar" bo'limi (faqat mavzu sahifasida — dars sahifalarida takrorlanmasin).
-function JsonLd({ topic, lesson }: { topic: Topic; lesson?: Lesson }) {
+function JsonLd({ topic, lesson, locale }: { topic: Topic; lesson?: Lesson; locale: Locale }) {
   const crumbs = [
-    { name: "Robohub Academy", item: `${SITE}${ACADEMY_BASE}` },
-    { name: topic.name, item: `${SITE}${topicHref(topic.slug)}` },
+    { name: "Robohub Academy", item: `${SITE}${academyHref(locale)}` },
+    { name: topic.name, item: `${SITE}${topicHref(locale, topic.slug)}` },
     ...(lesson
       ? [
           {
             name: lesson.title,
-            item: `${SITE}${lessonHref(topic.slug, lesson.n)}`,
+            item: `${SITE}${lessonHref(locale, topic.slug, lesson.n)}`,
           },
         ]
       : []),
   ];
-  const main = lesson ?? getLesson(topic.mainLesson);
+  const main = lesson ?? getLesson(topic.mainLesson, locale);
   const data = [
     {
       "@context": "https://schema.org",
@@ -68,7 +70,7 @@ function JsonLd({ topic, lesson }: { topic: Topic; lesson?: Lesson }) {
         ...c,
       })),
     },
-    ...(main ? [videoLd(topic, main)] : []),
+    ...(main ? [videoLd(topic, main, locale)] : []),
     ...(lesson
       ? []
       : [
@@ -96,20 +98,21 @@ function JsonLd({ topic, lesson }: { topic: Topic; lesson?: Lesson }) {
   );
 }
 
-export default function TopicView({
+export default async function TopicView({
   topic,
   lesson,
 }: {
   topic: Topic;
   lesson?: Lesson;
 }) {
+  const locale = await getLocale();
   return (
     <PlayerProvider
       topic={topic.slug}
       mainLesson={topic.mainLesson}
       initialLesson={lesson?.n}
     >
-      <JsonLd topic={topic} lesson={lesson} />
+      <JsonLd topic={topic} lesson={lesson} locale={locale} />
       {/* Hero = sarlavha, pleyer va mavzu darslari (YouTube kabi); pastda — tanlangan dars haqida matn, savollar va CTA */}
       <Stage topic={topic} />
       <LessonInfo topic={topic} />

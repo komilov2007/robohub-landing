@@ -1,6 +1,9 @@
 import type { CSSProperties } from "react";
-import { LESSONS, TOPICS, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
-import { PHONE, PHONE_TEL, START_URL } from "./lib/links";
+import type { Metadata } from "next";
+import { getLocale } from "@/i18n/server";
+import { getLessons, getTopics, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
+import { ACADEMY_BASE, PHONE, PHONE_TEL, START_URL, academyHref, languageAlternates } from "./lib/links";
+import { messages } from "./home.i18n";
 import AcademySearch from "./components/academy-search/academy-search";
 import ContinueCard from "./components/continue-card/continue-card";
 import StartPath from "./components/start-path/start-path";
@@ -19,12 +22,24 @@ import "./home.css";
 //   Keyin mavzular nomlari lentasi, Boshlang'ich yo'l, bento-mavzular, jonli darslar lentasi va yordam bloki.
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
-export default function AcademyHome() {
-  const totalMinutes = Math.round(LESSONS.reduce((s, l) => s + l.durationSec, 0) / 60);
+// canonical va hreflang: /academy, /ru/academy, /en/academy (sarlavha va tavsif — layout.tsx dan)
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    alternates: { canonical: academyHref(locale), languages: languageAlternates(ACADEMY_BASE) },
+    openGraph: { url: academyHref(locale) },
+  };
+}
+
+export default async function AcademyHome() {
+  const locale = await getLocale();
+  const t = messages[locale];
+  const topics = getTopics(locale);
+  const totalMinutes = Math.round(getLessons(locale).reduce((s, l) => s + l.durationSec, 0) / 60);
   const stats = [
-    { value: TOTAL_LESSONS, label: "video dars" },
-    { value: TOTAL_TOPICS, label: "mavzu" },
-    { value: totalMinutes, label: "daqiqa jami" },
+    { value: TOTAL_LESSONS, label: t.stats.lessons(TOTAL_LESSONS) },
+    { value: TOTAL_TOPICS, label: t.stats.topics(TOTAL_TOPICS) },
+    { value: totalMinutes, label: t.stats.minutes(totalMinutes) },
   ];
   return (
     <>
@@ -37,17 +52,17 @@ export default function AcademyHome() {
             <MpPeek style={{ "--d": "0ms" } as CSSProperties} />
             <h1 id="ac-home-title" className="acx-title">
               <span className="acx-word" style={{ "--d": "60ms" } as CSSProperties}>
-                Robohub’ni
+                {t.title[0]}
               </span>{" "}
               <span className="acx-word acx-word--grad" style={{ "--d": "180ms" } as CSSProperties}>
-                qisqa darslarda
+                {t.title[1]}
               </span>{" "}
               <span className="acx-word" style={{ "--d": "300ms" } as CSSProperties}>
-                o‘rganing
+                {t.title[2]}
               </span>
             </h1>
             <p className="acx-lead acx-in" style={{ "--d": "380ms" } as CSSProperties}>
-              Har bir dars — bitta vazifa va bir necha daqiqa. Savolingizni yozing yoki boshlang‘ich yo‘ldan boring.
+              {t.lead}
             </p>
             <div className="acx-search acx-in" style={{ "--d": "480ms" } as CSSProperties}>
               <AcademySearch />
@@ -80,10 +95,10 @@ export default function AcademyHome() {
         <div className="acx-ticker__track">
           {[0, 1].map((copy) => (
             <span key={copy} className="acx-ticker__row">
-              {TOPICS.map((t) => (
-                <span key={t.slug} className="acx-ticker__item">
-                  <Icon d={t.icon} size={30} />
-                  {t.name}
+              {topics.map((x) => (
+                <span key={x.slug} className="acx-ticker__item">
+                  <Icon d={x.icon} size={30} />
+                  {x.name}
                   <i>✦</i>
                 </span>
               ))}
@@ -98,14 +113,14 @@ export default function AcademyHome() {
       <section className="acx-topics" id="topics" data-theme="light" aria-labelledby="ac-topics-title">
         <div className="container">
           <div className="acx-head" data-reveal>
-            <p className="acx-kicker">Mavzular</p>
+            <p className="acx-kicker">{t.topicsKicker}</p>
             <h2 id="ac-topics-title" className="acx-h2">
-              Nimani <span className="acx-mark">o‘rganmoqchisiz?</span>
+              {t.topicsTitle} <span className="acx-mark">{t.topicsMark}</span>
             </h2>
           </div>
           <ul className="acx-bento">
-            {TOPICS.map((t, i) => (
-              <TopicCard key={t.slug} topic={t} index={i} featured={i === 0} />
+            {topics.map((x, i) => (
+              <TopicCard key={x.slug} topic={x} index={i} featured={i === 0} />
             ))}
           </ul>
         </div>
@@ -122,18 +137,18 @@ export default function AcademyHome() {
               <span />
             </div>
             <div className="acx-end__text">
-              <p className="acx-kicker acx-kicker--dark">Yordam</p>
+              <p className="acx-kicker acx-kicker--dark">{t.helpKicker}</p>
               <h2 id="ac-help-title" className="acx-h2">
-                Javob <span className="acx-grad">topilmadimi?</span>
+                {t.helpTitle} <span className="acx-grad">{t.helpMark}</span>
               </h2>
-              <p>Savolingizni yozing yoki qo‘ng‘iroq qiling — jamoamiz yordam beradi.</p>
+              <p>{t.helpText}</p>
               {/* TODO (14-bo'lim, 7-savol): Telegram linki bo'lsa — shu yerga uchinchi tugma */}
               <div className="acx-end__btns">
                 <a href={PHONE_TEL} className="acx-btn acx-btn--light" data-magnet>
                   <Icon d={ICONS.phone} size={18} /> {PHONE}
                 </a>
                 <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--ghost" data-magnet>
-                  Hoziroq boshlash
+                  {t.start}
                 </a>
               </div>
             </div>

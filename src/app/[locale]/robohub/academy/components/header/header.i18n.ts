@@ -1,0 +1,47 @@
+import { defineMessages } from "@/i18n/config";
+
+// Header, "Mavzular" menyusi va logo matnlari
+export const messages = defineMessages({
+  uz: {
+    navLabel: "Asosiy menyu",
+    topics: "Mavzular",
+    help: "Yordam",
+    login: "Kirish",
+    start: "Hoziroq boshlash",
+    menuOpen: "Menyuni ochish",
+    menuClose: "Menyuni yopish",
+    homeLink: "Academy — bosh sahifa",
+    logoLabel: "Robohub Academy — bosh sahifa",
+    lang: "Til tanlash",
+    megaCount: (topics: number, lessons: number) => `${topics} ta · ${lessons} dars`,
+    megaAll: "Barcha mavzular kartochkalarda",
+  },
+  ru: {
+    navLabel: "Главное меню",
+    topics: "Темы",
+    help: "Помощь",
+    login: "Войти",
+    start: "Начать сейчас",
+    menuOpen: "Открыть меню",
+    menuClose: "Закрыть меню",
+    homeLink: "Academy — главная",
+    logoLabel: "Robohub Academy — главная",
+    lang: "Выбор языка",
+    megaCount: (topics: number, lessons: number) => `${topics} тем · ${lessons} уроков`,
+    megaAll: "Все темы в карточках",
+  },
+  en: {
+    navLabel: "Main menu",
+    topics: "Topics",
+    help: "Help",
+    login: "Log in",
+    start: "Get started",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
+    homeLink: "Academy — home",
+    logoLabel: "Robohub Academy — home",
+    lang: "Choose language",
+    megaCount: (topics: number, lessons: number) => `${topics} topics · ${lessons} lessons`,
+    megaAll: "All topics as cards",
+  },
+});

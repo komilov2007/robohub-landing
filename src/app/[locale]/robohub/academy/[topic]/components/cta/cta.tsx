@@ -2,13 +2,18 @@ import Link from "next/link";
 import { nextTopic, type Topic } from "../../../lib/academy";
 import { START_URL, topicHref } from "../../../lib/links";
 import { RobohubMark } from "../../../components/logo/logo";
+import { getLocale } from "@/i18n/server";
+import { messages } from "./cta.i18n";
 
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
 // CTA — bosh sahifadagi "Yordam" bloki uslubida: harakatlanuvchi gradient fon, aylanuvchi halqalar
 // va marketpleyslar orbitasi, magnit tugmalar (data-magnet).
-export default function Cta({ topic }: { topic: Topic }) {
-  const next = nextTopic(topic.slug);
+export default async function Cta({ topic }: { topic: Topic }) {
+  const locale = await getLocale();
+  const t = messages[locale];
+  const title = t.title(topic.name);
+  const next = nextTopic(topic.slug, locale);
   return (
     <section className="acx-help" data-theme="light" aria-labelledby="ac-cta-title">
       <div className="container">
@@ -19,17 +24,18 @@ export default function Cta({ topic }: { topic: Topic }) {
             <span />
           </div>
           <div className="acx-end__text">
-            <p className="acx-kicker acx-kicker--dark">Amalda sinab ko‘ring</p>
+            <p className="acx-kicker acx-kicker--dark">{t.kicker}</p>
             <h2 id="ac-cta-title" className="acx-h2">
-              {topic.name}ni bugun <span className="acx-grad">o‘z kabinetingizda</span> sinab ko‘ring
+              {title.before} <span className="acx-grad">{title.mark}</span>
+              {title.after && ` ${title.after}`}
             </h2>
-            <p>Darsdagi har bir qadamni o‘z kabinetingizda takrorlang.</p>
+            <p>{t.text}</p>
             <div className="acx-end__btns">
               <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--light" data-magnet>
-                Hoziroq boshlash <span aria-hidden="true">→</span>
+                {t.start} <span aria-hidden="true">→</span>
               </a>
-              <Link href={topicHref(next.slug)} className="acx-btn acx-btn--ghost" data-magnet>
-                Keyingi mavzu: {next.name}
+              <Link href={topicHref(locale, next.slug)} className="acx-btn acx-btn--ghost" data-magnet>
+                {t.next(next.name)}
               </Link>
             </div>
           </div>

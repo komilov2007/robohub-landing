@@ -6,12 +6,18 @@ import { usePathname } from "next/navigation";
 import Logo from "../logo/logo";
 import TopicsMenu from "./topics-menu";
 import Icon from "../svg-icon/svg-icon";
-import { TOPICS, lessonsByTopic } from "../../lib/academy";
-import { LOGIN_URL, START_URL, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
+import LangSelect from "@/components/lang-select/lang-select";
+import { getTopics, lessonsByTopic } from "../../lib/academy";
+import { loginUrl, START_URL, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
+import { useAcademyLocale } from "../locale/locale";
+import { messages } from "./header.i18n";
 
 // Academy header — Robohub landingi header'i uslubida: sticky, oq + blur, scroll'da soya.
 // Menyu — Academy'ning o'z bo'limlari: bosh sahifa, Mavzular (8 mavzu ochiladigan panelda), Yordam, YouTube.
 export default function Header() {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
+  const topics = getTopics(locale);
   const pathname = usePathname();
   // Menyular qaysi sahifada ochilganini eslaydi — boshqa sahifaga o'tilsa o'zi yopiq hisoblanadi
   const [openAt, setOpenAt] = useState<string | null>(null); // mobil menyu
@@ -27,11 +33,14 @@ export default function Header() {
   const dropRef = useRef<HTMLLIElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Academy — /academy ostida: "/academy" — bosh sahifa, "/academy/order" — mavzu
-  const sub = pathname.startsWith(ACADEMY_BASE) ? pathname.slice(ACADEMY_BASE.length) : pathname;
+  // Academy — /academy ostida (ru/en da /ru/academy …): "/academy" — bosh sahifa, "/academy/order" — mavzu.
+  // path — tilsiz yo'l: til tanlash menyusi boshqa tilda ham shu sahifani ochadi.
+  const at = pathname.indexOf(ACADEMY_BASE);
+  const path = at >= 0 ? pathname.slice(at) : ACADEMY_BASE;
+  const sub = path.slice(ACADEMY_BASE.length);
   const slug = sub.split("/")[1] ?? "";
   const isHome = sub === "" || sub === "/";
-  const currentTopic = TOPICS.find((t) => t.slug === slug)?.slug;
+  const currentTopic = topics.find((x) => x.slug === slug)?.slug;
 
   useEffect(() => {
     let raf = 0;
@@ -91,11 +100,11 @@ export default function Header() {
       data-theme="light"
     >
       <div className="container ac-header__inner">
-        <Logo />
-        <nav className="ac-nav" aria-label="Asosiy menyu">
+        <Logo href={academyHref(locale)} label={t.logoLabel} />
+        <nav className="ac-nav" aria-label={t.navLabel}>
           <ul>
             <li>
-              <Link href={ACADEMY_BASE} className={`ac-nav__link${isHome ? " is-active" : ""}`} aria-current={isHome ? "page" : undefined}>
+              <Link href={academyHref(locale)} className={`ac-nav__link${isHome ? " is-active" : ""}`} aria-current={isHome ? "page" : undefined}>
                 Academy
               </Link>
             </li>
@@ -112,14 +121,14 @@ export default function Header() {
                 aria-controls="ac-topics-menu"
                 onClick={() => setDrop((v) => !v)}
               >
-                Mavzular
+                {t.topics}
                 <Icon d="M6 9l6 6 6-6" size={15} className="ac-nav__caret" />
               </button>
               <TopicsMenu open={drop} current={currentTopic} />
             </li>
             <li>
-              <Link href={academyHref("#help")} className="ac-nav__link">
-                Yordam
+              <Link href={academyHref(locale, "#help")} className="ac-nav__link">
+                {t.help}
               </Link>
             </li>
             <li>
@@ -130,17 +139,18 @@ export default function Header() {
           </ul>
         </nav>
         <div className="ac-header__actions">
-          <a href={LOGIN_URL} className="btn btn--ghost">
-            Kirish
+          <LangSelect locale={locale} label={t.lang} path={path} />
+          <a href={loginUrl(locale)} className="btn btn--ghost">
+            {t.login}
           </a>
           <a href={START_URL} target="_blank" rel="noopener" className="btn btn--accent">
-            Hoziroq boshlash
+            {t.start}
           </a>
         </div>
         <button
           type="button"
           className="ac-burger"
-          aria-label={open ? "Menyuni yopish" : "Menyuni ochish"}
+          aria-label={open ? t.menuClose : t.menuOpen}
           aria-expanded={open}
           aria-controls="ac-mobile-menu"
           onClick={() => setOpen((v) => !v)}
@@ -153,33 +163,33 @@ export default function Header() {
 
       <div id="ac-mobile-menu" className="ac-mmenu" inert={!open}>
         <div className="container">
-          <Link href={ACADEMY_BASE} className="ac-mmenu__link" aria-current={isHome ? "page" : undefined}>
-            Academy — bosh sahifa
+          <Link href={academyHref(locale)} className="ac-mmenu__link" aria-current={isHome ? "page" : undefined}>
+            {t.homeLink}
           </Link>
-          <p className="ac-mmenu__label">Mavzular</p>
+          <p className="ac-mmenu__label">{t.topics}</p>
           <ul className="ac-mmenu__topics">
-            {TOPICS.map((t) => (
-              <li key={t.slug}>
-                <Link href={topicHref(t.slug)} aria-current={t.slug === currentTopic ? "page" : undefined}>
-                  <Icon d={t.icon} size={16} />
-                  {t.name}
-                  <small>{lessonsByTopic(t.slug).length}</small>
+            {topics.map((x) => (
+              <li key={x.slug}>
+                <Link href={topicHref(locale, x.slug)} aria-current={x.slug === currentTopic ? "page" : undefined}>
+                  <Icon d={x.icon} size={16} />
+                  {x.name}
+                  <small>{lessonsByTopic(x.slug, locale).length}</small>
                 </Link>
               </li>
             ))}
           </ul>
-          <Link href={academyHref("#help")} className="ac-mmenu__link">
-            Yordam
+          <Link href={academyHref(locale, "#help")} className="ac-mmenu__link">
+            {t.help}
           </Link>
           <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener" className="ac-mmenu__link">
             YouTube ↗
           </a>
           <div className="ac-mmenu__actions">
-            <a href={LOGIN_URL} className="btn btn--lg btn--outline">
-              Kirish
+            <a href={loginUrl(locale)} className="btn btn--lg btn--outline">
+              {t.login}
             </a>
             <a href={START_URL} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
-              Hoziroq boshlash
+              {t.start}
             </a>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { defineMessages } from "@/i18n/config";
+import { defineMessages, localeHref } from "@/i18n/config";
 import { ACADEMY_PATH } from "@/lib/sites";
 
 export const messages = defineMessages({
@@ -46,7 +46,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифы" },
       { href: "#faq", label: "Вопросы" },
       { href: "#contact", label: "Контакты" },
-      { href: ACADEMY_PATH, label: "Видеоуроки (Academy)" },
+      { href: localeHref("ru", ACADEMY_PATH), label: "Видеоуроки (Academy)" },
     ],
     tools: "Бесплатные инструменты",
     calculator: "Калькулятор маркетплейсов",
@@ -72,7 +72,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Pricing" },
       { href: "#faq", label: "FAQ" },
       { href: "#contact", label: "Contact" },
-      { href: ACADEMY_PATH, label: "Video lessons (Academy)" },
+      { href: localeHref("en", ACADEMY_PATH), label: "Video lessons (Academy)" },
     ],
     tools: "Free tools",
     calculator: "Marketplace calculator",

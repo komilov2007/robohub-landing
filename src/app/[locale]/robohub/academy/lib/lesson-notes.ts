@@ -4,11 +4,15 @@
 //   tip     — ixtiyoriy qisqa maslahat.
 // Matnlar dars nomi, tavsifi va "Ushbu darsda" bandlariga (academy.ts) hamda umumiy marketpleys tushunchalariga
 // tayanadi; Robohub interfeysining tafsilotlari videoning o'zida. Kontent jamoasi tekshirib, to'ldirishi mumkin.
-// Yangi dars qo'shilsa — shu yerga uning raqami bilan yozuv qo'shiladi (bo'lmasa bo'lim faqat tavsifni ko'rsatadi).
+// Yangi dars qo'shilsa — shu yerga va content/{ru,en}-lessons.ts ga uning raqami bilan yozuv qo'shiladi (bo'lmasa — tsc xato).
+
+import type { Locale } from "@/i18n/config";
+import type { LessonN } from "./academy";
+import { CONTENT } from "./content";
 
 export type LessonNote = { concept: string; why: string; tip?: string };
 
-export const LESSON_NOTES: Record<number, LessonNote> = {
+const NOTES_UZ: Record<LessonN, LessonNote> = {
   // ───────── ANALITIKA ─────────
   1: {
     concept:
@@ -174,3 +178,9 @@ export const LESSON_NOTES: Record<number, LessonNote> = {
     why: "Grafik va vizual ko‘rinish raqamlarni tezroq tushunishga yordam beradi — tendensiyalar va o‘zgarishlar bir qarashda ko‘rinadi.",
   },
 };
+
+// Joriy tildagi izoh (ru/en — content/ dan)
+export function getLessonNote(n: number, locale: Locale): LessonNote | undefined {
+  const notes: Record<number, LessonNote> = locale === "uz" ? NOTES_UZ : CONTENT[locale].notes;
+  return notes[n];
+}

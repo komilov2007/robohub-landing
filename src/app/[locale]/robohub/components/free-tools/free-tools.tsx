@@ -167,7 +167,8 @@ export default async function FreeTools() {
                   <h3 className="tool__name">{t.ai.name}</h3>{" "}
                   <p className="tool__desc">{t.ai.desc}</p>
                 </div>{" "}
-                <a className="tool__go" href="/ai-infografika/">
+                {/* nisbiy: robohub.uz → robohub.uz/ai-studio, robohub-landing.vercel.app → …/ai-studio */}{" "}
+                <a className="tool__go" href="/ai-studio">
                   {`${t.go} `}
                   <span className="arrow" aria-hidden="true">→</span>
                 </a>

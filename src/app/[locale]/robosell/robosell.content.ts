@@ -16,219 +16,204 @@ export const PHONE_HREF = "tel:+998781138212";
 
 export const NAV = [
   { href: "#features", label: "Imkoniyatlar" },
-  { href: "#channels", label: "Platformalar" },
+  { href: "#how-it-works", label: "Qanday ishlaydi" },
   { href: "#integrations", label: "Integratsiyalar" },
-  { href: "#pricing", label: "Tariflar" },
+  { href: "#pricing", label: "Narxlar" },
   { href: "#faq", label: "FAQ" },
 ];
 
 export const HERO = {
-  badge: "Telegram bot + Veb-sayt + QR menyu, bitta paneldan",
-  title: ["Onlayn do‘koningizni", "1 kunda", "ishga tushiring"],
-  lead: "Dasturchisiz va 10 barobar arzon. Buyurtma, to‘lov, yetkazib berish, marketing va analitika — hammasi Robosell’da.",
-  start: "Bepul boshlash",
-  demo: "Video demo",
-  // NAMUNA: haqiqiy mijozlar soni
-  trust: "500+ biznes ishonadi",
-  partners: ["Click", "Payme", "Uzum nasiya", "Fargo", "iiko"],
+  badge: "Telegram bot · Veb-sayt · Admin panel",
+  // [oldin, ajratilgan, keyin] — o'rtadagisi yashil "marker" bilan chiziladi
+  title: ["Onlayn buyurtmani", "1 kunda", "yo‘lga qo‘ying"],
+  lead: "Telegram bot, veb-sayt va admin panel bitta tizimda. Mijozlar buyurtma beradi, siz hammasini bitta joydan boshqarasiz: buyurtma, to‘lov, yetkazish va statistika.",
+  start: "Bepul demo olish",
+  video: "Video qo‘llanma",
+  // qo'llanma video (YouTube): hero tugmasi uni sahifa ustidagi oynada ochadi
+  videoId: "XepgHqR7V5o",
+  worksWith: "Click, Payme, iiko, Billz va boshqa tizimlar bilan ishlaydi",
 };
 
-// Hero telefonidagi do'kon — NAMUNA mahsulotlar va narxlar
-export const SHOP = {
-  bot: "Robosell Shop",
-  cats: ["Hammasi", "Lavash", "Burger", "Ichimlik"],
-  items: [
-    { name: "Lavash", price: 32000, tone: "a" },
-    { name: "Burger", price: 38000, tone: "b" },
-    { name: "Pitsa", price: 89000, tone: "c" },
-    { name: "Kola", price: 12000, tone: "d" },
+// Robosell'dan foydalanadigan kompaniyalar (robo.uz saytidan)
+// logo — public/robosell/clients (rb-landing'dagi brend logolari)
+const C = (name: string, slug: string) => ({ name, logo: `/robosell/clients/${slug}.webp` });
+export const CLIENTS = {
+  title: "Robosell’dan foydalanadigan kompaniyalar",
+  list: [
+    C("Jumanji", "jumanji"),
+    C("XonXonim", "xonxonim"),
+    C("Sushi Bar", "sushi-bar"),
+    C("Mona", "mona"),
+    C("Bek Osiyo", "bek-osiyo"),
+    C("Lago Park", "lago-park"),
+    C("DI sport", "di-sport"),
+    C("Zero", "zero"),
+    C("Lyagan", "lyagan"),
+    C("N’Medov", "nmedov"),
+    C("Сыроварня", "syrovarnya"),
   ],
-  // NAMUNA: dashboard raqamlari
-  revenue: [48.2, 48.3],
-  orders: [1284, 1285],
-  clients: 932,
+};
+
+// ---------- Hamkorlar fikri (robo.uz saytidagi sharhlar) ----------
+export const REVIEWS = {
+  eyebrow: "Mijozlar fikri",
+  title: "Hamkorlar biz haqimizda",
+  lead: "Restoran, do‘kon va xizmat ko‘rsatuvchi bizneslar Robosell bilan qanday ishlayotgani haqida.",
+  list: [
+    { name: "Rustam", company: "Pishloq do‘koni", text: "Robosell onlayn savdolarimni butunlay o‘zgartirdi! Ushbu platforma tufayli men bir necha daqiqada do‘konim uchun qulay Telegram bot va veb-sayt yaratishga muvaffaq bo‘ldim." },
+    { name: "Gulshana", company: "N’Medov", text: "Men uzoq vaqt davomida onlayn do‘kon yaratish uchun mos platformani qidirdim va uni topdim. Robosell foydalanish uchun qulay interfeysga ega va mening asosiy yordamchim!" },
+    { name: "Murod", company: "Mobishop Online", text: "Ushbu platforma mijozlarimizga xizmat ko‘rsatish va ovqat yetkazib berish bo‘yicha buyurtmalar boshqaruvini yangi bosqichga olib chiqishimizga yordam berdi." },
+    { name: "Anvar", company: "Planbaby", text: "Robosell bilan biz yanada moslashuvchan bo‘ldik va mijozlar so‘rovlariga tezroq javob bera boshladik. Telegram bot va buyurtma sayti mijoz bilan tezkor muloqot qilish imkonini yaratdi." },
+    { name: "Artur", company: "Bebek Food", text: "Robosell bilan fastfud shoxobchamizni boshqarish juda oson! Biz shunchaki akkaunt yaratib, unga menyu qo‘shdik. Endi mijozlar osongina onlayn buyurtma berishlari mumkin." },
+    { name: "Ivan", company: "Beefo", text: "Robosell nafaqat onlayn do‘kon yaratishni osonlashtiradi, balki buyurtmalarni boshqarish va mijozlarga xizmat ko‘rsatish uchun ko‘plab funksiyalarni ham taklif qiladi." },
+    { name: "Umid", company: "IPrint Book", text: "Robosell’ning tezligi va sifati meni hayratda qoldirdi. Bir necha daqiqada do‘konim uchun Telegram bot yaratdim va buyurtmalarni qabul qila boshladim. Kichik biznes uchun haqiqiy topilma!" },
+    { name: "Sarvar", company: "Московская пицца", text: "Biz uzoq vaqt davomida onlayn buyurtma berish uchun yechim izlagandik va Robosell biz kutgan natijani berdi." },
+    { name: "Kamil", company: "Temir Darvozalar", text: "Platforma bizga qulay Telegram bot va buyurtmalar uchun veb-sayt yaratishda yordam berdi. Bu esa o‘z navbatida ko‘proq mijozlarni jalb qilib, daromadimizni oshirdi." },
+    { name: "Artur", company: "Jumanji", text: "Restoran egasi sifatida men soddalik va funksionallikni qadrlayman. Bu platforma mijozlarimizga ovqat buyurtma qilish va yetkazib berish jarayonini tez va qulay qildi." },
+  ],
 };
 
 export const PROBLEM = {
-  eyebrow: "Nega Robosell?",
-  title: "Yetarli! Biznesni onlayn qilish uchun 10 barobar ko‘p pul sarflash shart emas",
-  receiptHead: "Maxsus dasturlash",
-  receiptSub: "Buyurtma asosida, bir martalik",
-  // Narxlar mijozdan (tarif sahifasi). Diqqat: qatorlar yig'indisi 35–48 mln, "Jami" esa 50–62 mln —
-  // farqni (xosting, yangilash, xizmat) aniqlashtirish kerak.
-  rows: [
-    { name: "Telegram bot", price: "5–7 mln" },
-    { name: "Veb-sayt", price: "15–20 mln" },
-    { name: "Administrator paneli", price: "5–7 mln" },
-    { name: "Integratsiyalar (to‘lov, ombor)", price: "5–7 mln" },
-    { name: "Ta’lim va qo‘llab-quvvatlash", price: "5–7 mln" },
+  eyebrow: "Muammo va yechim",
+  // [boshi, "yo'qoladigan" so'z]
+  title: ["Buyurtmalar chat va daftarda", "yo‘qolyaptimi?"],
+  lead: "Ko‘p biznes buyurtmani qo‘lda qabul qiladi. Robosell bilan bu jarayon avtomatik bo‘ladi.",
+  before: "Hozir (Robosell’siz)",
+  after: "Robosell bilan",
+  // har juftlik: muammo → yechim; vis — vizual turi (problem-visuals.tsx)
+  pairs: [
+    { vis: "chats", pain: "Buyurtmalar Telegram va telefonda tarqalib ketadi", fix: "Har bir buyurtma panelga avtomatik tushadi" },
+    { vis: "catalog", pain: "Mahsulot va narxlar daftar yoki Excel’da", fix: "Katalog, narx va qoldiq bitta joyda" },
+    { vis: "pay", pain: "To‘lovni qo‘lda tekshirasiz", fix: "Click, Payme, Robopay orqali onlayn to‘lov" },
+    { vis: "stats", pain: "Kim qancha sotgani, qancha foyda qilgani noma’lum", fix: "Daromad, foyda va top mahsulotlar grafikda" },
   ],
-  total: "50–62 mln so‘m",
-  cardLabel: "Robosell bilan",
-  unit: "so‘m / oy, hammasi obunada",
-  perks: ["1 kunda ishga tushadi", "Dasturchi kerak emas", "Yangilanishlar bepul"],
-  cta: "Tajribadan o‘tkazish",
-};
+} as const;
 
-export const CHANNELS = {
-  eyebrow: "Platformalar",
-  title: "Bir marta mahsulot qo‘shing, hamma joyda soting",
-  lead: "Bitta katalog va bitta admin panel. Buyurtmalar barcha kanallardan bir joyga tushadi.",
-  source: { name: "Admin panel", note: "1 katalog · 248 mahsulot" },
-  // badge — NAMUNA: chat ro'yxatidagi "o'qilmagan buyurtmalar"
-  list: [
-    { id: "TG", name: "Telegram bot", text: "WebApp do‘kon, BotFather token bilan 5 daqiqada ulanadi", badge: 12, tone: "teal" },
-    { id: "WEB", name: "Veb-sayt", text: "O‘z domeningiz, favicon, analitika va SEO", badge: 7, tone: "ink" },
-    { id: "QR", name: "QR menyu", text: "Kafe va restoran stollari uchun katalog", badge: 4, tone: "green" },
-    { id: "IG", name: "Instagram", text: "Profildan to‘g‘ridan-to‘g‘ri buyurtma", badge: 3, tone: "orange" },
-    { id: "C", name: "Click SuperApp", text: "Millionlab Click foydalanuvchilariga soting", badge: 5, tone: "yellow" },
-  ],
-  marketsLabel: "Marketplace’lar:",
-  markets: ["Yandex Eats", "Robohub", "Click SuperApp"],
-  all: "Barcha buyurtmalar bitta panelda",
-};
-
-export const FEATURES = {
-  eyebrow: "Imkoniyatlar",
-  title: "Savdo uchun kerakli hamma narsa bitta panelda",
-  hint: "Surib ko‘ring",
-  orders: {
-    title: "Buyurtma va mijozlar",
-    text: "Barcha kanallardan kelgan buyurtmalarni bitta ro‘yxatda boshqaring: holatlar, mijozlar bazasi va tarixi.",
-    // NAMUNA buyurtmalar
-    feed: [
-      { id: "#1285", who: "Aziz R.", sum: "121 000", src: "Telegram" },
-      { id: "#1284", who: "Malika T.", sum: "64 000", src: "Sayt" },
-      { id: "#1283", who: "Javlon S.", sum: "38 000", src: "QR" },
-    ],
-    states: ["Yangi", "Tayyorlanmoqda", "Yo‘lda", "Yetkazildi"],
-    // NAMUNA raqamlar
-    stats: [
-      { value: "24", label: "Bugungi buyurtma" },
-      { value: "932", label: "Mijozlar bazasi" },
-      { value: "41%", label: "Qayta xarid" },
-    ],
-  },
-  products: {
-    title: "Mahsulot va ombor",
-    text: "Kategoriyalar, Excel import, IKPU, qoldiq va chegirmalar.",
-    file: "mahsulotlar.xlsx",
-    tags: ["Kategoriya", "IKPU", "Qoldiq: 24", "Chegirma −15%"],
-  },
-  pay: {
-    title: "To‘lov (10 usul)",
-    list: ["Naqd", "Karta", "Click", "Payme", "RoboPay", "Alif nasiya", "Uzum nasiya", "Muddatli to‘lov"],
-  },
-  delivery: {
-    title: "Yetkazib berish",
-    list: ["Olib ketish", "Kuryer", "Fargo", "Uzpost"],
-  },
-  team: {
-    title: "Filial va xodimlar",
-    text: "Har kimga o‘z roli: operator, oshpaz, kuryer. Filiallar alohida, hisobot umumiy.",
-    roles: [
-      { i: "A", name: "Admin" },
-      { i: "O", name: "Operator" },
-      { i: "Sh", name: "Oshpaz" },
-      { i: "K", name: "Kuryer" },
-    ],
-    branches: ["Chilonzor", "Yunusobod", "Sergeli"],
-  },
-  marketing: {
-    title: "Marketing",
-    text: "Rassilka, SMS, promo-kod, bannerlar, sharhlar va kanalga avto-post.",
-    push: "Bugun −20%! Promo-kod: LAVASH20",
-    tags: ["Rassilka", "SMS", "Promo-kod", "Banner", "Sharhlar", "Avto-post"],
-  },
-};
-
-export const ANALYTICS = {
-  eyebrow: "Analitika",
-  title: "Biznesingiz real vaqtda, bir ekranda",
-  lead: "Daromad, foyda va mijozlarni kuzating. Qaysi reklama ishlayotganini biling.",
-  bullets: ["Daromad, tannarx, foyda", "Trafik manbai va buyurtma xaritasi", "Eng ko‘p buyurtma soatlari", "Top-10 mahsulot va mijoz"],
-  cta: "Demo’ni ko‘rish",
-  // NAMUNA: dashboard raqamlari
-  kpis: [
-    { label: "Foyda", value: "12.4 mln", delta: "+18%" },
-    { label: "O‘rtacha chek", value: "86 000", delta: "+6%" },
-    { label: "Qaytgan mijoz", value: "41%", delta: "+4%" },
-  ],
-  hoursLabel: "Buyurtmalar soatlar bo‘yicha",
-  hours: [18, 26, 34, 52, 78, 64, 40, 36, 58, 86, 100, 72],
-  hoursFrom: 10,
-  topLabel: "Top mahsulotlar",
-  top: [
-    { name: "Lavash", n: 312 },
-    { name: "Burger", n: 268 },
-    { name: "Pitsa", n: 201 },
-    { name: "Kola", n: 187 },
-    { name: "Fri", n: 150 },
-  ],
-};
-
-// Toifalar — taxminiy guruhlash, kerak bo'lsa aniqlashtiriladi
-export const INTEGRATIONS = {
-  eyebrow: "Robo market",
-  title: "30+ integratsiya: ishlatayotgan tizimingiz bilan ulanadi",
-  cats: [
-    { id: "all", label: "Barchasi" },
-    { id: "pos", label: "POS" },
-    { id: "erp", label: "Omborxona" },
-    { id: "ship", label: "Yetkazib berish" },
-    { id: "pay", label: "To‘lov" },
-    { id: "crm", label: "CRM va telefoniya" },
-    { id: "mkt", label: "Marketplace" },
-  ],
-  items: [
-    { name: "iiko", cat: "pos" },
-    { name: "R-Keeper", cat: "pos" },
-    { name: "Poster", cat: "pos" },
-    { name: "Clopos", cat: "pos" },
-    { name: "Alipos", cat: "pos" },
-    { name: "YesPos", cat: "pos" },
-    { name: "Billz", cat: "erp" },
-    { name: "Bito", cat: "erp" },
-    { name: "ERA", cat: "erp" },
-    { name: "Smartup", cat: "erp" },
-    { name: "Regos", cat: "erp" },
-    { name: "Uzpost", cat: "ship" },
-    { name: "Fargo", cat: "ship" },
-    { name: "BTS Express", cat: "ship" },
-    { name: "Yandex Delivery", cat: "ship" },
-    { name: "Noor Delivery", cat: "ship" },
-    { name: "Robo Pochta", cat: "ship" },
-    { name: "EMU Express", cat: "ship" },
-    { name: "Payme", cat: "pay" },
-    { name: "Click", cat: "pay" },
-    { name: "RoboPay", cat: "pay" },
-    { name: "AmoCRM", cat: "crm" },
-    { name: "Online PBX", cat: "crm" },
-    { name: "Yandex Eats", cat: "mkt" },
-  ],
-  all: "Barcha integratsiyalar",
-};
-
+// ---------- 3. Qanday ishlaydi ----------
 export const STEPS = {
   eyebrow: "Qanday ishlaydi",
-  title: "5 qadamda birinchi buyurtmagacha",
+  title: "3 qadamda ishga tushadi",
+  lead: "Texnik bilim kerak emas — hammasini siz bilan birga 1 kunda sozlaymiz.",
   list: [
-    { title: "Ro‘yxatdan o‘ting", text: "Telefon raqam bilan 1 daqiqada", chip: "+998 •• ••• •• ••" },
-    { title: "Botni ulang", text: "BotFather tokenini kiriting", chip: "7341…:AAH-token" },
-    { title: "Sozlang", text: "Logo, til, valyuta, ish vaqti", chip: "UZ · so‘m · 09:00–23:00" },
-    { title: "Mahsulot qo‘shing", text: "Qo‘lda yoki Excel import", chip: "mahsulotlar.xlsx · 248 ta" },
-    { title: "Soting!", text: "To‘lov va yetkazishni yoqing", chip: "Birinchi buyurtma keldi ✓" },
+    { title: "Ariza qoldirasiz", text: "Telefon raqamingizni qoldirasiz, menejer 15 daqiqada bog‘lanadi.", time: "2 daqiqa" },
+    { title: "Biz sozlaymiz", text: "Katalog, to‘lov va yetkazishni siz bilan birga ulab chiqamiz.", time: "1 kun" },
+    { title: "Buyurtma qabul qilasiz", text: "Mijozlar bot, sayt va ilovadan buyurtma beradi — siz panelda ko‘rasiz.", time: "Darhol" },
   ],
-  // NAMUNA: video hali yo'q
-  video: "Video qo‘llanma",
-  videoNote: "“Qanday qilib internet-magazin yaratish + telegram bot”",
-  helpTitle: "Qiyin bo‘lsa, biz yordam beramiz",
-  helpText: "Bepul onboarding va video darslar. Savollar uchun:",
-  cta: "Hoziroq boshlash",
+  // 2-qadam animatsiyasidagi sozlamalar
+  setup: ["Katalog", "To‘lov", "Yetkazish", "Telegram bot"],
+  cta: "Ariza qoldirish",
+  total: "Ariza qoldirgandan birinchi buyurtmagacha — taxminan 1 kun",
+};
+
+// ---------- 4. Savdo kanallari ----------
+export const CHANNELS = {
+  eyebrow: "Savdo kanallari",
+  title: "Mijoz qayerda bo‘lsa, buyurtma o‘sha yerdan",
+  lead: "Bir marta mahsulot qo‘shasiz — u bot, sayt va ilovada bir vaqtda paydo bo‘ladi.",
+  hub: "Bitta katalog",
+  list: [
+    { id: "tg", name: "Telegram bot", text: "Mijoz chatdan chiqmasdan menyuni ko‘radi va buyurtma beradi." },
+    { id: "web", name: "Veb-sayt", text: "O‘z domeningizda tayyor internet-do‘kon: savat, to‘lov va SEO bilan." },
+    { id: "click", name: "Click mini app", text: "Click ilovasining millionlab foydalanuvchilari sizdan to‘g‘ridan-to‘g‘ri xarid qiladi." },
+  ],
+};
+
+// ---------- 5. Admin panel ----------
+export const DASHBOARD = {
+  eyebrow: "Admin panel",
+  title: "Biznesingiz bir qarashda",
+  lead: "Buyurtma, mahsulot, mijoz va pul harakati — bitta panelda, real vaqtda.",
+  tabs: [
+    { id: "orders", label: "Buyurtmalar", title: "Buyurtmalar holati", text: "Yangi, jarayonda, yo‘lda — har bir buyurtma qaysi bosqichda ekanini ko‘rasiz." },
+    { id: "products", label: "Mahsulotlar", title: "Katalog va ombor", text: "Narx, qoldiq va chegirmalar bitta joyda. Excel’dan bir bosishda import." },
+    { id: "clients", label: "Mijozlar", title: "Mijozlar bazasi", text: "Kim, qachon va qancha xarid qilgani avtomatik yig‘iladi." },
+    { id: "payments", label: "To‘lovlar", title: "Onlayn to‘lovlar", text: "Click, Payme va Robopay to‘lovlari avtomatik tasdiqlanadi." },
+    { id: "stats", label: "Statistika", title: "Daromad va foyda", text: "Kunlik savdo, o‘rtacha chek va top mahsulotlar grafikda." },
+  ],
+} as const;
+
+// ---------- 6. Integratsiyalar ----------
+// src — rb-frontend ikonkalari (public/robosell/icons) yoki loyihadagi logolar (public/integrations)
+type Logo = { src: string; w: number; h: number; label?: string; alt: string };
+const I = (n: string, w: number, h: number, alt: string, label?: string): Logo => ({ src: `/robosell/icons/${n}.svg`, w, h, alt, label });
+const L = (n: string, w: number, h: number, alt: string, label?: string): Logo => ({ src: `/integrations/${n}.svg`, w, h, alt, label });
+export const INTEGRATIONS = {
+  eyebrow: "Integratsiyalar",
+  title: "Hozirgi tizimlaringiz bilan ulanadi",
+  lead: "Ishlayotgan dasturlaringizni almashtirish shart emas — Robosell ularga o‘zi ulanadi.",
+  rows: [
+    {
+      label: "To‘lov",
+      ico: "💳",
+      text: "Mijoz to‘lagan zahoti buyurtma avtomatik tasdiqlanadi.",
+      live: ["Click · 149 000 so‘m to‘landi", "Payme · 690 000 so‘m to‘landi", "Robopay · 420 000 so‘m to‘landi"],
+      items: [
+        I("click", 78, 31, "Click"),
+        I("payme", 84, 24, "Payme"),
+        I("robo-pay", 30, 30, "", "Robopay"),
+        I("uzum-bank", 78, 32, "Uzum bank"),
+        I("uzcard", 52, 30, "Uzcard"),
+        I("humo", 52, 30, "Humo"),
+        I("alif", 30, 30, "", "Alif"),
+        I("stripe", 70, 30, "Stripe"),
+      ],
+    },
+    {
+      label: "Ombor va POS",
+      ico: "📦",
+      text: "Mahsulot, narx va qoldiq kassa dasturingiz bilan sinxron.",
+      live: ["iiko · 248 mahsulot sinxronlandi", "Billz · qoldiq yangilandi", "MoySklad · narxlar yangilandi"],
+      items: [
+        I("iiko", 72, 29, "iiko"),
+        I("billz", 30, 30, "", "Billz"),
+        I("logo-bito", 104, 22, "Bito market"),
+        I("logo-era", 76, 24, "ERA"),
+        L("moysklad", 30, 30, "", "MoySklad"),
+        L("smartup", 30, 30, "", "Smartup"),
+        L("yespos", 30, 30, "", "YesPos"),
+        L("retail-crm", 30, 30, "", "RetailCRM"),
+      ],
+    },
+    {
+      label: "Yetkazib berish",
+      ico: "🚚",
+      text: "Buyurtma kuryer xizmatiga o‘zi uzatiladi, holati kuzatiladi.",
+      live: ["Fargo · kuryer yo‘lda, 25 daqiqa", "Yandex Delivery · yetkazildi", "Uzpost · jo‘natma qabul qilindi"],
+      items: [
+        I("fargo", 84, 30, "Fargo"),
+        I("uzpost", 84, 26, "Uzpost"),
+        I("bts", 64, 30, "BTS Express"),
+        I("yandex", 30, 30, "", "Yandex Delivery"),
+        I("wolt", 30, 30, "", "Wolt"),
+      ],
+    },
+  ],
+  more: "va yana 20+ integratsiya",
+};
+
+// ---------- 7. Biznes turlari ----------
+export const INDUSTRIES = {
+  eyebrow: "Kimlar uchun",
+  title: "Sizning biznesingizga ham mos",
+  lead: "Restoran bo‘ladimi yoki butik — Robosell savdo turingizga moslashadi.",
+  list: [
+    { img: "/categories/food.webp", title: "Restoran va kafe", text: "Menyu, stol uchun QR, yetkazib berish va oshxonaga avtomatik buyurtma.", tags: ["QR menyu va bannerlar", "Promokod va aksiyalar", "Yetkazish, iiko"] },
+    { img: "/categories/clothing.webp", title: "Kiyim va poyabzal", text: "O‘lcham va rang variantlari, qoldiq nazorati va kolleksiyalar.", tags: ["Rang va o‘lcham parametrlari", "Bir nechta rasm", "Qoldiq, Billz"] },
+    { img: "/categories/beauty.webp", title: "Go‘zallik va kosmetika", text: "Mahsulot to‘plamlari, sharhlar va doimiy mijozlar uchun bonuslar.", tags: ["Bonuslar", "Sharhlar", "Rassilka"] },
+    { img: "/categories/electronics.webp", title: "Elektronika va texnika", text: "Muddatli to‘lov, kafolat va nasiya bilan sotish.", tags: ["Nasiya", "Kafolat", "Fargo"] },
+  ],
+  // NAMUNA raqamlar
+  stats: [
+    { n: 500, suffix: "+", label: "faol biznes" },
+    { n: 1, suffix: " mln+", label: "qabul qilingan buyurtma" },
+    { n: 24, suffix: "/7", label: "qo‘llab-quvvatlash" },
+  ],
 };
 
 export const PRICING = {
+  eyebrow: "Narxlar",
   title: "Tarifni tanlang va samaradorlikni oshiring",
+  lead: "Barcha tariflarda yangilanishlar bepul. Uzoq muddatga olsangiz — arzonroq.",
   periods: [
     { months: 3, label: "3 oylik", off: 0 },
     { months: 6, label: "6 oylik", off: 0.1 },
@@ -259,19 +244,36 @@ export const PRICING = {
   ] as { name: string; v: (boolean | string)[] }[],
 };
 
-export const REVIEWS = {
-  title: "Bizga ishonishadi",
-  // NAMUNA: haqiqiy mijoz fikrlari bilan almashtiriladi
-  list: [
-    { text: "Telegram bot orqali buyurtmalar 2 barobar oshdi", who: "Mijoz ismi", role: "Restoran", time: "09:41" },
-    { text: "Instagram va saytdagi buyurtmalar endi bitta joyda", who: "Mijoz ismi", role: "Kiyim do‘koni", time: "12:08" },
-    { text: "5 filialni bitta paneldan boshqaramiz", who: "Mijoz ismi", role: "Filiallar tarmog‘i", time: "18:30" },
+// "Robosell'siz xarajatlar" — robo.uz dagi taqqoslash jadvali (narxlar o'sha yerdan)
+export const COST = {
+  title: "Robosell’siz qancha sarflaysiz?",
+  lead: "Biznesingizni onlayn qilish uchun 10 barobar ko‘p pul sarflashingiz shart emas.",
+  colOld: "Maxsus dasturlash",
+  colOldNote: "1 oydan boshlab",
+  colNew: "Robosell bilan",
+  rows: [
+    { name: "Telegram bot", from: 5, to: 7 },
+    { name: "Veb-sayt", from: 15, to: 20 },
+    { name: "Administrator paneli", from: 5, to: 7 },
+    { name: "Integratsiyalar (to‘lov, ombor)", from: 5, to: 7 },
+    { name: "Ta’lim va qo‘llab-quvvatlash", from: 5, to: 7 },
   ],
+  included: "Obunada",
+  totalOld: "50–62 mln so‘m",
+  totalNew: "500 000 so‘m / oy",
+  totalLabel: "Jami xarajat",
 };
 
 export const FAQ = {
+  eyebrow: "FAQ",
   title: "Ko‘p beriladigan savollar",
+  lead: "Javobini topmadingizmi? Menejerimiz 15 daqiqada bog‘lanadi.",
+  helpTitle: "Savolingiz qoldimi?",
+  helpText: "Ism, kompaniya va telefon raqamingizni qoldiring — menejerimiz 15 daqiqada bog‘lanadi va bepul maslahat beradi.",
   list: [
+    { q: "Platforma qaysi biznes turlari uchun mos?", a: "Restoran, kafe va fastfud, kiyim-kechak, kosmetika, elektronika va boshqa har qanday chakana savdo uchun. Restoran va onlayn do‘kon uchun alohida dizayn turlari bor." },
+    { q: "Telegram botni qanday yaratish mumkin?", a: "BotFather’da bot oching va tokenini admin paneldagi “Platformalar → Telegram bot” bo‘limiga kiriting. Katalog, savat va to‘lov bot ichida avtomatik paydo bo‘ladi." },
+    { q: "Veb-saytni qanday yaratish mumkin?", a: "“Platformalar → Veb-sayt” bo‘limida dizayn turini tanlaysiz — sayt Robosell subdomenida darhol ishga tushadi. Basic va Professional tariflarda o‘z domeningizni ulaysiz." },
     { q: "Dasturchi kerakmi?", a: "Yo‘q. Botni ulash, mahsulot qo‘shish va to‘lovlarni sozlash — hammasi admin panelda, kod yozmasdan. Kerak bo‘lsa, jamoamiz bepul yordam beradi." },
     { q: "Bot qancha vaqtda tayyor bo‘ladi?", a: "Odatda bir kun ichida: ro‘yxatdan o‘tasiz, BotFather tokenini kiritasiz va mahsulotlarni qo‘shasiz. Mahsulot ko‘p bo‘lsa, Excel orqali bir martada import qilasiz." },
     { q: "Qaysi to‘lov tizimlari ulanadi?", a: "Naqd, karta, Click, Payme, RoboPay, Alif va Uzum nasiya hamda muddatli to‘lov." },
@@ -279,14 +281,22 @@ export const FAQ = {
     // NAMUNA: fiskal chek bo'yicha javobni aniqlashtirish kerak
     { q: "IKPU va fiskal chek bormi?", a: "Har bir mahsulotga IKPU kodini biriktirish mumkin. Fiskal chekni ulash tartibini menejerimiz biznesingizga qarab tushuntirib beradi." },
     // NAMUNA: sinov muddatini aniqlashtirish kerak
-    { q: "Bepul sinov muddati bormi?", a: "Ha. Sinov davrida asosiy imkoniyatlarni bepul tekshirib ko‘rasiz, bank kartasi talab qilinmaydi." },
+    { q: "Bepul versiya yoki sinov muddati bormi?", a: "Ha. Sinov davrida asosiy imkoniyatlarni bepul tekshirib ko‘rasiz, bank kartasi talab qilinmaydi." },
   ],
 };
 
 export const FINAL = {
-  title: "Onlayn biznesingizni bugun boshlang",
+  title: ["Onlayn biznesingizni", "bugun boshlang"],
   text: "Bepul sinov, karta talab qilinmaydi. Sozlashda yordam beramiz.",
   start: "Bepul boshlash",
+  checks: ["1 kunda ishga tushadi", "Dasturchi kerak emas", "Bepul onboarding"],
+  // chat oynasidagi suhbat (navbat bilan chiqadi)
+  chat: [
+    { me: true, text: "Salom! Onlayn do‘kon ochmoqchiman 🙌" },
+    { me: false, text: "Assalomu alaykum! Bugunoq ishga tushiramiz." },
+    { me: false, text: "Telegram bot va sayt tayyor ✅" },
+    { me: true, text: "Birinchi buyurtma ham keldi! 🎉" },
+  ],
 };
 
 // icon — footer "Aloqa" ustunida havola oldida ikon; external — yangi oynada ochiladi
@@ -296,8 +306,7 @@ export const FOOTER: { about: string; cols: { title: string; links: FooterLink[]
   about: "Telegram bot, veb-sayt va QR menyu orqali onlayn savdo platformasi.",
   cols: [
     { title: "Mahsulot", links: [{ label: "Imkoniyatlar", href: "#features" }, { label: "Platformalar", href: "#channels" }, { label: "Integratsiyalar", href: "#integrations" }, { label: "Tariflar", href: "#pricing" }] },
-    // NAMUNA: video darslar manzili hali yo'q
-    { title: "Yordam", links: [{ label: "Video darslar", href: "#how-it-works" }, { label: "FAQ", href: "#faq" }, { label: "Qo‘llab-quvvatlash", href: PHONE_HREF }] },
+    { title: "Yordam", links: [{ label: "Video qo‘llanma", href: `https://www.youtube.com/watch?v=${HERO.videoId}`, external: true }, { label: "FAQ", href: "#faq" }, { label: "Qo‘llab-quvvatlash", href: PHONE_HREF }] },
     {
       title: "Aloqa",
       links: [
@@ -313,18 +322,6 @@ export const FOOTER: { about: string; cols: { title: string; links: FooterLink[]
 };
 
 // Section'lar orasidagi "chat" xabarlari — har bo'lim tepasida pufakcha bo'lib chiqadi
-export const PINGS = {
-  problem: "Hisob-kitob tayyor ✓",
-  channels: "Yangi kanal ulandi ✓",
-  features: "Buyurtma qabul qilindi ✓",
-  analytics: "Hisobot yangilandi ✓",
-  integrations: "Ombor sinxronlandi ✓",
-  steps: "Do‘kon ishga tushdi ✓",
-  pricing: "Tarif tanlandi ✓",
-  reviews: "Yangi sharh ★★★★★",
-  final: "Siz navbatdasiz ✓",
-};
-
 // Narxni guruhlab yozish: 1500000 → "1 500 000" (bo'sh joy — bo'linmas). Server va brauzerda bir xil natija.
 export function money(n: number): string {
   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");

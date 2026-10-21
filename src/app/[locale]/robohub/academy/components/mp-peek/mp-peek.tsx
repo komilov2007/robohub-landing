@@ -5,7 +5,10 @@ import Link from "next/link";
 import { lessonsByTopic } from "../../lib/academy";
 import { fmt, yt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
-import { lessonHref } from "../../lib/links";
+import { lessonHref, topicHref } from "../../lib/links";
+import { common } from "../../lib/common.i18n";
+import { useAcademyLocale } from "../locale/locale";
+import { messages } from "./mp-peek.i18n";
 
 // Bosh sahifa hero kapsulasi: "Robohub Academy · marketpleys sotuvchilari uchun" va ustma-ust 4 marketpleys logosi.
 // Logolar ustiga kelinsa — ular yoyiladi; bittasiga kelinsa (yoki klaviatura fokusi) — tagida kichik ko'rinish oynasi:
@@ -17,11 +20,13 @@ const MARKETPLACES = [
   { logo: "yandex", name: "Yandex Market" },
   { logo: "ozon", name: "Ozon" },
 ];
-// Integratsiya darslari tartibi MARKETPLACES bilan bir xil (22 Uzum, 23 WB, 24 Yandex, 25 Ozon)
-const LESSONS = lessonsByTopic("integration");
-const href = (n: number) => lessonHref("integration", n);
-
 export default function MpPeek({ style }: { style?: CSSProperties }) {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
+  const c = common[locale];
+  // Integratsiya darslari tartibi MARKETPLACES bilan bir xil (22 Uzum, 23 WB, 24 Yandex, 25 Ozon)
+  const LESSONS = lessonsByTopic("integration", locale);
+  const href = (n: number) => lessonHref(locale, "integration", n);
   const [active, setActive] = useState<number | null>(null);
   // x — oyna markazi (kapsulaga nisbatan), ax — strelkaning markazdan siljishi (oyna ekran chetiga qisilganda)
   const [pos, setPos] = useState({ x: 0, ax: 0 });
@@ -78,10 +83,10 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
               ref={(el) => {
                 itemRefs.current[i] = el;
               }}
-              href={LESSONS[i] ? href(LESSONS[i].n) : "/integratsiya"}
+              href={LESSONS[i] ? href(LESSONS[i].n) : topicHref(locale, "integration")}
               className={`acx-mps__item${i === active ? " is-active" : ""}`}
               style={{ "--k": i } as CSSProperties}
-              aria-label={`${m.name}ni ulash darsi`}
+              aria-label={t.connectLabel(m.name)}
               onPointerEnter={(e) => e.pointerType === "mouse" && show(i)}
               onFocus={() => show(i)}
             >
@@ -89,7 +94,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
             </Link>
           ))}
         </span>
-        Robohub Academy<span className="acx-hide-sm"> · marketpleys sotuvchilari uchun</span>
+        Robohub Academy<span className="acx-hide-sm"> · {t.forSellers}</span>
       </div>
 
       {lesson && mp && (
@@ -106,7 +111,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
               <img src={`/marketplaces/${mp.logo}.svg`} alt="" width={18} height={18} />
               {mp.name}
               <span>
-                {lesson.n}-dars · {fmt(lesson.durationSec)}
+                {c.lessonN(lesson.n)} · {fmt(lesson.durationSec)}
               </span>
             </span>
             <span className="acx-mppop__thumb">
@@ -117,7 +122,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
             </span>
             <span className="acx-mppop__title">{lesson.title}</span>
             <span className="acx-mppop__more">
-              Videoni ko‘rish
+              {t.watch}
               <Icon d={ICONS.arrowRight} size={14} />
             </span>
           </Link>

@@ -175,6 +175,8 @@
 .acx-about__meta span{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:var(--r-pill);font-size:12.5px;font-weight:800}
 .acx-about__meta .is-main{background:var(--ac-mint-soft);color:var(--brand)}
 .acx-about__meta .is-done{background:var(--brand);color:#fff}
+/* ru/en: "Video o'zbek tilida" eslatmasi */
+.acx-about__meta .is-lang{border:1px solid var(--line-strong);color:var(--text-dim)}
 
 /* 2. nazariy qism — maqola: chapda kichik sarlavha, o'ngda matn, qatorlar orasida ingichka chiziq */
 .acx-read{max-width:880px;animation:acx-in 600ms var(--ease-soft) 80ms backwards}

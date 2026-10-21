@@ -1,20 +1,27 @@
-import { PINGS, PRICING } from "../../robosell.content";
-import Section from "../section/section";
+import { PRICING } from "../../robosell.content";
 import PricingClient from "./pricing-client";
 
-// 8-bo'lim. Davr tanlovi narxlarni qayta hisoblaydi; Basic — sariq ramka va "Mashhur".
-// Mobilda kartalar slayder (Basic birinchi), taqqoslash jadvali — kartalar.
+// 8-bo'lim. Sirpanuvchi davr tanlagichi, narxlar sanab o'zgaradi; "Mashhur" kartada aylanuvchi chegara;
+// har kartada barcha imkoniyatlar (bor/yo'q). Pastda ochiladigan taqqoslash jadvali.
 export default function Pricing() {
   return (
-    <Section id="pricing" side="in" tone="white" ping={PINGS.pricing} labelledBy="price-title">
+    <section className="rs-price" id="pricing" aria-labelledby="price-title">
+      <div className="rs-price__bg" aria-hidden="true" />
       <div className="rs-wrap">
-        <header className="rs-head rs-head--center">
-          <h2 className="rs-h2" id="price-title" data-rv="">
+        <header className="rs-head2">
+          <p className="rs-kicker" data-rv="">
+            <span>08</span>
+            {PRICING.eyebrow}
+          </p>
+          <h2 className="rs-title" id="price-title" data-rv="">
             {PRICING.title}
           </h2>
+          <p className="rs-sub" data-rv="">
+            {PRICING.lead}
+          </p>
         </header>
         <PricingClient p={PRICING} />
       </div>
-    </Section>
+    </section>
   );
 }

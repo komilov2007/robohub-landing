@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { RobohubLogo } from "../logo/logo";
-import { TOPICS } from "../../lib/academy";
-import { PHONE, PHONE_TEL, START_URL, ACADEMY_BASE, topicHref, ROBOHUB_HOME, ROBOHUB_PRICING } from "../../lib/links";
+import { getLocale } from "@/i18n/server";
+import { getTopics } from "../../lib/academy";
+import { PHONE, PHONE_TEL, START_URL, academyHref, topicHref, robohubHome, robohubPricing } from "../../lib/links";
+import { messages } from "./footer.i18n";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
@@ -23,29 +25,31 @@ async function Year() {
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
 // Footer — Robohub landingi footeri uslubida (to'q fon, logo, ustunlar)
-export default function Footer() {
+export default async function Footer() {
+  const locale = await getLocale();
+  const t = messages[locale];
   return (
     <footer className="ac-footer" id="ac-footer" data-theme="dark">
       <div className="container">
         <div className="ac-footer__grid">
           <div className="ac-footer__about">
-            <Link href={ACADEMY_BASE} className="ac-footer__logo" aria-label="Robohub Academy">
+            <Link href={academyHref(locale)} className="ac-footer__logo" aria-label="Robohub Academy">
               <RobohubLogo />
               <span>Academy</span>
             </Link>
-            <p>Uzum, Wildberries, Yandex Market va Ozon sotuvchilari uchun Robohub bo‘yicha qisqa video darslar.</p>
+            <p>{t.about}</p>
             <p className="ac-footer__mps" aria-hidden="true">
               {MARKETPLACES.map((m) => (
                 <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
               ))}
             </p>
           </div>
-          <nav aria-label="Mavzular">
-            <h3>Mavzular</h3>
+          <nav aria-label={t.topics}>
+            <h3>{t.topics}</h3>
             <ul className="ac-footer__cols">
-              {TOPICS.map((t) => (
-                <li key={t.slug}>
-                  <Link href={topicHref(t.slug)}>{t.name}</Link>
+              {getTopics(locale).map((x) => (
+                <li key={x.slug}>
+                  <Link href={topicHref(locale, x.slug)}>{x.name}</Link>
                 </li>
               ))}
             </ul>
@@ -54,18 +58,18 @@ export default function Footer() {
             <h3>Robohub</h3>
             <ul>
               <li>
-                <a href={ROBOHUB_HOME}>Bosh sahifa</a>
+                <a href={robohubHome(locale)}>{t.home}</a>
               </li>
               <li>
-                <a href={ROBOHUB_PRICING}>Tariflar</a>
+                <a href={robohubPricing(locale)}>{t.pricing}</a>
               </li>
               <li>
-                <a href={START_URL} target="_blank" rel="noopener">Hoziroq boshlash</a>
+                <a href={START_URL} target="_blank" rel="noopener">{t.start}</a>
               </li>
             </ul>
           </nav>
           <div>
-            <h3>Aloqa</h3>
+            <h3>{t.contacts}</h3>
             <ul className="ac-footer__contacts">
               {CONTACTS.map((c) => (
                 <li key={c.icon}>
@@ -80,7 +84,7 @@ export default function Footer() {
         </div>
         <div className="ac-footer__bar">
           <p>
-            © <Year /> Robohub. Barcha huquqlar himoyalangan.
+            © <Year /> Robohub. {t.rights}
           </p>
           <p>Robohub Academy</p>
         </div>

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Lesson } from "../../lib/academy";
 import { warmYoutube, yt } from "../../lib/youtube";
 import { PlayGlyph } from "../svg-icon/svg-icon";
+import { useAcademyLocale } from "../locale/locale";
+import { messages } from "./video-player.i18n";
 
 // Muqova: telefonda (≤767px) 480px hqdefault webp — LCP uchun yengil; kattada webp maxres → jpg maxres;
 // xato bo'lsa — hqdefault. key={vid} — dars almashsa holat yangilanadi.
@@ -53,6 +55,7 @@ export default function VideoPlayer({
   // iframe ichidagi video haqiqatan o'ynayaptimi (true) yoki pauza/tugadi (false) — YouTube postMessage orqali
   onPlayingChange?: (playing: boolean) => void;
 }) {
+  const t = messages[useAcademyLocale()];
   const { youtubeId: vid, title } = lesson;
   const frameRef = useRef<HTMLIFrameElement>(null);
   const cbRef = useRef(onPlayingChange);
@@ -117,7 +120,7 @@ export default function VideoPlayer({
         <button
           type="button"
           className="ac-video__facade"
-          aria-label={`Videoni ijro etish: ${title}`}
+          aria-label={t.play(title)}
           onClick={onPlay}
           onPointerEnter={warmYoutube}
           onFocus={warmYoutube}

@@ -7,12 +7,13 @@ import "./lang-select.css";
 type Props = {
   locale: Locale;
   label: string; // "Til tanlash" — joriy tilda, ekran o'quvchilar uchun
+  path?: string; // tilsiz yo'l ("/academy/order") — boshqa tilda ham shu sahifa ochiladi; standart — bosh sahifa
 };
 
 // Til tanlash: bayroq + qisqa kod tugmasi, bosilganda uchta til ro'yxati ochiladi.
-// Har til — oddiy havola (/, /ru, /en), shuning uchun JS ishlamasa ham ishlaydi.
+// Har til — oddiy havola (/, /ru, /en; path berilsa — /academy, /ru/academy …), shuning uchun JS ishlamasa ham ishlaydi.
 // Klaviatura: ↑/↓ — tanlash, Home/End — chetlar, Esc — yopish (fokus tugmaga qaytadi).
-export default function LangSelect({ locale, label }: Props) {
+export default function LangSelect({ locale, label, path = "/" }: Props) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -86,7 +87,7 @@ export default function LangSelect({ locale, label }: Props) {
                 className="lang-select__item"
                 role="menuitemradio"
                 aria-checked={active}
-                href={localeHref(l)}
+                href={localeHref(l, path)}
                 hrefLang={l}
                 lang={l}
                 tabIndex={open ? 0 : -1}

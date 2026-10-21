@@ -2,20 +2,23 @@ import { onest } from "./fonts";
 import Header from "./components/header/header";
 import Hero from "./components/hero/hero";
 import Problem from "./components/problem/problem";
+import Steps from "./components/steps/steps";
 import Channels from "./components/channels/channels";
-import Features from "./components/features/features";
-import Analytics from "./components/analytics/analytics";
+import DashboardSection from "./components/dashboard/dashboard-section";
 import Integrations from "./components/integrations/integrations";
-import HowItWorks from "./components/how-it-works/how-it-works";
-import Pricing from "./components/pricing/pricing";
+import Industries from "./components/industries/industries";
 import Reviews from "./components/reviews/reviews";
+import Pricing from "./components/pricing/pricing";
+import Faq from "./components/faq/faq";
 import FinalCta from "./components/final-cta/final-cta";
 import Footer from "./components/footer/footer";
 import Reveal from "./components/reveal/reveal";
 
-// Robosell landingi. Konsepsiya — "do'kon chatdagi suhbat": hero'dan keyingi har bo'lim
-// chat pufakchasi (.rs-sec): bir burchagi o'tkir va "dumcha"li, navbatma-navbat chap/o'ng,
-// har biri oldingisi ustiga chiqadi. Uslublar: robosell.css, matnlar: robosell.content.ts.
+// Robosell landingi. Har bo'lim o'z fon, kompozitsiya va animatsiyasiga ega:
+//   hero — do'kondan admin panelga uchadigan buyurtma; 02 — oldin/keyin surgichi; 03 — to'ladigan yo'l;
+//   04 — katalogdan kanallarga oqim; 05 — jonli dashboard; 06 — ulash pulti; 07 — biznes turlari;
+//   hamkorlar sharhlari (ikki qatorli lenta); 08 — narxlar; 09 — FAQ; 10 — jonli chatli yakuniy CTA.
+// Uslublar: robosell.css, matnlar: robosell.content.ts.
 export default function Page() {
   return (
     <div className={`rs ${onest.variable}`} id="top">
@@ -23,13 +26,14 @@ export default function Page() {
       <main>
         <Hero />
         <Problem />
+        <Steps />
         <Channels />
-        <Features />
-        <Analytics />
+        <DashboardSection />
         <Integrations />
-        <HowItWorks />
-        <Pricing />
+        <Industries />
         <Reviews />
+        <Pricing />
+        <Faq />
         <FinalCta />
       </main>
       <Footer />

@@ -250,9 +250,14 @@ body:has(.ac){background:#fff}
    RESPONSIVE
    ============================================================ */
 
+/* tor ekranda logo + til tanlash + burger bir qatorga sig'ishi uchun */
+@media (max-width:480px){ .ac-header__inner{gap:10px} }
+
 @media (max-width:1023px){
-  .ac-nav,.ac-header__actions{display:none}
-  .ac-burger{display:block}
+  /* mobilda tugmalar burger menyuda; til tanlash — header'da qoladi */
+  .ac-nav,.ac-header__actions .btn{display:none}
+  .ac-header__actions{margin-left:auto}
+  .ac-burger{display:block;flex:none;margin-left:8px}
   
   
   

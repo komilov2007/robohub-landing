@@ -14,6 +14,9 @@ import { fmt, yt } from "../../../lib/youtube";
 import { usePlayer } from "../../../components/player/player-context";
 import VideoPlayer from "../../../components/video-player/video-player";
 import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
+import { common } from "../../../lib/common.i18n";
+import { useAcademyLocale } from "../../../components/locale/locale";
+import { messages } from "./stage.i18n";
 
 // Hero'dagi pleyer qismlari (YouTube kabi: pleyer va pleylist). Tanlangan dars — URL yo'lida (/academy/{mavzu}/{dars}, player-context).
 
@@ -25,8 +28,10 @@ function setCinema(on: boolean) {
 }
 
 export function HeroScreen() {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
   const { selected, mainLesson, playing, play } = usePlayer();
-  const lesson = getLesson(selected)!;
+  const lesson = getLesson(selected, locale)!;
 
   useEffect(() => {
     const onDown = (e: PointerEvent) => {
@@ -50,8 +55,8 @@ export function HeroScreen() {
         onPlay={() => play(lesson.n, "section")}
         badge={
           lesson.n === mainLesson
-            ? `Asosiy dars · ${lesson.n}`
-            : `${lesson.n}-dars`
+            ? t.mainBadge(lesson.n)
+            : common[locale].lessonN(lesson.n)
         }
         // ijro paytida sahifaning qolgan qismi xiralashadi (topic.css → .acx-cinema)
         onPlayingChange={setCinema}
@@ -66,13 +71,16 @@ export function HeroScreen() {
 // qayta yuklanmaydi (select), Ctrl/Cmd+bosish — yangi oynada ochiladi.
 // Pastda — doim ko'rinib turadigan "Keyingi mavzu" paneli (ro'yxat scroll bo'lsa ham joyida).
 export function Playlist({ topic }: { topic: Topic }) {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
+  const c = common[locale];
   const { selected, mainLesson, playing, select } = usePlayer();
   const watched = useWatched();
-  const lessons = lessonsByTopic(topic.slug);
+  const lessons = lessonsByTopic(topic.slug, locale);
   const pos = lessons.findIndex((l) => l.n === selected) + 1;
   const done = lessons.filter((l) => watched.has(l.n)).length;
   const listRef = useRef<HTMLOListElement>(null);
-  const upcoming = nextTopic(topic.slug);
+  const upcoming = nextTopic(topic.slug, locale);
   const open = (e: MouseEvent<HTMLAnchorElement>, n: number) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
       return;
@@ -92,11 +100,11 @@ export function Playlist({ topic }: { topic: Topic }) {
   }, [selected]);
 
   return (
-    <aside className="acx-pl" aria-label={`${topic.name}: mavzu darslari`}>
+    <aside className="acx-pl" aria-label={t.playlistLabel(topic.name)}>
       <div className="acx-pl__head">
         <p className="acx-pl__name">{topic.name}</p>
         <p className="acx-pl__meta">
-          {pos} / {lessons.length} · {done} ta ko‘rildi
+          {pos} / {lessons.length} · {t.watchedCount(done)}
         </p>
         <span className="acx-pl__bar" aria-hidden="true">
           <i
@@ -115,7 +123,7 @@ export function Playlist({ topic }: { topic: Topic }) {
           return (
             <li key={l.n}>
               <a
-                href={lessonHref(topic.slug, l.n)}
+                href={lessonHref(locale, topic.slug, l.n)}
                 className={`acx-pl__item${isSel ? " is-selected" : ""}`}
                 aria-current={isSel ? "true" : undefined}
                 onClick={(e) => open(e, l.n)}
@@ -147,9 +155,9 @@ export function Playlist({ topic }: { topic: Topic }) {
                 <span className="acx-pl__text">
                   <span className="acx-pl__title">{l.title}</span>
                   <span className="acx-pl__sub">
-                    {l.n}-dars
-                    {watched.has(l.n) && <em className="is-done">ko‘rildi</em>}
-                    {!watched.has(l.n) && l.n === mainLesson && <em>asosiy</em>}
+                    {c.lessonN(l.n)}
+                    {watched.has(l.n) && <em className="is-done">{c.watched}</em>}
+                    {!watched.has(l.n) && l.n === mainLesson && <em>{t.main}</em>}
                   </span>
                 </span>
               </a>
@@ -159,7 +167,7 @@ export function Playlist({ topic }: { topic: Topic }) {
       </ol>
       {/* doim — keyingi mavzu */}
       {
-        <Link href={topicHref(upcoming.slug)} className="acx-pl__next">
+        <Link href={topicHref(locale, upcoming.slug)} className="acx-pl__next">
           <span className="acx-pl__next-ico" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
@@ -175,9 +183,9 @@ export function Playlist({ topic }: { topic: Topic }) {
             </svg>
           </span>
           <span className="acx-pl__next-text">
-            <small>Keyingi mavzu</small>
+            <small>{t.nextTopic}</small>
             <b>
-              {upcoming.name} · {lessonsByTopic(upcoming.slug).length} dars
+              {upcoming.name} · {c.lessons(lessonsByTopic(upcoming.slug, locale).length)}
             </b>
           </span>
           <span className="acx-pl__next-go" aria-hidden="true">

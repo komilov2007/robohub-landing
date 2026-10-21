@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 import Icon, { ICONS } from "../svg-icon/svg-icon";
+import { useAcademyLocale } from "../locale/locale";
+import { messages } from "./swiper.i18n";
 
 // Yengil swiper (kutubxonasiz): gorizontal scroll-snap lenta, chap/o'ng strelkalar (bir sahifaga suradi),
 // sichqoncha bilan sudrab surish (sensorli ekranda — brauzerning o'z scroll'i), chetlarda yumshoq so'nish.
 // Strelka va so'nish faqat o'sha tomonga surish mumkin bo'lsa ko'rinadi. children — <li> elementlar.
 export default function Swiper({ label, className, children }: { label: string; className?: string; children: ReactNode }) {
+  const t = messages[useAcademyLocale()];
   const trackRef = useRef<HTMLUListElement>(null);
   const drag = useRef({ x: 0, left: 0, moved: false, active: false });
   const [edges, setEdges] = useState({ prev: false, next: false });
@@ -88,10 +91,10 @@ export default function Swiper({ label, className, children }: { label: string; 
       >
         {children}
       </ul>
-      <button type="button" className="acx-swiper__arrow acx-swiper__arrow--prev" aria-label="Oldingilar" tabIndex={edges.prev ? 0 : -1} onClick={() => step(-1)}>
+      <button type="button" className="acx-swiper__arrow acx-swiper__arrow--prev" aria-label={t.prev} tabIndex={edges.prev ? 0 : -1} onClick={() => step(-1)}>
         <Icon d={ICONS.chevronLeft} size={20} />
       </button>
-      <button type="button" className="acx-swiper__arrow acx-swiper__arrow--next" aria-label="Keyingilar" tabIndex={edges.next ? 0 : -1} onClick={() => step(1)}>
+      <button type="button" className="acx-swiper__arrow acx-swiper__arrow--next" aria-label={t.next} tabIndex={edges.next ? 0 : -1} onClick={() => step(1)}>
         <Icon d={ICONS.chevronRight} size={20} />
       </button>
     </div>

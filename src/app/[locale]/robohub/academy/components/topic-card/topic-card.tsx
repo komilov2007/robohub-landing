@@ -5,13 +5,17 @@ import { fmt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
 import TopicProgress from "./topic-progress";
 import { topicHref, lessonHref } from "../../lib/links";
+import { getLocale } from "@/i18n/server";
+import { common } from "../../lib/common.i18n";
 
 // Mavzu kartochkasi (bento): ikon, nom, qisqa tavsif, darslar ro'yxati va progress (localStorage'dan).
 // Kartochkaning bo'sh joyi — mavzu sahifasiga (nom havolasi ::after bilan butun kartochkani qoplaydi),
-// har bir dars qatori — o'sha darsning o'ziga (/academy/{mavzu}?lesson=N). Havola ichida havola bo'lmasligi uchun shunday.
+// har bir dars qatori — o'sha darsning o'z sahifasiga. Havola ichida havola bo'lmasligi uchun shunday.
 // data-glow — kursor ortidan yuradigan yorug'lik va chegara. featured — gridda katta (2×2), barcha darslar ko'rinadi.
-export default function TopicCard({ topic, index, featured = false }: { topic: Topic; index: number; featured?: boolean }) {
-  const lessons = lessonsByTopic(topic.slug);
+export default async function TopicCard({ topic, index, featured = false }: { topic: Topic; index: number; featured?: boolean }) {
+  const locale = await getLocale();
+  const c = common[locale];
+  const lessons = lessonsByTopic(topic.slug, locale);
   const shown = featured ? lessons : lessons.slice(0, 3);
   const more = lessons.length - shown.length;
 
@@ -23,12 +27,12 @@ export default function TopicCard({ topic, index, featured = false }: { topic: T
             <Icon d={topic.icon} size={featured ? 28 : 22} />
           </span>
           <span className="acx-tcard__count">
-            {lessons.length} dars · {topicMinutes(topic.slug)} daq
+            {c.lessons(lessons.length)} · {c.minShort(topicMinutes(topic.slug))}
           </span>
         </span>
 
         <span className="acx-tcard__name">
-          <Link href={topicHref(topic.slug)} className="acx-tcard__link">
+          <Link href={topicHref(locale, topic.slug)} className="acx-tcard__link">
             {topic.name}
           </Link>
           <span className="acx-tcard__go" aria-hidden="true">
@@ -39,7 +43,7 @@ export default function TopicCard({ topic, index, featured = false }: { topic: T
 
         <span className="acx-tcard__lessons">
           {shown.map((l, i) => (
-            <Link key={l.n} href={lessonHref(topic.slug, l.n)} className="acx-tcard__lesson" style={{ "--j": i } as CSSProperties}>
+            <Link key={l.n} href={lessonHref(locale, topic.slug, l.n)} className="acx-tcard__lesson" style={{ "--j": i } as CSSProperties}>
               <b>
                 <span>{l.n}</span>
                 <PlayGlyph size={10} />
@@ -48,7 +52,7 @@ export default function TopicCard({ topic, index, featured = false }: { topic: T
               <em>{fmt(l.durationSec)}</em>
             </Link>
           ))}
-          {more > 0 && <span className="acx-tcard__more">+ yana {more} ta dars</span>}
+          {more > 0 && <span className="acx-tcard__more">{c.more(more)}</span>}
         </span>
 
         <TopicProgress lessons={lessons.map((l) => l.n)} />

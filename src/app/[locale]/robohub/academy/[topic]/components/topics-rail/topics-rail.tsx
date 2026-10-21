@@ -1,6 +1,9 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { TOPICS, TOTAL_LESSONS, lessonsByTopic, topicMinutes, type Topic } from "../../../lib/academy";
+import { getLocale } from "@/i18n/server";
+import { getTopics, TOTAL_LESSONS, lessonsByTopic, topicMinutes, type Topic } from "../../../lib/academy";
+import { common } from "../../../lib/common.i18n";
+import { messages } from "./topics-rail.i18n";
 import { yt } from "../../../lib/youtube";
 import { topicHref } from "../../../lib/links";
 import Swiper from "../../../components/swiper/swiper";
@@ -11,41 +14,45 @@ import Icon, { ICONS } from "../../../components/svg-icon/svg-icon";
 // kichik muqovalari ustma-ust va "Ochish". Hover'da ko'tariladi, chegara yorishadi — soyasiz. Joriy mavzu ajratilgan.
 const STACK = 3;
 
-export default function TopicsRail({ topic }: { topic: Topic }) {
+export default async function TopicsRail({ topic }: { topic: Topic }) {
+  const locale = await getLocale();
+  const t = messages[locale];
+  const c = common[locale];
+  const topics = getTopics(locale);
   return (
     <section className="acx-rail" data-theme="light" aria-labelledby="ac-rail-title">
       <div className="container">
         <div className="acx-head" data-reveal>
-          <p className="acx-kicker">Mavzular</p>
+          <p className="acx-kicker">{t.kicker}</p>
           <h2 id="ac-rail-title" className="acx-h2">
-            Boshqa mavzularni ham <span className="acx-mark">o‘rganing</span>
+            {t.title} <span className="acx-mark">{t.mark}</span>
           </h2>
           <p className="acx-head__note">
-            {TOPICS.length} mavzu · {TOTAL_LESSONS} dars
+            {c.topics(topics.length)} · {c.lessons(TOTAL_LESSONS)}
           </p>
         </div>
-        <Swiper label="Mavzular" className="acx-tv">
-          {TOPICS.map((t, i) => {
-            const cur = t.slug === topic.slug;
-            const ls = lessonsByTopic(t.slug);
+        <Swiper label={t.kicker} className="acx-tv">
+          {topics.map((x, i) => {
+            const cur = x.slug === topic.slug;
+            const ls = lessonsByTopic(x.slug, locale);
             const more = ls.length - STACK;
             return (
-              <li key={t.slug} style={{ "--i": i } as CSSProperties}>
-                <Link href={topicHref(t.slug)} className={`acx-tc${cur ? " is-current" : ""}`} aria-current={cur ? "page" : undefined}>
+              <li key={x.slug} style={{ "--i": i } as CSSProperties}>
+                <Link href={topicHref(locale, x.slug)} className={`acx-tc${cur ? " is-current" : ""}`} aria-current={cur ? "page" : undefined}>
                   <span className="acx-tc__top">
                     <span className="acx-tc__ico" aria-hidden="true">
-                      <Icon d={t.icon} size={22} />
+                      <Icon d={x.icon} size={22} />
                     </span>
                     {cur ? (
-                      <span className="acx-tc__now">Hozir shu yerdasiz</span>
+                      <span className="acx-tc__now">{t.here}</span>
                     ) : (
                       <span className="acx-tc__size">
-                        {ls.length} dars · {topicMinutes(t.slug)} daq
+                        {c.lessons(ls.length)} · {c.minShort(topicMinutes(x.slug))}
                       </span>
                     )}
                   </span>
-                  <span className="acx-tc__name">{t.name}</span>
-                  <span className="acx-tc__short">{t.short}</span>
+                  <span className="acx-tc__name">{x.name}</span>
+                  <span className="acx-tc__short">{x.short}</span>
                   <span className="acx-tc__foot">
                     <span className="acx-tc__stack" aria-hidden="true">
                       {ls.slice(0, STACK).map((l, k) => (
@@ -54,7 +61,7 @@ export default function TopicsRail({ topic }: { topic: Topic }) {
                       {more > 0 && <b>+{more}</b>}
                     </span>
                     <span className="acx-tc__go">
-                      Ochish
+                      {t.open}
                       <Icon d={ICONS.arrowRight} size={14} />
                     </span>
                   </span>

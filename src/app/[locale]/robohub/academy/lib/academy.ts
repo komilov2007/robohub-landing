@@ -1,6 +1,13 @@
-// Robohub Academy — barcha kontent shu faylda (Robohub_academy.md, 4-bo'lim).
-// Yangi dars qo'shish = LESSONS ga bitta obyekt. Hisoblagichlar (dars soni, davomiylik,
+// Robohub Academy — barcha kontent (Robohub_academy.md, 4-bo'lim).
+// O'zbekcha matn va matn bo'lmagan ma'lumotlar (slug, youtubeId, sana, davomiylik, ikonka) — shu faylda;
+// ruscha va inglizcha matnlar — content/ papkasida (dars raqami va mavzu slug'i bo'yicha, turi qat'iy:
+// biror dars yoki mavzu tarjimasi yetishmasa — tsc xato beradi).
+// Yangi dars qo'shish = LESSONS_UZ ga bitta obyekt + content/ dagi ru/en matni. Hisoblagichlar (dars soni, davomiylik,
 // "X / Y ko'rildi") pastdagi funksiyalar orqali avtomatik hisoblanadi — qo'lda yozilmaydi.
+// Kontentni o'qish faqat tilga bog'langan funksiyalar orqali: getTopics(locale), getLesson(n, locale) va h.k.
+import type { Locale } from "@/i18n/config";
+import { CONTENT } from "./content";
+import type { LessonText, TopicText } from "./content/types";
 
 export type TopicSlug =
   | "analytics"
@@ -15,14 +22,13 @@ export type TopicSlug =
 export type Lesson = {
   n: number; // dars raqami (YouTube’dagi raqam)
   topic: TopicSlug;
-  slug: string; // dars manzili: /academy/{mavzu}/{slug} (inglizcha, mavzu ichida yagona)
+  slug: string; // dars manzili: /academy/{mavzu}/{slug} (inglizcha, mavzu ichida yagona, hamma tilda bir xil)
   title: string; // savol yoki qisqa nom; "Dars N." va "| Robohub Academy" qismlarisiz
-  youtubeId: string;
+  youtubeId: string; // video o'zbekcha — hamma tilda bitta
   uploadDate?: string; // YouTube'ga yuklangan sana (ISO 8601) — JSON-LD VideoObject uchun (Google talab qiladi)
   durationSec: number;
   summary: string; // 1–2 jumla, video tavsifidan
   points: string[]; // "Ushbu darsda" bandlari, video tavsifidan
-  chapters?: { t: number; label: string }[]; // hozircha yo‘q — bo‘sh bo‘lsa UI’da yashiriladi
 };
 
 export type Topic = {
@@ -46,7 +52,13 @@ export type Topic = {
   related: TopicSlug[];
 };
 
-export const LESSONS: Lesson[] = [
+// Dars raqamlari turi ro'yxatning o'zidan olinadi (LessonN = 1 | 2 | … ) — tarjimalar shu raqamlar bo'yicha tekshiriladi
+function defineLessons<N extends number>(list: (Omit<Lesson, "n"> & { n: N })[]) {
+  return list;
+}
+
+// O‘zbekcha matn shu yerda (asosiy til). ru/en matnlari — content/ papkasida, dars raqami va mavzu slug’i bo‘yicha.
+const LESSONS_UZ = defineLessons([
   // ───────── ANALITIKA ─────────
   {
     n: 1,
@@ -584,9 +596,9 @@ export const LESSONS: Lesson[] = [
       "Savdo ko‘rsatkichlarini tushunish",
     ],
   },
-];
+]);
 
-export const TOPICS: Topic[] = [
+const TOPICS_UZ: Topic[] = [
   {
     slug: "analytics",
     name: "Analitika",
@@ -1240,41 +1252,104 @@ export const TOPICS: Topic[] = [
 
 // Bosh sahifadagi "Boshlang'ich yo'l": yangi foydalanuvchi mavzularni shu tartibda ko'radi.
 // Birinchi qadamning birinchi darsi — tarix bo'lmasa hero'dagi "Shu yerdan boshlang" darsi.
-export const START_PATH: { topic: TopicSlug; step: string }[] = [
-  { topic: "integration", step: "Marketpleys do‘koningizni Robohub’ga ulang" },
-  { topic: "product", step: "Tovar kartochkalari va narxlarni bir joydan yangilang" },
-  { topic: "order", step: "Barcha marketpleys buyurtmalarini bitta oynada qayta ishlang" },
-  { topic: "analytics", step: "Savdo, xarajat va foydani raqamlarda ko‘ring" },
-];
+export const START_TOPICS = ["integration", "product", "order", "analytics"] as const satisfies readonly TopicSlug[];
+export type StartTopic = (typeof START_TOPICS)[number];
+const START_PATH_UZ: Record<StartTopic, string> = {
+  integration: "Marketpleys do‘koningizni Robohub’ga ulang",
+  product: "Tovar kartochkalari va narxlarni bir joydan yangilang",
+  order: "Barcha marketpleys buyurtmalarini bitta oynada qayta ishlang",
+  analytics: "Savdo, xarajat va foydani raqamlarda ko‘ring",
+};
+
+// O'zbekcha matnlar — tarjima fayllari bilan bir xil ko'rinishda (content/types.ts)
+export type LessonN = (typeof LESSONS_UZ)[number]["n"];
+
+// ───────── Tilga moslash ─────────
+// uz — ma'lumot o'zi; ru/en — matn qismi content/ dan almashtiriladi, qolgani (slug, video, sana…) o'zgarmaydi.
+
+function localizeLesson(l: (typeof LESSONS_UZ)[number], locale: Locale): Lesson {
+  if (locale === "uz") return l;
+  const text: LessonText = CONTENT[locale].lessons[l.n];
+  return { ...l, ...text };
+}
+
+function localizeTopic(t: Topic, locale: Locale): Topic {
+  if (locale === "uz") return t;
+  const text: TopicText = CONTENT[locale].topics[t.slug];
+  return {
+    ...t,
+    ...text,
+    // xususiyat kartochkalari tartib bo'yicha: dars raqami uz ma'lumotidan
+    features: t.features.map((f, i) => ({ ...f, ...text.features[i] })),
+  };
+}
+
+type LocaleData = { lessons: Lesson[]; sorted: Lesson[]; topics: Topic[] };
+const cache = new Map<Locale, LocaleData>();
+
+// Har til uchun bir marta quriladi
+function data(locale: Locale): LocaleData {
+  let d = cache.get(locale);
+  if (!d) {
+    const lessons = LESSONS_UZ.map((l) => localizeLesson(l, locale));
+    d = {
+      lessons,
+      // Butun Academy bo'yicha n tartibida (Oldingi / Keyingi dars uchun)
+      sorted: [...lessons].sort((a, b) => a.n - b.n),
+      topics: TOPICS_UZ.map((t) => localizeTopic(t, locale)),
+    };
+    cache.set(locale, d);
+  }
+  return d;
+}
 
 // ───────── Hisoblanadigan qiymatlar ─────────
 
-export const TOTAL_LESSONS = LESSONS.length;
-export const TOTAL_TOPICS = TOPICS.length;
+export const TOTAL_LESSONS = LESSONS_UZ.length;
+export const TOTAL_TOPICS = TOPICS_UZ.length;
 
-// Butun Academy bo'yicha n tartibida (Oldingi / Keyingi dars uchun)
-export const LESSONS_SORTED: Lesson[] = [...LESSONS].sort((a, b) => a.n - b.n);
+// Matnga bog'liq bo'lmagan ro'yxatlar (statik yo'llar, sitemap): slug va raqamlar hamma tilda bir xil
+export const LESSON_ROUTES: Pick<Lesson, "n" | "topic" | "slug" | "uploadDate">[] = LESSONS_UZ;
+export const TOPIC_ROUTES: Pick<Topic, "slug" | "mainLesson">[] = TOPICS_UZ;
 
-export function getTopic(slug: string): Topic | undefined {
-  return TOPICS.find((t) => t.slug === slug);
+export function getLessons(locale: Locale): Lesson[] {
+  return data(locale).lessons;
 }
 
-export function getLesson(n: number): Lesson | undefined {
-  return LESSONS.find((l) => l.n === n);
+// Butun Academy bo'yicha n tartibida
+export function getLessonsSorted(locale: Locale): Lesson[] {
+  return data(locale).sorted;
+}
+
+export function getTopics(locale: Locale): Topic[] {
+  return data(locale).topics;
+}
+
+export function getStartPath(locale: Locale): { topic: StartTopic; step: string }[] {
+  const steps = locale === "uz" ? START_PATH_UZ : CONTENT[locale].startPath;
+  return START_TOPICS.map((topic) => ({ topic, step: steps[topic] }));
+}
+
+export function getTopic(slug: string, locale: Locale): Topic | undefined {
+  return getTopics(locale).find((t) => t.slug === slug);
+}
+
+export function getLesson(n: number, locale: Locale): Lesson | undefined {
+  return getLessons(locale).find((l) => l.n === n);
 }
 
 // Dars sahifasi manzilidan: /academy/{topic}/{slug}
-export function getLessonBySlug(topic: string, slug: string): Lesson | undefined {
-  return LESSONS.find((l) => l.topic === topic && l.slug === slug);
+export function getLessonBySlug(topic: string, slug: string, locale: Locale): Lesson | undefined {
+  return getLessons(locale).find((l) => l.topic === topic && l.slug === slug);
 }
 
-export function lessonsByTopic(slug: TopicSlug): Lesson[] {
-  return LESSONS_SORTED.filter((l) => l.topic === slug);
+export function lessonsByTopic(slug: TopicSlug, locale: Locale): Lesson[] {
+  return getLessonsSorted(locale).filter((l) => l.topic === slug);
 }
 
-// Mavzu darslari davomiyligi, soniyada
+// Mavzu darslari davomiyligi, soniyada (tilga bog'liq emas)
 export function topicDuration(slug: TopicSlug): number {
-  return lessonsByTopic(slug).reduce((sum, l) => sum + l.durationSec, 0);
+  return LESSONS_UZ.filter((l) => l.topic === slug).reduce((sum, l) => sum + l.durationSec, 0);
 }
 
 // "16 daqiqa" — kamida 1 daqiqa
@@ -1307,26 +1382,30 @@ export function visibleFaqs(topic: Topic): Topic["faqs"] {
   return topic.faqs.filter((f) => !f.q.startsWith("[TODO") && !f.a.startsWith("[TODO"));
 }
 
-export function prevLesson(n: number): Lesson | undefined {
-  const i = LESSONS_SORTED.findIndex((l) => l.n === n);
-  return i > 0 ? LESSONS_SORTED[i - 1] : undefined;
+export function prevLesson(n: number, locale: Locale): Lesson | undefined {
+  const sorted = getLessonsSorted(locale);
+  const i = sorted.findIndex((l) => l.n === n);
+  return i > 0 ? sorted[i - 1] : undefined;
 }
 
-export function nextLesson(n: number): Lesson | undefined {
-  const i = LESSONS_SORTED.findIndex((l) => l.n === n);
-  return i >= 0 && i < LESSONS_SORTED.length - 1 ? LESSONS_SORTED[i + 1] : undefined;
+export function nextLesson(n: number, locale: Locale): Lesson | undefined {
+  const sorted = getLessonsSorted(locale);
+  const i = sorted.findIndex((l) => l.n === n);
+  return i >= 0 && i < sorted.length - 1 ? sorted[i + 1] : undefined;
 }
 
 // Ro'yxatda keyingi mavzu (oxirgisidan keyin — birinchisi)
-export function nextTopic(slug: TopicSlug): Topic {
-  const i = TOPICS.findIndex((t) => t.slug === slug);
-  return TOPICS[(i + 1) % TOPICS.length];
+export function nextTopic(slug: TopicSlug, locale: Locale): Topic {
+  const topics = getTopics(locale);
+  const i = topics.findIndex((t) => t.slug === slug);
+  return topics[(i + 1) % topics.length];
 }
 
-// Qidiruv uchun: kichik harf, o‘/o'/oʻ va g‘/g'/gʻ, ’ farqi yo'q
+// Qidiruv uchun: kichik harf, o‘/o'/oʻ va g‘/g'/gʻ, ’ farqi yo'q; ruschada ё = е
 export function normalize(s: string): string {
   return s
     .toLowerCase()
+    .replace(/ё/g, "е")
     .replace(/[‘’ʻʼ`´']/g, "")
     .replace(/[«»"“”()?!.,:;×—–-]/g, " ")
     .replace(/\s+/g, " ")

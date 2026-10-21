@@ -2,40 +2,48 @@
 
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
-import { LESSONS_SORTED, getTopic, normalize } from "../../lib/academy";
+import type { Locale } from "@/i18n/config";
+import { getLessonsSorted, getTopic, normalize, type Lesson } from "../../lib/academy";
 import Icon, { ICONS } from "../svg-icon/svg-icon";
 import { lessonHref } from "../../lib/links";
+import { useAcademyLocale } from "../locale/locale";
+import { messages } from "./academy-search.i18n";
 
-// Academy qidiruvi (7.1): title, summary, points va mavzu nomi bo'yicha.
-// Kichik harf, o‘/o' va g‘/g' farqi hisobga olinmaydi (normalize). Klaviatura: ↑ ↓ Enter Esc.
-const INDEX = LESSONS_SORTED.map((l) => {
-  const topicName = getTopic(l.topic)?.name ?? "";
-  return {
-    lesson: l,
-    topicName,
-    title: " " + normalize(l.title),
-    // boshida bo'shliq: o'zak faqat so'z boshidan qidiriladi (" missi" — "komissiya" ga mos kelmaydi)
-    hay: " " + normalize([l.title, l.summary, ...l.points, topicName].join(" ")),
-  };
-});
+// Academy qidiruvi (7.1): joriy tildagi title, summary, points va mavzu nomi bo'yicha.
+// Kichik harf, o‘/o' va g‘/g' (ruschada ё/е) farqi hisobga olinmaydi (normalize). Klaviatura: ↑ ↓ Enter Esc.
+type Entry = { lesson: Lesson; topicName: string; title: string; hay: string };
+const indexes = new Map<Locale, Entry[]>();
+function buildIndex(locale: Locale): Entry[] {
+  const cached = indexes.get(locale);
+  if (cached) return cached;
+  const index = getLessonsSorted(locale).map((l) => {
+    const topicName = getTopic(l.topic, locale)?.name ?? "";
+    return {
+      lesson: l,
+      topicName,
+      title: " " + normalize(l.title),
+      // boshida bo'shliq: o'zak faqat so'z boshidan qidiriladi (" missi" — "komissiya" ga mos kelmaydi)
+      hay: " " + normalize([l.title, l.summary, ...l.points, topicName].join(" ")),
+    };
+  });
+  indexes.set(locale, index);
+  return index;
+}
 
-const POPULAR = ["Xarajatlar", "Uzum ulash", "ABC tahlil", "Missing"];
-
-// Savol so'zlari — har darsda bor, qidiruvga ta'sir qilmasin
-const STOP = new Set(["qanday", "qanaqa", "nima", "nimaga", "qayerda", "mumkin", "kerak", "qilish", "qilib", "va", "bilan", "uchun", "men", "u", "bu"]);
-
-// O'zbekcha so'z qo'shimchalar bilan o'zgaradi (guruhlayman / guruhlash / guruhlarga), shuning uchun
+// So'z qo'shimchalar bilan o'zgaradi (guruhlayman / guruhlash / guruhlarga), shuning uchun
 // so'zning boshidagi o'zagi qidiriladi: uzunligining ~60%, kamida 4 harf ("guruhlayman" → "guruhla").
 const stem = (w: string) => (w.length <= 4 ? w : w.slice(0, Math.max(4, Math.ceil(w.length * 0.6))));
 
-function search(query: string) {
+// stop — savol so'zlari (har darsda bor, qidiruvga ta'sir qilmasin), *.i18n.ts dan
+function search(query: string, locale: Locale) {
+  const stop = new Set(messages[locale].stop);
   const all = normalize(query).split(" ").filter(Boolean);
-  const words = all.filter((w) => !STOP.has(w));
+  const words = all.filter((w) => !stop.has(w));
   const terms = (words.length ? words : all).map(stem);
   if (!terms.length) return [];
   // So'zlarning kamida 2/3 qismi topilishi kerak; sarlavhadagi moslik ikki baravar og'ir
   const need = Math.ceil(terms.length * 0.67);
-  return INDEX.map((item) => {
+  return buildIndex(locale).map((item) => {
     const hits = terms.filter((t) => item.hay.includes(" " + t)).length;
     if (hits < need) return null;
     const score = hits + terms.filter((t) => item.title.includes(" " + t)).length * 2;
@@ -48,13 +56,15 @@ function search(query: string) {
 }
 
 export default function AcademySearch() {
+  const locale = useAcademyLocale();
+  const t = messages[locale];
   const router = useRouter();
   const id = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
-  const results = useMemo(() => search(query), [query]);
+  const results = useMemo(() => search(query, locale), [query, locale]);
   const showDropdown = open && query.trim().length > 0;
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -68,7 +78,7 @@ export default function AcademySearch() {
     const r = results[i];
     if (!r) return;
     setOpen(false);
-    router.push(lessonHref(r.lesson.topic, r.lesson.n));
+    router.push(lessonHref(locale, r.lesson.topic, r.lesson.n));
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -97,7 +107,7 @@ export default function AcademySearch() {
         }}
       >
         <label htmlFor={`${id}-input`} className="ac-search__label">
-          Savolingizni yozing
+          {t.label}
         </label>
         <div className="ac-search__row">
           <Icon d={ICONS.search} size={20} className="ac-search__ico" />
@@ -106,7 +116,7 @@ export default function AcademySearch() {
             id={`${id}-input`}
             type="search"
             autoComplete="off"
-            placeholder="Masalan: omborlarni qanday guruhlayman?"
+            placeholder={t.placeholder}
             value={query}
             role="combobox"
             aria-expanded={showDropdown}
@@ -126,7 +136,7 @@ export default function AcademySearch() {
             <button
               type="button"
               className="ac-search__clear"
-              aria-label="Qidiruvni tozalash"
+              aria-label={t.clear}
               // mousedown — input fokusini yo'qotmaslik uchun
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
@@ -139,7 +149,7 @@ export default function AcademySearch() {
             </button>
           )}
           <button type="submit" className="btn btn--accent ac-search__btn">
-            Qidirish
+            {t.submit}
           </button>
         </div>
 
@@ -147,11 +157,11 @@ export default function AcademySearch() {
           <div className="ac-search__dropdown">
             {results.length > 0 && (
               <p className="ac-search__count" aria-hidden="true">
-                {results.length} ta dars topildi <span>↑ ↓ · Enter</span>
+                {t.found(results.length)} <span>↑ ↓ · Enter</span>
               </p>
             )}
             {results.length ? (
-              <ul id={`${id}-list`} role="listbox" aria-label="Topilgan darslar" ref={listRef}>
+              <ul id={`${id}-list`} role="listbox" aria-label={t.listLabel} ref={listRef}>
                 {results.map((r, i) => (
                   <li
                     key={r.lesson.n}
@@ -176,9 +186,9 @@ export default function AcademySearch() {
               </ul>
             ) : (
               <p className="ac-search__empty" id={`${id}-list`} role="status">
-                Topilmadi.{" "}
+                {t.empty}{" "}
                 <a href="#topics" onMouseDown={(e) => e.preventDefault()} onClick={() => setOpen(false)}>
-                  Barcha mavzularni ko‘ring ↓
+                  {t.seeAll}
                 </a>
               </p>
             )}
@@ -187,9 +197,9 @@ export default function AcademySearch() {
       </form>
 
       <div className="ac-search__popular">
-        <span>Ko‘p qidiriladi:</span>
+        <span>{t.popularLabel}</span>
         <ul>
-          {POPULAR.map((p) => (
+          {t.popular.map((p) => (
             <li key={p}>
               <button
                 type="button"

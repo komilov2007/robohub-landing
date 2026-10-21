@@ -38,6 +38,7 @@
 .lang-select__check{display:none;width:16px;height:16px;color:var(--hl)}
 .lang-select__item[aria-checked="true"]{font-weight:600;color:var(--hl)}
 .lang-select__item[aria-checked="true"] .lang-select__check{display:block}
+.lang-select__item:not([aria-checked="true"]) svg.lang-select__check{display:none} /* sayt umumiy "svg{display:block}" qoidasi bilan ochilib qolmasin */
 
 @media (prefers-reduced-motion:reduce){
   .lang-select__menu,.lang-select__chev{transition:none}

@@ -1,9 +1,11 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
+import type { Locale } from "@/i18n/config";
 import { getLesson, getLessonBySlug, type TopicSlug } from "../../lib/academy";
 import { markWatched } from "../../lib/progress";
 import { LESSON_PARAM, lessonHref, topicHref } from "../../lib/links";
+import { useAcademyLocale } from "../locale/locale";
 
 // Mavzu sahifasining umumiy pleyer holati:
 //   selected — hero pleyerida tanlangan dars; manbasi URL yo'li: /academy/{mavzu}/{dars-slug} (har darsning o'z sahifasi).
@@ -37,16 +39,16 @@ function subscribeUrl(cb: () => void) {
 const getUrl = () => window.location.pathname + window.location.search;
 const getServerUrl = () => null;
 
-// URL'dan shu mavzuning darsi: /academy/{topic}/{slug}; eski havola /academy/{topic}?lesson=N ham tushuniladi.
+// URL'dan shu mavzuning darsi: /academy/{topic}/{slug} (ru/en: /ru/academy/…); eski havola /academy/{topic}?lesson=N ham tushuniladi.
 // Boshqa mavzu manzili (masalan, Next.js yashirin saqlagan oldingi sahifa) — null.
-function lessonFromUrl(url: string, topic: TopicSlug, mainLesson: number): number | null {
+function lessonFromUrl(url: string, topic: TopicSlug, mainLesson: number, locale: Locale): number | null {
   const u = new URL(url, "http://x");
-  const base = topicHref(topic);
+  const base = topicHref(locale, topic);
   if (u.pathname === base || u.pathname === `${base}/`) {
     const n = Number(u.searchParams.get(LESSON_PARAM));
-    return getLesson(n)?.topic === topic ? n : mainLesson;
+    return getLesson(n, locale)?.topic === topic ? n : mainLesson;
   }
-  if (u.pathname.startsWith(`${base}/`)) return getLessonBySlug(topic, u.pathname.slice(base.length + 1).replace(/\/$/, ""))?.n ?? null;
+  if (u.pathname.startsWith(`${base}/`)) return getLessonBySlug(topic, u.pathname.slice(base.length + 1).replace(/\/$/, ""), locale)?.n ?? null;
   return null;
 }
 
@@ -69,6 +71,7 @@ export function PlayerProvider({
   initialLesson?: number;
   children: ReactNode;
 }) {
+  const locale = useAcademyLocale();
   const url = useSyncExternalStore(subscribeUrl, getUrl, getServerUrl);
   const [playing, setPlaying] = useState<PlayerCtx["playing"]>(null);
 
@@ -77,18 +80,18 @@ export function PlayerProvider({
   useEffect(() => () => setPlaying(null), []);
 
   const selected = useMemo(
-    () => (url === null ? initialLesson : (lessonFromUrl(url, topic, mainLesson) ?? initialLesson)),
-    [url, topic, mainLesson, initialLesson],
+    () => (url === null ? initialLesson : (lessonFromUrl(url, topic, mainLesson, locale) ?? initialLesson)),
+    [url, topic, mainLesson, initialLesson, locale],
   );
 
   // Eski havola (?lesson=N) — manzil darsning yangi sahifasiga almashtiriladi
   useEffect(() => {
-    if (window.location.pathname !== topicHref(topic) || !new URLSearchParams(window.location.search).has(LESSON_PARAM)) return;
+    if (window.location.pathname !== topicHref(locale, topic) || !new URLSearchParams(window.location.search).has(LESSON_PARAM)) return;
     // gidratsiya paytidagi `selected` emas, URL'ning o'zi: birinchi chizishda selected hali server qiymatida (asosiy dars)
-    const n = lessonFromUrl(getUrl(), topic, mainLesson) ?? mainLesson;
-    window.history.replaceState(null, "", lessonHref(topic, n) + window.location.hash);
+    const n = lessonFromUrl(getUrl(), topic, mainLesson, locale) ?? mainLesson;
+    window.history.replaceState(null, "", lessonHref(locale, topic, n) + window.location.hash);
     window.dispatchEvent(new Event(URL_EVENT));
-  }, [topic, mainLesson]);
+  }, [topic, mainLesson, locale]);
 
   const play = useCallback((n: number, slot: Slot) => {
     markWatched(n);
@@ -97,13 +100,13 @@ export function PlayerProvider({
 
   const select = useCallback(
     (n: number, opts: { play?: boolean; scroll?: boolean } = {}) => {
-      window.history.replaceState(null, "", lessonHref(topic, n));
+      window.history.replaceState(null, "", lessonHref(locale, topic, n));
       window.dispatchEvent(new Event(URL_EVENT));
       if (opts.play) play(n, "section");
       else setPlaying((p) => (p?.slot === "section" ? null : p));
       if (opts.scroll) scrollToPlayer();
     },
-    [play, topic],
+    [play, topic, locale],
   );
 
   const value = useMemo(

@@ -1,45 +1,49 @@
-import {
-  FINAL,
-  PHONE,
-  PHONE_HREF,
-  PINGS,
-  SIGNUP_HREF,
-} from "../../robosell.content";
-import Section from "../section/section";
+import { Fragment, type CSSProperties } from "react";
+import { FINAL, PHONE, PHONE_HREF, SIGNUP_HREF } from "../../robosell.content";
+import FinalChat from "./final-chat";
 
-// 10-bo'lim. Yakuniy CTA: teal banner — chap tomonda taklif, o'ngda harakat; fon bezagi —
-// bir-biriga javob berayotgan chat pufakchalari.
+// 11-bo'lim. Katta yashil panel: fonda sekin suzuvchi yorug' dog'lar va nuqtali to'r; chapda sarlavha
+// (so'zlar navbat bilan ko'tariladi), afzalliklar va tugmalar; o'ngda jonli chat oynasi (final-chat.tsx).
 export default function FinalCta() {
+  const lead = FINAL.title[0].split(" ").length;
+  const words = FINAL.title.join(" ").split(" ");
   return (
-    <Section
-      id="start"
-      side="in"
-      tone="white"
-      ping={PINGS.final}
-      labelledBy="final-title"
-    >
+    <section className="rs-fin" id="start" aria-labelledby="final-title">
       <div className="rs-wrap">
-        <div className="rs-final" data-rv="">
-          <span className="rs-final__bubbles" aria-hidden="true">
-            <i>Salom! Do‘kon ochmoqchiman</i>
-            <i>Bugunoq ishga tushiramiz ✓✓</i>
-          </span>
-          <div className="rs-final__text">
-            <h2 className="rs-h2" id="final-title">
-              {FINAL.title}
+        <div className="rs-fin__panel" data-rv="">
+          <span className="rs-fin__blob rs-fin__blob--a" aria-hidden="true" />
+          <span className="rs-fin__blob rs-fin__blob--b" aria-hidden="true" />
+          <span className="rs-fin__grid" aria-hidden="true" />
+          <div className="rs-fin__text">
+            <h2 className="rs-fin__title" id="final-title">
+              {words.map((w, i) => (
+                <Fragment key={i}>
+                  <span className={i >= lead ? "is-accent" : undefined} style={{ "--i": i } as CSSProperties}>
+                    {w}
+                  </span>{" "}
+                </Fragment>
+              ))}
             </h2>
-            <p>{FINAL.text}</p>
+            <p className="rs-fin__lead">{FINAL.text}</p>
+            <ul className="rs-fin__checks">
+              {FINAL.checks.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
+            <div className="rs-fin__cta">
+              <a className="rs-fin__go" href={SIGNUP_HREF}>
+                {FINAL.start}
+                <span aria-hidden="true">→</span>
+              </a>
+              <a className="rs-fin__call" href={PHONE_HREF}>
+                <span aria-hidden="true">☎</span>
+                {PHONE}
+              </a>
+            </div>
           </div>
-          <div className="rs-final__cta">
-            <a className="rs-btn rs-btn--yellow rs-btn--lg" href={SIGNUP_HREF}>
-              {FINAL.start}
-            </a>
-            <a className="rs-btn rs-btn--ghost rs-btn--lg" href={PHONE_HREF}>
-              {PHONE}
-            </a>
-          </div>
+          <FinalChat />
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

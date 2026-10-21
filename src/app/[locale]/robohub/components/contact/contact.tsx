@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
+import { TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/contacts";
 import ContactScript from "./contact-script";
 import { messages } from "./contact.i18n";
 
@@ -60,11 +61,11 @@ export default async function Contact() {
             </p>
 
             <p className="contact__ways" data-sr="" style={{ "--d": "280ms" } as CSSProperties}>
-              <a href="https://t.me/Robohubuz" target="_blank" rel="noopener">
+              <a href={TELEGRAM_URL} target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.8.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.9 8.9-8c.4-.4-.1-.5-.6-.2L6.2 12.8 1.5 11.3c-1-.3-1-1 .2-1.5L20.200 2.7c.9-.3 1.600.2 1.300 1.600z" />
                 </svg>
-                @Robohubuz
+                {TELEGRAM_HANDLE}
               </a>
               <a href="tel:+998781138212">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
