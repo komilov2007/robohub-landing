@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="20" height="20">
+  <defs>
+    <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgb(79, 255, 176)" />
+      <stop offset="25%" stop-color="rgb(79, 179, 255)" />
+      <stop offset="50%" stop-color="rgb(107, 115, 255)" />
+      <stop offset="75%" stop-color="rgb(159, 64, 255)" />
+      <stop offset="100%" stop-color="rgb(255, 64, 191)" />
+    </linearGradient>
+  </defs>
+  <path d="M100 20 C100 80 120 100 180 100 C120 100 100 120 100 180 C100 120 80 100 20 100 C80 100 100 80 100 20 Z" fill="url(#aiGradient)" />
+  <path d="M165 15 C165 40 172 47 197 47 C172 47 165 54 165 79 C165 54 158 47 133 47 C158 47 165 40 165 15 Z" fill="url(#aiGradient)" />
+  <path d="M45 130 C45 145 50 150 65 150 C50 150 45 155 45 170 C45 155 40 150 25 150 C40 150 45 145 45 130 Z" fill="url(#aiGradient)" />
+</svg>

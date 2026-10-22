@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
-import { LOGIN_HREF, SIGNUP_HREF } from "../../ai-studio.content";
+import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
+import { LOGIN_HREF } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
 // Header — Robohub Academy header'i bilan bir xil dizayn (robohub-academy/components/header):
@@ -16,6 +17,8 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  // kabinetga kirgan sotuvchiga tugma matni "Kirish" o'rniga "Kabinet" (havola o'sha)
+  const authed = useRobohubAuthed();
 
   useEffect(() => {
     let raf = 0;
@@ -70,11 +73,8 @@ export default function Header() {
         </nav>
         <div className="as-header__actions">
           <LangSelect locale={locale} label={U.lang} path={path} />
-          <a href={LOGIN_HREF} className="as-hbtn as-hbtn--ghost">
-            {U.login}
-          </a>
-          <a href={SIGNUP_HREF} className="as-hbtn as-hbtn--accent">
-            {U.start}
+          <a href={LOGIN_HREF} className="as-hbtn as-hbtn--accent">
+            {authed ? CABINET_LABEL[locale] : U.login}
           </a>
         </div>
         <button
@@ -102,11 +102,8 @@ export default function Header() {
             <LangSelect locale={locale} label={U.lang} path={path} />
           </div>
           <div className="as-mmenu__actions">
-            <a href={LOGIN_HREF} className="as-hbtn as-hbtn--lg as-hbtn--outline">
-              {U.login}
-            </a>
-            <a href={SIGNUP_HREF} className="as-hbtn as-hbtn--lg as-hbtn--primary">
-              {U.start}
+            <a href={LOGIN_HREF} className="as-hbtn as-hbtn--lg as-hbtn--primary">
+              {authed ? CABINET_LABEL[locale] : U.login}
             </a>
           </div>
         </div>

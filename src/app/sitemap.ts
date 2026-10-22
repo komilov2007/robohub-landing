@@ -48,6 +48,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...landing,
     // AI Studio — Robohub domenida /ai-studio (robohub.uz/ai-studio, robohub-landing.vercel.app/ai-studio)
     ...academy("/ai-studio", { changeFrequency: "weekly", priority: 0.9 }),
+    // Marketpleys kalkulyatori — robohub.uz/calculator
+    ...academy("/calculator", { changeFrequency: "weekly", priority: 0.9 }),
     ...academy(ACADEMY_BASE, { lastModified: latest(LESSON_ROUTES.map((l) => l.uploadDate)), changeFrequency: "weekly", priority: 0.9 }),
     ...TOPIC_ROUTES.flatMap((t) =>
       academy(topicPath(t.slug), {

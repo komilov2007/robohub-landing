@@ -1,0 +1,38 @@
+/* Header ustidagi reklama polosasi (AnnounceBar) — rb-market ko'rinishida: to'q brend gradienti, mint urg'u va tugma,
+   sekin o'tuvchi yaltirash. Shrift — sahifanikidan (AI Studio / Kalkulyator: Inter). */
+.announce{
+  position:relative;z-index:51;overflow:hidden;width:100%;
+  background:linear-gradient(90deg,#002B29 0%,#00524F 45%,#0B6E69 100%);color:#fff;
+}
+.announce__link{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px;min-height:46px;padding:8px 48px;
+  font-size:13.5px;font-weight:600;line-height:1.35;text-align:center;color:#fff;text-decoration:none;
+}
+.announce__icon{
+  display:none;place-items:center;flex:none;width:26px;height:26px;border-radius:8px;background:#B8FFB0;color:#00524F;
+}
+.announce__icon svg{width:15px;height:15px}
+.announce__text b{font-weight:700;color:#B8FFB0}
+.announce__cta{
+  display:inline-flex;align-items:center;gap:6px;flex:none;height:28px;padding:0 13px;border-radius:999px;
+  background:#B8FFB0;color:#00524F;font-weight:700;white-space:nowrap;transition:transform .2s ease;
+}
+.announce__arrow{display:inline-block;transition:transform .2s ease}
+.announce__link:hover .announce__cta{transform:translateY(-1px)}
+.announce__link:hover .announce__arrow{transform:translateX(3px)}
+.announce__link:focus-visible{outline:2px solid #B8FFB0;outline-offset:-4px}
+.announce__close{
+  position:absolute;z-index:2;right:8px;top:50%;display:grid;place-items:center;width:32px;height:32px;border-radius:8px;
+  color:rgba(255,255,255,.75);background:transparent;transform:translateY(-50%);transition:background .2s,color .2s;
+}
+.announce__close:hover{background:rgba(255,255,255,.12);color:#fff}
+.announce__close:focus-visible{outline:2px solid #B8FFB0;outline-offset:1px}
+.announce__close svg{width:16px;height:16px}
+.announce__sheen{
+  position:absolute;top:0;bottom:0;left:0;width:18%;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(184,255,176,.18),transparent);animation:announce-sheen 7s ease-in-out infinite;
+}
+@keyframes announce-sheen{0%{transform:translateX(-140%) skewX(-18deg)}45%,100%{transform:translateX(620%) skewX(-18deg)}}
+@media (min-width:600px){ .announce__icon{display:grid} }
+@media (max-width:479px){ .announce__link{padding:8px 40px;font-size:12.5px} }
+@media (prefers-reduced-motion:reduce){ .announce__sheen{display:none} .announce__cta,.announce__arrow{transition:none} }

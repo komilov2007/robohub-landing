@@ -213,7 +213,7 @@
 .as-mmenu .as-wrap{max-height:calc(100dvh - var(--hf-h));overflow-y:auto;padding-top:6px}
 .as-mmenu__link{display:block;padding:14px 0;font-size:17px;font-weight:600;border-bottom:1px solid var(--hf-line)}
 .as-mmenu__link[aria-current]{color:var(--hf-teal)}
-.as-mmenu__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 0 22px}
+.as-mmenu__actions{display:grid;grid-template-columns:1fr;gap:10px;padding:16px 0 22px}
 /* mobil menyudagi til tanlash: ro'yxat yuqoriga ochiladi (pastda tugmalar bor) */
 .as-mmenu__lang{display:flex;padding-top:16px}
 .as-mmenu__lang .lang-select__menu{top:auto;bottom:calc(100% + 8px);left:0;right:auto;transform-origin:bottom left}
