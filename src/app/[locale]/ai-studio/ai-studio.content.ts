@@ -20,6 +20,11 @@ export const LOGIN_HREF = "https://seller.robohub.uz";
 export const EXAMPLES_HREF = "#examples";
 export const BEFORE_IMG = "/ai/base_cosmetics.webp";
 export const TOKENS_PER_IMAGE = 3;
+// Narx — bitta manba: 1 rasm narxi (so'm); 1 token narxi undan hisoblanadi. Matnlardagi {img} va {tok} shu bilan to'ldiriladi.
+export const PRICE_PER_IMAGE = 1500;
+export const TOKEN_PRICE = PRICE_PER_IMAGE / TOKENS_PER_IMAGE;
+/** So'm summasi: "1 500" (guruhlash — bo'linmas bo'sh joy, uch tilda bir xil) */
+export const money = (n: number) => Math.round(n).toLocaleString("ru-RU").replace(/\s/g, "\u00A0");
 
 export type GalleryCat = "electronics" | "fashion" | "accessories" | "beauty" | "home";
 type GalleryId =
@@ -78,8 +83,6 @@ const DATA = {
   pack: ["/ai/cosmetics_studio.webp", "/ai/cosmetics_everyday.webp", "/ai/cosmetics_composition.webp", "/ai/cosmetics_in_use.webp", "/ai/base_cosmetics.webp"],
   // Robohub Academy'dagi mos darslar (raqami — robohub/academy/lib/academy.ts dagi n): kartochka yaratish,
   // narxlarni yangilash, Uzum Market'ni ulash. Nomi, muqovasi va havolasi o'sha yerdan olinadi.
-  // 1 rasm narxi (so'm) — hisoblagich: rasm soni × shu narx
-  pricePerImage: 1500,
   calc: { min: 1, max: 500, initial: 40 },
   lessons: [16, 15, 22],
 };
@@ -116,7 +119,7 @@ const uz = {
     notes: ["Birinchi tokenlar bepul", "Karta kerak emas", "750×1000 format"],
     facts: [
       { value: "1", unit: "daqiqa", label: "1 rasm tayyorlanishi" },
-      { value: "3", unit: "token", label: "1 rasm narxi" },
+      { value: "3", unit: "token", label: "1 rasm narxi · {img} so‘m" },
       { value: "5", unit: "ta", label: "tayyor dizayn uslubi" },
     ],
   },
@@ -155,9 +158,9 @@ const uz = {
       {
         metric: "Narx",
         problem: { title: "Dizayner qimmat", text: "1 kartochka uchun 50 000+ so‘m" },
-        solution: { title: "AI arzon", text: "1 rasm = 3 token" },
+        solution: { title: "AI arzon", text: "1 rasm = 3 token = {img} so‘m" },
         old: { label: "Dizayner", value: "50 000+ so‘m" },
-        now: { label: "AI Studio", value: "3 token" },
+        now: { label: "AI Studio", value: "{img} so‘m" },
       },
       {
         metric: "Vaqt",
@@ -178,7 +181,7 @@ const uz = {
   gallery: {
     title: "Natijalarni ko‘ring",
     cta: "Shunaqasini yaratish",
-    meta: "Infografika · 3 token",
+    meta: "Infografika · 3 token · {img} so‘m",
     before: "Oldin",
     after: "Keyin",
     photoAlt: "{name} — oddiy foto",
@@ -231,7 +234,7 @@ const uz = {
     eyebrow: "Hisoblagich",
     title: "Faqat ishlatganingizga",
     accent: "to‘lang",
-    lead: "1 rasm = 3 token = 1 500 so‘m. Obuna majburiy emas — rasm sonini tanlang, token va narx darhol hisoblanadi.",
+    lead: "1 token = {tok} so‘m · 1 rasm = 3 token = {img} so‘m. Obuna majburiy emas — rasm sonini tanlang, token va narx darhol hisoblanadi.",
     calc: "Qancha rasm kerak?",
   },
   academy: {
@@ -308,7 +311,7 @@ const ru: Dict = {
     notes: ["Первые токены бесплатно", "Карта не нужна", "Формат 750×1000"],
     facts: [
       { value: "1", unit: "минута", label: "на одно изображение" },
-      { value: "3", unit: "токена", label: "цена одного изображения" },
+      { value: "3", unit: "токена", label: "цена одного изображения · {img} сум" },
       { value: "5", unit: "стилей", label: "готового дизайна" },
     ],
   },
@@ -347,9 +350,9 @@ const ru: Dict = {
       {
         metric: "Цена",
         problem: { title: "Дизайнер дорого", text: "От 50 000 сум за одну карточку" },
-        solution: { title: "AI дёшево", text: "1 изображение = 3 токена" },
+        solution: { title: "AI дёшево", text: "1 изображение = 3 токена = {img} сум" },
         old: { label: "Дизайнер", value: "50 000+ сум" },
-        now: { label: "AI Studio", value: "3 токена" },
+        now: { label: "AI Studio", value: "{img} сум" },
       },
       {
         metric: "Время",
@@ -370,7 +373,7 @@ const ru: Dict = {
   gallery: {
     title: "Посмотрите на результат",
     cta: "Создать такое же",
-    meta: "Инфографика · 3 токена",
+    meta: "Инфографика · 3 токена · {img} сум",
     before: "До",
     after: "После",
     photoAlt: "{name} — обычное фото",
@@ -423,7 +426,7 @@ const ru: Dict = {
     eyebrow: "Калькулятор",
     title: "Платите только",
     accent: "за использование",
-    lead: "1 изображение = 3 токена = 1 500 сум. Подписка не обязательна — выберите количество, токены и цена посчитаются сразу.",
+    lead: "1 токен = {tok} сум · 1 изображение = 3 токена = {img} сум. Подписка не обязательна — выберите количество, токены и цена посчитаются сразу.",
     calc: "Сколько изображений нужно?",
   },
   academy: {
@@ -497,7 +500,7 @@ const en: Dict = {
     notes: ["First tokens are free", "No card required", "750×1000 format"],
     facts: [
       { value: "1", unit: "minute", label: "to make one image" },
-      { value: "3", unit: "tokens", label: "price of one image" },
+      { value: "3", unit: "tokens", label: "price of one image · {img} UZS" },
       { value: "5", unit: "styles", label: "ready-made designs" },
     ],
   },
@@ -536,9 +539,9 @@ const en: Dict = {
       {
         metric: "Price",
         problem: { title: "Designers are expensive", text: "50,000+ UZS for a single card" },
-        solution: { title: "AI is cheap", text: "1 image = 3 tokens" },
+        solution: { title: "AI is cheap", text: "1 image = 3 tokens = {img} UZS" },
         old: { label: "Designer", value: "50,000+ UZS" },
-        now: { label: "AI Studio", value: "3 tokens" },
+        now: { label: "AI Studio", value: "{img} UZS" },
       },
       {
         metric: "Time",
@@ -559,7 +562,7 @@ const en: Dict = {
   gallery: {
     title: "See the results",
     cta: "Create one like this",
-    meta: "Infographic · 3 tokens",
+    meta: "Infographic · 3 tokens · {img} UZS",
     before: "Before",
     after: "After",
     photoAlt: "{name} — plain photo",
@@ -612,7 +615,7 @@ const en: Dict = {
     eyebrow: "Calculator",
     title: "Pay only for",
     accent: "what you use",
-    lead: "1 image = 3 tokens = 1,500 UZS. No subscription — pick how many images, and tokens and the price are worked out instantly.",
+    lead: "1 token = {tok} UZS · 1 image = 3 tokens = {img} UZS. No subscription — pick how many images, and tokens and the price are worked out instantly.",
     calc: "How many images do you need?",
   },
   academy: {
@@ -677,7 +680,10 @@ export function plural(n: number, forms: readonly string[]) {
 // Komponentlar ishlatadigan tayyor kontent (faqat oddiy ma'lumot — server'dan client'ga uzatsa bo'ladi)
 // path — sahifaning tilsiz yo'li: o'z domenida "/", Robohub domenida "/ai-studio" (til tanlash shu yo'lga olib boradi)
 export function buildContent(locale: Locale, path = "/") {
-  const t = TEXT[locale];
+  // {img} — 1 rasm narxi, {tok} — 1 token narxi; boshqa {…} belgilariga tegilmaydi
+  const t = JSON.parse(
+    JSON.stringify(TEXT[locale]).replaceAll("{img}", money(PRICE_PER_IMAGE)).replaceAll("{tok}", money(TOKEN_PRICE)),
+  ) as (typeof TEXT)[Locale];
   return {
     locale,
     path,
@@ -703,7 +709,7 @@ export function buildContent(locale: Locale, path = "/") {
     },
     STEPS_SECTION: { ...t.steps, steps: DATA.steps.map((id, i) => ({ id, ...t.steps.items[i] })) },
     MODES: { ...t.modes, pack: DATA.pack, items: DATA.modes.map((m, i) => ({ ...m, ...t.modes.items[i] })) },
-    PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc }, pricePerImage: DATA.pricePerImage },
+    PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc } },
     ACADEMY: {
       ...t.academy,
       url: `https://robohub.uz${localeHref(locale, "/academy")}`,

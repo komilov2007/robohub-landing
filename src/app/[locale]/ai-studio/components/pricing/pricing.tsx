@@ -2,10 +2,8 @@
 
 import { useState, type CSSProperties } from "react";
 import Icon from "../icon/icon";
-import { TOKENS_PER_IMAGE, plural } from "../../ai-studio.content";
+import { PRICE_PER_IMAGE, TOKENS_PER_IMAGE, money, plural } from "../../ai-studio.content";
 import { useC } from "../../content-context";
-
-const fmt = (n: number) => n.toLocaleString("ru-RU").replace(/ /g, " ");
 
 // 07 — Token hisoblagichi: tarif kartochkalarisiz, alohida bo'lim.
 // Rasm sonini tanlang → token (1 rasm = 3 token) va narx (1 rasm = 1 500 so'm) jonli hisoblanadi.
@@ -15,7 +13,7 @@ export default function Pricing() {
   const cur = T.currency;
   const [images, setImages] = useState(PRICING.calc.initial);
   const tokens = images * TOKENS_PER_IMAGE;
-  const sum = images * PRICING.pricePerImage;
+  const sum = images * PRICE_PER_IMAGE;
   const fill = ((images - PRICING.calc.min) / (PRICING.calc.max - PRICING.calc.min)) * 100;
 
   return (
@@ -67,7 +65,7 @@ export default function Pricing() {
             </span>
             <i>=</i>
             <span className="as-calc__cell as-calc__cell--sum">
-              <b key={`s${sum}`}>{fmt(sum)}</b> {cur}
+              <b key={`s${sum}`}>{money(sum)}</b> {cur}
             </span>
           </output>
         </div>

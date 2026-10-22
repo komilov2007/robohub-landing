@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Icon from "../icon/icon";
-import { plural } from "../../ai-studio.content";
+import { plural, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
 const STEP_MS = 4200;
@@ -46,7 +46,9 @@ function ModeMock() {
         <span className={"as-opt" + (i === 1 ? " is-pick" : "")} key={m.id}>
           <span className="as-opt__radio" />
           <b>{m.name}</b>
-          <small>{m.tokens} {plural(m.tokens, T.forms.token)}</small>
+          <small>
+            {m.tokens} {plural(m.tokens, T.forms.token)} · {money(m.tokens * TOKEN_PRICE)} {T.currency}
+          </small>
         </span>
       ))}
       <span className="as-opt__cursor">

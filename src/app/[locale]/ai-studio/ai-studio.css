@@ -1156,6 +1156,9 @@
 .as-mc__price{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--dim)}
 .as-mc__price b{font-family:var(--ff-head);font-size:28px;font-weight:600;letter-spacing:-.03em;color:var(--black)}
 .as-mc.is-featured .as-mc__price{color:rgba(255,255,255,.75)}
+/* token yonidagi so‘mdagi narx */
+.as-mc__som{font-style:normal;font-weight:600;color:var(--primary);white-space:nowrap}
+.as-mc.is-featured .as-mc__som{color:var(--mint)}
 .as-mc.is-featured .as-mc__price b{color:var(--white)}
 .as-mc__coin{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--mint);color:var(--primary);animation:as-coinflip 4s ease-in-out infinite}
 .as-mc__coin .as-i{width:15px;height:15px}

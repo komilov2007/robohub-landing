@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import Icon from "../icon/icon";
-import { SIGNUP_HREF, plural, type Content } from "../../ai-studio.content";
+import { SIGNUP_HREF, plural, type Content, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { getC } from "../../content.server";
 
 // Har rejimning o'z jonli vizuali:
@@ -106,6 +106,7 @@ export default async function Modes() {
                       <Icon name="ai" />
                     </span>
                     <b>{m.tokens}</b> {plural(m.tokens, T.forms.token)}
+                    <i className="as-mc__som">· {money(m.tokens * TOKEN_PRICE)} {T.currency}</i>
                   </span>
                   <a className={"as-btn as-btn--sm " + (m.featured ? "as-btn--mint" : "as-btn--ghost")} href={SIGNUP_HREF}>
                     {MODES.choose}
