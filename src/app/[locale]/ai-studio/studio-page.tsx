@@ -19,7 +19,7 @@ import { getC } from "./content.server";
 
 // RoboHub AI Studio landingi. Konsepsiya — "oddiy fotodan sotadigan kartochkaga":
 // hero'da oldin/keyin studiyasi, keyin ishonch (marketplace + raqamlar), muammo → yechim,
-// natijalar galereyasi, 4 qadam, generatsiya rejimlari, narxlar, Academy, FAQ, yakuniy CTA va footer.
+// natijalar galereyasi, 4 qadam, generatsiya rejimlari, token hisoblagichi, Academy, FAQ, yakuniy CTA va footer.
 // Uslublar: ai-studio.css (hamma narsa .as ichida), matnlar (uz/ru/en): ai-studio.content.ts.
 // Joriy tildagi kontent client komponentlarga ContentProvider orqali, server komponentlarga getC() orqali yetadi.
 // path — sahifaning tilsiz yo'li: o'z domenida "/" (page.tsx), Robohub domenida "/ai-studio" (robohub/ai-studio/page.tsx)

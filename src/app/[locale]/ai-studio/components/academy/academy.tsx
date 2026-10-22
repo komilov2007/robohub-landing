@@ -2,11 +2,24 @@ import type { CSSProperties } from "react";
 import Icon from "../icon/icon";
 import { fill } from "../../ai-studio.content";
 import { getC } from "../../content.server";
+import { getLesson } from "../../../robohub/academy/lib/academy";
+import { lessonHref } from "../../../robohub/academy/lib/links";
+import { yt } from "../../../robohub/academy/lib/youtube";
 
-// 08 — Robohub Academy: mijoz uchun ixcham blok. Chapda savol + tugma, o'ngda 3 ta dars kartasi.
+// Robohub Academy: mijoz uchun ixcham blok. Chapda savol + tugma, o'ngda 3 ta haqiqiy dars kartasi
+// (kartochka yaratish, narxlarni yangilash, Uzum Market'ni ulash) — nomi joriy tilda, muqova YouTube'dan,
+// bosilsa o'sha darsning Academy sahifasi ochiladi. Darslar ro'yxati — ai-studio.content.ts → DATA.lessons.
 // Kartalar biroz qiyshiq "taxlam" bo'lib turadi va sekin suzadi; muqovada Ken Burns zoom, play tugmasi to'lqin chiqaradi.
+// Server komponent: Academy'ning katta darslar fayli brauzer bundle'iga tushmaydi.
 export default async function Academy() {
-  const { ACADEMY } = await getC();
+  const { ACADEMY, locale } = await getC();
+  const lessons = ACADEMY.lessons.flatMap((n) => {
+    const lesson = getLesson(n, locale);
+    return lesson
+      ? [{ n, title: lesson.title, img: yt.thumbMq(lesson.youtubeId), href: `https://robohub.uz${lessonHref(locale, lesson.topic, n)}` }]
+      : [];
+  });
+
   return (
     <section className="as-acad" aria-labelledby="as-acad-title" data-pause>
       <div className="as-wrap">
@@ -31,11 +44,11 @@ export default async function Academy() {
           </div>
 
           <ul className="as-lessons">
-            {ACADEMY.lessons.map((l, i) => (
+            {lessons.map((l, i) => (
               <li key={l.n} className="as-lesson" style={{ "--k": i } as CSSProperties}>
-                <a href={ACADEMY.url} target="_blank" rel="noopener" className="as-lesson__link">
+                <a href={l.href} target="_blank" rel="noopener" className="as-lesson__link">
                   <span className="as-lesson__cover">
-                    <img src={l.img} alt="" loading="lazy" />
+                    <img src={l.img} alt="" loading="lazy" width={320} height={180} />
                     <span className="as-lesson__play" aria-hidden="true">
                       <svg viewBox="0 0 24 24">
                         <path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l10.6-6.8a1 1 0 0 0 0-1.72L9.5 4.34A1 1 0 0 0 8 5.2z" />

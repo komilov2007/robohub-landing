@@ -28,7 +28,7 @@ type GalleryId =
 
 // ---------- tilga bog'liq bo'lmagan ma'lumotlar ----------
 const DATA = {
-  nav: ["#features", "#how", "#examples", "#pricing", "#faq"] as const,
+  nav: ["#features", "#how", "#examples", "#faq"] as const,
   product: { brand: "AQUA", sub: "balance", volume: "250", icons: ["clock", "star", "shield"] as const },
   // label — idishdagi oq yorliqning rasm ichidagi o'rni (%, rasm 3:4 = 750×1000)
   variants: [
@@ -76,21 +76,19 @@ const DATA = {
     { id: "pack", tokens: 15, featured: false },
   ] as const,
   pack: ["/ai/cosmetics_studio.webp", "/ai/cosmetics_everyday.webp", "/ai/cosmetics_composition.webp", "/ai/cosmetics_in_use.webp", "/ai/base_cosmetics.webp"],
-  // NAMUNA: so'mdagi narxlar hali tasdiqlanmagan
-  plans: [
-    { id: "start", tokens: 30, price: 19000, featured: false },
-    { id: "business", tokens: 150, price: 79000, featured: true },
-    { id: "pro", tokens: 600, price: 249000, featured: false },
-  ] as const,
+  // Robohub Academy'dagi mos darslar (raqami — robohub/academy/lib/academy.ts dagi n): kartochka yaratish,
+  // narxlarni yangilash, Uzum Market'ni ulash. Nomi, muqovasi va havolasi o'sha yerdan olinadi.
+  // 1 rasm narxi (so'm) — hisoblagich: rasm soni × shu narx
+  pricePerImage: 1500,
   calc: { min: 1, max: 500, initial: 40 },
-  lessons: ["/ai/base_cosmetics.webp", "/ai/cosmetics_composition.webp", "/ai/cosmetics_everyday.webp"],
+  lessons: [16, 15, 22],
 };
 
 type Gallery = Record<GalleryId, { name: string; kicker: string; feats: string[] }>;
 
 // ---------- tarjimalar ----------
 const uz = {
-  nav: ["Imkoniyatlar", "Qanday ishlaydi", "Namunalar", "Narxlar", "FAQ"],
+  nav: ["Imkoniyatlar", "Qanday ishlaydi", "Namunalar", "FAQ"],
   ui: {
     home: "Robohub AI Studio — sahifa boshi",
     mainMenu: "Asosiy menyu",
@@ -230,26 +228,19 @@ const uz = {
     choose: "Tanlash",
   },
   pricing: {
-    eyebrow: "Tariflar",
+    eyebrow: "Hisoblagich",
     title: "Faqat ishlatganingizga",
     accent: "to‘lang",
-    lead: "1 rasm = 3 token. Obuna majburiy emas",
-    plans: ["Start", "Biznes", "Pro"],
-    tag: "Tavsiya",
-    fit: "Sizga mos",
-    perImage: "so‘m / rasm",
-    features: ["Barcha rejimlar", "Generatsiya tarixi", "750×1000 yuklab olish"],
-    buy: "Sotib olish",
+    lead: "1 rasm = 3 token = 1 500 so‘m. Obuna majburiy emas — rasm sonini tanlang, token va narx darhol hisoblanadi.",
     calc: "Qancha rasm kerak?",
   },
   academy: {
     kicker: "Robohub Academy",
     title: "Hali ham o‘rgana olmadingizmi?",
-    lead: "Robohub Academy kartochkani to‘g‘ri bezashni bepul o‘rgatadi — qisqa video darslarda.",
+    lead: "Robohub Academy kartochka yaratish, narxlarni yangilash va marketpleysni ulashni bepul o‘rgatadi — qisqa video darslarda.",
     cta: "Academy’ga o‘tish",
     free: "Bepul",
     lesson: "Dars {n}",
-    lessons: ["Qanday rasm yuklash kerak", "Infografika matnini yozish", "5 to‘plam bilan kartochka"],
   },
   // NAMUNA: javoblar mahsulot jamoasi bilan tekshirilishi kerak
   faq: {
@@ -278,7 +269,6 @@ const uz = {
     product: "Mahsulot",
     company: "Kompaniya",
     examples: "Namunalar",
-    pricing: "Narxlar",
     contacts: "Aloqa",
     rights: "Barcha huquqlar himoyalangan.",
   },
@@ -292,7 +282,7 @@ const uz = {
 type Dict = typeof uz;
 
 const ru: Dict = {
-  nav: ["Возможности", "Как это работает", "Примеры", "Цены", "FAQ"],
+  nav: ["Возможности", "Как это работает", "Примеры", "FAQ"],
   ui: {
     home: "Robohub AI Studio — в начало страницы",
     mainMenu: "Главное меню",
@@ -430,26 +420,19 @@ const ru: Dict = {
     choose: "Выбрать",
   },
   pricing: {
-    eyebrow: "Тарифы",
+    eyebrow: "Калькулятор",
     title: "Платите только",
     accent: "за использование",
-    lead: "1 изображение = 3 токена. Подписка не обязательна",
-    plans: ["Start", "Бизнес", "Pro"],
-    tag: "Рекомендуем",
-    fit: "Вам подходит",
-    perImage: "сум / фото",
-    features: ["Все режимы", "История генераций", "Скачивание 750×1000"],
-    buy: "Купить",
+    lead: "1 изображение = 3 токена = 1 500 сум. Подписка не обязательна — выберите количество, токены и цена посчитаются сразу.",
     calc: "Сколько изображений нужно?",
   },
   academy: {
     kicker: "Robohub Academy",
     title: "Всё ещё не разобрались?",
-    lead: "Robohub Academy бесплатно научит правильно оформлять карточки — в коротких видеоуроках.",
+    lead: "Robohub Academy бесплатно учит создавать карточки, обновлять цены и подключать маркетплейсы — в коротких видеоуроках.",
     cta: "Перейти в Academy",
     free: "Бесплатно",
     lesson: "Урок {n}",
-    lessons: ["Какое фото загружать", "Как написать текст инфографики", "Карточка с набором из 5"],
   },
   faq: {
     eyebrow: "FAQ",
@@ -477,7 +460,6 @@ const ru: Dict = {
     product: "Продукт",
     company: "Компания",
     examples: "Примеры",
-    pricing: "Цены",
     contacts: "Контакты",
     rights: "Все права защищены.",
   },
@@ -489,7 +471,7 @@ const ru: Dict = {
 };
 
 const en: Dict = {
-  nav: ["Features", "How it works", "Examples", "Pricing", "FAQ"],
+  nav: ["Features", "How it works", "Examples", "FAQ"],
   ui: {
     home: "Robohub AI Studio — back to top",
     mainMenu: "Main menu",
@@ -627,26 +609,19 @@ const en: Dict = {
     choose: "Choose",
   },
   pricing: {
-    eyebrow: "Plans",
+    eyebrow: "Calculator",
     title: "Pay only for",
     accent: "what you use",
-    lead: "1 image = 3 tokens. No subscription required",
-    plans: ["Start", "Business", "Pro"],
-    tag: "Recommended",
-    fit: "Best for you",
-    perImage: "UZS / image",
-    features: ["All modes", "Generation history", "750×1000 downloads"],
-    buy: "Buy",
+    lead: "1 image = 3 tokens = 1,500 UZS. No subscription — pick how many images, and tokens and the price are worked out instantly.",
     calc: "How many images do you need?",
   },
   academy: {
     kicker: "Robohub Academy",
     title: "Still figuring it out?",
-    lead: "Robohub Academy teaches you to design product cards the right way — free, in short video lessons.",
+    lead: "Robohub Academy teaches you to create product cards, update prices and connect marketplaces — free, in short video lessons.",
     cta: "Go to Academy",
     free: "Free",
     lesson: "Lesson {n}",
-    lessons: ["Which photo to upload", "Writing infographic copy", "A card with a 5-pack"],
   },
   faq: {
     eyebrow: "FAQ",
@@ -674,7 +649,6 @@ const en: Dict = {
     product: "Product",
     company: "Company",
     examples: "Examples",
-    pricing: "Pricing",
     contacts: "Contacts",
     rights: "All rights reserved.",
   },
@@ -729,15 +703,12 @@ export function buildContent(locale: Locale, path = "/") {
     },
     STEPS_SECTION: { ...t.steps, steps: DATA.steps.map((id, i) => ({ id, ...t.steps.items[i] })) },
     MODES: { ...t.modes, pack: DATA.pack, items: DATA.modes.map((m, i) => ({ ...m, ...t.modes.items[i] })) },
-    PRICING: {
-      ...t.pricing,
-      calc: { ...DATA.calc, label: t.pricing.calc },
-      plans: DATA.plans.map((p, i) => ({ ...p, name: t.pricing.plans[i] })),
-    },
+    PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc }, pricePerImage: DATA.pricePerImage },
     ACADEMY: {
       ...t.academy,
       url: `https://robohub.uz${localeHref(locale, "/academy")}`,
-      lessons: DATA.lessons.map((img, i) => ({ n: i + 1, img, title: t.academy.lessons[i] })),
+      // dars raqamlari — nomi, muqovasi va havolasi components/academy da (server) Academy ma'lumotidan olinadi
+      lessons: DATA.lessons,
     },
     FAQ: t.faq,
     FINAL_CTA: t.final,
@@ -749,7 +720,6 @@ export function buildContent(locale: Locale, path = "/") {
           links: [
             { label: "AI Studio", href: "#top" },
             { label: t.footer.examples, href: "#examples" },
-            { label: t.footer.pricing, href: "#pricing" },
             { label: "Robohub", href: `https://robohub.uz${localeHref(locale, "/")}` },
           ],
         },

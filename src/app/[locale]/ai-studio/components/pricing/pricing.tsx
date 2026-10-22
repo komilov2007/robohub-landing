@@ -2,28 +2,20 @@
 
 import { useState, type CSSProperties } from "react";
 import Icon from "../icon/icon";
-import CountUp from "../count-up/count-up";
-import { SIGNUP_HREF, TOKENS_PER_IMAGE, plural, type Content } from "../../ai-studio.content";
+import { TOKENS_PER_IMAGE, plural } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
-const fmt = (n: number) => n.toLocaleString("ru-RU").replace(/ /g, " ");
+const fmt = (n: number) => n.toLocaleString("ru-RU").replace(/ /g, " ");
 
-// Kerakli tokenni qoplaydigan eng kichik tarif (yetmasa — eng kattasi)
-const pickPlan = (plans: Content["PRICING"]["plans"], tokens: number) => plans.find((p) => p.tokens >= tokens) ?? plans[plans.length - 1];
-
-// 07 — Narxlar.
-//  • Kartalar kirishda chap/o'ng/pastdan "yig'iladi"; Biznes — brend yashilida, atrofida aylanuvchi mint chegara.
-//  • Kalkulyator: rasm sonini tanlang → token va taxminiy narx jonli hisoblanadi,
-//    mos keladigan tarif kartasi yoritiladi ("Sizga mos" belgisi).
+// 07 — Token hisoblagichi: tarif kartochkalarisiz, alohida bo'lim.
+// Rasm sonini tanlang → token (1 rasm = 3 token) va narx (1 rasm = 1 500 so'm) jonli hisoblanadi.
 export default function Pricing() {
   const { PRICING, T } = useC();
   const F = T.forms;
   const cur = T.currency;
   const [images, setImages] = useState(PRICING.calc.initial);
   const tokens = images * TOKENS_PER_IMAGE;
-  const fit = pickPlan(PRICING.plans, tokens);
-  const packs = Math.ceil(tokens / fit.tokens);
-  const sum = packs * fit.price;
+  const sum = images * PRICING.pricePerImage;
   const fill = ((images - PRICING.calc.min) / (PRICING.calc.max - PRICING.calc.min)) * 100;
 
   return (
@@ -42,47 +34,7 @@ export default function Pricing() {
           </p>
         </header>
 
-        <ul className="as-plans">
-          {PRICING.plans.map((p, i) => (
-            <li
-              key={p.id}
-              className={"as-plan" + (p.featured ? " is-featured" : "") + (fit.id === p.id ? " is-fit" : "")}
-              data-rv
-              style={{ "--d": `${i * 120}ms`, "--from": i - 1 } as CSSProperties}
-            >
-              {p.featured && <span className="as-plan__ring" aria-hidden="true" />}
-              <div className="as-plan__top">
-                <h3 className="as-plan__name">{p.name}</h3>
-                {p.featured && <span className="as-plan__tag">{PRICING.tag}</span>}
-                <span className="as-plan__fit" aria-hidden={fit.id !== p.id}>
-                  <Icon name="check" />
-                  {PRICING.fit}
-                </span>
-              </div>
-              <p className="as-plan__tokens">
-                <CountUp value={p.tokens} />
-                <span>{plural(p.tokens, F.token)}</span>
-              </p>
-              <p className="as-plan__imgs">
-                {p.tokens / TOKENS_PER_IMAGE} {plural(p.tokens / TOKENS_PER_IMAGE, F.image)} <i>·</i> {fmt(p.price)} {cur}
-              </p>
-              <p className="as-plan__per">≈ {fmt(Math.round(p.price / (p.tokens / TOKENS_PER_IMAGE)))} {PRICING.perImage}</p>
-              <ul className="as-plan__feats">
-                {PRICING.features.map((f) => (
-                  <li key={f}>
-                    <Icon name="check" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a className={"as-btn as-btn--lg " + (p.featured ? "as-btn--mint" : "as-btn--ghost")} href={SIGNUP_HREF}>
-                {PRICING.buy}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="as-calc" data-rv>
+        <div className="as-calc" data-rv style={{ "--d": "220ms" } as CSSProperties}>
           <label className="as-calc__q" htmlFor="as-calc-range">
             <span className="as-calc__ico">
               <Icon name="ai" />
@@ -113,7 +65,7 @@ export default function Pricing() {
             <span className="as-calc__cell">
               <b key={`t${tokens}`}>{tokens}</b> {plural(tokens, F.token)}
             </span>
-            <i>≈</i>
+            <i>=</i>
             <span className="as-calc__cell as-calc__cell--sum">
               <b key={`s${sum}`}>{fmt(sum)}</b> {cur}
             </span>
