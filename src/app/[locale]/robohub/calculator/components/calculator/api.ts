@@ -13,8 +13,17 @@ import type {
 
 // Ochiq kalkulyator API'si — rb-market src/apis/public/calculator.ts bilan bir xil so'rovlar.
 // Token yo'q, hech narsa saqlanmaydi; har IP uchun so'rovlar soni cheklangan (429 + Retry-After).
-// Manzil rb-market ishlatadigani (VITE_API_BASE_URL = https://api.robohub.uz/api). CORS — robohub domenlari va localhost.
-const BASE_URL = "https://api.robohub.uz/api/";
+// Manzil rb-market ishlatadigani (VITE_API_BASE_URL = https://api.robohub.uz/api).
+// CORS faqat robohub.uz domenlari va localhost'ga ruxsat beradi — u yerda to'g'ridan-to'g'ri (har IP o'z cheklovi bilan);
+// boshqa domenda (robohub-landing.vercel.app) — o'z serverimiz orqali: /api/robohub/* → api.robohub.uz/api/* (next.config.ts).
+const DIRECT_URL = "https://api.robohub.uz/api/";
+const PROXY_PATH = "/api/robohub/";
+const DIRECT_HOSTS = /(^|\.)robohub\.uz$|^localhost$/;
+
+const baseUrl = () =>
+  typeof window === "undefined" || DIRECT_HOSTS.test(window.location.hostname)
+    ? DIRECT_URL
+    : new URL(PROXY_PATH, window.location.origin).toString();
 
 const CALCULATOR_PATH: Record<CalculatorMarketplace, string> = {
   uzum_market: "uzum",
@@ -50,7 +59,9 @@ const pageLocale = (): Locale => {
 };
 
 async function request<T>(path: string, init: { method: "GET" | "POST"; body?: unknown; params?: Record<string, string | undefined> }) {
-  const url = new URL(path, BASE_URL);
+  const base = baseUrl();
+  // Proksi orqali — oxirgi "/" siz (Next uni yo'naltirib yuboradi); rewrite uni qaytarib qo'shadi
+  const url = new URL(base === DIRECT_URL ? path : path.replace(/\/$/, ""), base);
   Object.entries(init.params ?? {}).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, v));
 
   let res: Response;
