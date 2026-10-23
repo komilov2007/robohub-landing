@@ -1239,6 +1239,7 @@
 .integ-chip:hover{border-color:rgba(241,255,240,.45);background:rgba(0,0,0,.26);transform:translateY(-2px)}
 .integ-chip img,.integ-chip i{width:28px;height:28px;flex:none;border-radius:8px}
 .integ-chip img{display:block;object-fit:cover}
+.integ-chip img.is-plate{padding:3px;background:#fff;object-fit:contain}
 .integ-chip i{display:grid;place-items:center;background:#fff;color:var(--ink);font-style:normal;font-size:12px;font-weight:800}
 .integ__note{margin-top:var(--sp-2);font-size:13px;font-weight:600;color:var(--text-dim)}
 

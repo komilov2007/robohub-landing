@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { SIGNUP_HREF } from "../../ai-studio.content";
 import { getC } from "../../content.server";
 

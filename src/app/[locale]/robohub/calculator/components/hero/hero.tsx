@@ -1,5 +1,5 @@
 import { Fragment, type CSSProperties } from "react";
-import Icon from "../../../../ai-studio/components/icon/icon";
+import Icon from "../../../../ai-studio/components/icon/svg-icon";
 import MarketplacePick from "./marketplace-pick";
 import type { Content } from "../../calculator.content";
 

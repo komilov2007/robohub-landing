@@ -18,8 +18,8 @@
   --line:rgba(17,22,37,.08);
   --line-2:rgba(17,22,37,.14);
 
-  --ff-body:var(--ff-as-inter),"Segoe UI",system-ui,sans-serif;
-  --ff-head:var(--ff-as-grotesk),var(--ff-as-inter),system-ui,sans-serif;
+  --ff-body:var(--ff-inter),"Segoe UI",system-ui,sans-serif;
+  --ff-head:var(--ff-as-grotesk),var(--ff-inter),system-ui,sans-serif;
 
   --ease:cubic-bezier(.22,1,.36,1);
   --spring:cubic-bezier(.34,1.56,.64,1);
@@ -128,7 +128,7 @@
 }
 
 /* ============================================================
-   HEADER — Robohub Academy header'i bilan bir xil (robohub-academy/academy.css → .ac-header):
+   HEADER — Robohub Academy header'i bilan bir xil (robohub/academy → .ac-header):
    sticky, qog'oz fon + blur, faol/hover havola ostida sariq chiziq, logotip yonida sariq yorliq.
    Header va footer o'z tokenlari bilan: shrift — Onest, yorliqlar — Unbounded (umumiy).
    ============================================================ */

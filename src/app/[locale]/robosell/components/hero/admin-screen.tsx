@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { STATUS, uzs, type Order } from "./demo-data";
 
 // Robosell admin panelining "Buyurtmalar ro'yxati" sahifasi — rb-frontend'dagi bilan bir xil tuzilma va matnlar.

@@ -5,13 +5,9 @@ import { siteFromHost } from "@/lib/site-host";
 // Bitta loyiha — bir necha sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
 //   Sayt domendan: robohub.uz va robohub-landing.vercel.app (lokalda localhost) → robohub;
 //     Robohub Academy — shu saytning /academy sahifasi (robohub.uz/academy, /ru/academy, /en/academy — uch tilda).
-//     Eski robohub-academy-two domenlari ham robohub'ga tushadi (quyidagidan OLDIN tekshiriladi — prefiks umumiy);
-//   robohub-academy bilan boshlanadigan domen (robohub-academy.vercel.app;
-//     lokalda robohub-academy.localhost) → robohub-academy (faqat o'zbekcha);
+//     Eski robohub-two / robohub-academy domenlari ham robohub'ga tushadi; robohub-academy… bosh sahifasi → /academy;
 //   robosell bilan boshlanadigan domen (hozircha robosell-landing.vercel.app;
 //     lokalda robosell.localhost) → robosell; qolgan hammasi (robohub-landing.vercel.app, localhost) → robohub.
-//   robohub-landing-two (robohub-landing-two.vercel.app) yoki robohub-two (lokalda robohub-two.localhost)
-//     bilan boshlanadigan domen → robohub-two (robohub nusxasi, TT Fors shriftida).
 //   ai-studio bilan boshlanadigan domen (ai-studio.vercel.app; lokalda ai-studio.localhost) → ai-studio (RoboHub AI Studio landingi);
 //     shu landing Robohub domenida /ai-studio sahifasi sifatida ham ochiladi (robohub.uz/ai-studio, /ru/ai-studio, /en/ai-studio).
 //   Til yo'lning boshidan: /ru, /en; prefiks bo'lmasa — o'zbekcha.
@@ -31,7 +27,15 @@ export function proxy(request: NextRequest) {
 
   const locale = hasLocale(first) ? first : defaultLocale;
   const rest = hasLocale(first) ? pathname.slice(first.length + 1) : pathname;
-  const site = siteFromHost(request.headers.get("host") ?? "");
+  const host = request.headers.get("host") ?? "";
+  const site = siteFromHost(host);
+
+  // Eski Academy domeni (robohub-academy…, robohub-academy-two…): bosh sahifa — yangi Academy
+  if (host.toLowerCase().startsWith("robohub-academy") && (rest === "/" || rest === "")) {
+    const url = request.nextUrl.clone();
+    url.pathname = `${hasLocale(first) ? `/${first}` : ""}/academy`;
+    return NextResponse.redirect(url, 308);
+  }
 
   // Har doim til va sayt prefiksi qo'shiladi: robohub domenida /robosell ochilsa
   // /uz/robohub/robosell → 404, ya'ni bir sayt ikkinchisini o'z domenida ko'rsatib qo'ymaydi.

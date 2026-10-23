@@ -14,10 +14,43 @@ import Contact from "../components/contact/contact";
 import FinalCta from "../components/final-cta/final-cta";
 import ScrollReveal from "../components/scroll-reveal/scroll-reveal";
 import ToTop from "../components/to-top/to-top";
+import { messages as faqMessages } from "../components/faq/faq.i18n";
+import { getLocale } from "@/i18n/server";
+import { localeHref } from "@/i18n/config";
+import { jsonLd, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { messages } from "./layout";
 
-export default function Page() {
+export default async function Page() {
+  const locale = await getLocale();
+  const t = messages[locale];
+  // Qidiruv tizimlari uchun: kompaniya (logo, aloqa, ijtimoiy tarmoqlar), sayt va FAQ — sahifadagi matnlarning o'zi
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      ROBOHUB_ORG,
+      {
+        "@type": "WebSite",
+        "@id": `${ROBOHUB_ORIGIN}/#website`,
+        url: ROBOHUB_ORIGIN,
+        name: "Robohub",
+        description: t.description,
+        inLanguage: locale,
+        publisher: { "@id": ROBOHUB_ORG["@id"] },
+      },
+      {
+        "@type": "FAQPage",
+        url: ROBOHUB_ORIGIN + localeHref(locale, "/"),
+        mainEntity: faqMessages[locale].items.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a.map((x) => (typeof x === "string" ? x : x.b)).join("") },
+        })),
+      },
+    ],
+  };
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
       <Header />
       <main>
         <Hero />

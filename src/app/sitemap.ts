@@ -3,7 +3,6 @@ import { requestOrigin, siteFromHost } from "@/lib/site-host";
 import { locales, localeHref } from "@/i18n/config";
 import { LESSON_ROUTES, TOPIC_ROUTES } from "./[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/lib/links";
-import { TOPICS as OLD_TOPICS } from "./[locale]/robohub-academy/lib/academy";
 
 // /sitemap.xml — Google'ga beriladigan sahifalar ro'yxati. Bitta loyiha bir necha domenda ishlaydi (src/proxy.ts),
 // shuning uchun ro'yxat so'rov kelgan domen bo'yicha quriladi: har domen faqat o'z sahifalarini, o'z manzili bilan beradi
@@ -26,14 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { ...home, url: `${base}/en`, priority: 0.8 },
   ];
 
-  if (site === "robohub-academy") {
-    // eski Academy (faqat o'zbekcha): bosh sahifa va mavzular
-    return [
-      { url: base, changeFrequency: "weekly", priority: 1 },
-      ...OLD_TOPICS.map((t) => ({ url: `${base}/${t.slug}`, changeFrequency: "monthly" as const, priority: 0.8 })),
-    ];
-  }
-  if (site !== "robohub") return landing;
+  // AI Studio o'z domenida — canonical robohub.uz/ai-studio (u Robohub sitemap'ida), bu yerda beriladigan sahifa yo'q
+  if (site === "ai-studio") return [];
+  // Robosell: matn hozircha faqat o'zbekcha — /ru va /en o'zbekcha sahifaga canonical (robosell/layout.tsx)
+  if (site === "robosell") return [{ url: base, changeFrequency: "weekly", priority: 1 }];
 
   // Robohub: landing + Academy (bosh sahifa, 8 mavzu, har bir darsning o'z sahifasi) — uch tilda,
   // har sahifa qolgan ikki tildagi nusxasiga hreflang bilan bog'langan (uz — x-default)

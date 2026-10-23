@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { PROBLEM } from "../../robosell.content";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { NewVisual, OldVisual } from "./problem-visuals";
 
 // 2-bo'lim — "Robosell mashinasi". Och yashil fon. Har qator: chapda muammo (qog'oz karta) → o'rtadagi yashil

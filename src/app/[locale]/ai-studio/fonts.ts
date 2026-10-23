@@ -1,12 +1,9 @@
-import { Inter, Onest, Space_Grotesk } from "next/font/google";
+import { Onest, Space_Grotesk } from "next/font/google";
 
 // AI Studio shriftlari — faqat shu saytda (o'zgaruvchilar .as ildiziga qo'yiladi).
 //   Inter — asosiy matn va kichik yorliqlar; Space Grotesk — katta sarlavhalar va raqamlar (500/600/700).
-export const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--ff-as-inter",
-});
+// Inter — loyihadagi yagona instansiya (src/app/fonts.ts), o'zgaruvchisi --ff-inter: bir xil faylni ikki marta yuklamaslik uchun
+export { inter } from "../../fonts";
 
 export const grotesk = Space_Grotesk({
   subsets: ["latin"],

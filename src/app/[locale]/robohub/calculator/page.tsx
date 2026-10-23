@@ -15,6 +15,8 @@ import Footer from "./components/footer/footer";
 import Motion from "./components/motion/motion";
 import { buildContent } from "./calculator.content";
 import { messages } from "./calculator.i18n";
+import { localeHref } from "@/i18n/config";
+import { jsonLd as ldScript, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
 
 // Marketpleys kalkulyatori landingi — robohub.uz/calculator (/ru, /en ham). Konsepsiya: "sotuvdan qancha foyda qoladi?".
 // Tartib: hero (pul oqimi) → muammo (komissiya — hammasi emas) → KALKULYATOR (markazda) →
@@ -33,7 +35,10 @@ export default async function Page() {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       name: t.appName,
+      url: ROBOHUB_ORIGIN + localeHref(locale, "/calculator"),
       description: t.metaDescription,
+      inLanguage: locale,
+      provider: ROBOHUB_ORG,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       offers: { "@type": "Offer", price: "0", priceCurrency: "UZS" },
@@ -67,7 +72,7 @@ export default async function Page() {
       <Footer footer={c.FOOTER} nav={c.NAV} tag={c.T.ui.tag} home={c.T.ui.home} locale={locale} />
       <Reveal />
       <Motion />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={ldScript(jsonLd)} />
     </div>
   );
 }

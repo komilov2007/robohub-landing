@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { OG_LOCALE } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { getLocale } from "@/i18n/server";
 import { getLesson, getTopic, TOPIC_ROUTES } from "../lib/academy";
@@ -26,8 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/robohub/
     title: topic.name,
     description: topic.hero.subtitle,
     alternates: { canonical: url, languages: languageAlternates(topicPath(topic.slug)) },
-    openGraph: { title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle, url, images },
-    twitter: { card: "summary_large_image", title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle },
+    openGraph: { siteName: "Robohub Academy", locale: OG_LOCALE[locale], title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle, url, images },
+    twitter: { card: "summary_large_image", title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle, images },
   };
 }
 

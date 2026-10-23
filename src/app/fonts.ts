@@ -17,11 +17,12 @@ export const manrope = Manrope({
   variable: "--ff-manrope",
 });
 
-// Faqat ikki joyda (miniatyura oynalar ichida) ishlatiladi — oldindan yuklash shart emas
+// Inter — butun loyihada bitta instansiya (o'zgaruvchan og'irlik): Robohub bosh sahifasidagi miniatyura oynalar,
+// AI Studio va Kalkulyator (ai-studio/fonts.ts shuni qayta eksport qiladi). Ikki xil Inter bo'lsa, nomlari bir xil
+// ("Inter") bo'lgani uchun brauzer bitta faylni ikki manzildan ikki marta yuklardi.
+// Root layout'ga ulanmaydi — faqat ishlatadigan layout'lar o'z o'ramiga .variable qo'yadi.
 export const inter = Inter({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
-  preload: false,
   variable: "--ff-inter",
 });

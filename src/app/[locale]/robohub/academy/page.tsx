@@ -2,7 +2,10 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getLocale } from "@/i18n/server";
 import { getLessons, getTopics, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
-import { ACADEMY_BASE, PHONE, PHONE_TEL, START_URL, academyHref, languageAlternates } from "./lib/links";
+import { ACADEMY_BASE, PHONE, PHONE_TEL, START_URL } from "./lib/links";
+import { jsonLd, pageMetadata, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { localeHref } from "@/i18n/config";
+import { messages as metaMessages } from "./layout";
 import { messages } from "./home.i18n";
 import AcademySearch from "./components/academy-search/academy-search";
 import ContinueCard from "./components/continue-card/continue-card";
@@ -22,13 +25,21 @@ import "./home.css";
 //   Keyin mavzular nomlari lentasi, Boshlang'ich yo'l, bento-mavzular, jonli darslar lentasi va yordam bloki.
 const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
 
-// canonical va hreflang: /academy, /ru/academy, /en/academy (sarlavha va tavsif — layout.tsx dan)
+// canonical, hreflang, OG/Twitter va ulashish rasmi: /academy, /ru/academy, /en/academy.
+// Sarlavha absolute — layout'dagi "%s — Robohub Academy" shabloni bosh sahifaga qo'shilmasin.
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  return {
-    alternates: { canonical: academyHref(locale), languages: languageAlternates(ACADEMY_BASE) },
-    openGraph: { url: academyHref(locale) },
-  };
+  const t = metaMessages[locale];
+  const meta = pageMetadata({
+    origin: ROBOHUB_ORIGIN,
+    locale,
+    path: ACADEMY_BASE,
+    title: t.title,
+    description: t.description,
+    siteName: "Robohub Academy",
+    image: "/og/academy-{locale}.jpg",
+  });
+  return { ...meta, title: { absolute: t.title } };
 }
 
 export default async function AcademyHome() {
@@ -41,8 +52,28 @@ export default async function AcademyHome() {
     { value: TOTAL_TOPICS, label: t.stats.topics(TOTAL_TOPICS) },
     { value: totalMinutes, label: t.stats.minutes(totalMinutes) },
   ];
+  // Qidiruv tizimlari uchun: Academy — mavzular to'plami (har mavzu o'z sahifasi bilan), nashriyotchi — Robohub
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: metaMessages[locale].title,
+    description: metaMessages[locale].description,
+    url: ROBOHUB_ORIGIN + localeHref(locale, ACADEMY_BASE),
+    inLanguage: locale,
+    publisher: ROBOHUB_ORG,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: topics.map((x, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: x.name,
+        url: ROBOHUB_ORIGIN + localeHref(locale, `${ACADEMY_BASE}/${x.slug}`),
+      })),
+    },
+  };
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
       <section className="acx-hero" data-theme="dark" data-glow aria-labelledby="ac-home-title">
         <Aurora />
 

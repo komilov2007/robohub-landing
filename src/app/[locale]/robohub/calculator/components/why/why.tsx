@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import Icon from "../../../../ai-studio/components/icon/icon";
+import Icon from "../../../../ai-studio/components/icon/svg-icon";
 import { EXAMPLE, type Content } from "../../calculator.content";
 
 const fmt = (n: number) => n.toLocaleString("ru-RU").replace(/ | /g, " ");

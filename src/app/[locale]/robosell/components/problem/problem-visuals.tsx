@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 
 // "Muammo va yechim" vizuallari. Har tur uchun ikki holat: OLD — Robosell'siz tartibsizlik,
 // NEW — Robosell interfeysi. Surgichli taqqoslashda ikkalasi bir xil katakda ustma-ust turadi (problem-compare.tsx).

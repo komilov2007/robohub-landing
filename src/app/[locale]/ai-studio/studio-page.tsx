@@ -16,6 +16,10 @@ import Reveal from "./components/reveal/reveal";
 import StudioModal from "./components/studio-modal/studio-modal";
 import { ContentProvider } from "./content-context";
 import { getC } from "./content.server";
+import { PRICE_PER_IMAGE } from "./ai-studio.content";
+import { messages } from "./ai-studio.i18n";
+import { localeHref } from "@/i18n/config";
+import { jsonLd, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
 
 // RoboHub AI Studio landingi. Konsepsiya — "oddiy fotodan sotadigan kartochkaga":
 // hero'da oldin/keyin studiyasi, keyin ishonch (marketplace + raqamlar), muammo → yechim,
@@ -25,6 +29,35 @@ import { getC } from "./content.server";
 // path — sahifaning tilsiz yo'li: o'z domenida "/" (page.tsx), Robohub domenida "/ai-studio" (robohub/ai-studio/page.tsx)
 export default async function StudioPage({ path = "/" }: { path?: string }) {
   const c = await getC(path);
+  const t = messages[c.locale];
+  // Qidiruv tizimlari uchun: veb-ilova (1 rasm narxi bilan) va FAQ. Manzil — canonical (robohub.uz/ai-studio), layout.tsx bilan bir xil
+  const url = ROBOHUB_ORIGIN + localeHref(c.locale, "/ai-studio");
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: "RoboHub AI Studio",
+        url,
+        description: t.metaDescription,
+        applicationCategory: "DesignApplication",
+        operatingSystem: "Web",
+        inLanguage: c.locale,
+        offers: {
+          "@type": "Offer",
+          price: String(PRICE_PER_IMAGE),
+          priceCurrency: "UZS",
+          priceSpecification: { "@type": "UnitPriceSpecification", price: PRICE_PER_IMAGE, priceCurrency: "UZS", referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitText: "image" } },
+        },
+        provider: ROBOHUB_ORG,
+      },
+      {
+        "@type": "FAQPage",
+        url,
+        mainEntity: c.FAQ.items.map((it) => ({ "@type": "Question", name: it.q, acceptedAnswer: { "@type": "Answer", text: it.a } })),
+      },
+    ],
+  };
   return (
     <ContentProvider value={c}>
     <div className={`as ${inter.variable} ${grotesk.variable} ${onest.variable}`} id="top">
@@ -46,6 +79,7 @@ export default async function StudioPage({ path = "/" }: { path?: string }) {
       <Footer />
       <Reveal />
       <StudioModal />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
     </div>
     </ContentProvider>
   );

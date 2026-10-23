@@ -1,32 +1,42 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { defineMessages } from "@/i18n/config";
-import { getMessages } from "@/i18n/server";
+import { getLocale } from "@/i18n/server";
+import { pageMetadata, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { inter } from "../../../fonts";
 import "../robohub.css";
 
-const messages = defineMessages({
+export const messages = defineMessages({
   uz: {
-    title: "Robohub — 4 marketpleys. 1 kabinet.",
+    title: "Robohub — Uzum, Wildberries, Ozon va Yandex Market bitta kabinetda",
     description:
       "Uzum Market, Wildberries, Ozon va Yandex Market doʻkonlaringizni bitta kabinetdan boshqaring: buyurtmalar, kartochkalar, narxlar va analitika.",
   },
   ru: {
-    title: "Robohub — 4 маркетплейса. 1 кабинет.",
+    title: "Robohub — Uzum, Wildberries, Ozon и Яндекс Маркет в одном кабинете",
     description:
       "Управляйте магазинами на Uzum Market, Wildberries, Ozon и Yandex Market из одного кабинета: заказы, карточки товаров, цены и аналитика.",
   },
   en: {
-    title: "Robohub — 4 marketplaces. 1 dashboard.",
+    title: "Robohub — Uzum, Wildberries, Ozon and Yandex Market in one dashboard",
     description:
       "Run your Uzum Market, Wildberries, Ozon and Yandex Market stores from one dashboard: orders, product cards, prices and analytics.",
   },
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getMessages(messages);
+  const locale = await getLocale();
+  const t = messages[locale];
+  return pageMetadata({ origin: ROBOHUB_ORIGIN, locale, path: "/", ...t, siteName: "Robohub", image: "/og/robohub-{locale}.jpg" });
 }
 
 // Robohub landingi (bosh sahifa): uslublar va metadata faqat shu guruhga — /academy ularni olmaydi.
+// Inter (--ff-inter) shu sahifada miniatyura oynalarida ishlatiladi — root layout'ga emas, faqat shu yerga ulanadi
+// (AI Studio va Kalkulyator ham o'sha bitta instansiyani o'z o'ramiga qo'yadi). display:contents — joylashuvga ta'sir qilmaydi.
 export default function LandingLayout({ children }: { children: ReactNode }) {
-  return children;
+  return (
+    <div className={inter.variable} style={{ display: "contents" }}>
+      {children}
+    </div>
+  );
 }

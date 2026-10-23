@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import CountUp from "../count-up/count-up";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { getC } from "../../content.server";
 
 // Ishonch bloki: to'q panel, marketplace nomlari cheksiz lenta bo'lib oqadi, ostida sanaladigan raqamlar.

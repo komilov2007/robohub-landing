@@ -12,11 +12,11 @@ import "./motion.css";
 // Kodi landing bilan aralashmaydi: hamma narsa shu papkada, uslublar .ac ildiziga bog'langan (landing uslublari — (landing) guruhida).
 // Ko'rinish Robohub landingiga mos: umumiy tokenlar, shriftlar (Unbounded + Manrope) va .btn — globals.css dan.
 // Uch tilda: /academy (uz), /ru/academy, /en/academy. Videolar o'zbekcha — hamma tilda bitta.
-const messages = defineMessages({
+export const messages = defineMessages({
   uz: {
     title: "Robohub Academy — marketpleys sotuvchilari uchun video darslar",
     description:
-      "Robohub’ni qisqa darslarda o‘rganing: analitika, buyurtmalar, mahsulotlar, ombor, marketing, integratsiya, muloqot va boshqaruv. Har mavzuda matn, sxema va video.",
+      "Robohub’ni qisqa darslarda o‘rganing: analitika, buyurtmalar, mahsulotlar, ombor, marketing va integratsiya. Har mavzuda matn, sxema va video.",
     ogLocale: "uz_UZ",
     skip: "Asosiy kontentga o‘tish",
   },
@@ -30,7 +30,7 @@ const messages = defineMessages({
   en: {
     title: "Robohub Academy — video lessons for marketplace sellers",
     description:
-      "Learn Robohub in short lessons: analytics, orders, products, warehouse, marketing, integrations, communication and management. Every topic comes with text, diagrams and video.",
+      "Learn Robohub in short lessons: analytics, orders, products, warehouse, marketing and integrations. Every topic has text, diagrams and video.",
     ogLocale: "en_US",
     skip: "Skip to main content",
   },

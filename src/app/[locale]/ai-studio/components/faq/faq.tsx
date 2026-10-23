@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { useC } from "../../content-context";
 import { TELEGRAM_URL } from "@/lib/contacts";
 

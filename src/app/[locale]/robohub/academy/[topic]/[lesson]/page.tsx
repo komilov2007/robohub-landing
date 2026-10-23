@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { OG_LOCALE } from "@/lib/seo";
 import { permanentRedirect, redirect } from "next/navigation";
 import { getLocale } from "@/i18n/server";
 import { getLessonBySlug, getTopic, LESSON_ROUTES, TOPIC_ROUTES } from "../../lib/academy";
@@ -44,6 +45,8 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "video.other",
+      siteName: "Robohub Academy",
+      locale: OG_LOCALE[locale],
       title: `${lesson.title} — Robohub Academy`,
       description,
       url,
@@ -53,6 +56,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${lesson.title} — Robohub Academy`,
       description,
+      images,
     },
   };
 }

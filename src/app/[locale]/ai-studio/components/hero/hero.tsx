@@ -1,5 +1,5 @@
 import { Fragment, type CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import HeroStudio from "./hero-studio";
 import { EXAMPLES_HREF, SIGNUP_HREF } from "../../ai-studio.content";
 import { getC } from "../../content.server";

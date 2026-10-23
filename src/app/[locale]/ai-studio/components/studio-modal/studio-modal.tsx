@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { STUDIO_EMBED_URL, STUDIO_URL } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 

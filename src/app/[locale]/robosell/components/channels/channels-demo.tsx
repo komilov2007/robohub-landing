@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { CHANNELS } from "../../robosell.content";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 
 // "Bir marta qo'shing — hamma joyda chiqadi" sahnasi.
 // Aylanish: 0 — admin kartasida yangi mahsulot to'ldiriladi, 1 — "Nashr qilish" bosiladi,

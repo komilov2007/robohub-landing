@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { DASHBOARD } from "../../robosell.content";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 
 // 5-bo'lim — "jonli dashboard bento". Har widget — admin panelning bitta bo'limi (DASHBOARD.tabs):
 //   statistika (daromad grafigi), buyurtmalar (tushayotgan lenta), to'lovlar (diagramma), mahsulotlar (top + ombor),

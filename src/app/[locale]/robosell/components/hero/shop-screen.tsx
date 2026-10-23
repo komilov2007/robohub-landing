@@ -1,4 +1,4 @@
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { SHOP, uzs } from "./demo-data";
 
 // Robosell'da qurilgan do'kon (rb-shop) bosh sahifasi: tuzilma rb-shop'dagidek, kontent — NAMUNA (demo-data.ts).

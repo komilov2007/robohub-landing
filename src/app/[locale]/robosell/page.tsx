@@ -13,6 +13,38 @@ import Faq from "./components/faq/faq";
 import FinalCta from "./components/final-cta/final-cta";
 import Footer from "./components/footer/footer";
 import Reveal from "./components/reveal/reveal";
+import { FAQ, PRICING } from "./robosell.content";
+import { messages } from "./robosell.i18n";
+import { jsonLd, ROBOHUB_ORG, ROBOSELL_ORIGIN } from "@/lib/seo";
+
+// Qidiruv tizimlari uchun: veb-xizmat (tariflar narxi bilan) va FAQ. Matn o'zbekcha — sxema ham o'zbekcha (canonical — uz).
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "Robosell",
+      url: ROBOSELL_ORIGIN,
+      description: messages.uz.metaDescription,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web, Telegram",
+      inLanguage: "uz",
+      offers: PRICING.plans.map((p) => ({
+        "@type": "Offer",
+        name: p.name,
+        price: String(p.price),
+        priceCurrency: "UZS",
+        description: p.note,
+      })),
+      provider: ROBOHUB_ORG,
+    },
+    {
+      "@type": "FAQPage",
+      url: ROBOSELL_ORIGIN,
+      mainEntity: FAQ.list.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
+  ],
+};
 
 // Robosell landingi. Har bo'lim o'z fon, kompozitsiya va animatsiyasiga ega:
 //   hero — do'kondan admin panelga uchadigan buyurtma; 02 — oldin/keyin surgichi; 03 — to'ladigan yo'l;
@@ -38,6 +70,7 @@ export default function Page() {
       </main>
       <Footer />
       <Reveal />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
     </div>
   );
 }

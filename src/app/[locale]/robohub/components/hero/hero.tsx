@@ -5,7 +5,7 @@ import { messages } from "./hero.i18n";
 
 const MARKETPLACES = ["uzum", "wildberries", "ozon", "yandex"];
 
-// Ombor va hisob tizimlari. Apicore logotipi yoʻq — oʻrniga harfli belgi chiqadi.
+// Ombor va hisob tizimlari (logotipi boʻlmasa — harfli belgi chiqadi).
 const SYSTEMS: { name: string; logo?: string }[] = [
   { name: "МойСклад", logo: "/integrations/moysklad.svg" },
   { name: "BILLZ", logo: "/integrations/billz.svg" },
@@ -15,7 +15,7 @@ const SYSTEMS: { name: string; logo?: string }[] = [
   { name: "Bito", logo: "/integrations/bito.svg" },
   { name: "Sales Doctor", logo: "/integrations/sales-doctor.svg" },
   { name: "Retail CRM", logo: "/integrations/retail-crm.svg" },
-  { name: "Apicore" },
+  { name: "Apicore", logo: "/integrations/apicore-logo.svg" },
 ];
 
 export default async function Hero() {

@@ -1,6 +1,6 @@
 import { defineMessages } from "@/i18n/config";
 
-// AI Studio metadata. Sahifa matnlari hozircha faqat o'zbekcha — ai-studio.content.ts.
+// AI Studio metadata (sahifa matnlari uch tilda — ai-studio.content.ts).
 export const messages = defineMessages({
   uz: {
     metaTitle: "RoboHub AI Studio — oddiy rasmdan sotadigan infografika 1 daqiqada",

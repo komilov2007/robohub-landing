@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { PRICE_PER_IMAGE, TOKENS_PER_IMAGE, money, plural } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 

@@ -1,16 +1,13 @@
 // Domendan qaysi sayt ekanini aniqlash — proxy.ts (rewrite) va sitemap/robots uchun umumiy.
-//   robohub-landing-two / robohub-two… → robohub-two;  robohub-academy-two… → robohub (eski academy-two domeni);
-//   robohub-academy… → robohub-academy;  robosell… → robosell;  ai-studio… → ai-studio (ai-studio.vercel.app; lokalda ai-studio.localhost;
+//   robosell… → robosell;  ai-studio… → ai-studio (ai-studio.vercel.app; lokalda ai-studio.localhost;
 //   Robohub domenida esa /ai-studio sahifasi — app/[locale]/robohub/ai-studio);
-//   qolgan hammasi (robohub.uz, robohub-landing…, localhost) → robohub.
-export type Site = "robohub" | "robohub-two" | "robosell" | "robohub-academy" | "ai-studio";
+//   qolgan hammasi (robohub.uz, robohub-landing…, localhost) → robohub. Eski robohub-two va robohub-academy
+//   domenlari ham robohub'ga tushadi (robohub-academy… bosh sahifasi /academy ga yo'naltiriladi — proxy.ts).
+export type Site = "robohub" | "robosell" | "ai-studio";
 
 export function siteFromHost(host: string): Site {
   const h = host.toLowerCase();
   if (h.startsWith("ai-studio")) return "ai-studio";
-  if (h.startsWith("robohub-landing-two") || h.startsWith("robohub-two")) return "robohub-two";
-  if (h.startsWith("robohub-academy-two")) return "robohub";
-  if (h.startsWith("robohub-academy")) return "robohub-academy";
   return h.startsWith("robosell") ? "robosell" : "robohub";
 }
 

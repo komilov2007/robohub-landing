@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { HERO, SIGNUP_HREF } from "../../robosell.content";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import HeroDemo from "./hero-demo";
 import Clients from "./clients";
 import VideoButton from "./video-button";

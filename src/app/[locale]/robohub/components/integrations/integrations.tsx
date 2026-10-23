@@ -5,7 +5,8 @@ import { getMessages } from "@/i18n/server";
 import { messages } from "./integrations.i18n";
 
 // logo: public/integrations/ dagi fayl; logotipi yo'q tizim bosh harfi bilan chiqadi
-type System = { name: string; logo?: string };
+// plate — shaffof fonli logotip (to'q fonda xira ko'rinadi): oq plitka ustida chiqadi
+type System = { name: string; logo?: string; plate?: boolean };
 const STOCK: System[] = [
   { name: "МойСклад", logo: "/integrations/moysklad.svg" },
   { name: "BILLZ", logo: "/integrations/billz.svg" },
@@ -14,13 +15,17 @@ const STOCK: System[] = [
   { name: "YesPOS", logo: "/integrations/yespos.svg" },
   { name: "Bito", logo: "/integrations/bito.svg" },
   { name: "Sales Doctor", logo: "/integrations/sales-doctor.svg" },
-  { name: "Apicore" },
+  { name: "Apicore", logo: "/integrations/apicore-logo.svg", plate: true },
 ];
 const CRM: System[] = [{ name: "Retail CRM", logo: "/integrations/retail-crm.svg" }];
 
-const Chip = ({ name, logo }: System) => (
+const Chip = ({ name, logo, plate }: System) => (
   <li className="integ-chip">
-    {logo ? <img src={logo} alt="" width="28" height="28" loading="lazy" /> : <i aria-hidden="true">{name[0]}</i>}
+    {logo ? (
+      <img src={logo} alt="" width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
+    ) : (
+      <i aria-hidden="true">{name[0]}</i>
+    )}
     {name}
   </li>
 );

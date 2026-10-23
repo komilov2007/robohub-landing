@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { fill } from "../../ai-studio.content";
 import { getC } from "../../content.server";
 import { getLesson } from "../../../robohub/academy/lib/academy";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import Icon from "../icon/icon";
+import Icon from "../icon/svg-icon";
 import { plural, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 

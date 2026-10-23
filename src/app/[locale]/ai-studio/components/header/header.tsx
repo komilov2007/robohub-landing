@@ -7,7 +7,7 @@ import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import { LOGIN_HREF } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
-// Header — Robohub Academy header'i bilan bir xil dizayn (robohub-academy/components/header):
+// Header — Robohub Academy header'i bilan bir xil dizayn (robohub/academy header):
 // sticky, qog'oz fon + blur, scroll'da chegara va soya; o'rtada menyu (faol/hover — sariq chiziq),
 // o'ngda til tanlash (UZ/RU/EN), "Kirish" va "Bepul boshlash". Mobilda — header ostidan ochiladigan panel (Esc yopadi).
 // Faol bo'lim — scroll bo'yicha aniqlanadi.
