@@ -11,7 +11,7 @@
 .announce__icon{
   display:none;place-items:center;flex:none;width:26px;height:26px;border-radius:8px;background:#B8FFB0;color:#00524F;
 }
-.announce__icon svg{width:15px;height:15px}
+.announce__icon svg{width:18px;height:auto}
 .announce__text b{font-weight:700;color:#B8FFB0}
 .announce__cta{
   display:inline-flex;align-items:center;gap:6px;flex:none;height:28px;padding:0 13px;border-radius:999px;
