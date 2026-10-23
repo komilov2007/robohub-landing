@@ -39,13 +39,12 @@ export async function POST(request: Request) {
   const name = clean(body.name, 80);
   const company = clean(body.company, 120);
   const phone = clean(body.phone, 32);
-  const source = clean(body.source, 40) || "Landing";
   const digits = phone.replace(/\D/g, "");
   if (!name || !company || digits.length < 9 || digits.length > 15) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
 
-  const text = `Ismi: ${name}\nKompaniya: ${company}\nTelefon: ${phone}\nSana: ${tashkentNow()}\nManba: ${source}`;
+  const text = `Ismi: ${name}\nKompaniya: ${company}\nTelefon: ${phone}\nSana: ${tashkentNow()}`;
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",

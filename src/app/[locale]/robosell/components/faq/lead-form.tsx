@@ -11,6 +11,14 @@ const STEPS = [
   { name: "phone", type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+998 90 123 45 67" },
 ] as const;
 
+// Uzbek raqam formati: "+998 90 123 45 67" (998 kodi doim saqlanadi, 9 ta mahalliy raqam)
+function formatUzPhone(v: string): string {
+  const all = v.replace(/\D/g, "");
+  const d = (all.startsWith("998") ? all.slice(3) : all).slice(0, 9);
+  const parts = [d.slice(0, 2), d.slice(2, 5), d.slice(5, 7), d.slice(7, 9)].filter(Boolean);
+  return ["+998", ...parts].join(" ");
+}
+
 type Status = "idle" | "sending" | "done" | "error";
 
 export default function LeadForm() {
@@ -22,7 +30,10 @@ export default function LeadForm() {
   const trapRef = useRef<HTMLInputElement>(null);
   const s = STEPS[step];
 
-  const setValue = (v: string) => setAnswers((a) => a.map((x, i) => (i === step ? v : x)));
+  const setValue = (raw: string) => {
+    const v = s.name === "phone" ? formatUzPhone(raw) : raw;
+    setAnswers((a) => a.map((x, i) => (i === step ? v : x)));
+  };
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,7 +65,7 @@ export default function LeadForm() {
         body: JSON.stringify({
           name: answers[0].trim(),
           company: answers[1].trim(),
-          phone: answers[2].trim(),
+          phone: answers[2].replace(/\s/g, ""),
           source: "Robosell landing",
           website: trapRef.current?.value ?? "",
         }),
@@ -89,7 +100,7 @@ export default function LeadForm() {
           value={answers[step]}
           onChange={(e) => setValue(e.target.value)}
           disabled={done || status === "sending"}
-          maxLength={s.name === "phone" ? 20 : 100}
+          maxLength={s.name === "phone" ? 17 : 100}
           required
         />
         {/* botlar uchun tuzoq — odamga ko'rinmaydi */}

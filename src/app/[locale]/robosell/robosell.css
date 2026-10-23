@@ -1247,6 +1247,7 @@
 .rs-lead__step{display:grid;place-items:center;min-width:40px;height:40px;flex:none;border-radius:50%;background:rgba(255,255,255,.1);color:#A8EBC0;font-size:12.5px;font-weight:800}
 .rs-lead__form input{flex:1;min-width:0;height:46px;padding:0 4px;border:0;background:none;font:inherit;font-size:16px;font-weight:500;color:#fff;outline:0;animation:rs-lead-in .45s var(--ease)}
 @keyframes rs-lead-in{from{opacity:0;transform:translateX(16px)}}
+.rs-lead__form input:focus-visible{outline:0}
 .rs-lead__form input::placeholder{color:rgba(241,255,240,.55)}
 .rs-lead__form input:-webkit-autofill{-webkit-text-fill-color:#fff;-webkit-box-shadow:0 0 0 60px #003634 inset;caret-color:#fff}
 .rs-lead__form input[aria-invalid]{animation:rs-lead-shake .4s}
