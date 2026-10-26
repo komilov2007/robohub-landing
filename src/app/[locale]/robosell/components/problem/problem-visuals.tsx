@@ -101,7 +101,6 @@ const NEW: Record<Kind, ReactNode> = {
         [29181, "Jasur T.", "119,000", "globe"],
         [29180, "Malika R.", "285,000", "instagram"],
         [29179, "Operator", "150,000", "user"],
-        [29178, "Sardor B.", "119,000", "click-outline"],
       ].map(([id, n, s, p], i) => (
         <span key={id} className="rs-n-row" style={d(i)}>
           <b>{id}</b>
@@ -123,7 +122,6 @@ const NEW: Record<Kind, ReactNode> = {
         ["/ai/cosmetics_composition.webp", "Namlovchi krem, 50 ml", "149,000", 24],
         ["/categories/accessories.webp", "Soat U-Boat Classic", "1,250,000", 12],
         ["/categories/shoes.webp", "Krossovka White Glitter", "690,000", 8],
-        ["/categories/electronics.webp", "Quloqchin Koss Porta", "420,000", 31],
       ].map(([im, n, p, q], i) => (
         <span key={im} className="rs-n-prod" style={d(i)}>
           <img src={String(im)} alt="" />
