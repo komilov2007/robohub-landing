@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, hasLocale } from "@/i18n/config";
+import { defaultLocale, hasLocale, LOCALE_HEADER } from "@/i18n/config";
 import { siteFromHost } from "@/lib/site-host";
 
 // Bitta loyiha — bir necha sayt, uch til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
@@ -41,7 +41,10 @@ export function proxy(request: NextRequest) {
   // /uz/robohub/robosell → 404, ya'ni bir sayt ikkinchisini o'z domenida ko'rsatib qo'ymaydi.
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}/${site}${rest === "/" ? "" : rest}`;
-  return NextResponse.rewrite(url);
+  // Til — 404 sahifasi uchun (app/global-not-found.tsx): u layout'siz render bo'ladi va root parametrni ko'rmaydi
+  const headers = new Headers(request.headers);
+  headers.set(LOCALE_HEADER, locale);
+  return NextResponse.rewrite(url, { request: { headers } });
 }
 
 export const config = {

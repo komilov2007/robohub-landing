@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // 404 — app/global-not-found.tsx (Robohub va Robosell uchun alohida). Root layout [locale] ichida bo'lgani uchun
+  // oddiy not-found.tsx mos kelmagan manzillarni ushlamaydi; segment notFound() esa HTML'siz "error shell" beradi.
+  experimental: { globalNotFound: true },
   // Faqat dev: lokal saytni Wi-Fi yoki Radmin VPN orqali boshqalarga ko'rsatish.
   // Robohub (va /academy) — oddiy IP bilan: http://192.168.1.50:3000/academy (Wi-Fi IP o'zgarsa ham ishlaydi);
   // boshqa saytlar domendan tanlanadi (src/proxy.ts) — nip.io nomi bilan: http://robosell.<IP>.nip.io:3000

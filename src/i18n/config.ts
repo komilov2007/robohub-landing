@@ -4,6 +4,9 @@ export const locales = ["uz", "ru", "en"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "uz";
 
+// Proxy joriy tilni shu so'rov sarlavhasida uzatadi — root parametr yo'q joyda (global-not-found) o'qish uchun
+export const LOCALE_HEADER = "x-locale";
+
 export function hasLocale(value: string | undefined): value is Locale {
   return (locales as readonly string[]).includes(value ?? "");
 }

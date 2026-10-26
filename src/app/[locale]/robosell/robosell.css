@@ -1374,3 +1374,114 @@
   .rs-foot__brand{grid-column:auto}
 }
 @media (min-width:1024px){ .rs-foot{padding-bottom:36px;border-radius:56px 56px 0 0} }
+
+/* ============================================================
+   404 — robosell/not-found.tsx (components/not-found). Chapda matn, o'ngda bot suhbati.
+   Xabarlar --d kechikish bilan navbat bilan chiqadi; "yozmoqda…" faqat animatsiya paytida ko'rinadi
+   (reduced-motion'da animatsiya o'chadi — suhbat to'liq, nuqtalar yashirin).
+   ============================================================ */
+body:has(.rs-nf){background:#F9F9FC}
+/* overflow:clip — dekor dog'lar sahifa chetidan chiqib scroll hosil qilmasin */
+.rs-nf{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;isolation:isolate;overflow:clip}
+.rs-nf__blob{position:absolute;z-index:-1;border-radius:50%;filter:blur(70px);pointer-events:none}
+.rs-nf__blob--a{width:480px;height:480px;top:-160px;right:-120px;background:rgba(93,201,131,.28)}
+.rs-nf__blob--b{width:420px;height:420px;bottom:-180px;left:-140px;background:rgba(251,207,0,.2)}
+
+.rs-nf__top{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.rs-nf__logo{display:inline-flex;color:var(--teal)}
+.rs-nf__logo .rs-logo{height:22px;transition:transform .25s var(--ease)}
+.rs-nf__logo:hover .rs-logo{transform:scale(1.03)}
+
+.rs-nf__main{flex:1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:56px;padding-top:clamp(12px,3vh,32px);padding-bottom:clamp(20px,5vh,64px)}
+
+.rs-nf__text > *{animation:rs-msg .6s var(--ease) backwards}
+.rs-nf__text > :nth-child(2){animation-delay:.06s}
+.rs-nf__text > :nth-child(3){animation-delay:.12s}
+.rs-nf__text > :nth-child(4){animation-delay:.18s}
+.rs-nf__text > :nth-child(5){animation-delay:.24s}
+.rs-nf__badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 12px;
+  border-radius:12px 12px 12px 3px;background:rgba(0,82,79,.08);
+  font-size:13.5px;font-weight:700;color:var(--teal);
+}
+.rs-nf__badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red)}
+.rs-nf__code{
+  /* balandlik bo'yicha ham cheklangan (vh) — past ekranda sahifa scroll bo'lmasligi uchun */
+  margin:clamp(4px,1.2vh,12px) 0 clamp(4px,1.2vh,12px);font-size:clamp(80px,min(13vw,19vh),168px);font-weight:800;line-height:.9;letter-spacing:.01em;color:var(--teal);
+  font-variant-numeric:tabular-nums;
+}
+.rs-nf__code span{
+  display:inline-block;margin:0 .03em;color:var(--yellow);
+  animation:rs-nf-bob 3.2s ease-in-out infinite;
+}
+@keyframes rs-nf-bob{50%{transform:translateY(-5%)}}
+.rs-nf__title{margin:0 0 14px;font-size:clamp(28px,3.4vw,44px);font-weight:800;line-height:1.1;letter-spacing:-.03em}
+.rs-nf__lead{max-width:500px;margin:0 0 clamp(18px,3vh,28px);font-size:17px;line-height:1.6;color:var(--mute-ink)}
+.rs-nf__cta{display:flex;flex-wrap:wrap;gap:12px}
+
+/* bot suhbati */
+.rs-nf__chat{
+  justify-self:center;width:100%;max-width:420px;border-radius:28px;overflow:hidden;
+  background:#fff;box-shadow:0 40px 80px -36px rgba(0,82,79,.45),0 0 0 1px var(--line);
+  transform:rotate(1.5deg);animation:rs-nf-in .8s var(--ease) .1s backwards;
+}
+@keyframes rs-nf-in{from{opacity:0;transform:translateY(24px) rotate(4deg)}}
+.rs-nf__chat-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #EEF1F0}
+.rs-nf__chat-back{font-size:18px;color:var(--mute)}
+.rs-nf__chat-ava{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;font-weight:800}
+.rs-nf__chat-who{display:flex;flex-direction:column;line-height:1.2}
+.rs-nf__chat-who b{font-size:15px}
+.rs-nf__chat-who small{font-size:12px;color:#2E9C58}
+.rs-nf__msgs{display:flex;flex-direction:column;gap:8px;min-height:min(340px,46vh);padding:18px 16px;background:linear-gradient(#E4EFEA,#D8E8E0)}
+.rs-nf__msg{
+  align-self:flex-start;max-width:88%;padding:10px 13px;border-radius:16px 16px 16px 4px;
+  background:#fff;font-size:14.5px;line-height:1.45;box-shadow:0 2px 4px rgba(0,2,17,.08);
+  animation:rs-msg .4s cubic-bezier(.3,1.4,.5,1) var(--d,0ms) backwards;
+}
+.rs-nf__msg p + p{margin-top:6px}
+.rs-nf__msg.is-me{align-self:flex-end;border-radius:16px 16px 4px 16px;background:#D6F5DF}
+.rs-nf__msg small{margin-left:8px;font-size:11px;color:#2E9C58}
+.rs-nf__msg-code{
+  display:inline-block;padding:3px 8px;border-radius:8px;background:rgba(235,87,105,.1);
+  font-size:12.5px;font-weight:700;color:#C4314A;font-variant-numeric:tabular-nums;
+}
+.rs-nf__typing{
+  align-self:flex-start;display:flex;gap:4px;padding:0 14px;border-radius:16px 16px 16px 4px;background:#fff;
+  max-height:0;opacity:0;overflow:hidden;margin-bottom:-8px;
+  animation:rs-nf-typing 1.1s .8s both;
+}
+.rs-nf__typing i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:rs-nf-dot 1s infinite}
+.rs-nf__typing i:nth-child(2){animation-delay:.15s}
+.rs-nf__typing i:nth-child(3){animation-delay:.3s}
+@keyframes rs-nf-typing{
+  0%,100%{max-height:0;opacity:0;padding:0 14px;margin-bottom:-8px}
+  8%,92%{max-height:40px;opacity:1;padding:13px 14px;margin-bottom:0}
+}
+@keyframes rs-nf-dot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+/* Telegram inline-tugmalari: 2 ustun */
+.rs-nf__kb{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px}
+.rs-nf__kb a{
+  display:flex;align-items:center;justify-content:center;min-height:42px;padding:8px 10px;border-radius:12px;
+  background:rgba(0,82,79,.72);color:#fff;font-size:14px;font-weight:600;text-align:center;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:background-color .2s,transform .2s var(--ease);
+  animation:rs-msg .4s cubic-bezier(.3,1.4,.5,1) var(--d,0ms) backwards;
+}
+.rs-nf__kb a:hover{background:var(--teal);transform:translateY(-2px)}
+.rs-nf__kb a:first-child,.rs-nf__kb a:last-child:nth-child(even){grid-column:1 / -1}
+.rs-nf__kb a:first-child{background:var(--yellow);color:var(--ink)}
+.rs-nf__kb a:first-child:hover{background:#FFD92E}
+
+@media (max-width:899px){
+  .rs-nf__main{grid-template-columns:1fr;gap:40px;padding-top:16px;text-align:center}
+  .rs-nf__lead{margin-inline:auto}
+  .rs-nf__cta{justify-content:center}
+  .rs-nf__chat{transform:none;text-align:left}
+}
+@media (max-width:519px){
+  .rs-nf__top .rs-btn{display:none}
+  .rs-nf__cta{flex-direction:column}
+  .rs-nf__cta .rs-btn{width:100%}
+  .rs-nf__msgs{min-height:0}
+}
