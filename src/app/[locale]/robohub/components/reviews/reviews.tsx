@@ -3,6 +3,7 @@ import { getMessages } from "@/i18n/server";
 import { REELS } from "../reels/reels";
 import { messages as reelsMessages } from "../reels/reels.i18n";
 import { CHATS } from "./chats";
+import ReviewsBulge from "./reviews-bulge";
 import ReviewsChats from "./reviews-chats";
 import ReviewsVideos from "./reviews-client";
 import { messages } from "./reviews.i18n";
@@ -31,6 +32,7 @@ export default async function Reviews() {
         </h3>
       </div>
       {/* Telegram'dagi fikrlar: bir xil kartalar bitta qatorda, o'zi sekin suriladi */}
+      <ReviewsBulge />
       <ReviewsChats chats={CHATS} t={{ anon: t.anon, group: "RoboHub Sellers", more: t.more, close: t.close }} />
     </section>
   );
