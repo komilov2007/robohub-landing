@@ -26,7 +26,6 @@ export default async function Hero() {
         <div className="container hero__grid">
           {/* Birinchi ekran matni darhol koʻrinadi (LCP): .reveal va --d kechikishi yoʻq, kirish faqat siljish bilan */}
           <div className="hero__text">
-            <p className="hero__pill hero__rise">{t.pill}</p>
             <h1 className="hero__title" id="hero-title">
               {t.title.map((w, i) => (
                 <Fragment key={i}>
@@ -41,6 +40,12 @@ export default async function Hero() {
                   </Fragment>
                 ))}
               </span>
+              {t.end.map((w, i) => (
+                <Fragment key={i}>
+                  {" "}
+                  <span className="w">{w}</span>
+                </Fragment>
+              ))}
             </h1>
             <p className="hero__lead hero__rise">
               {t.lead}

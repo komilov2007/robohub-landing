@@ -6,7 +6,6 @@ import { defineMessages } from "@/i18n/config";
 // sep — minglik ajratuvchi (sanab chiqadigan sonlar uchun).
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Imkoniyatlar",
     title: ["Sotuvchiga kerak hamma narsa —", "bitta kabinetda."],
     lead: "Buyurtmadan sof foydagacha: Robohub ichida 18 ta tayyor vosita bor. Pastga suring — har biri nima qilishini ko‘rsatamiz.",
     hint: "Skroll qiling",
@@ -92,7 +91,6 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    eyebrow: "Возможности",
     title: ["Всё, что нужно продавцу —", "в одном кабинете."],
     lead: "От заказа до чистой прибыли: в Robohub 18 готовых инструментов. Листайте вниз — покажем, что умеет каждый.",
     hint: "Прокрутите",
@@ -178,7 +176,6 @@ export const messages = defineMessages({
     },
   },
   en: {
-    eyebrow: "Features",
     title: ["Everything a seller needs —", "in one dashboard."],
     lead: "From order to net profit: Robohub has 18 ready-made tools. Scroll down — we’ll show you what each one does.",
     hint: "Scroll down",

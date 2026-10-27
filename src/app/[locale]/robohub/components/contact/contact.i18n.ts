@@ -2,7 +2,6 @@ import { defineMessages } from "@/i18n/config";
 
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Aloqa",
     // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
     title: "Robohub jamoasi bilan ",
     titleAccent: "bog‘laning",
@@ -24,7 +23,6 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    eyebrow: "Контакты",
     title: "Свяжитесь с командой ",
     titleAccent: "Robohub",
     lead: "Есть вопрос или нужна демонстрация? Оставьте номер — мы быстро ответим.",
@@ -42,7 +40,6 @@ export const messages = defineMessages({
     },
   },
   en: {
-    eyebrow: "Contact",
     title: "Get in touch with the ",
     titleAccent: "Robohub team",
     lead: "Have a question or want a demo? Leave your number — we’ll get back to you fast.",

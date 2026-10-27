@@ -13,7 +13,6 @@ export default async function Contact() {
         <div className="container">
           {/* Ixcham, oʻrtada: sarlavha, bitta maydonli forma (telefon) va pastida aloqa havolalari */}
           <div className="contact__in">
-            <p className="contact__eyebrow" data-sr="">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="contact__title" id="contact-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
               {t.title}<span className="accent">{t.titleAccent}</span>

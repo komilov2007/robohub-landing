@@ -1,4 +1,4 @@
-// "Bizga ishongan sotuvchilar" lentasi uchun ma'lumot.
+// Ishonch boʻlimi ("Bizga ishongan sotuvchilar") uchun maʼlumot: logotiplar devori va ekran oʻquvchi roʻyxati.
 
 export type Company = {
   name: string;
@@ -269,3 +269,16 @@ export const interleave = (logos: Company[], words: string[]): Company[] => {
 };
 
 export const COMPANIES = interleave(LOGOS, WORDMARKS);
+
+/* Logotiplar devori: har qator — alohida lenta. Har logotip devorda bir marta (qatorlarga navbat bilan bo'linadi),
+   orasiga 13 tadan qisqa nom — faqat kvadrat plitkaga sig'adiganlari (14 belgigacha, so'zi 8 gacha).
+   Qator uch nusxada chiziladi (trust.tsx, COPIES): ikki nusxasi keng ekrandan uzunroq bo'lishi kerak —
+   aks holda lenta aylanganda bo'sh joy ko'rinadi. */
+export const WALL_ROWS = 6;
+const SHORT = WORDMARKS.filter((w) => w.length <= 14 && w.split(" ").every((p) => p.length <= 8));
+export const ROWS: Company[][] = Array.from({ length: WALL_ROWS }, (_, r) =>
+  interleave(
+    LOGOS.filter((_, j) => j % WALL_ROWS === r),
+    SHORT.filter((_, i) => i % WALL_ROWS === r).slice(0, 13),
+  ),
+);

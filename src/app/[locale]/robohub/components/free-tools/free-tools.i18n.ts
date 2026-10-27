@@ -5,7 +5,6 @@ import { defineMessages } from "@/i18n/config";
 // script — free-tools.script.js DOM ga yozadigan matnlar.
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Bepul vositalar",
     // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
     title: "Avval sinab ko‘ring.",
     titleAccent: "Keyin qaror qilasiz.",
@@ -57,7 +56,6 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    eyebrow: "Бесплатные инструменты",
     title: "Сначала попробуйте.",
     titleAccent: "Потом решайте.",
     go: "Перейти",
@@ -109,7 +107,6 @@ export const messages = defineMessages({
     },
   },
   en: {
-    eyebrow: "Free tools",
     title: "Try it first.",
     titleAccent: "Then decide.",
     go: "Open",

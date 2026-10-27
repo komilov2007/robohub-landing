@@ -19,7 +19,6 @@ export default function FaqClient({ t }: { t: T }) {
   return (
     <section className="faq" id="faq" data-theme="light" aria-labelledby="faq-title">
       <div className="container">
-        <p className="faq__eyebrow" data-sr="">{t.eyebrow}</p>
         {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
         <h2 className="faq__title" id="faq-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
           {t.title}<span className="accent">{t.titleAccent}</span>

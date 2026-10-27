@@ -37,7 +37,6 @@ export default async function Integrations() {
       <div className="container">
         <div className="integ__top">
           <div>
-            <p className="integ__eyebrow" data-sr="">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="integ__title" id="integ-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
               <span>{t.title}</span> <span className="accent">{t.titleAccent}</span>

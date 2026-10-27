@@ -4,7 +4,6 @@ import { defineMessages } from "@/i18n/config";
 // models — integ-models.tsx dagi MODELS tartibida (FBS, FBO, DBS); matnlar Robohub'ning avvalgi landingidan.
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Integratsiyalar",
     title: "Marketpleysdan omborgacha —",
     titleAccent: "hammasi ulangan.",
     lead: "Robohub siz bilan Uzum, Yandex Market, Wildberries va Ozon oʻrtasida turadi — barcha buyurtmalarni oʻzi qabul qiladi va qoldiqlarni qaytarib yuboradi, shunda hammasini bitta oynadan, ortiqcha sotuvsiz boshqarasiz.",
@@ -49,7 +48,6 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    eyebrow: "Интеграции",
     title: "От маркетплейса до склада —",
     titleAccent: "всё связано.",
     lead: "Robohub стоит между вами и Uzum, Yandex Market, Wildberries и Ozon — сам принимает все заказы и обновляет остатки на площадках, так что вы управляете всем из одного окна, без продаж сверх наличия.",
@@ -94,7 +92,6 @@ export const messages = defineMessages({
     },
   },
   en: {
-    eyebrow: "Integrations",
     title: "Marketplace to warehouse —",
     titleAccent: "everything connected.",
     lead: "Robohub sits between you and Uzum, Yandex Market, Wildberries and Ozon — it takes in every order and syncs stock back, so you run everything from one window with no overselling.",

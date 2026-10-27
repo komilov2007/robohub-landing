@@ -43,7 +43,6 @@ export default function ReviewsClient({ t }: { t: T }) {
   return (
     <section className="revs" id="reviews" data-theme="brand" aria-labelledby="revs-title">
       <div className="container">
-        <p className="revs__eyebrow" data-sr="">{t.eyebrow}</p>
         {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
         <h2 className="revs__title" id="revs-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
           {t.titleStart}<span className="accent">{t.titleAccent}</span>

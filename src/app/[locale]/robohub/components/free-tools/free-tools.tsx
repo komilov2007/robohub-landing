@@ -17,7 +17,6 @@ export default async function FreeTools() {
     <>
       <section className="tools" id="free-tools" data-theme="brand" aria-labelledby="tools-title">
         <div className="container">
-          <p className="tools__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
           {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}{" "}
           <h2 className="tools__title" id="tools-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
             <span>{t.title}</span>{" "}

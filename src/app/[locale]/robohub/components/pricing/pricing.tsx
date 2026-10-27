@@ -10,7 +10,6 @@ export default async function Pricing() {
       <section className="price" id="pricing" data-theme="light" aria-labelledby="price-title">
         <div className="container">
           <div className="price__in">
-            <p className="price__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}{" "}
             <h2 className="price__title" id="price-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
               {t.title}

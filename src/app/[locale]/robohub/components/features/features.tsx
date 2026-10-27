@@ -13,7 +13,6 @@ export default async function Features() {
           <div className="feat__rim" aria-hidden="true" />
 
           <div className="feat__intro">
-            <p className="feat__eyebrow">{t.eyebrow}</p>
             {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
             <h2 className="feat__title" id="feat-title">
               <span>{t.title[0]}</span>

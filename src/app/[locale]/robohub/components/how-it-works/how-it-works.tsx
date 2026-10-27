@@ -9,7 +9,6 @@ export default async function HowItWorks() {
     <>
       <section className="how" id="how-it-works" data-theme="light" aria-labelledby="how-title">
         <div className="container">
-          <p className="how__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
           <h2 className="how__title" id="how-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
             <span>{t.title}</span>{" "}
             <span className="accent">{t.titleAccent}</span>

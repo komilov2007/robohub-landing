@@ -10,7 +10,6 @@ export default async function Market() {
     <section className="mkt" id="regions" data-theme="light" aria-labelledby="mkt-title">
       <div className="container mkt__grid">
         <div>
-          <p className="mkt__eyebrow" data-sr="">{t.eyebrow}</p>{" "}
           <h2 className="mkt__title" id="mkt-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
             {t.titleStart}
             <span className="accent">{t.titleAccent}</span>

@@ -5,7 +5,6 @@ import { defineMessages } from "@/i18n/config";
 // (skriptdagi minglik ajratgich asl versiyadagidek — boʻlinmas boʻshliq).
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Tariflar",
     // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
     title: "Bitta tarif. ",
     titleAccent: "12 ta do‘kongacha.",
@@ -37,7 +36,6 @@ export const messages = defineMessages({
     ],
   },
   ru: {
-    eyebrow: "Тарифы",
     title: "Один тариф. ",
     titleAccent: "До 12 магазинов.",
     planName: " Тариф «Всё включено» ",
@@ -68,7 +66,6 @@ export const messages = defineMessages({
     ],
   },
   en: {
-    eyebrow: "Pricing",
     title: "One plan. ",
     titleAccent: "Up to 12 stores.",
     planName: " “All-in-one” plan ",

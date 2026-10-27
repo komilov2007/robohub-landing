@@ -5,7 +5,6 @@ import { defineMessages } from "@/i18n/config";
 type Review = { num: string; label: string; title: string; text: string; who: string; initial: string; meta: string };
 
 type ReviewsMessages = {
-  eyebrow: string;
   // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
   titleStart: string;
   titleAccent: string;
@@ -16,7 +15,6 @@ type ReviewsMessages = {
 
 export const messages = defineMessages<ReviewsMessages>({
   uz: {
-    eyebrow: "Sharhlar",
     titleStart: "Bizga ishonmang — ",
     titleAccent: "sotuvchilarni tinglang",
     lead: "Sotuvchilar Robohubga oʻtgach nimalar oʻzgargani haqida: tezroq joʻnatish, kamroq bekor qilish va nihoyat koʻrinadigan foyda.",
@@ -79,7 +77,6 @@ export const messages = defineMessages<ReviewsMessages>({
     ],
   },
   ru: {
-    eyebrow: "Отзывы",
     titleStart: "Не верьте нам — ",
     titleAccent: "послушайте продавцов",
     lead: "Продавцы рассказывают, что изменилось после перехода на Robohub: быстрее отгрузка, меньше отмен и наконец-то видимая прибыль.",
@@ -142,7 +139,6 @@ export const messages = defineMessages<ReviewsMessages>({
     ],
   },
   en: {
-    eyebrow: "Reviews",
     titleStart: "Don’t take our word — ",
     titleAccent: "hear it from sellers",
     lead: "Sellers on what changed after switching to Robohub: faster shipping, fewer cancellations and, at last, profit they can actually see.",

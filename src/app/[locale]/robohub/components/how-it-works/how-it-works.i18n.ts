@@ -3,7 +3,6 @@ import { defineMessages } from "@/i18n/config";
 // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Qanday ishlaydi",
     title: "Ulash uch qadam.",
     titleAccent: "Qolgani avtomatik.",
     steps: [
@@ -18,7 +17,6 @@ export const messages = defineMessages({
     guide: "Qoʻllanma va video",
   },
   ru: {
-    eyebrow: "Как это работает",
     title: "Подключение — три шага.",
     titleAccent: "Остальное — автоматически.",
     steps: [
@@ -33,7 +31,6 @@ export const messages = defineMessages({
     guide: "Инструкция и видео",
   },
   en: {
-    eyebrow: "How it works",
     title: "Connect in three steps.",
     titleAccent: "The rest is automatic.",
     steps: [

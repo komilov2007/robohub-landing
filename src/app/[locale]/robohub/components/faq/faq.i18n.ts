@@ -8,7 +8,6 @@ export type FaqItem = { q: string; a: Part[] };
 // Tasdiqlanmagan mavzular (bepul sinov, bekor qilish) ataylab kiritilmagan.
 export const messages = defineMessages({
   uz: {
-    eyebrow: "Savollar",
     // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
     title: "Ko‘p so‘raladigan ",
     titleAccent: "savollar",
@@ -49,7 +48,6 @@ export const messages = defineMessages({
     ] as FaqItem[],
   },
   ru: {
-    eyebrow: "Вопросы",
     title: "Частые ",
     titleAccent: "вопросы",
     support: "Служба поддержки",
@@ -89,7 +87,6 @@ export const messages = defineMessages({
     ],
   },
   en: {
-    eyebrow: "FAQ",
     title: "Frequently asked ",
     titleAccent: "questions",
     support: "Support service",

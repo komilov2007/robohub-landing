@@ -1,12 +1,12 @@
 import { defineMessages } from "@/i18n/config";
 
-// Sarlavha soʻzlari alohida — har biri ketma-ket paydo boʻladi (title — oddiy qism, accent — rangli qism)
-// "Yandex —" ichida boʻshliq — uzilmas (NBSP): tire qator boshiga tushib qolmasin
+// Sarlavha soʻzlari alohida — har biri ketma-ket paydo boʻladi (title — oddiy qism, accent — rangli qism, end — urgʻudan keyingi qism)
+// "на маркетплейсах" ichida boʻshliq — uzilmas (NBSP): qisqa predlog qator oxirida osilib qolmasin
 export const messages = defineMessages({
   uz: {
-    pill: "Marketpleys sotuvchilari uchun",
-    title: ["Uzum,", "Wildberries,", "Ozon", "va", "Yandex —"],
-    accent: ["bitta", "kabinetda"],
+    title: ["Marketpleyslardagi", "savdoni"],
+    accent: ["yagona", "kabinetdan"],
+    end: ["boshqaring"],
     lead: "Buyurtma, qoldiq va foydani bir joydan boshqaring. Toʻrtta kabinetga alohida kirish shart emas.",
     facts: { mps: "6+ marketpleys", integrations: "10+ integratsiya", ai: "AI assistent" },
     start: "Hoziroq boshlash",
@@ -18,9 +18,9 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    pill: "Для продавцов на маркетплейсах",
-    title: ["Uzum,", "Wildberries,", "Ozon", "и", "Yandex —"],
-    accent: ["в одном", "кабинете"],
+    title: ["Управляйте", "продажами", "на маркетплейсах", "из"],
+    accent: ["единого", "кабинета"],
+    end: [],
     lead: "Заказы, остатки и прибыль — в одном месте. Больше не нужно заходить в четыре кабинета по отдельности.",
     facts: { mps: "6+ маркетплейсов", integrations: "10+ интеграций", ai: "AI-ассистент" },
     start: "Начать сейчас",
@@ -32,9 +32,9 @@ export const messages = defineMessages({
     },
   },
   en: {
-    pill: "For marketplace sellers",
-    title: ["Uzum,", "Wildberries,", "Ozon", "&", "Yandex —"],
+    title: ["Manage", "your", "marketplace", "sales", "from"],
     accent: ["one", "dashboard"],
+    end: [],
     lead: "Manage orders, stock and profit from one place. No more logging in to four dashboards separately.",
     facts: { mps: "6+ marketplaces", integrations: "10+ integrations", ai: "AI assistant" },
     start: "Get started",

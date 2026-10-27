@@ -3,7 +3,6 @@ import type { CountryId } from "./globe";
 import type { LaunchText } from "./launch";
 
 type MarketMessages = {
-  eyebrow: string;
   titleStart: string;
   titleAccent: string;
   titleEnd: string;
@@ -17,7 +16,6 @@ type MarketMessages = {
 
 export const messages = defineMessages<MarketMessages>({
   uz: {
-    eyebrow: "Mintaqaviy savdo",
     titleStart: "Bitta mahsulot — ",
     titleAccent: "besh mamlakatda",
     titleEnd: " savdo",
@@ -48,7 +46,6 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   ru: {
-    eyebrow: "Продажи по региону",
     titleStart: "Один товар — ",
     titleAccent: "продажи в пяти странах",
     titleEnd: "",
@@ -79,7 +76,6 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   en: {
-    eyebrow: "Regional selling",
     titleStart: "One product — ",
     titleAccent: "sold in five countries",
     titleEnd: "",

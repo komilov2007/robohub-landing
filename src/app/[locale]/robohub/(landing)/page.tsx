@@ -14,6 +14,7 @@ import Contact from "../components/contact/contact";
 import FinalCta from "../components/final-cta/final-cta";
 import ScrollReveal from "../components/scroll-reveal/scroll-reveal";
 import ToTop from "../components/to-top/to-top";
+import Reels from "../components/reels/reels";
 import { messages as faqMessages } from "../components/faq/faq.i18n";
 import { getLocale } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
@@ -54,8 +55,8 @@ export default async function Page() {
       <Header />
       <main>
         <Hero />
-        <Trust />
         <Problem />
+        <Trust />
         <Features />
         <FreeTools />
         <HowItWorks />
@@ -69,6 +70,7 @@ export default async function Page() {
       </main>
       <ScrollReveal />
       <ToTop />
+      <Reels />
     </>
   );
 }
