@@ -71,7 +71,7 @@ export default async function FinalCta() {
             </span>
           </div>
         </div>{" "}
-        <footer className="foot">
+        <footer className="foot" id="about">
           <div className="foot__grid">
             <div>
               <svg className="foot__logo" viewBox="0 0 127 31" role="img" aria-label="Robohub">
@@ -83,7 +83,17 @@ export default async function FinalCta() {
                 <img src="/marketplaces/yandex.svg" alt="" width="30" height="30" />
                 <img src="/marketplaces/wildberries.svg" alt="" width="30" height="30" />
                 <img src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
-              </p>
+              </p>{" "}
+              <a className="foot__cert" href="/certificates/it-park.webp" target="_blank" rel="noopener" aria-label={`${t.cert.title} — ${t.cert.open}`}>
+                <span className="foot__cert-img">
+                  <img src="/certificates/it-park.webp" alt={t.cert.alt} width="1280" height="887" loading="lazy" decoding="async" />
+                </span>
+                <span className="foot__cert-text">
+                  <b>{t.cert.title}</b>
+                  <span>{t.cert.text}</span>
+                  <em>{t.cert.open} ↗</em>
+                </span>
+              </a>
             </div>{" "}
             <nav aria-label={t.pageLabel}>
               <h3>{t.pageTitle}</h3>{" "}

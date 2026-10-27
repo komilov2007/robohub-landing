@@ -58,5 +58,46 @@ export function init() {
   menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
 
+  /* Ochiladigan bandlar (Imkoniyatlar, Akademiya) — CSS'da :hover / :focus-within bilan ochiladi.
+     Havola bosilganda yoki Esc'da panel yopiladi va sichqoncha banddan chiqmaguncha qayta ochilmaydi
+     (aks holda sahifa scroll qilinayotganda panel sichqoncha ostida ochiq qolardi). */
+  /* Imkoniyatlar bandlari (data-feat — karta raqami): "Imkoniyatlar" sahnasi (features.script.js) "feat:go"
+     hodisasini qabul qilsa, sahifani aynan shu kartaga aylantiradi. Sahna hali yuklanmagan bo'lsa —
+     oddiy havola, #features boshiga o'tadi. */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a[data-feat]");
+    if (!a) return;
+    var ev = new CustomEvent("feat:go", { detail: Number(a.dataset.feat), cancelable: true });
+    document.dispatchEvent(ev);
+    if (ev.defaultPrevented) e.preventDefault();
+  });
+
+  /* Ochiq panel ustida g'ildirak / svayp sahifani aylantirmaydi. stopPropagation — window'dagi
+     boshqa g'ildirak tinglovchilari (features.script.js qadamli skrolli) ham ishlamasin. */
+  [].forEach.call(document.querySelectorAll(".mega,.drop"), function (panel) {
+    function block(e) { e.preventDefault(); e.stopPropagation(); }
+    panel.addEventListener("wheel", block, { passive: false });
+    panel.addEventListener("touchmove", block, { passive: false });
+  });
+
+  var items = document.querySelectorAll(".nav__item--menu");
+  function closeItem(item) {
+    item.classList.add("is-off");
+    if (item.contains(document.activeElement)) document.activeElement.blur();
+  }
+  items.forEach(function (item) {
+    item.addEventListener("click", function (e) { if (e.target.closest("a")) closeItem(item); });
+    item.addEventListener("pointerleave", function () { item.classList.remove("is-off"); });
+    item.addEventListener("focusin", function (e) { if (e.target.matches(":focus-visible")) item.classList.remove("is-off"); });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    items.forEach(function (item) {
+      if (!item.contains(document.activeElement)) { item.classList.add("is-off"); return; }
+      item.querySelector(".nav__link").focus();   // fokus band havolasiga qaytadi (focusin is-off'ni olib tashlaydi —
+      item.classList.add("is-off");                // shuning uchun bayroq fokusdan keyin qo'yiladi)
+    });
+  });
+
 })();
 }

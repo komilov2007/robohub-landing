@@ -65,7 +65,9 @@ return (function () {
     else card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + CATS[i] + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
     var text = document.createElement("article");
     text.className = "feat-text";
-    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p>" + (L.b ? "<ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "");
+    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p>" + (L.b ? "<ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "") +
+      // bilinar-bilinmas tugma: matn ustiga kelganda yaqqol ko'rinadi (robohub.css .feat-text__try)
+      '<a class="feat-text__try" href="' + msg.tryHref + '" target="_blank" rel="noopener">' + msg.try + "<i>→</i></a>";
     // ketma-ket chiqadigan mayda elementlar uchun tartib raqami
     [".mx b", ".cal i", ".bars i"].forEach(function (q) { [].forEach.call(card.querySelectorAll(q), function (el, j) { el.style.setProperty("--j", j); }); });
     stage.appendChild(card); stage.appendChild(text);
@@ -235,6 +237,17 @@ return (function () {
     window.scrollTo({ top: Math.round(top + ((i + lead) / span) * room), behavior: "instant" });
     lockUntil = performance.now() + LOCK;
   }
+  // Header menyusidan (header.script.js, "feat:go"): sahifa silliq aylanib, i-karta markazda to'xtaydi.
+  // Sahna qotmaydigan holatda (room <= 0) hodisa qabul qilinmaydi — havola oddiy #features ga o'tadi.
+  function onGo(e) {
+    var i = e.detail, room = sec.offsetHeight - H;
+    if (!(i >= 0 && i <= N - 1) || room <= 0) return;
+    e.preventDefault();
+    var top = sec.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.round(top + ((i + lead) / span) * room), behavior: reduce ? "auto" : "smooth" });
+    lockUntil = performance.now() + LOCK;
+  }
+  document.addEventListener("feat:go", onGo);
   // qulf: animatsiya tugaguncha va g'ildirak (tachpad inersiyasi ham) to'xtaguncha yangi qadam yo'q
   function locked(now) { return now < lockUntil || now - lastWheel < QUIET; }
 
@@ -344,6 +357,7 @@ return (function () {
     ro.disconnect();
     cancelAnimationFrame(kickRaf);
     removeEventListener("wheel", onWheel);
+    document.removeEventListener("feat:go", onGo);
     clearTimeout(settleT);
     removeEventListener("keydown", onKey);
     removeEventListener("touchstart", onTouchStart);

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 // beriladi — markazdagisi to'liq o'lchamda, chetga borgan sari kichrayib xiralashadi (lenta CSS animatsiyasi bilan
 // suriladi, bu faqat kartalarning o'zini o'zgartiradi). Bo'lim ekranda bo'lgandagina ishlaydi.
 const SHRINK = 0.2; // chetdagi karta shuncha kichrayadi (0.2 → 80%)
-const FADE = 0.45; // chetdagi karta shuncha xiralashadi
+const FADE = 0.25; // chetdagi karta shuncha xiralashadi
 
 export default function ReviewsBulge() {
   useEffect(() => {

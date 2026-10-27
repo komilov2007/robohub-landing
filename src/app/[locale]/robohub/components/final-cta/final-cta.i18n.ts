@@ -10,6 +10,13 @@ export const messages = defineMessages({
     start: "Hoziroq boshlash ",
     pricing: "Tariflarni koʻrish",
     about: "Marketpleys sotuvchilari uchun yagona kabinet.",
+    // IT Park guvohnomasi (public/certificates/it-park.webp) — footer'da, logotip ostida
+    cert: {
+      title: "IT Park rezidenti",
+      text: "Robohub — “Robosell” MChJ mahsuloti. Kompaniya 2025-yil 15-yanvardan IT Park Uzbekistan rezidenti.",
+      alt: "IT Park Uzbekistan rezidenti guvohnomasi — “Robosell” MChJ",
+      open: "Guvohnomani ko‘rish",
+    },
     pageLabel: "Sahifa boʻlimlari",
     pageTitle: "Sahifa",
     page: [
@@ -36,6 +43,12 @@ export const messages = defineMessages({
     start: "Начать сейчас ",
     pricing: "Смотреть тарифы",
     about: "Единый кабинет для продавцов на маркетплейсах.",
+    cert: {
+      title: "Резидент IT Park",
+      text: "Robohub — продукт ООО «Robosell». Компания — резидент IT Park Uzbekistan с 15 января 2025 года.",
+      alt: "Свидетельство резидента IT Park Uzbekistan — ООО «Robosell»",
+      open: "Посмотреть свидетельство",
+    },
     pageLabel: "Разделы страницы",
     pageTitle: "Страница",
     page: [
@@ -62,6 +75,12 @@ export const messages = defineMessages({
     start: "Get started ",
     pricing: "See pricing",
     about: "One dashboard for marketplace sellers.",
+    cert: {
+      title: "IT Park resident",
+      text: "Robohub is a product of Robosell LLC, an IT Park Uzbekistan resident since 15 January 2025.",
+      alt: "IT Park Uzbekistan resident certificate — Robosell LLC",
+      open: "View certificate",
+    },
     pageLabel: "Page sections",
     pageTitle: "Page",
     page: [

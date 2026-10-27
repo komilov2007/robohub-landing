@@ -1,85 +1,56 @@
 import { defineMessages } from "@/i18n/config";
 
-// Ikki sxema: before — Robohubsiz (har marketpleysga alohida menejer, 7 vazifa 4 marta takrorlanadi),
-// after — Robohub bilan (7 vazifa bitta kabinetda bir marta). Umumiy matnlar (tadbirkor, vazifalar, "keyin esa") ikkalasida bir xil.
-// tasks — problem.tsx dagi TASK_ICONS tartibida. Marketpleys nomlari tarjima qilinmaydi — problem.tsx da.
+// before — Robohubsiz (video 0–8 s), after — Robohub bilan (8 s dan keyin). "Keyin esa" qatori ikkalasida bir xil.
 // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi: ʻ bu shriftda harf ustiga minib qoladi.
 export const messages = defineMessages({
   uz: {
     eyebrow: "Taqqoslash",
-    who: { title: "Tadbirkor", note: "tovar ishlab chiqaradi va sotmoqchi" },
-    tasks: ["Kartochkalar", "Qoldiqlar", "Buyurtmalar", "Reklama", "Analitika", "Hujjatlar", "Yetkazish"],
-    mpLabel: "4 marketpleys",
     next: "Keyin esa —",
     own: "+ oʻz saytingiz va Telegram-bot",
     before: {
       label: "Robohubsiz",
       title: ["Robohubsiz", "bir xil vazifalar har bir marketpleysda takrorlanadi"],
       lead: "Har bir marketpleys — oʻz kabineti, oʻz qoidalari, oʻz hisobotlari va muddatlari. Tadbirkor bir xil vazifani har birida qaytadan bajaradi.",
-      mgrLabel: "×4 menejer",
-      tasksLabel: "×7 vazifa — har bir marketpleysda, har kuni",
-      manager: "Menejer",
-      salary: "oylik ~$300",
       cost: "Har yangi marketpleys = +$300/oy",
     },
     after: {
       label: "Robohub bilan",
       title: ["Robohub bilan", "barcha marketpleyslarni bitta kabinetdan boshqarasiz"],
       lead: "Uzum Market, Wildberries, Ozon va Yandex Market uchun bitta oyna. Har bir vazifa bir marta bajariladi — va darhol barcha marketpleyslarga ketadi.",
-      tasksLabel: "×7 vazifa — barcha marketpleyslar uchun bir marta",
-      panel: "Bitta kabinet — barcha vazifalar bir marta yopiladi",
       cost: "Har qanday yangi marketpleys = oʻsha kabinet",
     },
   },
   ru: {
     eyebrow: "Сравнение",
-    who: { title: "Предприниматель", note: "производит товар и хочет продавать" },
-    tasks: ["Карточки", "Остатки", "Заказы", "Реклама", "Аналитика", "Документы", "Доставка"],
-    mpLabel: "4 площадки",
     next: "А дальше —",
     own: "+ свой сайт и Telegram-бот",
     before: {
       label: "Без Robohub",
       title: ["Без Robohub", "одни и те же задачи повторяются на каждой площадке"],
       lead: "Каждый маркетплейс — свой кабинет, свои правила, свои отчёты и свои сроки. Одни и те же задачи предприниматель решает заново на каждой площадке.",
-      mgrLabel: "×4 менеджера",
-      tasksLabel: "×7 задач — на каждой площадке, каждый день",
-      manager: "Менеджер",
-      salary: "ЗП ~$300/мес",
       cost: "Каждая новая площадка = +$300/мес",
     },
     after: {
       label: "С Robohub",
       title: ["С Robohub", "вы управляете всеми площадками из одного кабинета"],
       lead: "Одно окно для Uzum Market, Wildberries, Ozon и Yandex Market. Каждая задача делается один раз — и сразу уходит на все площадки.",
-      tasksLabel: "×7 задач — один раз для всех площадок",
-      panel: "Один кабинет — все задачи закрываются один раз",
       cost: "Любая новая площадка = тот же кабинет",
     },
   },
   en: {
     eyebrow: "Comparison",
-    who: { title: "Entrepreneur", note: "makes products and wants to sell them" },
-    tasks: ["Listings", "Stock", "Orders", "Ads", "Analytics", "Documents", "Delivery"],
-    mpLabel: "4 marketplaces",
     next: "Next up —",
     own: "+ your own website and Telegram bot",
     before: {
       label: "Without Robohub",
       title: ["Without Robohub,", "the same tasks repeat on every marketplace"],
       lead: "Every marketplace has its own dashboard, rules, reports and deadlines. The entrepreneur solves the same tasks all over again on each one.",
-      mgrLabel: "×4 managers",
-      tasksLabel: "×7 tasks — on every marketplace, every day",
-      manager: "Manager",
-      salary: "~$300/mo salary",
       cost: "Every new marketplace = +$300/mo",
     },
     after: {
       label: "With Robohub",
       title: ["With Robohub,", "you run every marketplace from one dashboard"],
       lead: "One window for Uzum Market, Wildberries, Ozon and Yandex Market. Every task is done once — and goes out to every marketplace at once.",
-      tasksLabel: "×7 tasks — once for every marketplace",
-      panel: "One dashboard — every task done once",
       cost: "Any new marketplace = the same dashboard",
     },
   },

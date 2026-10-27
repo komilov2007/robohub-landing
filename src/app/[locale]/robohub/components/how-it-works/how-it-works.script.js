@@ -18,7 +18,7 @@ export function init() {
   var canWatch = "IntersectionObserver" in window;
 
   var H = 150, Y_HI = 46, Y_LO = 104;   // to'lqin balandligi va bekatlarning ikki sathi
-  var MOVE_MS = 850, STAY_MS = 950;     // bekatlar orasidagi yo'l va har bekatdagi to'xtash
+  var MOVE_MS = 560, STAY_MS = 520;     // bekatlar orasidagi yo'l va har bekatdagi to'xtash
   var len = 0, stops = [], pos = 0, stopMove = null, timer = 0, played = false;
 
   function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
@@ -129,7 +129,7 @@ export function init() {
   var ioWave = new IntersectionObserver(function (entries) {
     if (!entries[0].isIntersecting || !wide.matches) return;
     ioWave.disconnect();
-    timer = setTimeout(function () { play(0); }, 350);
+    timer = setTimeout(function () { play(0); }, 200);
   }, { threshold: 0.6 });
   ioWave.observe(wave);
 

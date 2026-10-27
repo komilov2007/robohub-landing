@@ -3,6 +3,19 @@ import { getLocale } from "@/i18n/server";
 import HeaderScript from "./header-script";
 import { messages } from "./header.i18n";
 
+// Ochiladigan bandlar yonidagi ▾ belgisi
+function Chevron() {
+  return (
+    <svg className="chev" viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// Imkoniyatlar panelidagi har band → "Imkoniyatlar" bo'limidagi qaysi karta (0 dan, features.i18n tools tartibida).
+// Ichki va tashqi tahlil — bitta karta. Bosilganda header.script.js sahifani shu kartaga aylantiradi.
+const FEAT_STEP = [0, 1, 2, 3, 3, 4, 5];
+
 export default async function Header() {
   const locale = await getLocale();
   const t = messages[locale];
@@ -30,8 +43,52 @@ export default async function Header() {
           <nav className="nav" aria-label={t.navLabel}>
             <ul className="nav__list">
               {t.nav.map((item) => (
-                <li key={item.href}>
-                  <a className="nav__link" href={item.href}>{item.label}</a>
+                <li key={item.href} className={item.menu ? `nav__item nav__item--menu nav__item--${item.menu}` : "nav__item"}>
+                  <a className="nav__link" href={item.href}>
+                    {item.label}
+                    {item.menu && <Chevron />}
+                  </a>
+                  {item.menu === "features" && (
+                    <div className="mega">
+                      <div className="container mega__inner">
+                        <div className="mega__col">
+                          <p className="mega__title">{t.features.title}</p>
+                          <ul className="mega__grid">
+                            {t.features.items.map((x, i) => (
+                              <li key={x.t}>
+                                <a className="mega__link" href={x.href} data-feat={FEAT_STEP[i]}>
+                                  <b>{x.t}</b>
+                                  <span>{x.d}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="mega__col mega__col--side">
+                          <p className="mega__title">{t.tools.title}</p>
+                          <ul className="mega__list">
+                            {t.tools.items.map((x) => (
+                              <li key={x.t}>
+                                <a className="mega__link" href={x.href}>
+                                  <b>{x.t}</b>
+                                  <span>{x.d}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {item.menu === "academy" && (
+                    <ul className="drop">
+                      {t.academy.map((x) => (
+                        <li key={x.t}>
+                          <a className="drop__link" href={x.href}>{x.t}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
@@ -52,7 +109,23 @@ export default async function Header() {
             <ul className="mobile-menu__list">
               {t.nav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href}>{item.label}</a>
+                  {item.menu ? (
+                    <details className="mobile-menu__group">
+                      <summary>
+                        {item.label}
+                        <Chevron />
+                      </summary>
+                      <ul>
+                        {(item.menu === "features" ? [...t.features.items, ...t.tools.items] : t.academy).map((x, i) => (
+                          <li key={x.t}>
+                            <a href={x.href} data-feat={item.menu === "features" ? FEAT_STEP[i] : undefined}>{x.t}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  ) : (
+                    <a href={item.href}>{item.label}</a>
+                  )}
                 </li>
               ))}
             </ul>{" "}

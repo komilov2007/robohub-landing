@@ -1,4 +1,5 @@
 import { defineMessages } from "@/i18n/config";
+import { REGISTER_URL } from "@/lib/sites";
 
 // script — brauzerda chiziladigan kartalar va matnlar (features.script.js ga uzatiladi).
 // cats — chapdagi hisoblagich ostidagi qisqa nom, har vosita uchun bittadan (tools tartibida).
@@ -14,6 +15,8 @@ export const messages = defineMessages({
       sep: " ",
       skipDown: "O‘tkazib yuborish",
       skipUp: "Tepaga qaytish",
+      try: "Sinab ko‘rish",
+      tryHref: REGISTER_URL,
       cats: ["Kartochkalar","Qoldiqlar","Buyurtmalar","Tahlil","Reklama","Muloqot"],
       tools: [
         { n: "Bir marta yuklang — bir nechta marketpleysda soting",
@@ -57,6 +60,8 @@ export const messages = defineMessages({
       sep: " ",
       skipDown: "Пропустить",
       skipUp: "Вернуться наверх",
+      try: "Попробовать",
+      tryHref: REGISTER_URL,
       cats: ["Карточки","Остатки","Заказы","Аналитика","Реклама","Общение"],
       tools: [
         { n: "Загрузите один раз — продавайте на нескольких маркетплейсах",
@@ -100,6 +105,8 @@ export const messages = defineMessages({
       sep: ",",
       skipDown: "Skip",
       skipUp: "Back to top",
+      try: "Try it",
+      tryHref: REGISTER_URL,
       cats: ["Cards","Stock","Orders","Analytics","Ads","Messages"],
       tools: [
         { n: "Upload once — sell on several marketplaces",
