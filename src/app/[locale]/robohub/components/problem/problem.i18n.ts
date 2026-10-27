@@ -21,11 +21,6 @@ export const messages = defineMessages({
       manager: "Menejer",
       salary: "oylik ~$300",
       cost: "Har yangi marketpleys = +$300/oy",
-      stats: [
-        { value: "$1 200/oy", label: "oyliklar: $300 × 4 marketpleys" },
-        { value: "×4", label: "bir xil amallar takrorlanadi" },
-        { value: "0", label: "barcha marketpleyslar boʻyicha umumiy manzara" },
-      ],
     },
     after: {
       label: "Robohub bilan",
@@ -34,11 +29,6 @@ export const messages = defineMessages({
       tasksLabel: "×7 vazifa — barcha marketpleyslar uchun bir marta",
       panel: "Bitta kabinet — barcha vazifalar bir marta yopiladi",
       cost: "Har qanday yangi marketpleys = oʻsha kabinet",
-      stats: [
-        { value: "500 000 soʻm/oy", label: "≈ $40 — toʻrtta oylik ($1 200) oʻrniga" },
-        { value: "1", label: "toʻrtta oʻrniga bitta kabinet" },
-        { value: "100%", label: "barcha marketpleyslar boʻyicha umumiy manzara" },
-      ],
     },
   },
   ru: {
@@ -57,11 +47,6 @@ export const messages = defineMessages({
       manager: "Менеджер",
       salary: "ЗП ~$300/мес",
       cost: "Каждая новая площадка = +$300/мес",
-      stats: [
-        { value: "$1 200/мес", label: "зарплаты: $300 × 4 площадки" },
-        { value: "×4", label: "дублирование одних и тех же операций" },
-        { value: "0", label: "общей картины по всем площадкам" },
-      ],
     },
     after: {
       label: "С Robohub",
@@ -70,11 +55,6 @@ export const messages = defineMessages({
       tasksLabel: "×7 задач — один раз для всех площадок",
       panel: "Один кабинет — все задачи закрываются один раз",
       cost: "Любая новая площадка = тот же кабинет",
-      stats: [
-        { value: "500 000 сум/мес", label: "≈ $40 вместо $1 200 на четырёх зарплатах" },
-        { value: "1", label: "кабинет вместо четырёх" },
-        { value: "100%", label: "общая картина по всем площадкам" },
-      ],
     },
   },
   en: {
@@ -93,11 +73,6 @@ export const messages = defineMessages({
       manager: "Manager",
       salary: "~$300/mo salary",
       cost: "Every new marketplace = +$300/mo",
-      stats: [
-        { value: "$1,200/mo", label: "salaries: $300 × 4 marketplaces" },
-        { value: "×4", label: "the same operations, duplicated" },
-        { value: "0", label: "overall picture across marketplaces" },
-      ],
     },
     after: {
       label: "With Robohub",
@@ -106,11 +81,6 @@ export const messages = defineMessages({
       tasksLabel: "×7 tasks — once for every marketplace",
       panel: "One dashboard — every task done once",
       cost: "Any new marketplace = the same dashboard",
-      stats: [
-        { value: "500,000 UZS/mo", label: "≈ $40 instead of $1,200 on four salaries" },
-        { value: "1", label: "dashboard instead of four" },
-        { value: "100%", label: "overall picture across all marketplaces" },
-      ],
     },
   },
 });

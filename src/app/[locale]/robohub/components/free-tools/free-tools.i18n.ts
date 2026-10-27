@@ -5,13 +5,12 @@ import { defineMessages } from "@/i18n/config";
 // script — free-tools.script.js DOM ga yozadigan matnlar.
 export const messages = defineMessages({
   uz: {
-    // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
-    title: "Avval sinab ko‘ring.",
-    titleAccent: "Keyin qaror qilasiz.",
-    go: "Oʻtish",
+    title: "Savdolaringiz uchun foydali vositalar",
+    lead: "Sotuvdan qoladigan foydani hisoblang va marketpleyslar uchun mahsulot rasmlarini tayyorlang.",
     calc: {
       name: "Marketpleys kalkulyatori",
-      desc: "Sotuvdan qancha foyda qoladi? Roʻyxatsiz, bepul.",
+      desc: "Tannarx va sotuv narxini kiriting — platforma komissiyasidan keyin qancha foyda qolishini bilib oling. Bepul va roʻyxatdan oʻtmasdan.",
+      go: "Foydani hisoblash",
       win: "Kalkulyator",
       step1: "Qaysi mahsulot?",
       productLabel: "Mahsulot nomi",
@@ -38,7 +37,8 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI infografika",
-      desc: "Mahsulot rasmi ~30 soniyada, 750×1000.",
+      desc: "Mahsulot rasmini yuklang va uslubni tanlang — AI mahsulot afzalliklarini koʻrsatadigan, kartochka uchun bezatilgan rasm tayyorlaydi.",
+      go: "Rasm yaratish",
       steps: ["Rasm yuklang", "Uslubni tanlang", "Tayyor rasm"],
       srcAlt: "Yuklangan oddiy mahsulot rasmi: oq banka",
       yourPhoto: "Sizning rasmingiz",
@@ -56,12 +56,12 @@ export const messages = defineMessages({
     },
   },
   ru: {
-    title: "Сначала попробуйте.",
-    titleAccent: "Потом решайте.",
-    go: "Перейти",
+    title: "Полезные инструменты для ваших продаж",
+    lead: "Рассчитайте прибыль с продажи и подготовьте изображения товаров для маркетплейсов.",
     calc: {
-      name: "Калькулятор маркетплейса",
-      desc: "Сколько прибыли остаётся с продажи? Без регистрации, бесплатно.",
+      name: "Калькулятор маркетплейсов",
+      desc: "Укажите себестоимость и цену продажи — узнайте, сколько останется после комиссии площадки. Бесплатно и без регистрации.",
+      go: "Рассчитать прибыль",
       win: "Калькулятор",
       step1: "Какой товар?",
       productLabel: "Название товара",
@@ -89,7 +89,8 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI-инфографика",
-      desc: "Фото товара за ~30 секунд, 750×1000.",
+      desc: "Загрузите фото товара и выберите стиль — AI подготовит изображение для карточки с оформлением и акцентом на преимуществах продукта.",
+      go: "Создать изображение",
       steps: ["Загрузите фото", "Выберите стиль", "Готовое фото"],
       srcAlt: "Загруженное простое фото товара: белая баночка",
       yourPhoto: "Ваше фото",
@@ -107,12 +108,12 @@ export const messages = defineMessages({
     },
   },
   en: {
-    title: "Try it first.",
-    titleAccent: "Then decide.",
-    go: "Open",
+    title: "Useful tools for your sales",
+    lead: "Calculate the profit from a sale and prepare product images for marketplaces.",
     calc: {
       name: "Marketplace calculator",
-      desc: "How much profit is left from a sale? No sign-up, free.",
+      desc: "Enter the cost and selling price — see how much profit is left after the platform’s commission. Free, no sign-up.",
+      go: "Calculate profit",
       win: "Calculator",
       step1: "Which product?",
       productLabel: "Product name",
@@ -139,7 +140,8 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI infographics",
-      desc: "Product image in ~30 seconds, 750×1000.",
+      desc: "Upload a product photo and choose a style — AI prepares a card-ready image designed to highlight the product’s benefits.",
+      go: "Create image",
       steps: ["Upload a photo", "Choose a style", "Ready image"],
       srcAlt: "Uploaded plain product photo: a white jar",
       yourPhoto: "Your photo",

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { fontClass } from "../../fonts";
 import type { messages } from "./hero.i18n";
 
 type T = (typeof messages)["uz"]["video"];
@@ -46,7 +47,7 @@ export default function HeroVideo({ t }: { t: T }) {
       </button>
       {open &&
         createPortal(
-          <div className="vmodal" role="dialog" aria-modal="true" aria-label={t.dialog} onClick={() => setOpen(false)}>
+          <div className={`vmodal ${fontClass}`} role="dialog" aria-modal="true" aria-label={t.dialog} onClick={() => setOpen(false)}>
             <div className="vmodal__box" onClick={(e) => e.stopPropagation()}>
               <button className="vmodal__x" type="button" ref={closeRef} onClick={() => setOpen(false)} aria-label={t.close}>
                 ✕

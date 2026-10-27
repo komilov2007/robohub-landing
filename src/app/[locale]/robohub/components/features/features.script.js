@@ -1,4 +1,4 @@
-// Imkoniyatlar bo'limining brauzer mantig'i: 18 ta vosita kartasi va matnini chizadi,
+// Imkoniyatlar bo'limining brauzer mantig'i: 6 ta yo'nalish kartasi va matnini chizadi,
 // skrollga qarab ularni yoy bo'ylab joylashtiradi. features-script.tsx uni sahifa ochilganda bir marta ishga tushiradi.
 // NAMUNA MA'LUMOT: kartalardagi son va nomlar shartli.
 // msg — joriy tildagi matnlar (features.i18n.ts → script): nomlar, izohlar, karta yozuvlari, tugma matnlari.
@@ -15,71 +15,32 @@ return (function () {
   // sonni joriy til ajratuvchisi bilan guruhlaydi: 1000000 → "1 000 000" (uz/ru) · "1,000,000" (en)
   var group = function (v) { return String(v).replace(/\B(?=(\d{3})+$)/g, msg.sep); };
 
-  var CATS = msg.cats;
+  var CATS = msg.cats;   // har yo'nalishning qisqa nomi (hisoblagich ostida)
 
-  // c — toifa (1..5), r — tanasi yonma-yon, v(s) — karta ichi (s — shu vositaning msg.tools[i].v yozuvlari).
+  // Kartalar tartibi: yuklash (guruhlash), qoldiq sinxroni, buyurtmalar, foyda tahlili, avtobidder, sharhlarga avtojavob.
+  // c — karta rangi (1..5), r — tanasi yonma-yon, v(s) — karta ichi (s — shu vositaning msg.tools[i].v yozuvlari).
   // Nom, izoh, kichik yozuv, xulosa va bandlar — msg.tools[i] dan.
   var TOOLS = [
-    { c: 1,
-      v: function (s) { return '<div class="kpis"><div class="kpi"><span class="cap">' + s[0] + '</span><b data-n="128">128</b></div><div class="kpi"><span class="cap">' + s[1] + "</span><b>" + s[2] + '</b></div><div class="kpi"><span class="cap">' + s[3] + '</span><b data-n="2314">' + group(2314) + '</b></div></div><div class="bars"><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:66%"></i><i style="--h:60%"></i><i style="--h:84%"></i><i style="--h:100%"></i></div>'; } },
-    { c: 1,
-      v: function (s) { return row(mp("u") + "<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>") + row(mp("w") + "<span>" + s[2] + '</span><b class="tag tag--warn">' + s[3] + "</b>") + row(mp("o") + "<span>" + s[4] + '</span><b class="tag tag--soft">' + s[5] + "</b>"); } },
-    { c: 1,
-      v: function (s) { return row("<span>" + s[0] + "</span><em>" + s[1] + "</em>" + bar(18, 1) + '<b class="tag">' + s[2] + "</b>") + row("<span>" + s[3] + "</span><em>" + s[4] + "</em>" + bar(40, 1) + '<b class="tag">' + s[5] + "</b>") + row("<span>" + s[6] + "</span><em>" + s[7] + "</em>" + bar(78) + '<b class="tag tag--soft">' + s[8] + "</b>"); } },
-
-    { c: 2,
-      v: function (s) { return '<div class="line"><span>' + s[0] + "</span>" + bar(100) + "<b>" + group(1000000) + "</b></div>" + '<div class="line"><span>' + s[1] + "</span>" + bar(40, 1) + "<b>−" + group(400000) + "</b></div>" + '<div class="line"><span>' + s[2] + "</span>" + bar(18, 1) + "<b>−" + group(180000) + "</b></div>" + '<div class="line"><span>' + s[3] + "</span>" + bar(9, 1) + "<b>−" + group(90000) + "</b></div>" + '<div class="line"><span>' + s[4] + "</span>" + bar(7, 1) + "<b>−" + group(70000) + "</b></div>" + '<div class="line line--sum"><span>' + s[5] + "</span>" + bar(26) + "<b data-n='260000'>" + group(260000) + "</b></div>"; } },
-    { c: 2, r: 1,
-      v: function (s) { return '<div class="ring"><b><em data-n="148" data-suf="%">148%</em></b></div><div class="col"><div class="line"><span>' + s[0] + '</span><b style="flex:1">' + group(500000) + "</b></div>" + bar(40, 1) + '<div class="line"><span>' + s[1] + '</span><b style="flex:1">' + group(1240000) + "</b></div>" + bar(100) + "</div>"; } },
-    { c: 2,
-      v: function () { return '<div class="mx"><span></span><span>X</span><span>Y</span><span>Z</span><span>A</span><b class="is-top">24</b><b class="is-mid">11</b><b>6</b><span>B</span><b class="is-mid">18</b><b>15</b><b>9</b><span>C</span><b>12</b><b>20</b><b class="is-bad">31</b></div>'; } },
-    { c: 2,
-      v: function (s) { return row(SPARK + "<span>" + s[0] + "</span>") + row(SPARK + "<span>" + s[1] + "</span>") + row(SPARK + "<span>" + s[2] + "</span>"); } },
-
-    { c: 3, r: 1,
-      v: function (s) { return '<div style="flex:none;text-align:center"><span class="cap">' + s[0] + '</span><b class="big" style="display:block;margin-top:.1em">24</b></div><div class="col">' + row(mp("u") + '<span>Uzum</span><b>24</b><b class="tag">✓</b>') + row(mp("w") + '<span>Wildberries</span><b>24</b><b class="tag">✓</b>') + row(mp("o") + '<span>Ozon</span><b>24</b><b class="tag">✓</b>') + row(mp("y") + '<span>Yandex Market</span><b>24</b><b class="tag">✓</b>') + "</div>"; } },
     { c: 3,
       v: function (s) { return '<div class="grid2">' + row(mp("u") + "<span>" + s[0] + "</span>") + row(mp("w") + "<span>" + s[1] + "</span>") + row(mp("o") + "<span>" + s[2] + "</span>") + row(mp("y") + "<span>" + s[3] + "</span>") + "</div>" + row("<span>" + s[4] + "</span><b>" + s[5] + '</b><b class="tag">' + s[6] + "</b>", "is-me"); } },
-    { c: 3,
-      v: function (s) { return row('<i class="file">XLS</i><span>' + s[0] + "</span>" + bar(100) + '<b class="tag">' + s[1] + "</b>") + row("<span>" + s[2] + "</span><em>" + s[3] + "</em><b>120</b>") + row("<span>" + s[4] + "</span><em>" + s[5] + "</em><b>60</b>"); } },
     { c: 3, r: 1,
-      v: function (s) { return '<div style="flex:none;text-align:center"><b class="big" data-n="5">5</b><span class="cap" style="display:block;margin-top:.3em">' + s[0] + '</span></div><div class="col">' + row(mp("w") + "<span>" + s[1] + '</span><b class="tag tag--warn">−2</b>') + row(mp("o") + "<span>" + s[2] + '</span><b class="tag tag--warn">−1</b>') + row(mp("u") + "<span>" + s[3] + '</span><b class="tag tag--warn">−2</b>') + "</div>"; } },
-
+      v: function (s) { return '<div style="flex:none;text-align:center"><span class="cap">' + s[0] + '</span><b class="big" style="display:block;margin-top:.1em">24</b></div><div class="col">' + row(mp("u") + '<span>Uzum</span><b>24</b><b class="tag">✓</b>') + row(mp("w") + '<span>Wildberries</span><b>24</b><b class="tag">✓</b>') + row(mp("o") + '<span>Ozon</span><b>24</b><b class="tag">✓</b>') + row(mp("y") + '<span>Yandex Market</span><b>24</b><b class="tag">✓</b>') + "</div>"; } },
+    { c: 1,
+      v: function (s) { return row(mp("u") + "<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>") + row(mp("w") + "<span>" + s[2] + '</span><b class="tag tag--warn">' + s[3] + "</b>") + row(mp("o") + "<span>" + s[4] + '</span><b class="tag tag--soft">' + s[5] + "</b>"); } },
+    { c: 2,
+      v: function (s) { return '<div class="line"><span>' + s[0] + "</span>" + bar(100) + "<b>" + group(1000000) + "</b></div>" + '<div class="line"><span>' + s[1] + "</span>" + bar(40, 1) + "<b>−" + group(400000) + "</b></div>" + '<div class="line"><span>' + s[2] + "</span>" + bar(18, 1) + "<b>−" + group(180000) + "</b></div>" + '<div class="line"><span>' + s[3] + "</span>" + bar(9, 1) + "<b>−" + group(90000) + "</b></div>" + '<div class="line"><span>' + s[4] + "</span>" + bar(7, 1) + "<b>−" + group(70000) + "</b></div>" + '<div class="line line--sum"><span>' + s[5] + "</span>" + bar(26) + "<b data-n='260000'>" + group(260000) + "</b></div>"; } },
     { c: 4,
       v: function (s) { return row("<span>" + s[0] + "</span><b>" + s[1] + '</b><b class="tag">' + s[2] + "</b>") + '<div><span class="cap">' + s[3] + '</span><div class="slider"></div></div>' + row("<span>" + s[4] + '</span><b class="tag">3</b>'); } },
-    { c: 4,
-      v: function (s) { return '<div class="ticket"><code>' + s[0] + "</code><span>" + s[1] + '</span><b>−10%</b></div><div class="ticket"><code>' + s[2] + "</code><span>" + s[3] + '</span><b>−15%</b></div><div class="ticket"><code>' + s[4] + "</code><span>" + s[5] + "</span><b>−5%</b></div>"; } },
-    { c: 4,
-      v: function (s) { return '<div class="cal">' + cal() + "</div>" + row(mp("u") + "<span>" + s[0] + "</span><em>3–6</em>") + row(mp("w") + "<span>" + s[1] + "</span><em>11–14</em>") + row(mp("o") + "<span>" + s[2] + "</span><em>19–23</em>"); } },
-    { c: 4,
-      v: function (s) { return row("<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>", "is-me rank-me") + row("<span>" + s[2] + "</span>", "is-dim rank-o") + row("<span>" + s[2] + "</span>", "is-dim rank-o"); } },
-
-    { c: 5,
-      v: function (s) { return '<div class="msg">' + mp("u") + s[0] + '</div><div class="msg msg--me">' + s[1] + '</div><div class="msg">' + mp("w") + s[2] + "</div>"; } },
-    { c: 5,
-      v: function (s) { return row(mp("u") + stars(5) + "<span>" + s[0] + "</span>") + row(mp("o") + stars(4) + "<span>" + s[1] + "</span>") + row(mp("w") + stars(2) + "<span>" + s[2] + "</span>"); } },
     { c: 5,
       v: function (s) { return row(stars(5) + "<span>" + s[0] + '</span><i class="sw"></i>') + row(stars(3) + "<span>" + s[1] + '</span><i class="sw"></i>') + row(stars(1) + "<span>" + s[2] + '</span><i class="sw"></i>'); } }
   ];
   // x(s) — karta tanasiga qo'shimcha (s — o'sha vositaning yozuvlari, TOOLS dagi v(s) bilan bir xil)
   var MORE = [
-    { x: function () { return '<div class="legend"><span>' + mp("u") + "42%</span><span>" + mp("w") + "27%</span><span>" + mp("o") + "19%</span><span>" + mp("y") + "12%</span></div>"; } },
+    {},
+    {},
     { x: function (s) { return row(mp("y") + "<span>" + s[6] + '</span><b class="tag tag--soft">' + s[7] + "</b>"); } },
-    { x: function (s) { return row("<span>" + s[9] + "</span><em>" + s[10] + "</em>" + bar(100) + '<b class="tag tag--soft">' + s[11] + "</b>"); } },
-    {},
-    {},
-    {},
-    { x: function (s) { return row(SPARK + "<span>" + s[3] + "</span>"); } },
-    {},
-    {},
-    { x: function (s) { return row("<span>" + s[6] + "</span><em>" + s[7] + "</em><b>35</b>"); } },
     {},
     { x: function (s) { return row("<span>" + s[5] + "</span><b>" + s[6] + "</b>"); } },
-    {},
-    {},
-    { x: function (s) { return row("<span>" + s[2] + "</span>", "is-dim rank-o"); } },
-    { x: function (s) { return '<div class="msg msg--me">' + s[3] + "</div>"; } },
-    { x: function (s) { return row(mp("y") + stars(5) + "<span>" + s[3] + "</span>"); } },
     { x: function (s) { return row(stars(4) + "<span>" + s[3] + '</span><i class="sw"></i>'); } }
   ];
   var N = TOOLS.length;
@@ -97,10 +58,10 @@ return (function () {
     card.className = "feat-card"; card.dataset.c = t.c; card.setAttribute("aria-hidden", "true");
     card.style.setProperty("--card", CARD_BG[t.c]);
     var L = msg.tools[i], s = L.v;   // shu vositaning joriy tildagi matnlari
-    card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + L.n + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
+    card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + CATS[i] + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
     var text = document.createElement("article");
     text.className = "feat-text";
-    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p><ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+    text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p>" + (L.b ? "<ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "");
     // ketma-ket chiqadigan mayda elementlar uchun tartib raqami
     [".mx b", ".cal i", ".bars i"].forEach(function (q) { [].forEach.call(card.querySelectorAll(q), function (el, j) { el.style.setProperty("--j", j); }); });
     stage.appendChild(card); stage.appendChild(text);
@@ -176,7 +137,7 @@ return (function () {
   }
   function setActive(it, on) {
     if (on === it.act) return;
-    it.act = on; it.card.classList.toggle("is-on", on);
+    it.act = on; it.card.classList.toggle("is-on", on); it.text.classList.toggle("is-on", on);
     if (on && !reduce) count(it.card);
   }
 
@@ -215,19 +176,19 @@ return (function () {
         it.text.style.opacity = show ? ((0.3 + 0.7 * k) * fade).toFixed(3) : 0;
         continue;
       } else {
-        it.card.style.transform = "translate(" + (dx - CW / 2).toFixed(1) + "px," + (y - CH / 2).toFixed(1) + "px) scale(" + (0.9 + 0.12 * k).toFixed(3) + ")";
+        // g'ildirak bo'ylab oqadi: chetda biroz og'gan, kichikroq va xiraroq; markazda tik va to'liq o'lchamda
+        it.card.style.transform = "translate(" + (dx - CW / 2).toFixed(1) + "px," + (y - CH / 2).toFixed(1) + "px) rotate(" + (a * 0.32).toFixed(4) + "rad) scale(" + (0.86 + 0.16 * k).toFixed(3) + ")";
         it.text.style.transform = "translate(" + (cxR - R * cos).toFixed(1) + "px," + y.toFixed(1) + "px) translateY(-50%)";
-        it.card.style.opacity = show ? 1 : 0;
+        it.card.style.opacity = show ? (0.45 + 0.55 * Math.min(1, k * 1.6)).toFixed(3) : 0;
       }
       it.text.style.opacity = show ? (0.3 + 0.7 * k).toFixed(3) : 0;
     }
 
     var idx = clamp(Math.round(t), 0, N - 1);
     if (idx !== lastIdx) {
-      var c = TOOLS[idx].c;
       hudN.textContent = pad(idx + 1);
-      if (lastIdx < 0 || TOOLS[lastIdx].c !== c) hudCat.innerHTML = "<span>" + pad(c) + " · " + CATS[c - 1] + "</span>";
-      for (var j = 0; j < hudDots.length; j++) hudDots[j].classList.toggle("is-on", j === c - 1);
+      hudCat.innerHTML = "<span>" + CATS[idx] + "</span>";
+      for (var j = 0; j < hudDots.length; j++) hudDots[j].classList.toggle("is-on", j === idx);
       lastIdx = idx;
     }
     hudRing.style.strokeDashoffset = 301.6 * (1 - clamp(t / (N - 1), 0, 1));
@@ -252,7 +213,7 @@ return (function () {
 
   // Qadamli skroll: sahna qotib turganda g'ildirak / klaviatura / svayp bir harakatda faqat bitta vositaga o'tkazadi.
   // Sahifa darhol kerakli joyga sakraydi, ko'rinadigan silliq harakatni tick() dagi yumshoq ergashish beradi.
-  // 1-vositadan tepaga va 18-vositadan pastga oddiy skroll ishlaydi.
+  // 1-vositadan tepaga va oxirgisidan pastga oddiy skroll ishlaydi.
   var LOCK = 650, QUIET = 160, lockUntil = 0, lastWheel = 0;
   function pinned(r) { return r.top <= 2 && r.bottom >= H - 2; }
   // dir (+1/−1) yo'nalishidagi keyingi vosita indeksi; sahna qotmagan yoki chetga yetgan bo'lsa null

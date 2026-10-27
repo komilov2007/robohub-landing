@@ -55,15 +55,15 @@ export default async function Page() {
       <Header />
       <main>
         <Hero />
-        <Problem />
         <Trust />
+        <Problem />
         <Features />
-        <FreeTools />
         <HowItWorks />
         <Integrations />
         <Market />
         <Reviews />
         <Pricing />
+        <FreeTools />
         <Faq />
         <Contact />
         <FinalCta />

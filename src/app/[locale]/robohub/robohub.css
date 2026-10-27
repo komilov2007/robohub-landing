@@ -3,6 +3,15 @@
    Tokenlar, mavzular va tugmalar umumiy: src/app/globals.css.
    ============================================================ */
 
+/* Shriftlar — AI Studio bilan bir xil: sarlavhalar Space Grotesk (kirill — Inter), matn Inter.
+   .rh-font (robohub/fonts.ts) — landing o'rami va body'ga portal qilinadigan oynalar (hero videosi, reels).
+   globals.css dagi tokenlar (Unbounded + Manrope) faqat shu ildiz ichida almashadi — Academy ularni saqlaydi. */
+.rh-font{
+  --font-head:var(--ff-grotesk),var(--ff-inter),"Segoe UI",system-ui,sans-serif;
+  --font-body:var(--ff-inter),"Segoe UI",system-ui,sans-serif;
+  font-family:var(--font-body);
+}
+
 /* ============================================================
    HEADER
    ============================================================ */
@@ -119,10 +128,16 @@
 .hero__rise{animation:rise-y 760ms var(--ease-soft) backwards}
 @keyframes rise-y{from{transform:translate3d(0,14px,0)}to{transform:none}}
 .hero__lead{max-width:36ch;margin-bottom:var(--sp-3);font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--text-dim)}
-.hero__facts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:var(--sp-4);font-size:13.5px;font-weight:700;white-space:nowrap}
-.hero__facts li{display:flex;align-items:center;gap:10px}
-/* nuqta oldingi bandga tegishli — qator hech qachon nuqta bilan boshlanmaydi */
-.hero__facts li:not(:last-child)::after{content:"·";margin-left:4px;color:var(--text-dim)}
+/* Ajratuvchi nuqta — har bandning boshida (li::before). Band chapga nuqta+oraliq kengligicha (16px) suriladi, shuning uchun
+   qator boshidagi nuqta ro'yxat chetidan tashqarida qoladi va kesiladi (overflow-x:clip): qator qayerda bo'linmasin,
+   nuqta faqat bandlar orasida ko'rinadi, oxirida osilib qolmaydi. padding-left (margin bilan qoplangan) — kesish chetini
+   10px chapga oladi: belgilarning kirish animatsiyasi (-8px) va soyasi kesilmaydi. */
+.hero__facts{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;margin:0 0 var(--sp-4) -10px;padding-left:10px;overflow-x:clip;
+  font-size:13.5px;font-weight:700;white-space:nowrap;
+}
+.hero__facts li{display:flex;align-items:center;gap:10px;margin-left:-16px}
+.hero__facts li::before{content:"·";flex:none;width:6px;text-align:center;color:var(--text-dim)}
 .hero__mps{display:inline-flex;align-items:center;flex:none}
 .hero__mps .mp-ico{
   width:22px;height:22px;border-radius:6px;margin-right:-6px;box-shadow:0 0 0 2px var(--bg);
@@ -156,7 +171,7 @@
    ============================================================ */
 .hero__visual{position:relative;min-width:0}
 .orbit{
-  --ri:22cqw;--ro:41cqw;--tile:clamp(38px,9.4cqw,54px);
+  --ri:25cqw;--ro:42cqw;--tile:clamp(38px,9.4cqw,54px);
   position:relative;width:100%;max-width:580px;aspect-ratio:1;margin:0 auto;container-type:inline-size;
   animation:hero-pop 1000ms var(--ease-soft) 400ms backwards;
 }
@@ -179,7 +194,11 @@
 .orbit__tile img,.orbit__tile b{width:var(--tile);height:var(--tile);border-radius:28%;background:#fff;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line),0 16px 28px -12px rgba(0,54,52,.45)}
 .orbit__tile b{display:grid;place-items:center;font-size:calc(var(--tile) * .42);font-weight:800;background:#E3EFEA;color:var(--brand)}
 .orbit__tile em{padding:2px 9px;border-radius:99px;background:rgba(255,255,255,.92);font-style:normal;font-size:clamp(9.5px,2.05cqw,12px);font-weight:700;line-height:1.4;white-space:nowrap}
-.orbit__tile--mp{--tile:clamp(42px,10.6cqw,62px)}
+/* ichki halqa — asosiy gap marketpleyslarda: kattaroq */
+.orbit__tile--mp{--tile:clamp(44px,11.4cqw,66px)}
+/* tashqi halqa — ombor va hisob tizimlari: kichikroq va xiraroq, marketpleyslardan e'tiborni tortmaydi */
+.orbit__ring--out .orbit__tile{--tile:clamp(30px,7.6cqw,44px);gap:4px;opacity:.6;filter:blur(.4px) saturate(.7)}
+.orbit__ring--out .orbit__tile em{padding:1px 7px;font-size:clamp(8.5px,1.8cqw,10.5px)}
 
 /* halqa bo'ylab yuradigan nuqtalar: sariq — buyurtma, yashil — qoldiq va narx */
 .orbit__dot{position:absolute;left:50%;top:50%;width:0;height:0;animation:orbit-spin 9s linear infinite}
@@ -209,9 +228,10 @@
   .hero__lead{font-size:16px}
   .hero__cta{flex-direction:column}
   .hero__cta .btn{width:100%}
-  /* tor ekranda bandlar bir qatorga sig'maydi: nuqta qator oxirida osilib qolmasligi uchun ajratuvchi — oraliq */
+  /* tor ekranda bandlar deyarli har biri alohida qatorda — ajratuvchi nuqta o'rniga oraliq */
   .hero__facts{gap:8px 18px}
-  .hero__facts li:not(:last-child)::after{display:none}
+  .hero__facts li{margin-left:0}
+  .hero__facts li::before{display:none}
 }
 
 /* ============================================================
@@ -232,13 +252,14 @@
   --rh:56px;--rg:8px;   /* sxema qatori balandligi va oralig'i */
   --c-who:150px;--c-l:30px;--c-mgr:130px;--c-a:24px;--c-r:52px;--c-mp:150px;   /* sxema ustunlari */
   --m:0;--f:0;
-  position:relative;background:var(--bg-dark-2);border-radius:40px 40px 0 0;
+  position:relative;z-index:1;margin-top:-40px;   /* ishonch bo'limi ustiga varaqdek chiqadi */
+  background:var(--bg-dark-2);border-radius:40px 40px 0 0;
 }
 .pain .ic{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .pain__slide{--wire:rgba(255,122,144,.42);padding:var(--sp-10) 0}
 .pain__slide--after{
   --wire:rgba(0,82,79,.4);
-  padding-bottom:calc(var(--sp-10) + 40px);   /* pastki 40px ni ISHONCH varag'i yopadi */
+  padding-bottom:calc(var(--sp-10) + 40px);   /* pastki 40px ni IMKONIYATLAR varag'i yopadi */
   border-radius:40px 40px 0 0;background:var(--mint);
 }
 .pain__frame{position:relative;display:flex;flex-direction:column;gap:var(--sp-4)}
@@ -351,6 +372,118 @@
 .dg__mp img{flex:none;width:26px;height:26px;border-radius:7px}
 .dg__mp span{min-width:0;font-size:13px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
 
+/* ---------- jonli oqim: "ish bo'lagi" (yorug' nuqta) sxema bo'ylab yuradi ----------
+   Robohubsiz (--T 7s, sekin): nuqta tadbirkordan chiqadi → ustunda to'rtga bo'linadi → har menejerga kiradi →
+   7 vazifani birma-bir bosib o'tadi (har biri navbat bilan yonadi) → marketpleysga yetadi. To'rt qatorda bir vaqtda —
+   bitta ish to'rt marta qilinayotgani ko'rinadi.
+   Robohub bilan (--T 3.6s, ikki barobar tez): tadbirkor → panel (7 vazifa birdan yonadi) → to'rttala marketpleysga birdan.
+   Nuqta kartalar ortidan o'tadi (kartalar shaffof emas) — oraliqlarda ko'rinadi, kartalar yonishi uni davom ettiradi.
+   Barcha kechikishlar --T ulushida: nuqta yo'li (dg-run, dg-in, dg-line, dg-out) va kartalar yonishi (dg-hit, dg-ping) mos.
+   Ekrandan tashqarida va yopiq sxemada to'xtaydi (.is-idle — problem.script.js). */
+.dg--before{
+  --T:7s;--pk:#FF7A90;--pk-glow:rgba(255,122,144,.75);--ring:rgba(255,122,144,.55);
+  --hb0:var(--bad-line);--hg0:color-mix(in srgb,#FF7A90 8%,var(--bg-dark-2));
+  --hb1:var(--bad);--hg1:color-mix(in srgb,#FF7A90 26%,var(--bg-dark-2));
+}
+.dg--after{
+  --T:3.6s;--pk:var(--brand);--pk-glow:rgba(0,82,79,.45);--ring:rgba(0,82,79,.35);
+  --hb0:rgba(0,82,79,.14);--hg0:#EFFFEC;--hb1:rgba(0,82,79,.55);--hg1:#D2F7CB;
+}
+.dg__pkt{
+  --oy:calc((1.5 - var(--i,1.5)) * (var(--rh) + var(--rg)));   /* ustun markazidan shu qatorgacha */
+  position:absolute;z-index:1;left:0;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;
+  opacity:0;pointer-events:none;background:var(--pk);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--pk) 22%,transparent),0 0 16px 3px var(--pk-glow);
+  animation:dg-run var(--T) linear infinite;
+}
+.dg__pkt--in{animation-name:dg-in}
+.dg__line .dg__pkt{animation-name:dg-line}
+.dg__mp .dg__pkt{animation-name:dg-out}
+
+/* qator rels: ustundan (chapda) marketpleysgacha; menejer va vazifalar ortida, oraliqlarda ko'rinadi */
+.dg__flow{
+  --L:calc(var(--c-l) / 2);   /* menejer chap cheti */
+  --S:calc(var(--c-l) / 2 + var(--c-mgr) + var(--c-a));   /* vazifalar boshi */
+  --W:calc(100% - var(--c-l) / 2 - var(--c-mgr) - var(--c-a) - var(--c-r));   /* vazifalar kengligi */
+  position:absolute;top:0;bottom:0;left:calc(var(--c-l) / -2);right:0;pointer-events:none;
+}
+.dg__flow::before{content:"";position:absolute;left:var(--L);right:0;top:50%;height:1.5px;margin-top:-.75px;background:var(--wire)}
+.dg__flow .dg__pkt{z-index:auto}
+.dg--before .dg__task{background:var(--hg0)}
+.dg--before .dg__arrow{position:relative}
+
+/* kartalar yonishi */
+.dg--before .dg__task{animation:dg-hit var(--T) ease-out calc(var(--T) * (.23 + var(--k) * .08)) infinite}
+.dg--after .dg__task{animation:dg-hit var(--T) ease-out calc(var(--T) * (.22 + var(--k) * .012)) infinite}
+.dg__who{--sh0:0 18px 36px -20px rgba(0,30,28,.7);animation:dg-ping var(--T) ease-out infinite}
+.dg__panel{--sh0:0 26px 50px -28px rgba(0,82,79,.55);animation:dg-ping var(--T) ease-out calc(var(--T) * .19) infinite}
+.dg__mp{--sh0:0 14px 28px -20px rgba(0,30,28,.6)}
+.dg--before .dg__mp{animation:dg-ping var(--T) ease-out calc(var(--T) * .81) infinite}
+.dg--after .dg__mp{animation:dg-ping var(--T) ease-out calc(var(--T) * .54) infinite}
+@media (min-width:1024px){
+  .dg--before .dg__mgr{position:relative;background:var(--hg0);animation:dg-hit var(--T) ease-out calc(var(--T) * .14) infinite}
+}
+
+/* menejer → 7 vazifa (har birida to'xtab) → marketpleys; kartalar ortida yashirin joylari bor */
+@keyframes dg-run{
+  0%,6%{left:0;top:calc(50% + var(--oy));opacity:0}
+  7%{left:0;top:calc(50% + var(--oy));opacity:1}
+  12%{left:0;top:50%}
+  15%{left:var(--L)}
+  19%{left:calc(var(--L) + var(--c-mgr))}
+  24%,27%{left:calc(var(--S) + var(--W) * 1 / 14)}
+  32%,35%{left:calc(var(--S) + var(--W) * 3 / 14)}
+  40%,43%{left:calc(var(--S) + var(--W) * 5 / 14)}
+  48%,51%{left:calc(var(--S) + var(--W) * 7 / 14)}
+  56%,59%{left:calc(var(--S) + var(--W) * 9 / 14)}
+  64%,67%{left:calc(var(--S) + var(--W) * 11 / 14)}
+  72%,75%{left:calc(var(--S) + var(--W) * 13 / 14)}
+  82%{left:100%;opacity:1}
+  85%,100%{left:100%;top:50%;opacity:0}
+}
+/* tadbirkordan ustungacha — keyin dg-run davom ettiradi */
+@keyframes dg-in{
+  0%{left:0;opacity:0}
+  1%{opacity:1}
+  7%{left:50%;opacity:1}
+  8%,100%{left:50%;opacity:0}
+}
+/* Robohub bilan: tadbirkordan panelga */
+@keyframes dg-line{
+  0%{left:0;opacity:0}
+  2%{opacity:1}
+  20%{left:100%;opacity:1}
+  22%,100%{left:100%;opacity:0}
+}
+/* paneldan ustungacha, ustunda har marketpleysga bo'linadi */
+@keyframes dg-out{
+  0%,30%{left:calc(var(--c-r) * -1);top:calc(50% + var(--oy));opacity:0}
+  31%{opacity:1}
+  37%{left:calc(var(--c-r) / -2);top:calc(50% + var(--oy))}
+  47%{left:calc(var(--c-r) / -2);top:50%}
+  55%{left:0;opacity:1}
+  57%,100%{left:0;top:50%;opacity:0}
+}
+@keyframes dg-hit{
+  0%,13%,100%{border-color:var(--hb0);background-color:var(--hg0);transform:none;box-shadow:0 0 0 0 transparent}
+  3%,7%{border-color:var(--hb1);background-color:var(--hg1);transform:translateY(-2px);box-shadow:0 10px 22px -12px var(--pk-glow)}
+}
+@keyframes dg-ping{
+  0%,100%{box-shadow:0 0 0 0 transparent,var(--sh0)}
+  3%{box-shadow:0 0 0 3px var(--ring),var(--sh0)}
+  16%{box-shadow:0 0 0 12px transparent,var(--sh0)}
+}
+.pain.is-idle .dg *,
+.pain.is-pinned[data-state="after"] .dg--before *,
+.pain.is-pinned:not([data-state="after"]) .dg--after *{animation-play-state:paused}
+@media (max-width:1023px){
+  .dg__pkt,.dg__flow{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .dg *{animation:none !important}
+  .dg__pkt{display:none}
+}
+
 /* ---------- "keyin esa" qatori ---------- */
 .pain__next{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 14px 10px 18px;border:1.5px dashed var(--wire);border-radius:18px}
 .pain__next-k{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
@@ -365,24 +498,11 @@
 .pain__next-cost{margin-left:auto;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--bad)}
 .pain__slide--after .pain__next-cost{color:var(--brand)}
 
-/* ---------- raqamlar ---------- */
-.pain__stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:16px 0;border-radius:20px;border:1px solid var(--bad-line);background:var(--bad-soft)}
-.pain__stats li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:14px;padding:0 22px}
-.pain__stats li + li{border-left:1px solid var(--bad-line)}
-.pain__stat-ico{grid-row:span 2;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--bad-line);color:var(--bad)}
-.pain__stat-ico .ic{width:20px;height:20px}
-.pain__stats b{align-self:end;font-family:var(--font-head);font-size:clamp(18px,1.75vw,24px);font-weight:700;line-height:1.1;letter-spacing:-.03em;white-space:nowrap;color:var(--bad)}
-.pain__stats small{align-self:start;margin-top:4px;font-size:10.5px;font-weight:800;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
-.pain__slide--after .pain__stats{border-color:rgba(0,82,79,.16);background:rgba(255,255,255,.55)}
-.pain__slide--after .pain__stats li + li{border-color:rgba(0,82,79,.16)}
-.pain__slide--after .pain__stat-ico{border:0;background:var(--brand);color:var(--mint)}
-.pain__slide--after .pain__stats b{color:var(--brand)}
-
 /* ---------- qotgan sahna ---------- */
 .pain__switch{display:none}
 .pain.is-pinned{height:180vh;height:180svh}
 .pain.is-pinned .pain__stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-/* pastki 40px ni ISHONCH varag'i yopadi (problem.script.js dagi BOTTOM) */
+/* pastki 40px ni IMKONIYATLAR varag'i yopadi (problem.script.js dagi BOTTOM) */
 .pain.is-pinned .pain__slide{position:absolute;inset:0;display:flex;align-items:center;padding:var(--header-h) 0 40px;border-radius:0}
 .pain.is-pinned .pain__slide--after{z-index:1;clip-path:circle(calc(var(--f) * var(--R,150vmax)) at var(--fx,50%) var(--fy,60%))}
 .pain.is-pinned .pain__frame{gap:clamp(12px,2.6vh,28px)}
@@ -391,7 +511,7 @@
   transform:translate3d(0,calc(var(--dy,0px) * var(--m)),0) scale(calc(1 - var(--m) * .06));
   opacity:calc(1 - var(--m) * .45);
 }
-.pain.is-pinned .dg--before :is(.dg__mgr,.dg__arrow,.dg__tree){opacity:calc(1 - var(--m) * 2.2)}
+.pain.is-pinned .dg--before :is(.dg__mgr,.dg__arrow,.dg__tree,.dg__flow){opacity:calc(1 - var(--m) * 2.2)}
 .pain.is-pinned .dg--before .dg__row::before,.pain.is-pinned .dg--before .dg__row::after{opacity:calc(1 - var(--m) * 2.2)}
 .pain.is-pinned .dg__panel{transform:scale(calc(.9 + var(--f) * .1))}
 
@@ -420,7 +540,6 @@
   .pain.is-pinned{--rh:clamp(42px,6.4vh,52px);--rg:6px}
   .pain.is-pinned .pain__title{font-size:clamp(22px,min(2.6vw,4.4vh),34px)}
   .pain.is-pinned .pain__eyebrow{min-height:32px}
-  .pain.is-pinned .pain__stats{padding:12px 0}
 }
 @media (max-height:700px){
   .pain.is-pinned .pain__lead{display:none}
@@ -468,10 +587,6 @@
   .dg__panel-head span{padding:0;border:0;white-space:normal}
 
   .pain__next-cost{flex-basis:100%;margin-left:0}
-  .pain__stats{grid-template-columns:minmax(0,1fr);padding:4px 0}
-  .pain__stats li{padding:12px 16px}
-  .pain__stats li + li{border-left:0;border-top:1px solid var(--bad-line)}
-  .pain__slide--after .pain__stats li + li{border-top-color:rgba(0,82,79,.16)}
 }
 @media (min-width:600px) and (max-width:1023px){
   .dg--before .dg__task{height:56px}
@@ -479,7 +594,7 @@
   .dg--after .dg__tasks{grid-template-columns:repeat(7,minmax(0,1fr))}
 }
 @media (max-width:860px){
-  .pain{border-radius:28px 28px 0 0}
+  .pain{margin-top:-28px;border-radius:28px 28px 0 0}
   .pain__slide{padding:var(--sp-8) 0}
   .pain__slide--after{padding-bottom:calc(var(--sp-8) + 28px);border-radius:28px 28px 0 0}
   .pain__frame{gap:var(--sp-3)}
@@ -489,7 +604,7 @@
 }
 
 /* ============================================================
-   ISHONCH — muammodan keyin: "bizga ishongan sotuvchilar".
+   ISHONCH — hero'dan keyin: "bizga ishongan sotuvchilar".
 
    Chapda sarlavha va uchta raqam kartasi (kompaniya, mahsulot, buyurtma) — ustma-ust, bitta ustunda.
    Logotiplar devori butun section kengligida (chetdan chetga), matn ustunining ostidan o'tadi:
@@ -508,15 +623,15 @@
   --col:480px;   /* matn ustuni (sarlavha) kengligi — devor maskasi ham shundan hisoblanadi */
   --stats-w:320px;   /* raqam kartalari kengligi — devorning pastki qismi shu chetdan boshlanadi */
   --pad:clamp(24px,5vw,80px);   /* full width: matn konteynerga emas, section chetiga yopishadi */
-  position:relative;z-index:1;margin-top:-40px;padding:var(--sp-12) 0;   /* muammo bo'limi ustiga varaqdek chiqadi */
+  position:relative;z-index:1;padding:var(--sp-12) 0;   /* pastki 40px ni MUAMMO varag'i yopadi */
   border-radius:40px 40px 0 0;background:var(--bg);overflow:hidden;
 }
 /* devor ortida yumshoq nur */
 .trust::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(48% 62% at 76% 50%,rgba(52,229,230,.1),transparent 70%)}
 
 .trust>.container{max-width:none;padding:0 var(--pad)}
-.trust__head,.trust__stats{position:relative;z-index:1;max-width:var(--col)}
-.trust__stats{max-width:var(--stats-w)}
+.trust__head,.trust__stats,.trust__reach{position:relative;z-index:1;max-width:var(--col)}
+.trust__stats,.trust__reach{max-width:var(--stats-w)}
 .trust__title{font-weight:500;font-size:clamp(26px,2.4vw,36px);line-height:1.14;letter-spacing:-.035em;color:var(--text)}
 .trust__title span{display:block}
 .trust__title .accent{color:var(--mint)}
@@ -531,9 +646,22 @@
 }
 .trust__ico{grid-row:span 2;width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:rgba(184,255,176,.1);color:var(--mint)}
 .trust__ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.trust__num{font-family:var(--font-head);font-weight:700;font-size:clamp(24px,2.3vw,30px);line-height:1.05;letter-spacing:-.03em;white-space:nowrap}
+.trust__num{font-family:var(--font-head);font-weight:700;font-size:clamp(24px,2.3vw,30px);line-height:1.05;letter-spacing:-.03em;white-space:nowrap;font-variant-numeric:tabular-nums}   /* sanalayotganda raqamlar sakramaydi */
 .trust__num i{font-style:normal;color:var(--accent)}
 .trust__label{margin-top:4px;font-size:15px;line-height:1.3;color:var(--text-dim)}
+
+/* ---------- qamrov — kartalar ostida, ramkasiz oddiy matn: tepada har bir marketpleys logotipi,
+   pastda belgili yozuvlar "4 ta mamlakat · Bitta kabinet" ---------- */
+.trust__reach{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:18px 0 0;padding:0 4px;list-style:none}
+.trust__reach li{display:flex;align-items:center;gap:7px;min-width:0;font-size:14px;line-height:1.3;white-space:nowrap;color:var(--text-dim)}
+.trust__reach li + li + li::before{content:"·";margin-right:11px;color:var(--text-dim)}   /* mamlakat · kabinet */
+.trust__reach b{font-weight:800;color:var(--text)}
+.trust__reach .trust__reach-mps{flex-basis:100%;flex-wrap:wrap;gap:8px 10px}
+.trust__reach-k{font-weight:700;color:var(--text)}
+.trust__reach-logos{display:flex;gap:5px}
+.trust__reach-logos img{flex:none;width:23px;height:23px;padding:2px;border-radius:7px;background:#fff;object-fit:contain;box-shadow:0 4px 10px -6px rgba(0,0,0,.6)}
+.trust__reach-ico{flex:none;display:grid;place-items:center;color:var(--mint)}
+.trust__reach-ico svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- logotiplar devori ---------- */
 .trust__wall{
@@ -548,9 +676,9 @@
    pastda (kartalar yonida) kartalar kengligida. Bitta element sifatida xiralashtiriladi (blur) — shuning uchun
    chetlari yumshoq, ikkala burchagi yumaloq, ulanish joyi bilinmaydi.
    --edge — ustun chetidan soyaning yarim shaffof chizig'igacha, --soft — xiralik.
-   --low-h — section pastidan kartalar tepasigacha (padding + 3 karta va 2 oraliq ≈ 300px). */
+   --low-h — section pastidan kartalar tepasigacha (padding + 3 karta, qamrov qatorlari va oraliqlar ≈ 375px). */
 .trust__wall::after{
-  --edge:96px;--soft:48px;--low-h:calc(var(--sp-12) + 300px);
+  --edge:96px;--soft:48px;--low-h:calc(var(--sp-12) + 375px);
   content:"";position:absolute;z-index:1;top:-150px;bottom:-150px;left:-150px;
   width:calc(150px + var(--tx) + var(--col) + var(--edge));
   background:
@@ -592,9 +720,9 @@
 
 /* ---------- telefon va planshet: devor sarlavha ostida, ekran kengligida ---------- */
 @media (max-width:960px){
-  .trust{--tile:60px;--gap:12px;--pad:var(--sp-3);margin-top:-28px;padding:var(--sp-8) 0;border-radius:28px 28px 0 0}
+  .trust{--tile:60px;--gap:12px;--pad:var(--sp-3);padding:var(--sp-8) 0;border-radius:28px 28px 0 0}
   .trust::before{background:radial-gradient(90% 34% at 50% 42%,rgba(52,229,230,.08),transparent 70%)}
-  .trust__head,.trust__stats{max-width:560px}
+  .trust__head,.trust__stats,.trust__reach{max-width:560px}
   .trust__wall{
     position:relative;left:auto;margin:var(--sp-5) calc(-1 * var(--sp-3)) 0;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
@@ -666,10 +794,23 @@
 .feat-text{width:min(30vw,400px)}
 .feat-text__n{display:block;margin-bottom:8px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--text-dim)}
 .feat-text h3{font-family:var(--font-head);font-weight:500;font-size:clamp(18px,1.7vw,24px);line-height:1.12;letter-spacing:-.03em}
-.feat-text p{margin-top:10px;max-width:340px;font-size:15px;line-height:1.5;color:var(--text-dim)}
+.feat-text p{margin-top:10px;max-width:380px;font-size:15px;line-height:1.5;color:var(--text-dim)}
 .feat-text ul{list-style:none;display:grid;gap:8px;margin-top:16px;font-size:14px;font-weight:600;line-height:1.35}
 .feat-text li{position:relative;padding-left:26px}
 .feat-text li::before{content:"✓";position:absolute;left:0;top:0;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:#fff;font-size:10px;font-weight:800}
+
+/* Markazga kelganda (is-on — features.script.js): karta yorug' halqa bilan "yonadi",
+   matn esa raqam → sarlavha → izoh tartibida ketma-ket oqib chiqadi. */
+.feat-card{transition:box-shadow 500ms var(--ease-soft)}
+.feat-card.is-on{box-shadow:0 0 0 3px rgba(184,255,176,.55),0 34px 70px -26px rgba(0,43,41,.5)}
+.feat-text__n{transition:color 400ms}
+.feat-text.is-on .feat-text__n{color:var(--brand)}
+.feat-text.is-on > *{animation:ft-textIn 620ms cubic-bezier(.2,.8,.2,1) backwards}
+.feat-text.is-on h3{animation-delay:80ms}
+.feat-text.is-on p{animation-delay:170ms}
+.feat-text.is-on ul{animation-delay:260ms}
+@keyframes ft-textIn{from{opacity:0;transform:translate3d(28px,0,0);filter:blur(4px)}}
+@media (prefers-reduced-motion:reduce){.feat-text.is-on > *{animation:none}}
 
 /* markaz: Robohub belgisi + hisoblagich */
 .feat__hud{position:absolute;z-index:30;left:clamp(24px,4vw,72px);top:50%;transform:translateY(-50%);width:min(15vw,220px);transition:opacity 400ms ease}
@@ -853,7 +994,7 @@
       va tayyor rasm ochiladi. Kadr ustidagi tutqich bilan asl rasm bilan solishtiriladi.
    ============================================================ */
 .tools{
-  position:relative;z-index:2;margin-top:-40px;padding:var(--sp-12) 0;
+  position:relative;z-index:5;margin-top:-40px;padding:var(--sp-12) 0;   /* tariflardan keyin: ularning ustida, FAQ (6) ostida */
   border-radius:40px 40px 0 0;overflow:clip;   /* oldingi section ustiga varaqdek chiqadi */
   background:
     radial-gradient(60% 50% at 88% 0%,rgba(184,255,176,.22),transparent 70%),
@@ -868,20 +1009,26 @@
 }
 .tools > .container{position:relative}
 
-.tools__title{margin-bottom:var(--sp-6);font-size:clamp(22px,2.4vw,32px);line-height:1.12;letter-spacing:-.03em}
-.tools__title span{display:block}
-.tools__title .accent{color:var(--text-dim)}
+.tools__head{max-width:720px;margin-bottom:var(--sp-6)}
+.tools__title{font-size:clamp(22px,2.4vw,32px);line-height:1.12;letter-spacing:-.03em}
+.tools__lead{margin-top:var(--sp-2);font-size:clamp(15px,1.25vw,17px);line-height:1.55;color:var(--text-dim)}
 
 .tools__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:var(--sp-4);align-items:stretch}
 .tool{display:flex;flex-direction:column;gap:var(--sp-3);min-width:0}
+/* keng ekranda ikki ustun: sarlavha qismlari bitta qatorda (subgrid) — tavsif uzunligi har xil bo'lsa ham oynalar bir chiziqda boshlanadi */
+@media (min-width:1041px){
+  .tools__grid{grid-template-rows:auto 1fr}
+  .tool{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--sp-3)}
+  .tool__head{align-content:flex-start}   /* nomlar tepada bir chiziqda */
+}
 .tool__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--sp-2);min-height:90px}
 /* nomi (masalan "AI-инфографика") defisda bo'linmasin: sig'masa tugma pastki qatorga o'tadi */
 .tool__name{font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em;white-space:nowrap}
 /* ruschada nomlar uzunroq ("AI-инфографика") — tor ustunda tugma bilan bir qatorga sig'ishi uchun biroz kichikroq */
 :lang(ru) .tool__name{font-size:clamp(18px,1.55vw,21px)}
 /* matn bloki tavsif uzunligiga qarab kengaymasin: faqat nomgacha qisqaradi, tavsif ichida o'raladi */
-.tool__head>div{flex:1 1 0;min-width:min-content}
-.tool__desc{margin-top:6px;font-size:15.5px;color:var(--text-dim)}
+.tool__head>div{flex:1 1 260px;min-width:min-content}   /* tor ustunda tugma tavsif ostiga tushadi */
+.tool__desc{margin-top:6px;max-width:520px;font-size:15px;line-height:1.5;color:var(--text-dim)}
 .tool__go{
   flex:none;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r-pill);
   background:var(--btn);color:var(--btn-ink);font-size:15px;font-weight:700;
@@ -1103,7 +1250,7 @@
 }
 @media (max-width:900px){
   .tools{padding:var(--sp-8) 0;border-radius:28px 28px 0 0;margin-top:-28px}
-  .tools__title{margin-bottom:var(--sp-4)}
+  .tools__head{margin-bottom:var(--sp-4)}
 }
 @media (max-width:640px){
   .ai__steps{gap:4px;font-size:10px}
@@ -1112,6 +1259,7 @@
   .ai__steps b{width:16px;height:16px}
   .calc{grid-template-columns:1fr}
   .tool__head{flex-direction:column;align-items:stretch;min-height:0}
+  .tool__head>div{flex:none}   /* ustun yo'nalishida flex-basis balandlik bo'lib qolmasin */
   .tool__go{justify-content:center}
   /* sig'magan marketpleys tablari so'z o'rtasida keskin kesilmaydi — o'ng chetda erib ketadi */
   .calc__mps{-webkit-mask-image:linear-gradient(90deg,#000 78%,transparent);mask-image:linear-gradient(90deg,#000 78%,transparent)}
@@ -1191,7 +1339,9 @@
   width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:var(--mint);
   font-size:12px;font-weight:800;transition:opacity 300ms var(--ease) 500ms,transform 500ms var(--ease-soft) 500ms;
 }
-.how-card h3{margin-bottom:12px;font-size:clamp(15px,1.35vw,18px);line-height:1.28;letter-spacing:-.02em}
+.how-card h3{margin-bottom:6px;font-size:clamp(15px,1.35vw,18px);line-height:1.28;letter-spacing:-.02em}
+.how-card__desc{margin-bottom:14px;font-size:14px;line-height:1.45;color:var(--text-dim)}
+.how-card--help .how-card__desc{color:rgba(255,255,255,.78)}
 /* izoh: belgi bilan kapsula ichida */
 .how-card__meta{
   display:inline-flex;align-items:center;gap:7px;width:max-content;max-width:100%;margin-top:auto;padding:7px 12px 7px 9px;
@@ -1865,14 +2015,20 @@
 .end__btns .btn--outline:hover{border-color:#fff;color:#fff}
 
 /* orbita: markazda Robohub, atrofida to'rt marketpleys aylanadi */
-.end__orbit{position:relative;width:min(100%,250px);aspect-ratio:1;margin:0 auto}
+.end__orbit{position:relative;width:min(100%,290px);aspect-ratio:1;margin:0 auto}
 .end__ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(241,255,240,.3);animation:end-spin 36s linear infinite}
-.end__ring--in{inset:21%;border-style:solid;border-color:rgba(241,255,240,.14);animation:none}
-.end__ring img{position:absolute;width:46px;height:46px;margin:-23px;border-radius:14px;box-shadow:0 12px 26px rgba(0,54,52,.28);animation:end-spin 36s linear infinite reverse}   /* belgi o'zi tik turadi */
-.end__ring img:nth-child(1){left:50%;top:0}
-.end__ring img:nth-child(2){left:100%;top:50%}
-.end__ring img:nth-child(3){left:50%;top:100%}
-.end__ring img:nth-child(4){left:0;top:50%}
+/* ichki halqa teskari tomonga aylanadi — asosiy to'rt marketpleys, kattaroq */
+.end__ring--in{inset:17%;border-style:solid;border-color:rgba(241,255,240,.14);animation-duration:28s;animation-direction:reverse}
+/* belgi halqada o'z burchagida (--a) turadi va halqaga teskari aylanib, tik qoladi */
+.end__ring img{
+  --s:34px;
+  position:absolute;left:calc(50% + 50% * cos(var(--a)));top:calc(50% + 50% * sin(var(--a)));
+  width:var(--s);height:var(--s);margin:calc(var(--s) / -2);border-radius:28%;background:#fff;object-fit:contain;
+  box-shadow:0 10px 22px rgba(0,54,52,.28);animation:end-spin 36s linear infinite reverse;
+}
+.end__ring--in img{--s:42px;animation-duration:28s;animation-direction:normal}
+/* tashqi halqa — qolgan marketpleyslar va hisob tizimlari: kichikroq, biroz xira */
+.end__ring:not(.end__ring--in) img{opacity:.85}
 @keyframes end-spin{to{transform:rotate(360deg)}}
 .end__mark{
   position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px;display:grid;place-items:center;border-radius:26px;
@@ -1916,8 +2072,9 @@
 @media (max-width:900px){
   .end{padding-top:var(--sp-6);border-radius:28px 28px 0 0;margin-top:-28px}
   .end__card{grid-template-columns:1fr;padding:var(--sp-4) var(--sp-3);border-radius:26px}
-  .end__orbit{width:190px;order:-1}
-  .end__ring img{width:38px;height:38px;margin:-19px;border-radius:12px}
+  .end__orbit{width:230px;order:-1}
+  .end__ring img{--s:28px}
+  .end__ring--in img{--s:34px}
   .end__mark{width:66px;height:66px;margin:-33px;border-radius:21px}
   .end__mark svg{width:38px;height:17px}
   .foot{padding-top:var(--sp-4)}
@@ -1991,6 +2148,16 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 }
 .reels__card:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 24px 48px -16px rgba(0,30,28,.6),0 0 0 1px rgba(0,54,52,.12)}
 .reels__card:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+/* × — kartochkaning o'ng tepa burchagida, chetidan biroz chiqib turadi */
+.reels__hide{
+  position:absolute;z-index:3;top:-8px;right:-8px;width:24px;height:24px;display:grid;place-items:center;padding:0;
+  border-radius:50%;border:2px solid #fff;background:var(--brand);color:#fff;cursor:pointer;
+  box-shadow:0 6px 14px -6px rgba(0,30,28,.6);transition:transform 200ms var(--ease-soft),background 200ms var(--ease);
+}
+.reels__hide svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.reels__hide:hover{background:#0C6A60;transform:scale(1.1)}
+.reels__hide:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.reels.is-drag .reels__hide{opacity:0}
 .reels__poster,.reels__frame{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 /* iframe sichqonchani olmaydi — butun kartochka bitta tugma */
 .reels__frame{pointer-events:none;transform:scale(1.02);opacity:0;transition:opacity 400ms var(--ease)}
@@ -2083,7 +2250,10 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 .reels-full__list img{flex:none;width:40px;height:56px;border-radius:8px;object-fit:cover}
 .reels-full__list span{display:flex;flex-direction:column;flex:1;min-width:0}
 .reels-full__list b{font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.reels-full__list small{font-size:12.5px;color:rgba(255,255,255,.6)}
+.reels-full__list small{font-size:12.5px;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* video tili: bayroq + yozuv */
+.reels-lang{display:inline-flex;align-items:center;gap:5px;font-style:normal;vertical-align:middle;color:rgba(255,255,255,.85)}
+.reels-full__list .reels-lang img{width:14px;height:14px;border-radius:50%;object-fit:cover}
 /* hozir o'ynayotgan — kichik "ekvalayzer" */
 .reels-full__eq{display:flex;align-items:flex-end;gap:2px;height:14px}
 .reels-full__eq s{width:3px;height:100%;border-radius:2px;background:var(--cyan);animation:reels-eq 900ms ease-in-out infinite}

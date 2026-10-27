@@ -7,8 +7,8 @@ export const messages = defineMessages({
     title: ["Marketpleyslardagi", "savdoni"],
     accent: ["yagona", "kabinetdan"],
     end: ["boshqaring"],
-    lead: "Buyurtma, qoldiq va foydani bir joydan boshqaring. Toʻrtta kabinetga alohida kirish shart emas.",
-    facts: { mps: "6+ marketpleys", integrations: "10+ integratsiya", ai: "AI assistent" },
+    lead: "Mahsulotlaringizni Uzum Market, Wildberries, Ozon va Yandex Market’da joylashtiring. Buyurtmalarni boshqaring, qoldiqlarni sinxronlang va foydangizni Robohub’da kuzating.",
+    facts: { mps: "Marketpleyslar", integrations: "Hisob tizimlari bilan integratsiyalar", ai: "AI yordamchi" },
     start: "Hoziroq boshlash",
     video: {
       button: "Qanday ishlaydi",
@@ -19,10 +19,10 @@ export const messages = defineMessages({
   },
   ru: {
     title: ["Управляйте", "продажами", "на маркетплейсах", "из"],
-    accent: ["единого", "кабинета"],
+    accent: ["одного", "кабинета"],
     end: [],
-    lead: "Заказы, остатки и прибыль — в одном месте. Больше не нужно заходить в четыре кабинета по отдельности.",
-    facts: { mps: "6+ маркетплейсов", integrations: "10+ интеграций", ai: "AI-ассистент" },
+    lead: "Размещайте товары на Uzum Market, Wildberries, Ozon и Яндекс Маркете. Управляйте заказами, синхронизируйте остатки и отслеживайте прибыль в Robohub.",
+    facts: { mps: "Маркетплейсы", integrations: "Интеграции с учётными системами", ai: "AI-помощник" },
     start: "Начать сейчас",
     video: {
       button: "Как это работает",
@@ -35,8 +35,8 @@ export const messages = defineMessages({
     title: ["Manage", "your", "marketplace", "sales", "from"],
     accent: ["one", "dashboard"],
     end: [],
-    lead: "Manage orders, stock and profit from one place. No more logging in to four dashboards separately.",
-    facts: { mps: "6+ marketplaces", integrations: "10+ integrations", ai: "AI assistant" },
+    lead: "List your products on Uzum Market, Wildberries, Ozon and Yandex Market. Manage orders, sync stock and track your profit in Robohub.",
+    facts: { mps: "Marketplaces", integrations: "Accounting system integrations", ai: "AI assistant" },
     start: "Get started",
     video: {
       button: "How it works",

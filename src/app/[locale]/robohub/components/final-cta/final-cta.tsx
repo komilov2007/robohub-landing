@@ -1,7 +1,26 @@
+import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
 import { messages } from "./final-cta.i18n";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+
+// Orbita: ichki halqada toʻrtta asosiy marketpleys, tashqi halqada qolgan marketpleyslar va hisob tizimlari
+// (hero orbitasidagidek). Har belgi oʻz burchagida (--a), halqa aylanadi, belgi tik turadi.
+const INNER = ["/marketplaces/uzum.svg", "/marketplaces/wildberries.svg", "/marketplaces/ozon.svg", "/marketplaces/yandex.svg"];
+const OUTER = [
+  "/robosell/icons/alif.svg",
+  "/integrations/moysklad.svg",
+  "/marketplaces/kaspi.svg",
+  "/integrations/billz.svg",
+  "/marketplaces/halyk.svg",
+  "/integrations/1c.svg",
+  "/robosell/icons/click-outline.svg",
+  "/robosell/icons/zoomrad.svg",
+];
+const ring = (list: string[], start: number) =>
+  list.map((src, i) => (
+    <img key={src} src={src} alt="" width="54" height="54" style={{ "--a": `${start + (i * 360) / list.length}deg` } as CSSProperties} />
+  ));
 
 // Footer "Aloqa": ikon + oddiy matn (chegarasiz)
 const CONTACTS: { icon: ContactIconName; label: string; href: string; external?: boolean }[] = [
@@ -34,13 +53,8 @@ export default async function FinalCta() {
             </div>
           </div>{" "}
           <div className="end__orbit" aria-hidden="true">
-            <span className="end__ring end__ring--in" />{" "}
-            <span className="end__ring">{" "}
-              <img src="/marketplaces/uzum.svg" alt="" width="54" height="54" />{" "}
-              <img src="/marketplaces/wildberries.svg" alt="" width="54" height="54" />{" "}
-              <img src="/marketplaces/ozon.svg" alt="" width="54" height="54" />{" "}
-              <img src="/marketplaces/yandex.svg" alt="" width="54" height="54" />{" "}
-            </span>{" "}
+            <span className="end__ring end__ring--in">{ring(INNER, -45)}</span>{" "}
+            <span className="end__ring">{ring(OUTER, -90)}</span>{" "}
             <span className="end__mark">
               <svg viewBox="0 0 33.8675 15.06">
                 <use href="#rh-mark" />

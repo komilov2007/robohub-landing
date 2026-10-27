@@ -13,9 +13,22 @@ import {
 import { createPortal, flushSync } from "react-dom";
 import { RobohubMark } from "@/components/robohub-404/logo";
 import { idle } from "@/lib/idle";
+import { fontClass } from "../../fonts";
 
-type Reel = { id: string; name: string };
-type Texts = { title: string; open: string; close: string; prev: string; next: string; cta: string; client: string; drag: string };
+type Lang = "uz" | "ru";
+type Reel = { id: string; name?: string; lang: Lang };
+type Texts = {
+  title: string;
+  open: string;
+  close: string;
+  prev: string;
+  next: string;
+  cta: string;
+  client: string;
+  drag: string;
+  hide: string;
+  langs: Record<Lang, string>;
+};
 type Corner = "tl" | "tr" | "bl" | "br";
 
 // Burchakdagi kartochka: brauzer bo'shagach paydo bo'ladi (LCP'ga ta'sir qilmaydi), video ovozsiz o'ynaydi
@@ -26,6 +39,7 @@ type Corner = "tl" | "tr" | "bl" | "br";
 // Kamroq harakat tanlangan bo'lsa (prefers-reduced-motion) burchakda video emas, faqat muqova.
 const ROTATE = 12000;
 const CORNER_KEY = "rb-reels-corner";
+const HIDE_KEY = "rb-reels-hidden"; // × bosilsa — shu seans (tab yopilguncha) qaytib chiqmaydi
 const CORNERS: readonly Corner[] = ["tl", "tr", "bl", "br"];
 const ORIGIN = "https://www.youtube-nocookie.com";
 
@@ -37,6 +51,14 @@ const previewSrc = (id: string) =>
 // to'liq ekran: ovoz bilan (bosish — foydalanuvchi harakati, brauzer ruxsat beradi), video tugaganini bilish uchun JS API
 const fullSrc = (id: string) => `${base(id)}&autoplay=1&controls=1&enablejsapi=1`;
 const poster = (id: string) => `https://i.ytimg.com/vi/${id}/oar2.jpg`; // Shorts'ning vertikal muqovasi
+
+// video tili: bayroq + yozuv ("Oʻzbek tilida")
+const LangTag = ({ lang, label }: { lang: Lang; label: string }) => (
+  <em className="reels-lang">
+    <img src={`/flags/${lang}.svg`} alt="" width="14" height="14" />
+    {label}
+  </em>
+);
 
 const Icon = ({ d }: { d: string }) => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -53,6 +75,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
   const [dir, setDir] = useState<1 | -1>(1); // almashish yo'nalishi — animatsiya uchun
   const [hiddenTab, setHiddenTab] = useState(false);
   const [liveId, setLiveId] = useState<string | null>(null); // burchakda haqiqatan o'ynayotgan video
+  const [hidden, setHidden] = useState(false); // × bilan yopilgan
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -71,6 +94,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
       try {
         const saved = localStorage.getItem(CORNER_KEY) as Corner | null;
         if (saved && CORNERS.includes(saved)) setCorner(saved);
+        if (sessionStorage.getItem(HIDE_KEY)) setHidden(true);
       } catch {}
       setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
       setReady(true);
@@ -128,7 +152,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     return () => window.removeEventListener("message", onMessage);
   }, [ready, count]);
 
-  if (!ready || count === 0) return null;
+  if (!ready || count === 0 || hidden) return null;
 
   const reel = reels[index];
   const open = () => {
@@ -143,6 +167,12 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     if (full !== null) setIndex(full);
     setFull(null);
     requestAnimationFrame(() => cardRef.current?.focus());
+  };
+  const hide = () => {
+    try {
+      sessionStorage.setItem(HIDE_KEY, "1");
+    } catch {}
+    setHidden(true);
   };
   const go = (i: number) => {
     setDir(full !== null && i < full ? -1 : 1);
@@ -245,7 +275,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
               className={`reels__frame${liveId === reel.id ? " is-live" : ""}`}
               src={previewSrc(reel.id)}
               onLoad={() => listen(previewRef.current)}
-              title={reel.name}
+              title={reel.name ?? t.client}
               allow="autoplay; encrypted-media; picture-in-picture"
               tabIndex={-1}
               aria-hidden="true"
@@ -265,15 +295,19 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           </span>
           <span className="reels__cap">
             <b>{t.title}</b>
-            <small>{reel.name}</small>
+            <small>{reel.name ?? t.client}</small>
           </span>
+        </button>
+        {/* yopish: kartochkadan tashqarida (tugma ichida tugma bo'lmaydi), o'ng tepa burchakda */}
+        <button type="button" className="reels__hide" onClick={hide} aria-label={t.hide} title={t.hide}>
+          <Icon d="M7 7l10 10M17 7L7 17" />
         </button>
       </div>
 
       {current &&
         createPortal(
           <div
-            className="reels-full"
+            className={`reels-full ${fontClass}`}
             role="dialog"
             aria-modal="true"
             aria-label={t.title}
@@ -293,7 +327,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   ref={frameRef}
                   className="reels-full__frame"
                   src={fullSrc(current.id)}
-                  title={`${t.title} — ${current.name}`}
+                  title={`${t.title} — ${current.name ?? t.client}`}
                   allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                   allowFullScreen
                   // yuklanguncha muqova ko'rinadi (iframe'ning qora foni uni yopmasin)
@@ -313,7 +347,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   <span className="reels-full__title">
                     <b>{t.title}</b>
                     <small>
-                      {current.name} · {full! + 1}/{count}
+                      {current.name ?? t.client} · {t.langs[current.lang]} · {full! + 1}/{count}
                     </small>
                   </span>
                 </div>
@@ -324,8 +358,11 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                       <button type="button" className={i === full ? "is-on" : undefined} aria-current={i === full || undefined} onClick={() => go(i)}>
                         <img src={poster(r.id)} alt="" />
                         <span>
-                          <b>{r.name}</b>
-                          <small>{t.client}</small>
+                          <b>{r.name ?? t.client}</b>
+                          {/* ikkinchi qator — video tili (sarlavhada "Robohub mijozlari" bor, takrorlanmaydi) */}
+                          <small>
+                            <LangTag lang={r.lang} label={t.langs[r.lang]} />
+                          </small>
                         </span>
                         {i === full && (
                           <i className="reels-full__eq" aria-hidden="true">

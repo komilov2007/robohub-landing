@@ -19,7 +19,7 @@
   --line-2:rgba(17,22,37,.14);
 
   --ff-body:var(--ff-inter),"Segoe UI",system-ui,sans-serif;
-  --ff-head:var(--ff-as-grotesk),var(--ff-inter),system-ui,sans-serif;
+  --ff-head:var(--ff-grotesk),var(--ff-inter),system-ui,sans-serif;
 
   --ease:cubic-bezier(.22,1,.36,1);
   --spring:cubic-bezier(.34,1.56,.64,1);

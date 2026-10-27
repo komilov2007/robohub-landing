@@ -25,7 +25,7 @@ export function init() {
      Qadam shu ikki nuqta orasida sakraydi; skrollbar yoki tez skrollda SWITCH dan o'tganda almashadi. */
   var AT = { before: 0, after: 1 }, SWITCH = 0.45;
   var DUR = 1000;    // almashish animatsiyasi, ms
-  var BOTTOM = 40;   // sahna pastini ISHONCH varag'i yopadi (robohub.css dagi .is-pinned .pain__slide bilan bir xil)
+  var BOTTOM = 40;   // sahna pastini IMKONIYATLAR varag'i yopadi (robohub.css dagi .is-pinned .pain__slide bilan bir xil)
 
   var pinned = false, raf = 0, rq = 0, state = "", theme = "", alive = true;
   var p = 0, goal = 0, last = 0, anim = 0;   // p — almashish holati (0 → 1), vaqt bo'yicha goal ga yetadi
@@ -193,6 +193,11 @@ export function init() {
   wide.addEventListener("change", onResize);
   reduced.addEventListener("change", onResize);
   btns.forEach(function (b) { b.addEventListener("click", go); });
+  // sxemadagi oqim animatsiyalari bo'lim ekrandan chiqqanda to'xtaydi (robohub.css, .is-idle)
+  var io = "IntersectionObserver" in window
+    ? new IntersectionObserver(function (es) { sec.classList.toggle("is-idle", !es[es.length - 1].isIntersecting); })
+    : null;
+  if (io) io.observe(sec);
   layout();
   // shrift yuklangach sarlavha balandligi o'zgaradi — qayta o'lchanadi
   if (document.fonts) document.fonts.ready.then(function () { if (alive) onResize(); });
@@ -207,6 +212,8 @@ export function init() {
     reduced.removeEventListener("change", onResize);
     btns.forEach(function (b) { b.removeEventListener("click", go); });
     clearTimeout(settleT);
+    if (io) io.disconnect();
+    sec.classList.remove("is-idle");
     cancelAnimationFrame(raf);
     cancelAnimationFrame(rq);
     unpin();

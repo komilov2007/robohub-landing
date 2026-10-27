@@ -56,32 +56,10 @@ const TASK_ICONS = [
   ),
 ];
 
-// raqamlar belgilari (i18n stats tartibida)
-const COIN = ic(
-  <>
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M14.6 9.2c-.4-.9-1.4-1.4-2.6-1.4-1.5 0-2.6.8-2.6 1.9 0 2.6 5.3 1.3 5.3 4 0 1.1-1.2 2-2.7 2-1.3 0-2.4-.6-2.8-1.5M12 6.3v1.5M12 16.2v1.5" />
-  </>,
-);
-const STAT_ICONS = {
-  before: [
-    COIN,
-    ic(<path d="M8.5 8.5h11v11h-11zM15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5" />),
-    ic(
-      <>
-        <path d="M3 12s3.3-6 9-6 9 6 9 6-3.3 6-9 6-9-6-9-6z" />
-        <circle cx="12" cy="12" r="2.6" />
-        <path d="M4.5 4.5l15 15" />
-      </>,
-    ),
-  ],
-  after: [COIN, ic(<path d="M3.5 4.5h17V16h-17zM9 20h6M12 16v4" />), CHECK],
-};
-
 // 2. MUAMMO — ikki sxema: avval Robohubsiz (tadbirkor → 4 menejer → har birida 7 vazifa → 4 marketpleys),
 // keyin Robohub bilan (tadbirkor → bitta kabinetda 7 vazifa → 4 marketpleys).
 // Keng ekranda sahna ekranga qotadi va skroll bilan birinchisi ikkinchisiga aylanadi (problem.script.js);
-// aks holda ikkala sxema ketma-ket turadi. Sxemalar bezak (aria-hidden) — mazmuni sarlavha, matn va raqamlarda.
+// aks holda ikkala sxema ketma-ket turadi. Sxemalar bezak (aria-hidden) — mazmuni sarlavha va matnda.
 export default async function Problem() {
   const t = await getMessages(messages);
   const tasks = (done: boolean) => (
@@ -95,8 +73,10 @@ export default async function Problem() {
       ))}
     </ul>
   );
-  const mp = (m: (typeof MARKETPLACES)[number], i: number) => (
-    <div className="dg__mp" key={m.id} style={{ "--r": i + 2 } as CSSProperties}>
+  // pkt — "Robohub bilan"da paneldan kelgan ish bo'lagi (bitta paneldan to'rttala marketpleysga birdan)
+  const mp = (pkt: boolean) => (m: (typeof MARKETPLACES)[number], i: number) => (
+    <div className="dg__mp" key={m.id} style={{ "--r": i + 2, "--i": i } as CSSProperties}>
+      {pkt && <i className="dg__pkt" />}
       <img src={`/marketplaces/${m.id}.svg`} alt="" width="26" height="26" />
       <span>{m.name}</span>
     </div>
@@ -135,9 +115,15 @@ export default async function Problem() {
                   <b>{t.who.title}</b>
                   <small>{t.who.note}</small>
                 </div>
-                <i className="dg__tree dg__tree--l" />
+                <i className="dg__tree dg__tree--l">
+                  <i className="dg__pkt dg__pkt--in" />
+                </i>
                 {MARKETPLACES.map((m, i) => (
                   <div className="dg__row" key={m.id} style={{ "--r": i + 2, "--i": i } as CSSProperties}>
+                    {/* ish bo'lagi: tadbirkor → menejer → 7 vazifa birma-bir → marketpleys (robohub.css, dg-run) */}
+                    <i className="dg__flow">
+                      <i className="dg__pkt" />
+                    </i>
                     <div className="dg__mgr">
                       <img src={`/marketplaces/${m.id}.svg`} alt="" width="22" height="22" />
                       <b>{t.before.manager}</b>
@@ -148,7 +134,7 @@ export default async function Problem() {
                     <i className="dg__arrow dg__arrow--go">{ARROW}</i>
                   </div>
                 ))}
-                {MARKETPLACES.map(mp)}
+                {MARKETPLACES.map(mp(false))}
               </>
             ) : (
               <>
@@ -159,7 +145,9 @@ export default async function Problem() {
                   <b>{t.who.title}</b>
                   <small>{t.who.note}</small>
                 </div>
-                <i className="dg__line" />
+                <i className="dg__line">
+                  <i className="dg__pkt" />
+                </i>
                 <div className="dg__panel">
                   <div className="dg__panel-head">
                     <svg viewBox="0 0 127 31">
@@ -170,7 +158,7 @@ export default async function Problem() {
                   {tasks(true)}
                 </div>
                 <i className="dg__tree dg__tree--r" />
-                {MARKETPLACES.map(mp)}
+                {MARKETPLACES.map(mp(true))}
               </>
             )}
           </div>
@@ -194,18 +182,6 @@ export default async function Problem() {
             </span>
             <b className="pain__next-cost">{s.cost}</b>
           </div>
-
-          <ul className="pain__stats" data-sr="">
-            {s.stats.map((st, k) => (
-              <li key={k}>
-                <span className="pain__stat-ico" aria-hidden="true">
-                  {STAT_ICONS[side][k]}
-                </span>
-                <b>{st.value}</b>
-                <small>{st.label}</small>
-              </li>
-            ))}
-          </ul>
 
           {/* sahna qotganda: qaysi sxema ko'rinayotgani va unga o'tish (problem.script.js) */}
           {!done && (

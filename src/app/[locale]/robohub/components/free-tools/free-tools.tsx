@@ -17,11 +17,14 @@ export default async function FreeTools() {
     <>
       <section className="tools" id="free-tools" data-theme="brand" aria-labelledby="tools-title">
         <div className="container">
-          {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}{" "}
-          <h2 className="tools__title" id="tools-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-            <span>{t.title}</span>{" "}
-            <span className="accent">{t.titleAccent}</span>
-          </h2>{" "}
+          <div className="tools__head">
+            <h2 className="tools__title" id="tools-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
+              {t.title}
+            </h2>
+            <p className="tools__lead" data-sr="" style={{ "--d": "120ms" } as CSSProperties}>
+              {t.lead}
+            </p>
+          </div>{" "}
           <div className="tools__grid">
             {/* ===== 1) Marketpleys kalkulyatori ===== */}{" "}
             <article className="tool" data-sr="" style={{ "--d": "120ms" } as CSSProperties}>
@@ -31,7 +34,7 @@ export default async function FreeTools() {
                   <p className="tool__desc">{c.desc}</p>
                 </div>{" "}
                 <a className="tool__go" href="/calculator/">
-                  {`${t.go} `}
+                  {`${c.go} `}
                   <span className="arrow" aria-hidden="true">→</span>
                 </a>
               </div>{" "}
@@ -168,7 +171,7 @@ export default async function FreeTools() {
                 </div>{" "}
                 {/* nisbiy: robohub.uz → robohub.uz/ai-studio, robohub-landing.vercel.app → …/ai-studio */}{" "}
                 <a className="tool__go" href="/ai-studio">
-                  {`${t.go} `}
+                  {`${t.ai.go} `}
                   <span className="arrow" aria-hidden="true">→</span>
                 </a>
               </div>{" "}

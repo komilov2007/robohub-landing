@@ -2,10 +2,11 @@ import { getMessages } from "@/i18n/server";
 import FeaturesScript from "./features-script";
 import { messages } from "./features.i18n";
 
-// Skroll sahnasi: bo'lim ekranga qotadi, 18 ta vosita yoy bo'ylab o'tadi.
+// Skroll sahnasi: bo'lim ekranga qotadi, 6 ta yo'nalish (har biri karta + matn) yoy bo'ylab oqib o'tadi.
 // Kartalar va matnlar brauzerda chiziladi (features.script.js) — bu yerda faqat sahna asosi.
 export default async function Features() {
   const t = await getMessages(messages);
+  const n = t.script.tools.length;
   return (
     <>
       <section className="feat" id="features" data-theme="light" aria-labelledby="feat-title">
@@ -36,15 +37,13 @@ export default async function Features() {
               </svg>
             </div>
             <p className="feat-hud__count">
-              <b>01</b> / 18
+              <b>01</b> / {String(n).padStart(2, "0")}
             </p>
             <p className="feat-hud__cat" />
             <div className="feat-hud__dots">
-              <i />
-              <i />
-              <i />
-              <i />
-              <i />
+              {t.script.tools.map((_, i) => (
+                <i key={i} />
+              ))}
             </div>
           </div>
           {/* kartalar va matnlar JS bilan shu yerga chiziladi */}

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { defineMessages } from "@/i18n/config";
 import { getLocale } from "@/i18n/server";
 import { pageMetadata, ROBOHUB_ORIGIN } from "@/lib/seo";
-import { inter } from "../../../fonts";
+import { fontClass } from "../fonts";
 import "../robohub.css";
 
 export const messages = defineMessages({
@@ -31,11 +31,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // Robohub landingi (bosh sahifa): uslublar va metadata faqat shu guruhga — /academy ularni olmaydi.
-// Inter (--ff-inter) shu sahifada miniatyura oynalarida ishlatiladi — root layout'ga emas, faqat shu yerga ulanadi
-// (AI Studio va Kalkulyator ham o'sha bitta instansiyani o'z o'ramiga qo'yadi). display:contents — joylashuvga ta'sir qilmaydi.
+// Shriftlar — AI Studio bilan bir xil (Space Grotesk + Inter, robohub/fonts.ts): root layout'ga emas, faqat shu o'ramga
+// ulanadi, Academy esa Unbounded + Manrope'da qoladi. display:contents — joylashuvga ta'sir qilmaydi
+// (o'zgaruvchilar va font-family baribir ichkariga meros bo'lib o'tadi).
 export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className={inter.variable} style={{ display: "contents" }}>
+    <div className={fontClass} style={{ display: "contents" }}>
       {children}
     </div>
   );
