@@ -3,6 +3,18 @@ import { getMessages } from "@/i18n/server";
 import PricingScript from "./pricing-script";
 import { messages } from "./pricing.i18n";
 
+// Oʻng panel tepasi: ulangan toʻrtta marketpleys, ostida — tez kunda qoʻshiladiganlar (xiraroq).
+// Rasmiy logotipi hali yoʻqlari nom bilan chiqadi — fayl qoʻshilganda logo yoziladi.
+const MPS = ["uzum", "yandex", "wildberries", "ozon"];
+const SOON: { name: string; logo?: string; wide?: boolean }[] = [
+  { name: "Kaspi", logo: "/marketplaces/kaspi.svg" },
+  { name: "Teez", logo: "/marketplaces/teez.webp", wide: true },
+  { name: "MMarket", logo: "/marketplaces/mmarket.svg", wide: true },
+  { name: "Namba One", logo: "/marketplaces/namba.svg", wide: true },
+  { name: "LakLak", logo: "/marketplaces/laklak.webp", wide: true },
+  { name: "Avval", logo: "/marketplaces/avval.svg", wide: true },
+];
+
 export default async function Pricing() {
   const t = await getMessages(messages);
   return (
@@ -69,20 +81,41 @@ export default async function Pricing() {
               </div>{" "}
               <div className="plan__in" data-theme="dark">
                 <p className="plan__mps" aria-hidden="true">
-                  <img src="/marketplaces/uzum.svg" alt="" width="38" height="38" />{" "}
-                  <img src="/marketplaces/yandex.svg" alt="" width="38" height="38" />{" "}
-                  <img src="/marketplaces/wildberries.svg" alt="" width="38" height="38" />{" "}
-                  <img src="/marketplaces/ozon.svg" alt="" width="38" height="38" />
+                  {MPS.map((m) => (
+                    <img key={m} src={`/marketplaces/${m}.svg`} alt="" width="38" height="38" />
+                  ))}
+                </p>{" "}
+                <p className="plan__soon">
+                  <em>{t.soon}</em>
+                  {SOON.map((m) => (
+                    <span key={m.name} className={m.wide ? "is-wide" : undefined}>
+                      {m.wide ? <img src={m.logo} alt={m.name} height="14" /> : m.logo && <img src={m.logo} alt="" width="16" height="16" />}
+                      {!m.wide && m.name}
+                    </span>
+                  ))}
                 </p>{" "}
                 <p className="plan__label">{t.includesLabel}</p>{" "}
-                <ul className="plan__list">
-                  {t.includes.map((item, n) => (
-                    <li key={n} style={{ "--n": String(n) } as CSSProperties}>
-                      <i aria-hidden="true">✓</i>
-                      {item}
-                    </li>
+                {/* guruh bosilsa bandlari tagida ochiladi (bir vaqtda bittasi). Ro'yxat panelning qolgan balandligida
+                    o'zi aylanadi — panel cho'zilmaydi; skroll chizig'i matn ustiga tushmaydi (o'z yo'lagi bor) */}
+                <div className="plan__list">
+                  {t.groups.map((g, n) => (
+                    <details key={g.title} name="plan-groups" style={{ "--n": String(n) } as CSSProperties}>
+                      <summary>
+                        <i aria-hidden="true">✓</i>
+                        <span>{g.title}</span>
+                        <small>{g.items.length}</small>
+                        <svg className="plan__chev" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </summary>
+                      <ul>
+                        {g.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </details>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -1,103 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { CSSProperties, KeyboardEvent } from "react";
-import type { messages } from "./reviews.i18n";
+import type { CSSProperties } from "react";
+import { OPEN_EVENT } from "../reels/reels-client";
 
-// Matnlar server ota komponentdan (reviews.tsx) `t` prop orqali keladi.
-type T = (typeof messages)["uz"];
+// Videosharhlar: ekran kengligidagi lenta, o'zi sekin suriladi va cheksiz takrorlanadi (sichqoncha ustida to'xtaydi).
+// Videolar kam bo'lsa ham ekran to'lishi uchun ro'yxat REPEAT marta ketma-ket chiziladi, so'ng butun bo'lak
+// ikki nusxada — lenta yarmiga surilganda ikkinchi nusxa birinchisining o'rnida turadi (ulanish bilinmaydi).
+// Karta bosilsa — burchakdagi reels pleyeri shu videodan to'liq ekranda ochiladi (OPEN_EVENT).
+type Video = { id: string; name: string; lang: string; flag: string };
+type T = { title: string; prev: string; next: string; watch: string };
 
-// Har sharh ekranda shuncha turadi, keyin navbatdagisiga oʻtadi.
-const STEP = 6000;
+const REPEAT = 2;
+const poster = (id: string) => `https://i.ytimg.com/vi/${id}/oar2.jpg`;
 
-export default function ReviewsClient({ t }: { t: T }) {
-  const REVIEWS = t.reviews;
-  const [at, setAt] = useState(0);
-  // sichqoncha ustida yoki klaviatura fokusida turganda avtomatik almashish toʻxtaydi
-  const [paused, setPaused] = useState(false);
-
-  useEffect(() => {
-    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setTimeout(() => setAt((i) => (i + 1) % REVIEWS.length), STEP);
-    return () => clearTimeout(id);
-  }, [at, paused, REVIEWS.length]);
-
-  const r = REVIEWS[at];
-
-  // Tablar klaviaturada WAI-ARIA andozasi bo'yicha: Tab bilan faqat tanlangan tabga kiriladi,
-  // ←/→ (Home/End) bilan qo'shnisiga o'tiladi va u darhol ochiladi
-  const onTabKey = (e: KeyboardEvent<HTMLButtonElement>) => {
-    const n = REVIEWS.length;
-    const to =
-      e.key === "ArrowRight" ? (at + 1) % n
-      : e.key === "ArrowLeft" ? (at - 1 + n) % n
-      : e.key === "Home" ? 0
-      : e.key === "End" ? n - 1
-      : -1;
-    if (to < 0) return;
-    e.preventDefault();
-    setAt(to);
-    document.getElementById("revs-tab-" + to)?.focus();
-  };
-
+export default function ReviewsVideos({ videos, t }: { videos: Video[]; t: T }) {
+  const half = Array.from({ length: REPEAT }, () => videos).flat();
+  const all = [...half, ...half];
   return (
-    <section className="revs" id="reviews" data-theme="brand" aria-labelledby="revs-title">
-      <div className="container">
-        {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi */}
-        <h2 className="revs__title" id="revs-title" data-sr="" style={{ "--d": "80ms" } as CSSProperties}>
-          {t.titleStart}<span className="accent">{t.titleAccent}</span>
-        </h2>
-        <p className="revs__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
-          {t.lead}
-        </p>
-
-        {/* Tabloga oʻxshash: tepada oltita natija raqami, pastda tanlangan raqam ortidagi sotuvchining gapi.
-            Raqam bosilsa oʻsha sharh ochiladi; aks holda STEP oraligʻida oʻzi almashadi. */}
-        <div
-          className="revs__stage"
-          data-sr=""
-          style={{ "--d": "200ms", "--step": STEP + "ms" } as CSSProperties}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
-        >
-          <div className="revs__tabs" role="tablist" aria-label={t.tabsLabel}>
-            {REVIEWS.map((x, i) => (
-              <button
-                className={"revs__tab" + (i === at ? " is-on" : "")}
-                key={x.num}
-                type="button"
-                role="tab"
-                id={"revs-tab-" + i}
-                aria-selected={i === at}
-                aria-controls="revs-panel"
-                tabIndex={i === at ? 0 : -1}
-                onClick={() => setAt(i)}
-                onKeyDown={onTabKey}
-              >
-                <b>{x.num}</b>
-                <span>{x.label}</span>
-                {/* vaqt chizigʻi: toʻlganda keyingi sharhga oʻtadi */}
-                {i === at && !paused && <i aria-hidden="true" />}
-              </button>
-            ))}
-          </div>
-          <div className="revs__spot" id="revs-panel" role="tabpanel" aria-labelledby={"revs-tab-" + at} tabIndex={0} key={at}>
-            <div>
-              <h3>{r.title}</h3>
-              <p>{r.text}</p>
-            </div>
-            <div className="revs__who">
-              <i aria-hidden="true">{r.initial}</i>
-              <span>
-                <b>{r.who}</b>
-                <span>{r.meta}</span>
-              </span>
-            </div>
-          </div>
-        </div>
+    <div className="revs__videos" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
+      <h3 className="revs__sub">{t.title}</h3>
+      <div className="revs__vmarquee">
+        <ul className="revs__track" style={{ "--dur": `${half.length * 6}s` } as CSSProperties}>
+          {all.map((v, k) => {
+            const i = k % videos.length;
+            const copy = k >= videos.length; // birinchi nusxadan keyingilari — ekran o'quvchilar va Tab uchun yashirin
+            return (
+              <li key={k} aria-hidden={copy || undefined}>
+                <button
+                  type="button"
+                  className="revs__video"
+                  tabIndex={copy ? -1 : undefined}
+                  onClick={() => window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: i }))}
+                  aria-label={`${t.watch}: ${v.name}`}
+                >
+                  <img src={poster(v.id)} alt="" loading="lazy" draggable={false} />
+                  <span className="revs__play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M8 5.5v13l11-6.5z" />
+                    </svg>
+                  </span>
+                  <span className="revs__cap">
+                    <b>{v.name}</b>
+                    <small>
+                      <img src={`/flags/${v.flag}.svg`} alt="" width="14" height="14" />
+                      {v.lang}
+                    </small>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-    </section>
+    </div>
   );
 }

@@ -101,6 +101,15 @@ export function init(t) {
   shown[total.id] = BASE * 3;     // boshlang'ich qiymat sahifada yozilgan — noldan sanamaslik uchun
   choose(0);
 
+  /* "Tarifga nimalar kiradi": guruh ochilganda ro'yxat o'sha guruhga aylanadi (sahifa emas, faqat ro'yxat) */
+  var list = plan.querySelector(".plan__list");
+  if (list) list.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (!d.open) return;
+    var top = d.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - 4;
+    list.scrollTo({ top: top, behavior: reduced ? "auto" : "smooth" });
+  }, true);
+
   /* "Nimalar kiradi" bandlari karta ekranga kirganda navbat bilan belgilanadi */
   if (!("IntersectionObserver" in window)) { plan.classList.add("is-in"); return; }
   var io = new IntersectionObserver(function (entries) {

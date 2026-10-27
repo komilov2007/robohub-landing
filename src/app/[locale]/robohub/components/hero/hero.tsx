@@ -3,22 +3,22 @@ import { getMessages } from "@/i18n/server";
 import HeroVideo from "./hero-video";
 import { messages } from "./hero.i18n";
 
-// Ichki halqa: sakkizta marketpleys — toʻrt asosiysi navbat bilan yangilari orasida, halqa boʻylab teng tarqaladi
+// Ichki halqa: ulangan marketpleyslar — katta plitkalar, halqa bo'ylab teng tarqaladi.
 const MARKETPLACES = [
   "/marketplaces/uzum.svg",
   "/robosell/icons/alif.svg",
   "/marketplaces/wildberries.svg",
-  "/marketplaces/halyk.svg",
-  "/marketplaces/ozon.svg",
   "/robosell/icons/click-outline.svg",
-  "/marketplaces/yandex.svg",
+  "/marketplaces/ozon.svg",
   "/robosell/icons/zoomrad.svg",
+  "/marketplaces/yandex.svg",
 ];
 
-// Ombor va hisob tizimlari (logotipi boʻlmasa — harfli belgi chiqadi).
-const SYSTEMS: { name: string; logo?: string }[] = [
+// Tashqi halqa: ombor va hisob tizimlari (integratsiyalar) — kichikroq va xiraroq plitkalar, faqat logotip.
+const SYSTEMS: { name: string; logo: string }[] = [
   { name: "МойСклад", logo: "/integrations/moysklad.svg" },
   { name: "BILLZ", logo: "/integrations/billz.svg" },
+  { name: "Smartup", logo: "/integrations/smartup.svg" },
   { name: "1С", logo: "/integrations/1c.svg" },
   { name: "ERA", logo: "/integrations/era.svg" },
   { name: "YesPOS", logo: "/integrations/yespos.svg" },
@@ -83,7 +83,7 @@ export default async function Hero() {
             </div>
           </div>
 
-          {/* Oʻngda orbita: markazda Robohub, ichki halqada sakkizta marketpleys, tashqi halqada ombor va hisob tizimlari.
+          {/* Oʻngda orbita: markazda Robohub, ichki halqada marketpleyslar, tashqi halqada ombor va hisob tizimlari.
               Halqalar sekin aylanadi, belgilar tik turadi. Bezak — matn chapda bor. */}
           <div className="hero__visual" aria-hidden="true">
             <div className="orbit">
@@ -104,11 +104,10 @@ export default async function Hero() {
               </div>
               <div className="orbit__ring orbit__ring--out">
                 {SYSTEMS.map((s, i) => (
-                  <div className="orbit__item" key={s.name} style={{ "--a": `${-70 + i * 40}deg` } as CSSProperties}>
+                  <div className="orbit__item" key={s.name} style={{ "--a": `${-70 + i * (360 / SYSTEMS.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className="orbit__tile">
-                        {s.logo ? <img src={s.logo} alt="" /> : <b>{s.name[0]}</b>}
-                        <em>{s.name}</em>
+                        <img src={s.logo} alt="" title={s.name} />
                       </span>
                     </span>
                   </div>

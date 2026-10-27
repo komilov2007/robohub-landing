@@ -107,7 +107,7 @@
 .hero{position:relative;padding:var(--sp-8) 0 var(--sp-10);background:var(--bg);overflow:hidden}
 .hero__grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);gap:clamp(32px,4.5vw,64px);align-items:center}
 
-.hero__title{margin:0 0 var(--sp-3);font-size:clamp(28px,2.95vw,40px);line-height:1.16;letter-spacing:-.035em}
+.hero__title{margin:0 0 var(--sp-3);font-size:clamp(30px,3.25vw,44px);line-height:1.16;letter-spacing:-.035em}
 /* LCP: so'zlar darhol ko'rinadi — opacity 0 dan emas va kechikishsiz, faqat siljish va xiralik */
 .hero__title .w{display:inline-block;animation:word-in 820ms var(--ease-soft) backwards}
 @keyframes word-in{
@@ -127,7 +127,7 @@
 /* hero matn bloklari (lead, faktlar, CTA): .reveal o'rniga — opacity'siz, kechikishsiz, faqat siljish */
 .hero__rise{animation:rise-y 760ms var(--ease-soft) backwards}
 @keyframes rise-y{from{transform:translate3d(0,14px,0)}to{transform:none}}
-.hero__lead{max-width:36ch;margin-bottom:var(--sp-3);font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:var(--text-dim)}
+.hero__lead{max-width:40ch;margin-bottom:var(--sp-3);font-size:clamp(15px,1.15vw,17px);line-height:1.55;color:var(--text-dim)}
 /* Ajratuvchi nuqta — har bandning boshida (li::before). Band chapga nuqta+oraliq kengligicha (16px) suriladi, shuning uchun
    qator boshidagi nuqta ro'yxat chetidan tashqarida qoladi va kesiladi (overflow-x:clip): qator qayerda bo'linmasin,
    nuqta faqat bandlar orasida ko'rinadi, oxirida osilib qolmaydi. padding-left (margin bilan qoplangan) — kesish chetini
@@ -171,7 +171,7 @@
    ============================================================ */
 .hero__visual{position:relative;min-width:0}
 .orbit{
-  --ri:25cqw;--ro:42cqw;--tile:clamp(38px,9.4cqw,54px);
+  --ri:29cqw;--ro:43cqw;--tile:clamp(38px,9.4cqw,54px);
   position:relative;width:100%;max-width:580px;aspect-ratio:1;margin:0 auto;container-type:inline-size;
   animation:hero-pop 1000ms var(--ease-soft) 400ms backwards;
 }
@@ -191,11 +191,16 @@
 .orbit__up{position:absolute;left:0;top:0;width:0;height:0;animation:orbit-spin var(--t) linear infinite reverse}
 .orbit__ring--in .orbit__up{animation-direction:normal}
 .orbit__tile{position:absolute;left:0;top:0;width:max-content;display:grid;justify-items:center;gap:6px;transform:translate(-50%,calc(var(--tile) / -2))}
-.orbit__tile img,.orbit__tile b{width:var(--tile);height:var(--tile);border-radius:28%;background:#fff;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line),0 16px 28px -12px rgba(0,54,52,.45)}
+.orbit__tile img,.orbit__tile b{width:var(--tile);height:var(--tile);border-radius:28%;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(0,54,52,.28))}
+/* Uzum, Wildberries, Ozon, Yandex (o'z rangli foni bor) — fonsiz; qolganlari (alif, Click, Zoomrad va hisob tizimlari) — oq ramkali plitkada */
+.orbit__tile img:not([src*="/marketplaces/"]){background:#fff;filter:none;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line),0 16px 28px -12px rgba(0,54,52,.45)}
+/* alif, Click, Zoomrad — plitka o'lchami o'sha, logotip ichida biroz kichikroq */
+.orbit__tile img[src*="/robosell/icons/"]{box-sizing:border-box;padding:15%}
 .orbit__tile b{display:grid;place-items:center;font-size:calc(var(--tile) * .42);font-weight:800;background:#E3EFEA;color:var(--brand)}
 .orbit__tile em{padding:2px 9px;border-radius:99px;background:rgba(255,255,255,.92);font-style:normal;font-size:clamp(9.5px,2.05cqw,12px);font-weight:700;line-height:1.4;white-space:nowrap}
 /* ichki halqa — asosiy gap marketpleyslarda: kattaroq */
 .orbit__tile--mp{--tile:clamp(44px,11.4cqw,66px)}
+/* tashqi halqa — ombor va hisob tizimlari: kichikroq va xiraroq, marketpleyslardan e'tiborni tortmaydi */
 /* tashqi halqa — ombor va hisob tizimlari: kichikroq va xiraroq, marketpleyslardan e'tiborni tortmaydi */
 .orbit__ring--out .orbit__tile{--tile:clamp(30px,7.6cqw,44px);gap:4px;opacity:.6;filter:blur(.4px) saturate(.7)}
 .orbit__ring--out .orbit__tile em{padding:1px 7px;font-size:clamp(8.5px,1.8cqw,10.5px)}
@@ -222,10 +227,10 @@
 @media (max-width:960px){
   .hero{padding:var(--sp-6) 0 var(--sp-8)}
   .hero__grid{grid-template-columns:1fr;gap:var(--sp-5)}
-  .hero__title{font-size:clamp(24px,5.4vw,36px)}
+  .hero__title{font-size:clamp(26px,6vw,38px)}
 }
 @media (max-width:560px){
-  .hero__lead{font-size:16px}
+  .hero__lead{font-size:15px}
   .hero__cta{flex-direction:column}
   .hero__cta .btn{width:100%}
   /* tor ekranda bandlar deyarli har biri alohida qatorda — ajratuvchi nuqta o'rniga oraliq */
@@ -802,6 +807,9 @@
 /* Markazga kelganda (is-on — features.script.js): karta yorug' halqa bilan "yonadi",
    matn esa raqam → sarlavha → izoh tartibida ketma-ket oqib chiqadi. */
 .feat-card{transition:box-shadow 500ms var(--ease-soft)}
+/* video karta: video fon rangidagi karta ichida to'liq ko'rinadi */
+.feat-card:has(.fd__video){background:#075B4E}
+.fd__video{display:block;width:100%;height:100%;object-fit:contain}
 .feat-card.is-on{box-shadow:0 0 0 3px rgba(184,255,176,.55),0 34px 70px -26px rgba(0,43,41,.5)}
 .feat-text__n{transition:color 400ms}
 .feat-text.is-on .feat-text__n{color:var(--brand)}
@@ -882,6 +890,8 @@
 .fd .line > span{flex:0 0 31%;color:var(--mute)}
 .fd .line > b{flex:0 0 27%;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .fd .line--sum{padding-top:.6em;border-top:1px dashed var(--edge)}
+.fd .line > .mp{width:1.45em;height:1.45em;margin-right:-.3em}
+.fd .line > .mp + span{flex-basis:24%}
 .fd .line--sum > span{color:var(--fg);font-weight:800}
 .fd .ring{flex:none;width:8.6em;height:8.6em;display:grid;place-items:center;border-radius:50%;background:conic-gradient(var(--hi) 0 74%,var(--soft) 0)}
 .fd .ring b{width:6.8em;height:6.8em;display:grid;place-items:center;border-radius:50%;background:var(--card);font-family:var(--font-head);font-weight:600}
@@ -894,6 +904,32 @@
 .fd .mx b.is-bad{background:rgba(250,207,0,.35)}
 .fd .spark{flex:none;width:1.5em;height:1.5em;padding:.25em;border-radius:.4em;background:var(--hi);color:var(--hi-ink)}
 .fd .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+/* qoldiq: har marketpleys plitkasi — eski son (24) o'chadi, yangisi (23) va ✓ chiqadi */
+.fd .stock{display:flex;align-items:center;gap:.45em;padding:.55em .65em;border-radius:.9em;background:var(--soft);font-size:1.02em;font-weight:700;white-space:nowrap}
+.fd .stock > span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.fd .stock s{color:var(--mute);font-weight:600}
+.fd .stock .ok{width:1.3em;height:1.3em;display:grid;place-items:center;border-radius:50%;background:var(--hi);color:var(--hi-ink);font-size:.75em;font-style:normal}
+.fd .row.is-event{background:rgba(250,207,0,.14)}
+.fd .row .big-n{font-family:var(--font-head);font-size:1.25em}
+.feat-card.is-on .stock s{animation:ft-strike 600ms var(--ease) 900ms backwards}
+.feat-card.is-on .stock .ok{animation:ft-tPop 420ms cubic-bezier(.34,1.56,.64,1) calc(var(--j,0) * 90ms + 1100ms) backwards}
+@keyframes ft-strike{from{text-decoration-color:transparent;opacity:1}}
+/* tahlil: narx tarkibi (bitta chiziqda) + izoh + platformalar jadvali */
+.fd .ue{display:flex;align-items:baseline;justify-content:space-between}
+.fd .ue b{font-family:var(--font-head);font-size:1.35em;letter-spacing:-.02em}
+.fd .stack{flex:none;display:flex;height:.75em;border-radius:99em;overflow:hidden;gap:2px}
+.fd .stack i{width:var(--w);background:var(--c)}
+.feat-card.is-on .stack i{transform-origin:left;animation:ft-tGrowX 700ms cubic-bezier(.33,1,.68,1) backwards}
+.fd .leg{display:flex;flex-wrap:wrap;gap:.25em .8em;font-size:.86em;font-weight:600;color:var(--mute)}
+.fd .leg span{display:inline-flex;align-items:center;gap:.35em}
+.fd .leg span::before{content:"";width:.6em;height:.6em;border-radius:50%;background:var(--c)}
+.fd .leg b{color:var(--fg)}
+.fd .tbl{display:grid;grid-template-columns:1fr auto auto;gap:.3em 1.2em;align-items:center;font-size:.98em}
+.fd .tbl em{font-style:normal;font-size:.82em;font-weight:700;color:var(--mute);text-align:right}
+.fd .tbl span{display:flex;align-items:center;gap:.45em;font-weight:700}
+.fd .tbl .mp{width:1.3em;height:1.3em}
+.fd .tbl b{text-align:right;font-variant-numeric:tabular-nums}
+.fd .tbl b:nth-of-type(2n){color:var(--hi)}
 .fd .file{flex:none;padding:.2em .5em;border-radius:.4em;background:var(--hi);color:var(--hi-ink);font-family:var(--font-head);font-size:.8em;font-weight:600}
 .fd .ticket{display:flex;align-items:center;gap:.8em;padding:.6em .9em;border-radius:.9em;border:1px dashed var(--mute);font-size:1.05em;font-weight:600;white-space:nowrap}
 .fd .ticket code{font-family:var(--font-head);font-weight:600;color:var(--hi)}
@@ -1009,11 +1045,11 @@
 }
 .tools > .container{position:relative}
 
-.tools__head{max-width:720px;margin-bottom:var(--sp-6)}
+.tools__head{max-width:720px;margin:0 auto var(--sp-6);text-align:center}
 .tools__title{font-size:clamp(22px,2.4vw,32px);line-height:1.12;letter-spacing:-.03em}
 .tools__lead{margin-top:var(--sp-2);font-size:clamp(15px,1.25vw,17px);line-height:1.55;color:var(--text-dim)}
 
-.tools__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:var(--sp-4);align-items:stretch}
+.tools__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:var(--sp-4) var(--sp-8);align-items:stretch}
 .tool{display:flex;flex-direction:column;gap:var(--sp-3);min-width:0}
 /* keng ekranda ikki ustun: sarlavha qismlari bitta qatorda (subgrid) — tavsif uzunligi har xil bo'lsa ham oynalar bir chiziqda boshlanadi */
 @media (min-width:1041px){
@@ -1021,13 +1057,17 @@
   .tool{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--sp-3)}
   .tool__head{align-content:flex-start}   /* nomlar tepada bir chiziqda */
 }
-.tool__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--sp-2);min-height:90px}
+/* ikkala vosita bir xil: nom, izoh, ostida tugma */
+.tool__head{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)}
 /* nomi (masalan "AI-инфографика") defisda bo'linmasin: sig'masa tugma pastki qatorga o'tadi */
-.tool__name{font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em;white-space:nowrap}
+.tool__name{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em;white-space:nowrap}
+.tool__by{flex:none;width:1.4em;height:auto;fill:currentColor;color:var(--mint)}   /* kalkulyator nomi oldida Robohub belgisi */
+/* AI studio — generatsiya ranglarida (gradient matn) */
+.tool__ai{background:linear-gradient(90deg,#B8FFB0,#34E5E6 45%,#B48CFF 75%,#FF8FC8);-webkit-background-clip:text;background-clip:text;color:transparent}
 /* ruschada nomlar uzunroq ("AI-инфографика") — tor ustunda tugma bilan bir qatorga sig'ishi uchun biroz kichikroq */
 :lang(ru) .tool__name{font-size:clamp(18px,1.55vw,21px)}
 /* matn bloki tavsif uzunligiga qarab kengaymasin: faqat nomgacha qisqaradi, tavsif ichida o'raladi */
-.tool__head>div{flex:1 1 260px;min-width:min-content}   /* tor ustunda tugma tavsif ostiga tushadi */
+.tool__head>div{min-width:0}
 .tool__desc{margin-top:6px;max-width:520px;font-size:15px;line-height:1.5;color:var(--text-dim)}
 .tool__go{
   flex:none;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r-pill);
@@ -1065,6 +1105,9 @@
 .calc__step{display:flex;align-items:center;gap:9px;margin:0 0 10px;font-size:14px;font-weight:700}
 .calc__step b{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:#fff;font-size:12px}
 .calc__step ~ .calc__step{margin-top:16px}
+.calc__step span{display:grid;line-height:1.25}
+.calc__step small{font-size:11.5px;font-weight:500;color:#6F8985}
+.calc__step:has(small){align-items:flex-start}
 .fld{display:block;margin-bottom:10px}
 .fld > span:first-child{display:block;margin-bottom:5px;font-size:12.5px;font-weight:600;color:var(--text-dim)}
 .fld__box{
@@ -1106,15 +1149,43 @@
 /* juda uzun son bir qatorga sig'ishi uchun */
 .calc.is-long .calc__sum b{font-size:24px}
 /* narx qayerga ketadi: komissiya | tannarx | qoladi */
-.calc__bar{display:flex;gap:3px;height:8px;margin-top:10px}
+.calc__bar{display:flex;gap:3px;height:10px}
 .calc__bar i{display:block;min-width:0;border-radius:4px;transition:flex-grow 260ms var(--ease-soft)}
-.calc__bar .is-fee{flex:var(--fee,15) 0 0;background:var(--accent)}
-.calc__bar .is-cost{flex:var(--cost,50) 0 0;background:rgba(241,255,240,.38)}
-.calc__bar .is-left{flex:var(--left,35) 0 0;background:var(--mint)}
+/* ulushlar ranglari: komissiya — sariq, yetkazish — ko'k, tannarx — kulrang, foyda — yashil */
+.calc__where{--c-fee:#F5A524;--c-log:#5B8DEF;--c-tax:#A77BE8;--c-cost:#A9BDB8;--c-left:#16A36A}
+.calc__bar .is-fee{flex:var(--fee,15) 0 0;background:var(--c-fee)}
+.calc__bar .is-log{flex:var(--log,3) 0 0;background:var(--c-log)}
+.calc__bar .is-tax{flex:var(--tax,0) 0 0;background:var(--c-tax)}
+.calc__bar .is-cost{flex:var(--cost,50) 0 0;background:var(--c-cost)}
+.calc__bar .is-left{flex:var(--left,32) 0 0;background:var(--c-left)}
 .calc__kpis{display:flex;gap:8px;margin-top:10px}
 .calc__kpis span{flex:1;padding:7px 10px;border-radius:10px;background:rgba(241,255,240,.09);font-size:11.5px;font-weight:600;color:#A8CFCA}
 .calc__kpis b{display:block;font-size:15px;color:#F1FFF0;font-variant-numeric:tabular-nums}
-.calc.is-wait .calc__bar i{flex:1 0 0;background:rgba(241,255,240,.14)}
+.calc.is-wait .calc__bar i{flex:1 0 0;background:#E3ECE8}
+.calc__kpis span{min-width:0}
+.calc__kpis b{white-space:nowrap}
+/* xaridor to'lagan pul qayerga ketadi */
+.calc__where{margin-bottom:10px;padding:12px 14px;border-radius:14px;border:1px solid #DCE9E4;background:#fff}
+.calc__where h4{margin:0 0 10px;font:inherit;font-size:13px;font-weight:700}
+.calc__where ul{display:grid;gap:5px;margin-top:10px}
+.calc__where li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;font-size:12.5px;color:var(--text-dim)}
+.calc__where li span{display:flex;align-items:center;gap:7px}
+.calc__where li span::before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:var(--c)}
+.calc__where li.is-fee{--c:var(--c-fee)}.calc__where li.is-log{--c:var(--c-log)}.calc__where li.is-tax{--c:var(--c-tax)}.calc__where li.is-cost{--c:var(--c-cost)}.calc__where li.is-left{--c:var(--c-left)}
+.calc__where em{min-width:30px;font-style:normal;font-size:11.5px;text-align:right;color:#6F8985}
+.calc__where b{min-width:62px;font-weight:600;text-align:right;color:var(--text);font-variant-numeric:tabular-nums}
+.calc__where li.is-left b{color:var(--c-left);font-weight:800}
+/* 3-qadam: FBO / FBS / DBS */
+.calc__models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.calc__models button{
+  display:grid;gap:2px;padding:8px 9px;border-radius:12px;border:1px solid #DCE9E4;background:#fff;text-align:left;cursor:pointer;
+  font:inherit;transition:border-color 200ms var(--ease),background 200ms var(--ease);
+}
+.calc__models button:hover{border-color:var(--brand)}
+.calc__models b{font-size:13px;font-weight:800;color:var(--text)}
+.calc__models small{font-size:11px;line-height:1.25;color:#6F8985}
+.calc__models [aria-checked="true"]{border-color:var(--brand);background:#EEF7EC;box-shadow:inset 0 0 0 1px var(--brand)}
+.calc__models button:focus-visible{outline:3px solid rgba(0,82,79,.25);outline-offset:1px}
 
 .calc__detail{padding:12px 14px;border-radius:14px;background:#F3F9F1}
 .calc__detail h4{margin:0 0 8px;font:inherit;font-size:13px;font-weight:700}
@@ -1237,6 +1308,15 @@
 .ai__style:hover{color:var(--text);transform:translateY(-2px)}
 .ai__style:hover img{opacity:1}
 .ai__style.is-on{color:var(--mint)}
+/* keng ekranda oyna kalkulyator balandligiga cho'ziladi — bo'sh joy qolmasin: kadr kattaroq, uslublar 2×2 katta plitkalarda
+   (kenglik o'zgarmaydi) */
+@media (min-width:1041px){
+  .ai{justify-content:flex-start;gap:10px}
+  .ai__frame{width:74%}
+  .ai__label{margin-top:auto}
+  .ai__styles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+  .ai__style img{aspect-ratio:4 / 3}
+}
 .ai__style.is-on img{opacity:1;outline-color:var(--mint)}
 /* tanlangan uslub burchagida belgi */
 .ai__style.is-on::after{
@@ -1558,81 +1638,53 @@
 .mkt__title .accent{color:var(--brand)}
 .mkt__lead{max-width:52ch;margin-bottom:var(--sp-4);font-size:17px;color:var(--text-dim)}
 
-/* ---------- LAUNCH: "Robohub'siz ↔ Robohub bilan" taqqoslash (bozor/launch.tsx) ---------- */
-.launch{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:8px;border-radius:30px;background:#fff;
-  border:1px solid rgba(0,82,79,.1);box-shadow:0 34px 64px -46px rgba(0,54,52,.55)}
-.launch__col{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;padding:18px 18px 20px;border-radius:24px}
-.launch__col--off{background:#F3F5F4}
-.launch__col--on{background:radial-gradient(130% 90% at 100% 0%,#0C6A60,#00524F 55%,#003634);color:#fff;box-shadow:0 26px 44px -26px rgba(0,54,52,.8)}
-.launch__col--on::before{content:"";position:absolute;z-index:-1;left:50%;top:-30px;width:240px;height:240px;margin-left:-120px;border-radius:50%;
-  background:radial-gradient(circle,rgba(184,255,176,.35),transparent 65%);animation:launch-breathe 4s ease-in-out infinite}
-
-.launch__tag{align-self:flex-start;padding:5px 11px;border-radius:var(--r-pill);font-size:12px;font-weight:800;letter-spacing:.02em}
-.launch__col--off .launch__tag{background:#fff;color:rgba(0,54,52,.55);border:1px solid rgba(0,54,52,.1)}
-.launch__col--on .launch__tag{background:rgba(184,255,176,.16);color:var(--mint);border:1px solid rgba(184,255,176,.25)}
-
-/* tasvir maydoni */
-.launch__art{position:relative;height:118px;margin:14px 0 8px}
-/* Robohub'siz: to'rtta alohida, qiyshaygan "oyna" */
-.launch__col--off .launch__art{display:grid;grid-template-columns:repeat(2,58px);justify-content:center;align-content:center;gap:8px 12px}
-.launch__win{display:grid;justify-items:center;gap:4px;padding:5px 0 7px;border-radius:12px;background:#fff;border:1px solid rgba(0,54,52,.08);
-  box-shadow:0 8px 14px -10px rgba(0,0,0,.3);rotate:calc((var(--k) - 1.5) * 3deg);animation:launch-wobble 3.2s ease-in-out calc(var(--k) * -.8s) infinite}
-.launch__win i{width:26px;height:4px;border-radius:2px;background:repeating-linear-gradient(90deg,#E2E8E5 0 5px,transparent 5px 8px)}
-.launch__win img{width:26px;height:26px;border-radius:8px;filter:grayscale(.35)}
-/* Robohub bilan: logolar markazdagi kabinetga uchib kiradi */
-.launch__col--on .launch__art{display:grid;place-items:center}
-.launch__mark{position:relative;display:grid;place-items:center;width:64px;height:44px;border-radius:14px;background:#fff;color:var(--brand);
-  box-shadow:0 0 0 8px rgba(184,255,176,.14),0 0 0 18px rgba(184,255,176,.06),0 16px 30px -10px rgba(0,0,0,.5);animation:launch-gulp 4s var(--ease) infinite}
-.launch__mark svg{width:36px;height:auto;fill:currentColor}
-.launch__fly{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:8px;box-shadow:0 6px 12px -6px rgba(0,0,0,.5);
-  animation:launch-fly 4s var(--ease) calc(var(--k) * 120ms) infinite}
-.launch__fly:nth-child(1){--x:-92px;--y:-34px}
-.launch__fly:nth-child(2){--x:92px;--y:-34px}
-.launch__fly:nth-child(3){--x:-92px;--y:34px}
-.launch__fly:nth-child(4){--x:92px;--y:34px}
-
-/* soni */
-.launch__count{display:flex;align-items:baseline;gap:8px;padding-bottom:14px;margin-bottom:14px;font-size:14.5px;font-weight:700}
-.launch__count b{font-family:var(--font-head);font-size:clamp(38px,3.4vw,48px);line-height:.9;letter-spacing:-.05em}
-.launch__col--off .launch__count{color:rgba(0,54,52,.55);border-bottom:1px dashed rgba(0,54,52,.15)}
-.launch__col--off .launch__count b{color:rgba(0,54,52,.4)}
-.launch__col--on .launch__count{color:rgba(241,255,240,.85);border-bottom:1px dashed rgba(184,255,176,.25)}
-.launch__col--on .launch__count b{color:var(--mint)}
-
-/* ro'yxatlar */
-.launch__list{display:grid;gap:11px}
-.launch__list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:600;line-height:1.4}
-.launch__list i{flex:none;display:grid;place-items:center;width:20px;height:20px;margin-top:-1px;border-radius:50%}
-.launch__col--off .launch__list li{color:rgba(0,54,52,.6)}
-.launch__col--off .launch__list i{background:#FBE3E1;color:#D9534A}
-.launch__col--on .launch__list li{color:#fff}
-.launch__col--on .launch__list i{background:var(--mint);color:var(--brand)}
-
-/* o'rtadagi o'q */
-.launch__arrow{position:absolute;z-index:2;left:50%;top:92px;display:grid;place-items:center;width:42px;height:42px;margin-left:-21px;border-radius:50%;
-  background:#fff;color:var(--brand);box-shadow:0 0 0 6px #fff,0 12px 24px -10px rgba(0,54,52,.5);animation:launch-nudge 2s var(--ease) infinite}
-
-@keyframes launch-wobble{0%,100%{transform:none}50%{transform:translateY(-3px)}}
-@keyframes launch-fly{
-  0%{transform:translate(var(--x),var(--y));opacity:0}
-  12%{opacity:1}
-  45%{transform:translate(var(--x),var(--y));opacity:1}
-  70%,100%{transform:translate(0,0) scale(.4);opacity:0}
+/* ---------- REGIONS: mamlakatlar va marketpleyslar ro'yxati (market/regions.tsx) ----------
+   Har qator: bayroq + mamlakat | ulangan marketpleyslar (logotip + nom) va "Tez kunda" (punktir, xiraroq). */
+.reg__list{display:grid;padding:6px 18px;border-radius:26px;background:#fff;border:1px solid var(--line);box-shadow:0 24px 50px -36px rgba(0,54,52,.45)}
+.reg__row{display:grid;grid-template-columns:168px minmax(0,1fr);align-items:center;gap:8px 16px;padding:14px 10px;margin:0 -10px;border-radius:16px;transition:background 200ms var(--ease)}
+.reg__row{position:relative}
+.reg__row{cursor:pointer}
+.reg__row:hover{background:#F6FAF5}
+/* globusda yongan mamlakat (market bo'limining data-active'i — globe.tsx) */
+.reg__row::after{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:2px;background:var(--brand);transform:scaleY(0);transition:transform 350ms var(--ease-soft)}
+.mkt[data-active="uz"] .reg__row[data-c="uz"],.mkt[data-active="kz"] .reg__row[data-c="kz"],.mkt[data-active="kg"] .reg__row[data-c="kg"],
+.mkt[data-active="ru"] .reg__row[data-c="ru"],.mkt[data-active="tj"] .reg__row[data-c="tj"]{background:#EEF7EC}
+.mkt[data-active="uz"] .reg__row[data-c="uz"]::after,.mkt[data-active="kz"] .reg__row[data-c="kz"]::after,.mkt[data-active="kg"] .reg__row[data-c="kg"]::after,
+.mkt[data-active="ru"] .reg__row[data-c="ru"]::after,.mkt[data-active="tj"] .reg__row[data-c="tj"]::after{transform:none}
+/* qatorlar orasidagi to'g'ri chiziq (yumaloq burchakli qatorning o'z chegarasi egilib qoladi) */
+.reg__row + .reg__row::before{content:"";position:absolute;left:10px;right:10px;top:0;height:1px;background:var(--line)}
+.reg__row:hover::before,.reg__row:hover + .reg__row::before{opacity:0}
+.reg__row{transition:background 300ms var(--ease)}
+.reg__country{display:flex;align-items:center;gap:11px;color:var(--ink)}
+.reg__country img{flex:none;width:28px;height:28px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #fff,0 0 0 3px rgba(0,54,52,.1)}
+.reg__country span{display:grid;line-height:1.25}
+.reg__country b{font-size:15px;font-weight:800}
+.reg__country small{font-size:12px;font-weight:600;color:var(--text-dim)}
+.reg__mps{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.reg__mp{
+  display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:var(--r-pill);
+  background:#F3F9F1;font-size:13px;font-weight:700;line-height:1.2;white-space:nowrap;color:var(--ink);
 }
-@keyframes launch-gulp{0%,62%,100%{transform:none}72%{transform:scale(1.1)}}
-@keyframes launch-breathe{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
-@keyframes launch-nudge{0%,100%{transform:none}50%{transform:translateX(3px)}}
-@media (prefers-reduced-motion:reduce){
-  .launch *,.launch__col--on::before{animation:none!important}
-  .launch__fly{transform:translate(var(--x),var(--y))}
+.reg__mp img,.reg__mono{flex:none;width:20px;height:20px;border-radius:6px;object-fit:contain;background:#fff}
+.reg__mono{display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--brand);background:#E3EFEA}
+/* tez kunda: yozuv + punktir chegarali, xiraroq kapsulalar */
+.reg__soon{display:flex;flex-basis:100%;flex-wrap:wrap;align-items:center;gap:6px}   /* har doim alohida qatorda */
+.reg__soon em{
+  padding:2px 8px;border-radius:var(--r-pill);background:rgba(250,207,0,.22);
+  font-size:10.5px;font-style:normal;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#7A5B00;
 }
+/* tez kunda: hammasi bir xil oq kapsula — balandligi, chegarasi va logotip balandligi bir xil */
+.reg__mp--soon{height:28px;padding:0 12px;border:1px solid rgba(0,54,52,.12);background:#fff;color:var(--ink)}
+.reg__mp--soon img{height:16px;width:auto;border-radius:0;background:none}
+.reg__mp--soon:not(.reg__mp--wide) img{width:16px;border-radius:50%}
+/* wordmark logotiplar (Teez, MMarket, LakLak, Avval): nom o'rniga logotipning o'zi */
+.reg__mp--wide img{width:auto;max-width:84px;height:16px;object-fit:contain}
+.reg__cta{margin-top:var(--sp-3)}
 
 @media (max-width:600px){
-  .launch{grid-template-columns:minmax(0,1fr);border-radius:24px}
-  .launch__col{padding:16px}
-  .launch__art{height:104px}
-  .launch__arrow{position:relative;left:auto;top:auto;justify-self:center;margin:-34px 0 -34px;rotate:90deg}
-  .launch{gap:8px}
+  .reg__list{padding:4px 14px;border-radius:22px}
+  .reg__row{grid-template-columns:minmax(0,1fr);gap:8px;padding:12px 0}
+  .reg__cta{width:100%;justify-content:center;white-space:normal;text-align:center}
 }
 
 /* xarita kartasi */
@@ -1675,7 +1727,7 @@
 
 @media (max-width:900px){
   .mkt{padding:var(--sp-8) 0 calc(var(--sp-8) + 28px);border-radius:28px 28px 0 0;margin-top:-28px}
-  .mkt__grid{grid-template-columns:1fr;gap:var(--sp-4)}
+  .mkt__grid{grid-template-columns:minmax(0,1fr);gap:var(--sp-4)}
   .mkt__map{padding:var(--sp-3);border-radius:26px}
   /* kichik ekranda yorliqlar ustma-ust tushmasin: faqat faol mamlakat nomi ko'rinadi (qolganlari pastdagi tugmalarda) */
   .globe__pin b{transition:opacity 300ms var(--ease),background 300ms var(--ease),color 300ms var(--ease),transform 400ms var(--ease-soft)}
@@ -1683,10 +1735,9 @@
 }
 
 /* ============================================================
-   SHARHLAR — yashil fonda (integratsiyalar bo'limi rangi) natijalar tablosi.
-   Tepada oltita natija raqami (tugma), pastda tanlangan raqam ortidagi sotuvchining gapi.
-   Faol raqam mint rangda, ostida vaqt chizig'i to'ladi — to'lganda navbatdagi sharhga o'tadi.
-   Sichqoncha ustida turganda almashish to'xtaydi. Holat reviews.tsx da.
+   SHARHLAR — yashil fonda (integratsiyalar bo'limi rangi).
+   Tepada videosharhlar qatori (suriladi, bosilsa reels pleyeri to'liq ekranda ochiladi — reviews-client.tsx),
+   ostida Telegram guruhidagi sotuvchilar xabarlari skrinshotlari (public/reviews/).
    ============================================================ */
 .revs{
   position:relative;z-index:5;margin-top:-40px;padding:var(--sp-10) 0 calc(var(--sp-8) + 40px);
@@ -1697,47 +1748,82 @@
 .revs__title .accent{color:var(--text-dim)}
 .revs__lead{max-width:58ch;margin-bottom:var(--sp-4);font-size:17px;color:var(--text-dim)}
 
-.revs__stage{border-radius:30px;border:1px solid var(--line);background:rgba(241,255,240,.05);overflow:hidden}
-/* tablo */
-.revs__tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
-.revs__tab{position:relative;display:grid;align-content:start;gap:7px;min-width:0;padding:20px 18px 18px;font:inherit;text-align:left;color:var(--text-dim);cursor:pointer;transition:background 300ms var(--ease),color 300ms var(--ease)}
-.revs__tab + .revs__tab{border-left:1px solid var(--line)}
-.revs__tab b{font-family:var(--font-head);font-size:clamp(20px,2.1vw,29px);font-weight:700;line-height:1;letter-spacing:-.04em;white-space:nowrap;color:var(--text);transition:color 300ms var(--ease)}
-.revs__tab span{font-size:11px;font-weight:800;letter-spacing:.05em;line-height:1.3;text-transform:uppercase}
-.revs__tab:not(.is-on):hover{background:rgba(241,255,240,.07)}
-.revs__tab:not(.is-on):hover b{color:var(--mint)}
-.revs__tab.is-on{background:var(--mint);color:#2F5A55}
-.revs__tab.is-on b{color:var(--brand)}
-.revs__tab i{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--brand);transform-origin:0 50%;animation:revs-fill var(--step,6000ms) linear both}
-@keyframes revs-fill{from{transform:scaleX(0)}}
-
-/* tanlangan sharh */
-.revs__spot{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:var(--sp-4);min-height:230px;padding:32px 34px 30px;animation:revs-in 500ms var(--ease-soft)}
-@keyframes revs-in{from{opacity:0;transform:translateY(10px)}}
-.revs__spot::after{content:"\201D";position:absolute;right:28px;top:4px;font-family:Georgia,"Times New Roman",serif;font-size:150px;line-height:1;color:var(--mint);opacity:.1;pointer-events:none}
-.revs__spot h3{max-width:32em;font-family:var(--font-body);font-size:clamp(19px,1.9vw,25px);font-weight:700;line-height:1.35;letter-spacing:-.01em}
-.revs__spot p{max-width:64ch;margin-top:12px;font-size:15.5px;line-height:1.6;color:var(--text-dim)}
-.revs__who{display:flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border-radius:var(--r-pill);background:rgba(241,255,240,.08);border:1px solid var(--line)}
-.revs__who i{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--ink);font-style:normal;font-family:var(--font-head);font-size:13px}
-.revs__who b{display:block;font-size:14px;font-weight:700;white-space:nowrap}
-.revs__who span span{display:block;font-size:12.5px;color:var(--text-dim);white-space:nowrap}
-
-@media (max-width:1100px){
-  .revs__spot{grid-template-columns:1fr;align-items:start}
-  .revs__who{justify-self:start}
+/* videosharhlar: o'zi suriladigan cheksiz lenta, 9:16 kartalar (soyasiz) */
+.revs__sub{display:block;margin-bottom:14px;font-family:var(--font-body);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mint)}
+/* ekran kengligidagi, o'zi suriladigan lenta (Telegram fikrlari bilan bir xil) */
+.revs__vmarquee{
+  width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;padding:4px 0 8px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
+.revs__track{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:revs-roll var(--dur,60s) linear infinite}
+.revs__vmarquee:hover .revs__track,.revs__vmarquee:focus-within .revs__track{animation-play-state:paused}
+.revs__track li{flex:none;width:clamp(170px,17vw,220px);margin-right:14px}
+.revs__video{
+  position:relative;display:block;width:100%;aspect-ratio:9/16;padding:0;overflow:hidden;border-radius:20px;border:0;cursor:pointer;
+  background:#0B1F1E;transition:transform 300ms var(--ease-soft);
+}
+.revs__video > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 500ms var(--ease-soft)}
+.revs__video::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(3,18,17,.85))}
+.revs__video:hover{transform:translateY(-4px)}
+.revs__video:hover > img{transform:scale(1.04)}
+.revs__video:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.revs__play{
+  position:absolute;z-index:1;left:50%;top:44%;width:52px;height:52px;margin:-26px 0 0 -26px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform 300ms var(--ease-soft),background 300ms var(--ease);
+}
+.revs__play svg{width:22px;height:22px;margin-left:3px;fill:#fff}
+.revs__video:hover .revs__play{transform:scale(1.1);background:var(--mint)}
+.revs__video:hover .revs__play svg{fill:var(--brand)}
+.revs__cap{position:absolute;z-index:1;left:12px;right:12px;bottom:12px;display:grid;gap:4px;text-align:left;color:#fff}
+.revs__cap b{font-size:15px;font-weight:800;line-height:1.2}
+.revs__cap small{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8)}
+.revs__cap small img{width:14px;height:14px;border-radius:50%}
+
+/* Telegram'dagi fikrlar: ekran kengligidagi lenta, o'zi sekin suriladi (har element margin-right bilan —
+   gap ishlatilsa ikki nusxa aniq yarmiga teng bo'lmaydi va ulanishda sakrash chiqadi) */
+.revs__sub--chats{margin:var(--sp-5) 0 14px}
+.revs__marquee{
+  overflow:hidden;padding:4px 0 10px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+.revs__chats{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:revs-roll 90s linear infinite}
+.revs__marquee:hover .revs__chats,.revs__marquee:focus-within .revs__chats{animation-play-state:paused}
+@keyframes revs-roll{to{transform:translateX(-50%)}}
+/* Telegram xabari kartasi: hammasi bir xil o'lcham — uzun matn qisqartiriladi ("To'liq o'qish" oynada ochadi) */
+.chat{
+  flex:none;display:flex;flex-direction:column;width:330px;height:236px;margin-right:16px;padding:16px 18px 14px;
+  border-radius:20px 20px 20px 6px;background:#fff;color:#14231F;
+}
+.chat__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chat__ava{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:#fff;font-size:13px;font-weight:800}
+.chat__who{display:grid;flex:1;min-width:0;line-height:1.2}
+.chat__who b{overflow:hidden;font-size:14.5px;font-weight:700;white-space:nowrap;text-overflow:ellipsis;color:#2A7BC0}
+.chat__who small{font-size:12px;color:#8A9A96}
+.chat__tg{flex:none;width:20px;height:20px;fill:#2AABEE}
+.chat__text{
+  max-height:calc(1.45em * 6);overflow:hidden;font-size:14px;line-height:1.45;white-space:pre-line;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;
+}
+.chat__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px}
+.chat__foot time{font-size:12px;color:#8A9A96}
+.chat__more{padding:0;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--brand);cursor:pointer}
+.chat__more:hover{text-decoration:underline}
+.chat__more:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+/* to'liq matn oynasi */
+.chat-modal{position:fixed;z-index:100;inset:0;display:grid;place-items:center;padding:20px;background:rgba(3,18,17,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:reels-fade 200ms var(--ease) backwards}
+.chat--full{width:min(560px,100%);height:auto;max-height:85vh;margin:0;animation:revs-pop 300ms var(--ease-soft) backwards}
+.chat--full .chat__text{display:block;max-height:none;overflow:auto;font-size:15.5px;line-height:1.55}
+@keyframes revs-pop{from{opacity:0;transform:translateY(12px) scale(.97)}}
+.chat__close{flex:none;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:#EEF3F1;color:#14231F;cursor:pointer}
+.chat__close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+@media (max-width:600px){ .chat{width:280px;height:224px} .chat__text{-webkit-line-clamp:5;max-height:calc(1.45em * 5)} }
+@media (prefers-reduced-motion:reduce){ .revs__chats,.revs__track{animation:none} .revs__marquee,.revs__vmarquee{overflow-x:auto} }
+
 @media (max-width:900px){
   .revs{padding:var(--sp-6) 0 calc(var(--sp-6) + 28px);border-radius:28px 28px 0 0;margin-top:-28px}
   .revs__lead{font-size:16px}
-  .revs__stage{border-radius:24px}
-  /* telefonda tablo gorizontal suriladi */
-  .revs__tabs{display:flex;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
-  .revs__tabs::-webkit-scrollbar{display:none}
-  .revs__tab{flex:none;min-width:128px;padding:16px 16px 14px;scroll-snap-align:start}
-  .revs__spot{min-height:0;padding:22px 20px 20px}
-  .revs__who b,.revs__who span span{white-space:normal}
 }
-@media (prefers-reduced-motion:reduce){.revs__tab i,.revs__spot{animation:none}}
+@media (prefers-reduced-motion:reduce){.revs__video,.revs__video > img{transition:none}}
 
 /* ============================================================
    7. TARIFLAR — ikki qismli bitta karta.
@@ -1821,20 +1907,48 @@
   position:relative;display:flex;flex-direction:column;padding:26px 24px;border-radius:26px;overflow:hidden;
   background:radial-gradient(80% 60% at 100% 0%,rgba(255,255,255,.12),transparent 70%),var(--brand);
 }
-.plan__mps{display:flex;gap:8px;margin-bottom:var(--sp-3)}
+.plan__mps{display:flex;gap:8px;margin-bottom:12px}
+/* tez kunda: yozuv + xiraroq kichik logotiplar */
+.plan__soon{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:var(--sp-3)}
+.plan__soon em{margin-right:4px;padding:3px 9px;border-radius:var(--r-pill);background:rgba(250,207,0,.18);font-size:11px;font-style:normal;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+.plan__soon span{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:var(--r-pill);border:1px dashed rgba(241,255,240,.3);font-size:12px;font-weight:700;color:rgba(241,255,240,.8)}
+.plan__soon img{width:16px;height:16px;margin-left:-5px;border-radius:50%;background:#fff;object-fit:contain}
+/* hammasi bir xil: oq kapsula, ichida logotip (Kaspi — belgi va nom) */
+.plan__soon span{height:26px;border:0;background:#fff;color:var(--ink)}
+.plan__soon .is-wide img{width:auto;height:13px;margin:0;border-radius:0;background:none}
 .plan__mps img{width:36px;height:36px;border-radius:11px}
 .plan__label{margin-bottom:14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
-.plan__list{display:grid;gap:12px}
-.plan__list li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-size:15px;font-weight:400;line-height:1.45}
-/* belgi: sahifaga kirganda navbat bilan to'ladi */
-.plan__list i{
-  width:22px;height:22px;display:grid;place-items:center;border-radius:50%;
-  background:#fff;color:var(--brand);font-style:normal;font-size:11px;font-weight:700;
+/* "Tarifga nimalar kiradi": akkordeon. Keng ekranda panel balandligi chap qismga teng (contain:size —
+   o'ng panel qatorni cho'zmaydi), ro'yxat qolgan joyda o'zi aylanadi. Skroll chizig'i uchun o'ng tomonda yo'lak. */
+@media (min-width:901px){ .plan__in{contain:size} }
+.plan__list{
+  flex:1 1 0;min-height:0;display:grid;align-content:start;gap:2px;
+  margin:0 -14px 0 -8px;padding:0 10px 0 8px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:rgba(184,255,176,.4) transparent;
 }
-.js .plan__list li{opacity:.35;transition:opacity 400ms var(--ease) calc(var(--n) * 110ms + 300ms)}
-.js .plan__list i{transform:scale(0);transition:transform 450ms var(--ease-soft) calc(var(--n) * 110ms + 300ms)}
-.js .plan.is-in .plan__list li{opacity:1}
-.js .plan.is-in .plan__list i{transform:none}
+.plan__list::-webkit-scrollbar{width:6px}
+.plan__list::-webkit-scrollbar-thumb{border-radius:3px;background:rgba(184,255,176,.4)}
+.plan__list::-webkit-scrollbar-track{background:transparent}
+.plan__list summary{
+  display:grid;grid-template-columns:22px minmax(0,1fr) auto 16px;gap:12px;align-items:center;padding:7px 8px;margin:0 -8px;
+  border-radius:12px;font-size:15px;line-height:1.35;cursor:pointer;list-style:none;transition:background 200ms var(--ease);
+}
+.plan__list summary::-webkit-details-marker{display:none}
+.plan__list summary:hover{background:rgba(241,255,240,.08)}
+.plan__list summary:focus-visible{outline:2px solid var(--mint);outline-offset:-2px}
+.plan__list summary > i{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--brand);font-size:12px;font-style:normal;font-weight:800}
+.plan__list small{min-width:24px;padding:1px 7px;border-radius:var(--r-pill);background:rgba(241,255,240,.1);font-size:12px;font-weight:700;text-align:center;color:var(--text-dim)}
+.plan__chev{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--text-dim);transition:transform 250ms var(--ease-soft)}
+.plan__list details[open] .plan__chev{transform:rotate(180deg)}
+.plan__list details[open] summary{background:rgba(241,255,240,.09)}
+.plan__list details ul{display:grid;gap:7px;padding:8px 0 12px 34px}
+.plan__list details li{position:relative;font-size:13.5px;line-height:1.4;color:rgba(241,255,240,.86)}
+.plan__list details li::before{content:"";position:absolute;left:-14px;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--mint)}
+.plan__list details[open] ul{animation:plan-open 320ms var(--ease-soft)}
+@keyframes plan-open{from{opacity:0;transform:translateY(-4px)}}
+@media (max-width:900px){ .plan__list{flex:none;max-height:380px} }
+.js .plan__list details{opacity:.35;transition:opacity 400ms var(--ease) calc(var(--n) * 90ms + 300ms)}
+.js .plan.is-in .plan__list details{opacity:1}
 
 @media (max-width:900px){
   .price{padding:var(--sp-8) 0;border-radius:28px 28px 0 0;margin-top:-28px}
@@ -1888,11 +2002,11 @@
 .faq__answer h3{margin-top:18px;font-family:var(--font-body);font-size:clamp(19px,1.8vw,23px);font-weight:700;line-height:1.3;letter-spacing:-.01em}
 .faq__answer p{margin-top:12px;font-size:16.5px;line-height:1.6;color:#E2F3EF}
 .faq__answer b{font-weight:700;color:#fff}
-.faq__help{position:relative;z-index:1;display:flex;align-items:center;gap:12px;align-self:flex-start;margin-top:auto;padding:10px 20px 10px 10px;border-radius:var(--r-pill);background:rgba(241,255,240,.1);border:1px solid var(--line);transition:background 300ms var(--ease),border-color 300ms var(--ease)}
+.faq__help{position:relative;z-index:1;display:flex;align-items:center;gap:12px;align-self:flex-start;margin-top:auto;padding:10px 20px 10px 10px;border-radius:24px;background:rgba(241,255,240,.1);border:1px solid var(--line);transition:background 300ms var(--ease),border-color 300ms var(--ease)}
 .faq__panel .faq__answer{margin-bottom:var(--sp-4)}
 .faq__help:hover{background:rgba(241,255,240,.18);border-color:var(--line-strong)}
 .faq__help i{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--ink)}
-.faq__help span span{display:block;font-size:12.5px;color:var(--text-dim)}
+.faq__help span span{display:block;max-width:32ch;font-size:12.5px;line-height:1.35;color:var(--text-dim)}
 .faq__help b{display:block;font-size:15.5px;font-weight:700;white-space:nowrap}
 
 @media (max-width:900px){
@@ -1934,12 +2048,56 @@
 .contact__form input::placeholder{color:rgba(241,255,240,.62)}
 /* brauzerning avtomatik to'ldirish foni kapsula rangida qoladi */
 .contact__form input:-webkit-autofill,.contact__form input:-webkit-autofill:hover,.contact__form input:-webkit-autofill:focus{-webkit-text-fill-color:#fff;-webkit-box-shadow:0 0 0 60px var(--bg-dark-2) inset;caret-color:#fff;transition:background-color 9999s}
-.contact__form button{width:48px;height:48px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;transition:background 300ms var(--ease),transform 300ms var(--ease-soft)}
-.contact__form button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 300ms var(--ease-soft)}
-.contact__form button:hover{background:var(--mint)}
-.contact__form button:hover svg{transform:translateX(3px)}
-.contact__form button:active{transform:scale(.94)}
+.contact__form > button{width:48px;height:48px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:#fff;color:var(--ink);cursor:pointer;transition:background 300ms var(--ease),transform 300ms var(--ease-soft)}
+.contact__form > button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 300ms var(--ease-soft)}
+.contact__form > button:hover{background:var(--mint)}
+.contact__form > button:hover svg{transform:translateX(3px)}
+.contact__form > button:active{transform:scale(.94)}
 .contact__note{margin-top:12px;font-size:13px;color:var(--text-dim)}
+/* qadam ko'rsatkichi: "Qadam 1/3" + uchta chiziq (joriy va o'tganlari to'ladi) */
+.contact__steps{display:flex;align-items:center;gap:12px;margin-top:var(--sp-3);font-size:13px;font-weight:600;color:var(--text-dim)}
+.contact__steps b{color:var(--brand)}
+.contact__bars{display:flex;gap:5px}
+.contact__bars i{width:26px;height:4px;border-radius:2px;background:var(--line);transition:background 350ms var(--ease),width 350ms var(--ease-soft)}
+.contact__steps[data-step="0"] i:nth-child(1),
+.contact__steps[data-step="1"] i:nth-child(-n+2),
+.contact__steps[data-step="2"] i:nth-child(-n+3),
+.contact__steps[data-step="done"] i{background:var(--brand)}
+.contact__steps[data-step="0"] i:nth-child(1),.contact__steps[data-step="1"] i:nth-child(2),.contact__steps[data-step="2"] i:nth-child(3){width:40px}
+.contact__steps + .contact__form{margin-top:10px}
+/* qadam almashganda input "kirib keladi" */
+.contact__form.is-swap input{animation:contact-swap 450ms var(--ease-soft)}
+@keyframes contact-swap{from{opacity:0;transform:translateX(18px)}}
+/* 1-qadam variantlari va oxirgi qadamdagi telefon/email tanlovi */
+.contact__opts,.contact__via{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:520px;margin-top:12px}
+.contact__opts[hidden],.contact__via[hidden]{display:none}
+.contact__opts button,.contact__via button{
+  height:36px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line-strong);background:#fff;
+  font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;
+  transition:background 200ms var(--ease),border-color 200ms var(--ease),color 200ms var(--ease);
+}
+.contact__opts button:hover,.contact__via button:hover{border-color:var(--brand)}
+.contact__opts button[aria-pressed="true"],.contact__via button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.contact__opts button[aria-pressed="true"]::before{content:"✓ "}
+.contact__opts .is-other{border-style:dashed}
+/* tanlangan variantlar input ichida — × bilan olib tashlanadigan chiplar */
+/* chiplar input bilan bitta qatorda; sig'masa keyingi qatorga o'tadi va forma shundagina balandlashadi.
+   display:contents — chiplar forma qatorining o'z elementlari bo'ladi; tugma o'ng pastda qotib turadi */
+.contact__chips{display:contents}
+.contact__form:has(.contact__chip){flex-wrap:wrap;row-gap:4px;padding-right:62px;border-radius:30px}
+.contact__form:has(.contact__chip) > button{position:absolute;right:6px;bottom:6px}
+.contact__form:has(.contact__chip) input{flex:1 1 120px}
+.contact__chip{
+  display:inline-flex;align-items:center;gap:4px;flex:none;height:32px;padding:0 4px 0 12px;border-radius:var(--r-pill);
+  background:rgba(184,255,176,.16);border:1px solid rgba(184,255,176,.3);font-size:13.5px;font-weight:700;white-space:nowrap;color:var(--mint);
+  animation:contact-chip 260ms var(--ease-soft);
+}
+.contact__chip button{width:24px;height:24px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:none;color:inherit;cursor:pointer}
+.contact__chip button:hover{background:rgba(184,255,176,.22)}
+.contact__chip svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+@keyframes contact-chip{from{opacity:0;transform:scale(.8)}}
+.contact__opts button:focus-visible,.contact__via button:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){ .contact__form.is-swap input{animation:none} }
 
 /* ---------- tasdiq: oxirgi javobdan keyin (.is-done) ----------
    Ketma-ketlik: input va tugma so'nadi → forma doiraga yopiladi (ichida Robohub belgisi) →
@@ -1951,7 +2109,7 @@
   box-shadow:0 22px 40px -24px rgba(0,43,41,.7);
   animation:contact-close 1100ms var(--ease-soft) both;
 }
-.contact__form.is-done input,.contact__form.is-done button{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity 200ms var(--ease),transform 300ms var(--ease)}
+.contact__form.is-done input,.contact__form.is-done > button,.contact__form.is-done .contact__chips{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity 200ms var(--ease),transform 300ms var(--ease)}
 .contact__done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:6px;color:#fff;text-align:left;visibility:hidden}
 .is-done .contact__done{visibility:visible}
 .contact__done-ico{position:relative;width:48px;height:48px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--brand)}
@@ -2016,20 +2174,34 @@
 
 /* orbita: markazda Robohub, atrofida to'rt marketpleys aylanadi */
 .end__orbit{position:relative;width:min(100%,290px);aspect-ratio:1;margin:0 auto}
-.end__ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(241,255,240,.3);animation:end-spin 36s linear infinite}
-/* ichki halqa teskari tomonga aylanadi — asosiy to'rt marketpleys, kattaroq */
-.end__ring--in{inset:17%;border-style:solid;border-color:rgba(241,255,240,.14);animation-duration:28s;animation-direction:reverse}
-/* belgi halqada o'z burchagida (--a) turadi va halqaga teskari aylanib, tik qoladi */
-.end__ring img{
-  --s:34px;
-  position:absolute;left:calc(50% + 50% * cos(var(--a)));top:calc(50% + 50% * sin(var(--a)));
-  width:var(--s);height:var(--s);margin:calc(var(--s) / -2);border-radius:28%;background:#fff;object-fit:contain;
-  box-shadow:0 10px 22px rgba(0,54,52,.28);animation:end-spin 36s linear infinite reverse;
+/* Aylana yo'q. Har 7 soniyada markazdagi Robohub belgisidan har bir marketpleysga to'g'ri chiziq chiziladi (navbat bilan, --i),
+   chiziq yetib borganda logotip "otilib" chiqadi; turgan paytda chiziqlar bo'ylab yorug' nuqta yuguradi; oxirida hammasi so'nadi. */
+.end__ring{position:absolute;inset:9%}
+.end__spoke{
+  position:absolute;left:50%;top:50%;width:50%;height:2px;margin-top:-1px;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(184,255,176,.05),rgba(184,255,176,.55));border-radius:2px;
+  transform:rotate(var(--a)) scaleX(0);animation:end-line 7s cubic-bezier(.4,0,.2,1) calc(var(--i) * 90ms) infinite;
 }
-.end__ring--in img{--s:42px;animation-duration:28s;animation-direction:normal}
-/* tashqi halqa — qolgan marketpleyslar va hisob tizimlari: kichikroq, biroz xira */
-.end__ring:not(.end__ring--in) img{opacity:.85}
-@keyframes end-spin{to{transform:rotate(360deg)}}
+/* chiziq bo'ylab markazdan logotipga yuguradigan nuqta */
+.end__spoke::after{
+  content:"";position:absolute;top:50%;left:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;
+  background:var(--mint);box-shadow:0 0 10px 2px rgba(184,255,176,.7);opacity:0;
+  animation:end-dot 1.8s linear calc(var(--i) * 260ms + 1s) infinite;
+}
+@keyframes end-line{0%{transform:rotate(var(--a)) scaleX(0);opacity:1}11%,88%{transform:rotate(var(--a)) scaleX(1);opacity:1}100%{transform:rotate(var(--a)) scaleX(1);opacity:0}}
+@keyframes end-dot{0%{left:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+.end__ring img{
+  --s:42px;z-index:1;
+  position:absolute;left:calc(50% + 50% * cos(var(--a)));top:calc(50% + 50% * sin(var(--a)));
+  width:var(--s);height:var(--s);margin:calc(var(--s) / -2);border-radius:28%;object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(0,30,28,.35));
+  animation:end-pop 7s cubic-bezier(.2,.9,.25,1) calc(var(--i) * 90ms) infinite backwards;
+}
+/* fonsiz (shaffof) logotiplar — qolganlari kabi oq yumaloq plitka ichida */
+.end__ring img.is-plain{padding:6px;background:#fff}
+@keyframes end-pop{0%,8%{opacity:0;transform:scale(.3)}14%{opacity:1;transform:scale(1.15)}19%,88%{opacity:1;transform:none}100%{opacity:0;transform:scale(.85)}}
+@media (prefers-reduced-motion:reduce){ .end__ring img,.end__spoke,.end__spoke::after{animation:none} .end__spoke{transform:rotate(var(--a))} }
+
 .end__mark{
   position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px;display:grid;place-items:center;border-radius:26px;
   background:#fff;color:var(--brand);box-shadow:0 20px 44px rgba(0,30,28,.4);
@@ -2073,8 +2245,8 @@
   .end{padding-top:var(--sp-6);border-radius:28px 28px 0 0;margin-top:-28px}
   .end__card{grid-template-columns:1fr;padding:var(--sp-4) var(--sp-3);border-radius:26px}
   .end__orbit{width:230px;order:-1}
-  .end__ring img{--s:28px}
-  .end__ring--in img{--s:34px}
+  .end__ring img{--s:34px}
+  .end__ring img.is-plain{padding:5px}
   .end__mark{width:66px;height:66px;margin:-33px;border-radius:21px}
   .end__mark svg{width:38px;height:17px}
   .foot{padding-top:var(--sp-4)}

@@ -12,9 +12,22 @@ export const messages = defineMessages({
     done: "Soʻrov yuborildi",
     doneSub: "Tez orada siz bilan bogʻlanamiz",
     // contact.script.js boshqaradi: savollar bitta inputda ketma-ket chiqadi,
-    // oxirgisidan keyin javoblardan tayyor xat (mailto) tuziladi. label — xatdagi qator nomi
+    // oxirgisidan keyin javoblardan tayyor xat (mailto) tuziladi. label — xatdagi qator nomi.
+    // options — 1-qadamdagi tayyor variantlar, other — "Boshqa" (nomini inputga yozadi);
+    // methods — oxirgi qadamda telefon yoki email tanlovi
     quiz: {
       subject: "Robohub: sayt orqali murojaat",
+      step: "Qadam",
+      options: ["Uzum Market","Wildberries","Ozon","Yandex Market","Hali sotmayman"],
+      other: "Boshqa",
+      remove: "Olib tashlash",
+      otherPlaceholder: "Marketpleys nomini yozing",
+      pickError: "Variantni tanlang yoki nomini yozing",
+      phoneError: "Raqamni toʻliq kiriting: +998 (XX) XXX-XX-XX",
+      methods: { phone: "Telefon", email: "Email" },
+      emailPlaceholder: "Email manzilingiz",
+      emailLabel: "Email: ",
+      emailError: "Email manzilini toʻliq kiriting, masalan: name@mail.uz",
       steps: [
         { name: "marketplace", type: "text", autoComplete: "off", placeholder: "Qaysi marketpleysda sotasiz?", label: "Marketpleys: " },
         { name: "name", type: "text", autoComplete: "name", placeholder: "Ismingiz", label: "Ism: " },
@@ -32,6 +45,17 @@ export const messages = defineMessages({
     doneSub: "Скоро свяжемся с вами",
     quiz: {
       subject: "Robohub: заявка с сайта",
+      step: "Шаг",
+      options: ["Uzum Market","Wildberries","Ozon","Яндекс Маркет","Пока не продаю"],
+      other: "Другое",
+      remove: "Убрать",
+      otherPlaceholder: "Напишите название площадки",
+      pickError: "Выберите вариант или напишите название",
+      phoneError: "Введите номер полностью: +998 (XX) XXX-XX-XX",
+      methods: { phone: "Телефон", email: "Email" },
+      emailPlaceholder: "Ваш email",
+      emailLabel: "Email: ",
+      emailError: "Введите email полностью, например: name@mail.uz",
       steps: [
         { name: "marketplace", type: "text", autoComplete: "off", placeholder: "На каком маркетплейсе продаёте?", label: "Маркетплейс: " },
         { name: "name", type: "text", autoComplete: "name", placeholder: "Ваше имя", label: "Имя: " },
@@ -49,6 +73,17 @@ export const messages = defineMessages({
     doneSub: "We’ll get back to you soon",
     quiz: {
       subject: "Robohub: website inquiry",
+      step: "Step",
+      options: ["Uzum Market","Wildberries","Ozon","Yandex Market","Not selling yet"],
+      other: "Other",
+      remove: "Remove",
+      otherPlaceholder: "Type the marketplace name",
+      pickError: "Pick an option or type a name",
+      phoneError: "Enter the full number: +998 (XX) XXX-XX-XX",
+      methods: { phone: "Phone", email: "Email" },
+      emailPlaceholder: "Your email",
+      emailLabel: "Email: ",
+      emailError: "Enter a full email address, e.g. name@mail.uz",
       steps: [
         { name: "marketplace", type: "text", autoComplete: "off", placeholder: "Which marketplace do you sell on?", label: "Marketplace: " },
         { name: "name", type: "text", autoComplete: "name", placeholder: "Your name", label: "Name: " },

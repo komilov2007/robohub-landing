@@ -39,6 +39,11 @@ export function init(t) {
      1) KALKULYATOR
      ============================================================ */
   var COMMISSION = 0.15;    // NAMUNA: shartli komissiya, haqiqiy tarif emas
+  var LOG = { fbo: 5250, fbs: 4000, dbs: 0 };   // NAMUNA: bitta buyurtmani yetkazish narxi ish modeliga qarab
+  var model = "fbo";
+  var taxIn = byId("calc-tax"), extraIn = byId("calc-extra");   // 4-qadam: soliq foizi va bitta mahsulotga boshqa xarajat
+  function taxPct() { var v = parseFloat(String(taxIn.value).replace(",", ".")); return isFinite(v) ? Math.min(Math.max(v, 0), 50) : 0; }
+  var models = byId("calc-models");
   var calc = byId("calc");
   var nameIn = byId("calc-name"), catBox = byId("calc-catbox");
   var costIn = byId("calc-cost"), priceIn = byId("calc-price");
@@ -53,7 +58,8 @@ export function init(t) {
   /* shown — katta sonda ko'rsatiladigan qiymat (sanab chiqish paytida haqiqiysidan farq qiladi) */
   function render(shown) {
     var p = digits(priceIn.value), c = digits(costIn.value);
-    var fee = Math.round(p * COMMISSION), pay = p - fee, left = pay - c;
+    var fee = Math.round(p * COMMISSION), log = p ? LOG[model] : 0, pay = p - fee - log;
+    var tp = taxPct(), tax = Math.round(p * tp / 100) + digits(extraIn.value), left = pay - tax - c;
     var wait = calc.classList.contains("is-wait");
     if (shown === undefined) shown = left;
 
@@ -65,13 +71,25 @@ export function init(t) {
     byId("calc-r-cost").textContent = c ? "− " + fmt(c) + " " + t.currency : "—";
     byId("calc-margin").textContent = !wait && p ? pct(left / p * 100) : "—";
     byId("calc-roi").textContent = !wait && c ? pct(left / c * 100) : "—";
+    byId("calc-r-log").textContent = wait ? "—" : (log ? "− " + fmt(log) + " " + t.currency : "0 " + t.currency);
+    /* zararsiz narx — foyda 0 bo'ladigan eng past narx */
+    byId("calc-be").textContent = !wait && c ? fmt(Math.ceil((c + LOG[model] + digits(extraIn.value)) / (1 - COMMISSION - tp / 100))) : "—";
+    byId("calc-r-tax").textContent = wait ? "—" : (tax ? "− " + fmt(tax) + " " + t.currency : "0 " + t.currency);
+    /* xaridor to'lagan pul qayerga ketadi: summalar va ulushlar */
+    var parts = { fee: fee, log: log, tax: Math.max(Math.min(tax, pay), 0), cost: Math.max(Math.min(c, pay - tax), 0), left: Math.max(left, 0) };
+    Object.keys(parts).forEach(function (k) {
+      byId("calc-w-" + k).textContent = wait ? "—" : fmt(parts[k]);
+      byId("calc-w-" + k + "-p").textContent = wait || !p ? "" : Math.round(parts[k] / p * 100) + "%";
+    });
     calc.classList.toggle("is-loss", left < 0);
     calc.classList.toggle("is-long", String(Math.abs(left)).length > 7);
 
     /* chiziq: narxning qancha qismi komissiya, tannarx va foydaga ketadi */
     var bar = byId("calc-bar");
     bar.style.setProperty("--fee", fee);
-    bar.style.setProperty("--cost", Math.max(Math.min(c, pay), 0));
+    bar.style.setProperty("--log", log);
+    bar.style.setProperty("--tax", parts.tax);
+    bar.style.setProperty("--cost", parts.cost);
     bar.style.setProperty("--left", Math.max(left, 0));
 
     costR.value = c; priceR.value = p;
@@ -92,6 +110,27 @@ export function init(t) {
   }
   bindMoney(costIn, costR);
   bindMoney(priceIn, priceR);
+  /* 4-qadam: soliq — faqat raqam va bitta vergul/nuqta; xarajat — so'm, mingliklarga ajratiladi */
+  taxIn.addEventListener("input", function () {
+    taxIn.value = taxIn.value.replace(/[^\d.,]/g, "").replace(/([.,].*)[.,]/g, "$1").slice(0, 5);
+    render();
+  });
+  extraIn.addEventListener("input", function () {
+    var v = Math.min(digits(extraIn.value), 9999999);
+    extraIn.value = v ? fmt(v) : "";
+    render();
+  });
+  [taxIn, extraIn].forEach(function (el) { el.addEventListener("focus", finishDemo); });
+
+  /* ish modeli tanlovi: FBO / FBS / DBS — yetkazish narxi o'zgaradi */
+  models.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-model]");
+    if (!b) return;
+    finishDemo();
+    model = b.dataset.model;
+    Array.prototype.forEach.call(models.querySelectorAll("button"), function (x) { x.setAttribute("aria-checked", String(x === b)); });
+    render();
+  });
   render();
 
   /* ----- kirish namoyishi: forma o'zi to'ladi, keyin natija sanab chiqadi ----- */
@@ -132,7 +171,7 @@ export function init(t) {
     demoTimers.push(setTimeout(function () {
       calc.classList.remove("is-wait");
       calc.classList.add("is-fresh");
-      var left = FINAL.price - Math.round(FINAL.price * COMMISSION) - FINAL.cost;
+      var left = FINAL.price - Math.round(FINAL.price * COMMISSION) - LOG[model] - FINAL.cost;
       stopCount = tween(0, left, 900, render, function () { demoOn = false; render(); });
     }, t + 350));
   }

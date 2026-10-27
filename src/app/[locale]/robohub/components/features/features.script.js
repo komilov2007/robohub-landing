@@ -23,12 +23,14 @@ return (function () {
   var TOOLS = [
     { c: 3,
       v: function (s) { return '<div class="grid2">' + row(mp("u") + "<span>" + s[0] + "</span>") + row(mp("w") + "<span>" + s[1] + "</span>") + row(mp("o") + "<span>" + s[2] + "</span>") + row(mp("y") + "<span>" + s[3] + "</span>") + "</div>" + row("<span>" + s[4] + "</span><b>" + s[5] + '</b><b class="tag">' + s[6] + "</b>", "is-me"); } },
-    { c: 3, r: 1,
-      v: function (s) { return '<div style="flex:none;text-align:center"><span class="cap">' + s[0] + '</span><b class="big" style="display:block;margin-top:.1em">24</b></div><div class="col">' + row(mp("u") + '<span>Uzum</span><b>24</b><b class="tag">✓</b>') + row(mp("w") + '<span>Wildberries</span><b>24</b><b class="tag">✓</b>') + row(mp("o") + '<span>Ozon</span><b>24</b><b class="tag">✓</b>') + row(mp("y") + '<span>Yandex Market</span><b>24</b><b class="tag">✓</b>') + "</div>"; } },
+    // qoldiq: bitta joyda sotildi → to'rttala marketpleysda bir zumda 24 → 23
+    { c: 3,
+      v: function (s) { return row(mp("u") + "<span>" + s[1] + '</span><b class="tag tag--warn">−1</b>', "is-event") + '<div class="grid2">' + ["u", "w", "o", "y"].map(function (k, j) { return '<div class="stock">' + mp(k) + "<span>" + ["Uzum", "Wildberries", "Ozon", "Yandex"][j] + '</span><s>24</s><b>23</b><i class="ok">✓</i></div>'; }).join("") + "</div>" + row("<span>" + s[0] + '</span><b class="big-n">23</b><b class="tag">' + s[2] + "</b>", "is-me"); } },
     { c: 1,
       v: function (s) { return row(mp("u") + "<span>" + s[0] + '</span><b class="tag">' + s[1] + "</b>") + row(mp("w") + "<span>" + s[2] + '</span><b class="tag tag--warn">' + s[3] + "</b>") + row(mp("o") + "<span>" + s[4] + '</span><b class="tag tag--soft">' + s[5] + "</b>"); } },
+    // tahlil: bitta sotuv narxi nimaga ketadi (unit-iqtisodiyot) + platformalar bo'yicha komissiya va marja + raqobatchilar narxi
     { c: 2,
-      v: function (s) { return '<div class="line"><span>' + s[0] + "</span>" + bar(100) + "<b>" + group(1000000) + "</b></div>" + '<div class="line"><span>' + s[1] + "</span>" + bar(40, 1) + "<b>−" + group(400000) + "</b></div>" + '<div class="line"><span>' + s[2] + "</span>" + bar(18, 1) + "<b>−" + group(180000) + "</b></div>" + '<div class="line"><span>' + s[3] + "</span>" + bar(9, 1) + "<b>−" + group(90000) + "</b></div>" + '<div class="line"><span>' + s[4] + "</span>" + bar(7, 1) + "<b>−" + group(70000) + "</b></div>" + '<div class="line line--sum"><span>' + s[5] + "</span>" + bar(26) + "<b data-n='260000'>" + group(260000) + "</b></div>"; } },
+      v: function (s) { return '<div class="ue"><span class="cap">' + s[0] + "</span><b>" + group(189000) + "</b></div>" + '<div class="stack"><i style="--w:50%;--c:#9DB4AF"></i><i style="--w:15%;--c:#FACF00"></i><i style="--w:6%;--c:#F59E0B"></i><i style="--w:6%;--c:#FF7A90"></i><i style="--w:23%;--c:#00524F"></i></div>' + '<div class="leg"><span style="--c:#9DB4AF">' + s[1] + " 50%</span><span style=\"--c:#FACF00\">" + s[2] + " 15%</span><span style=\"--c:#F59E0B\">" + s[3] + " 6%</span><span style=\"--c:#FF7A90\">" + s[4] + " 6%</span><span style=\"--c:#00524F\"><b>" + s[5] + " 23%</b></span></div>" + '<div class="tbl"><span></span><em>' + s[6] + "</em><em>" + s[7] + "</em>" + [["u", "Uzum", 15, 23], ["y", "Yandex", 17, 20], ["w", "Wildberries", 20, 17], ["o", "Ozon", 22, 14]].map(function (r) { return "<span>" + mp(r[0]) + r[1] + "</span><b>" + r[2] + "%</b><b>" + r[3] + "%</b>"; }).join("") + "</div>" + row("<span>" + s[8] + "</span><b>" + group(195000) + '</b><b class="tag">' + s[9] + "</b>", "is-me"); } },
     { c: 4,
       v: function (s) { return row("<span>" + s[0] + "</span><b>" + s[1] + '</b><b class="tag">' + s[2] + "</b>") + '<div><span class="cap">' + s[3] + '</span><div class="slider"></div></div>' + row("<span>" + s[4] + '</span><b class="tag">3</b>'); } },
     { c: 5,
@@ -58,7 +60,9 @@ return (function () {
     card.className = "feat-card"; card.dataset.c = t.c; card.setAttribute("aria-hidden", "true");
     card.style.setProperty("--card", CARD_BG[t.c]);
     var L = msg.tools[i], s = L.v;   // shu vositaning joriy tildagi matnlari
-    card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + CATS[i] + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
+    // 1-yo'nalish (bir marta yuklab, hamma marketpleysda sotish) — kartochka o'rnida animatsion video
+    if (i === 0) card.innerHTML = '<video class="fd__video" src="/section-one-hub.mp4" muted loop playsinline preload="auto" aria-hidden="true"></video>';
+    else card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + CATS[i] + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
     var text = document.createElement("article");
     text.className = "feat-text";
     text.innerHTML = '<span class="feat-text__n">' + pad(i + 1) + "</span><h3>" + L.n + "</h3><p>" + L.t + "</p>" + (L.b ? "<ul>" + L.b.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" : "");
@@ -103,7 +107,7 @@ return (function () {
       step = (CH + GAP + TH + 40) / R;      // karta + ostidagi matn bloki + oraliq
       per = H * 0.52;
     } else {
-      CW = clamp(W * 0.235, 290, 370); CH = Math.round(CW * 0.84);
+      CW = clamp(W * 0.27, 320, 430); CH = Math.round(CW * 0.84);
       R = clamp(Math.max(W * 0.34, H * 0.52), 380, 720);
       cxL = W * 0.475 - CW / 2 - R;         // kartaning o'ng cheti ekranning ~47% ida
       cxR = W * 0.535 + R;                  // matnlar yoyi ~53% ida
@@ -139,6 +143,8 @@ return (function () {
     if (on === it.act) return;
     it.act = on; it.card.classList.toggle("is-on", on); it.text.classList.toggle("is-on", on);
     if (on && !reduce) count(it.card);
+    var v = it.card.querySelector("video");
+    if (v) { if (on && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause(); }
   }
 
   var cur = -1, target = 0, lastIdx = -1, raf = 0;

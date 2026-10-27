@@ -4,124 +4,123 @@ import { defineMessages } from "@/i18n/config";
 export type Part = string | { b: string };
 export type FaqItem = { q: string; a: Part[] };
 
-// Javoblar sahifaning o'zidagi va Robohub vositalari sahifalaridagi ma'lumotga tayanadi.
-// Tasdiqlanmagan mavzular (bepul sinov, bekor qilish) ataylab kiritilmagan.
+// support — oʻngdagi panel pastidagi telefon kartasi yozuvi.
 export const messages = defineMessages({
   uz: {
     // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi
-    title: "Ko‘p so‘raladigan ",
-    titleAccent: "savollar",
-    support: "Qoʻllab-quvvatlash xizmati",
+    title: "Savollaringizga ",
+    titleAccent: "javoblar",
+    support: "Savollar qoldimi? Biz bilan bogʻlaning — yordam beramiz.",
     items: [
+      {
+        q: "Hali marketpleyslarda savdo qilmasam ham boshlashim mumkinmi?",
+        a: [{ b: "Ha." }, " Robohub orqali mavjud do‘konlarni ulashingiz yoki yangi platformalarda savdoni boshlashingiz mumkin. Jamoamiz ro‘yxatdan o‘tish, ulanish va mahsulotlarni joylashtirish jarayonida yordam beradi. Sotuvchi va hujjatlarga qo‘yiladigan talablar tanlangan marketpleysga bog‘liq."],
+      },
       {
         q: "Robohub qaysi marketpleyslar bilan ishlaydi?",
-        a: [{ b: "Uzum Market, Yandex Market, Wildberries va Ozon." }, " Toʻrttalasidagi buyurtma, tovar, qoldiq va analitika bitta kabinetda turadi."],
+        a: ["Hozir Uzum Market, Wildberries, Ozon va Yandex Market bilan ishlash mumkin. Kaspi, Teez, MMarket, Namba One, LakLak va Avval bilan ulanishlar tayyorlanmoqda. Mavjud funksiyalar platforma va mamlakatga qarab farqlanadi."],
       },
       {
-        q: "Ulash qancha vaqt oladi?",
-        a: [{ b: "Bir necha daqiqa." }, " Roʻyxatdan oʻtasiz, marketpleys kabinetidan olingan API kalitini kiritasiz — maʼlumotlar kabinetga avtomatik keladi. Qiyin boʻlsa, jamoamiz yordam beradi."],
+        q: "Do‘konlarimni qanday ulayman?",
+        a: ["Robohub’da ro‘yxatdan o‘ting va marketpleys kabinetlaringizdagi API kalitlarini qo‘shing. Ulangandan so‘ng ma’lumotlar yuklana boshlaydi. Yordam kerak bo‘lsa, jamoamiz sozlash jarayonida ko‘maklashadi."],
       },
       {
-        q: "Narxi qancha?",
-        a: [{ b: "Oyiga 500 000 soʻm." }, " 6 oyga toʻlasangiz 5%, 12 oyga toʻlasangiz 15% chegirma. Tarifga 4 ta marketpleys va har biriga 3 tadan doʻkon kiradi."],
+        q: "Obuna qancha turadi va nechta do‘kon ulash mumkin?",
+        a: ["3 oy uchun to‘langanda narx oyiga 500 000 so‘m — jami 1 500 000 so‘m. Tarifga 12 tagacha do‘kon kiradi: Uzum Market, Wildberries, Ozon va Yandex Market’ning har birida 3 tadan. Har bir qo‘shimcha do‘kon oyiga 99 000 so‘m. 6 va 12 oylik to‘lov shartlari tariflar bo‘limida ko‘rsatilgan."],
       },
       {
-        q: "Nechta doʻkon ulash mumkin?",
-        a: [{ b: "Tarif ichida 12 tagacha:" }, " har marketpleysga 3 tadan. Koʻproq kerak boʻlsa, har bir qoʻshimcha doʻkon oyiga 99 000 soʻm."],
+        q: "Barcha mahsulotlarni qaytadan yuklash kerakmi?",
+        a: [{ b: "Yo‘q." }, " Mahsulotlarni ulangan do‘konlardan yoki Excel orqali import qilishingiz mumkin. Kartochkalarni boshqa platformalarda joylashtirish uchun ularning talablariga mos ma’lumotlar bilan to‘ldirasiz. Nashr qilish tegishli marketpleys moderatsiyasidan o‘tadi."],
       },
       {
-        q: "Ombor va hisob tizimim bilan ishlaydimi?",
-        a: [{ b: "Ha." }, " МойСклад, BILLZ, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore va Retail CRM bilan integratsiya bor. Baʼzilari menejer bilan birga sozlanadi."],
+        q: "Robohub mening hisob tizimim bilan ishlaydimi?",
+        a: ["BILLZ, МойСклад, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore va Retail CRM bilan integratsiyalar ko‘zda tutilgan. Jamoamiz tizimingiz bilan ma’lumot almashish imkoniyatlarini aniqlab, ulanishni sozlashda yordam beradi."],
       },
       {
-        q: "Foydamni qanday koʻraman?",
-        a: ["Dashboardda ", { b: "sof foyda, marja va ROI" }, " koʻrinadi; ABC/XYZ tahlil va AI tavsiyalar qaysi tovar foyda keltirayotganini koʻrsatadi."],
+        q: "Mahsulotlar bo‘yicha foyda qanday hisoblanadi?",
+        a: ["Robohub savdo, tannarx va xarajatlar — komissiya, logistika va reklama ma’lumotlaridan foydalanadi. Bu har bir mahsulotning unit-iqtisodiyotini baholash va do‘konlar natijalarini solishtirishga yordam beradi. Hisob-kitob aniqligi yuklangan ma’lumotlar va kiritilgan xarajatlarning to‘liqligiga bog‘liq."],
       },
       {
-        q: "Kalkulyator va AI infografika pullikmi?",
-        a: [{ b: "Marketpleys kalkulyatori bepul" }, " va roʻyxatdan oʻtmasdan ishlaydi. AI infografikada dastlabki 3 ta rasm bepul, keyingilari — bittasi 1 500 soʻm."],
+        q: "Robohub’ni o‘rganishda kim yordam beradi?",
+        a: ["Jamoamiz do‘konlarni ulash, ishni sozlash va asosiy funksiyalarni o‘rganishda yordam beradi. Telefon yoki Telegram orqali murojaat qilishingiz, shuningdek qo‘llanmalar va videodarslardan foydalanishingiz mumkin."],
       },
-      {
-        q: "Qanday qoʻllab-quvvatlash bor?",
-        a: [{ b: "Oʻzbek, rus va ingliz tillarida" }, " telefon va Telegram orqali jonli yordam beramiz."],
-      },
-    ] as FaqItem[],
+    ],
   },
   ru: {
-    title: "Частые ",
-    titleAccent: "вопросы",
-    support: "Служба поддержки",
+    title: "Ответы на ",
+    titleAccent: "ваши вопросы",
+    support: "Остались вопросы? Свяжитесь с нами — поможем разобраться.",
     items: [
       {
+        q: "Можно начать, если я ещё не продаю на маркетплейсах?",
+        a: [{ b: "Да." }, " Через Robohub можно подключить действующие магазины или начать работу на новых площадках. Наша команда поможет разобраться с регистрацией, подключением и размещением товаров. Требования к продавцу и документам зависят от выбранного маркетплейса."],
+      },
+      {
         q: "С какими маркетплейсами работает Robohub?",
-        a: [{ b: "Uzum Market, Yandex Market, Wildberries и Ozon." }, " Заказы, товары, остатки и аналитика со всех четырёх — в одном кабинете."],
+        a: ["Сейчас доступны Uzum Market, Wildberries, Ozon и Яндекс Маркет. Готовятся подключения Kaspi, Teez, MMarket, Namba One, LakLak и Avval. Доступность функций зависит от площадки и страны."],
       },
       {
-        q: "Сколько времени занимает подключение?",
-        a: [{ b: "Несколько минут." }, " Регистрируетесь, вводите API-ключ из кабинета маркетплейса — данные подтягиваются автоматически. Если возникнут трудности, наша команда поможет."],
+        q: "Как подключить мои магазины?",
+        a: ["Зарегистрируйтесь в Robohub и добавьте API-ключи из кабинетов маркетплейсов. После подключения начнётся загрузка данных. Если понадобится помощь, команда проведёт вас через настройку."],
       },
       {
-        q: "Сколько это стоит?",
-        a: [{ b: "500 000 сум в месяц." }, " При оплате за 6 месяцев — скидка 5%, за 12 месяцев — 15%. В тариф входят 4 маркетплейса и по 3 магазина на каждый."],
+        q: "Сколько стоит подписка и сколько магазинов можно подключить?",
+        a: ["Стоимость — 500 000 сум в месяц при оплате за 3 месяца: всего 1 500 000 сум. В тариф входят до 12 магазинов — по 3 на Uzum Market, Wildberries, Ozon и Яндекс Маркете. Каждый дополнительный магазин — 99 000 сум в месяц. Условия оплаты на 6 и 12 месяцев указаны в блоке тарифов."],
       },
       {
-        q: "Сколько магазинов можно подключить?",
-        a: [{ b: "До 12 в рамках тарифа:" }, " по 3 на каждый маркетплейс. Если нужно больше, каждый дополнительный магазин — 99 000 сум в месяц."],
+        q: "Нужно заново загружать все товары?",
+        a: [{ b: "Нет." }, " Вы можете импортировать товары из подключённых магазинов или Excel. Карточки можно использовать для размещения на других площадках, дополнив данные под их требования. Публикация проходит модерацию соответствующего маркетплейса."],
       },
       {
-        q: "Работает ли с моей складской и учётной системой?",
-        a: [{ b: "Да." }, " Есть интеграции с МойСклад, BILLZ, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore и Retail CRM. Некоторые настраиваются вместе с менеджером."],
+        q: "Robohub работает с моей системой учёта?",
+        a: ["Предусмотрены интеграции с BILLZ, МойСклад, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore и Retail CRM. Команда поможет уточнить возможности обмена данными и настроить подключение для вашей системы."],
       },
       {
-        q: "Как увидеть свою прибыль?",
-        a: ["В дашборде видны ", { b: "чистая прибыль, маржа и ROI" }, "; ABC/XYZ-анализ и AI-рекомендации показывают, какой товар приносит прибыль."],
+        q: "Как рассчитывается прибыль по товарам?",
+        a: ["Robohub использует данные о продажах, себестоимости и расходах: комиссиях, логистике и рекламе. Это помогает оценивать юнит-экономику каждого товара и сравнивать результаты магазинов. Точность расчётов зависит от полноты загруженных данных и внесённых затрат."],
       },
       {
-        q: "Калькулятор и AI-инфографика платные?",
-        a: [{ b: "Калькулятор маркетплейсов бесплатный" }, " и работает без регистрации. В AI-инфографике первые 3 изображения бесплатно, дальше — 1 500 сум за каждое."],
-      },
-      {
-        q: "Какая есть поддержка?",
-        a: [{ b: "На узбекском, русском и английском:" }, " живая помощь по телефону и в Telegram."],
+        q: "Кто поможет освоить Robohub?",
+        a: ["Команда поможет подключить магазины, настроить работу и разобраться с основными функциями. Вы можете обратиться по телефону или в Telegram, а также воспользоваться инструкциями и видеоуроками."],
       },
     ],
   },
   en: {
-    title: "Frequently asked ",
-    titleAccent: "questions",
-    support: "Support service",
+    title: "Answers to ",
+    titleAccent: "your questions",
+    support: "Still have questions? Contact us — we’ll help you figure it out.",
     items: [
       {
+        q: "Can I start if I don’t sell on marketplaces yet?",
+        a: [{ b: "Yes." }, " With Robohub you can connect existing stores or start selling on new platforms. Our team will help with registration, connection and listing your products. Requirements for sellers and documents depend on the chosen marketplace."],
+      },
+      {
         q: "Which marketplaces does Robohub work with?",
-        a: [{ b: "Uzum Market, Yandex Market, Wildberries and Ozon." }, " Orders, products, stock and analytics from all four live in one dashboard."],
+        a: ["Uzum Market, Wildberries, Ozon and Yandex Market are available now. Connections to Kaspi, Teez, MMarket, Namba One, LakLak and Avval are in progress. Available features depend on the platform and country."],
       },
       {
-        q: "How long does it take to connect?",
-        a: [{ b: "A few minutes." }, " Sign up and enter the API key from your marketplace account — your data flows into the dashboard automatically. If you get stuck, our team will help."],
+        q: "How do I connect my stores?",
+        a: ["Sign up for Robohub and add API keys from your marketplace dashboards. Once connected, your data starts loading. If you need help, our team will walk you through the setup."],
       },
       {
-        q: "How much does it cost?",
-        a: [{ b: "500,000 UZS per month." }, " Pay for 6 months and get 5% off, or 12 months for 15% off. The plan includes 4 marketplaces with 3 stores each."],
+        q: "How much is the subscription and how many stores can I connect?",
+        a: ["It’s 500,000 UZS per month when paid for 3 months: 1,500,000 UZS in total. The plan includes up to 12 stores — 3 each on Uzum Market, Wildberries, Ozon and Yandex Market. Each extra store is 99,000 UZS per month. Terms for 6 and 12 months are shown in the pricing section."],
       },
       {
-        q: "How many stores can I connect?",
-        a: [{ b: "Up to 12 on the plan:" }, " 3 per marketplace. Need more? Each extra store is 99,000 UZS per month."],
+        q: "Do I need to upload all my products again?",
+        a: [{ b: "No." }, " You can import products from connected stores or from Excel. Product cards can be reused on other platforms once you add the data they require. Publishing goes through the moderation of the relevant marketplace."],
       },
       {
-        q: "Does it work with my inventory and accounting system?",
-        a: [{ b: "Yes." }, " We integrate with МойСклад (MoySklad), BILLZ, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore and Retail CRM. Some are set up together with a manager."],
+        q: "Does Robohub work with my accounting system?",
+        a: ["Integrations are available with BILLZ, МойСклад, ERA, Smartup, YesPOS, Bito, Sales Doctor, Apicore and Retail CRM. Our team will help check the data exchange options and set up the connection for your system."],
       },
       {
-        q: "How do I see my profit?",
-        a: ["The dashboard shows ", { b: "net profit, margin and ROI" }, "; ABC/XYZ analysis and AI recommendations show which products actually make money."],
+        q: "How is product profit calculated?",
+        a: ["Robohub uses data on sales, cost of goods and expenses: commissions, logistics and advertising. This helps you assess the unit economics of every product and compare store results. Accuracy depends on how complete your uploaded data and recorded costs are."],
       },
       {
-        q: "Are the calculator and AI infographics paid?",
-        a: [{ b: "The marketplace calculator is free" }, " and works without signing up. With AI infographics, your first 3 images are free, then 1,500 UZS each."],
-      },
-      {
-        q: "What support do you offer?",
-        a: [{ b: "In Uzbek, Russian and English:" }, " live help by phone and on Telegram."],
+        q: "Who will help me learn Robohub?",
+        a: ["Our team will help you connect stores, set up your work and learn the main features. You can reach us by phone or Telegram, and use our guides and video lessons."],
       },
     ],
   },

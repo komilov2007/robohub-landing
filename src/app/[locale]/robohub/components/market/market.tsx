@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
 import Globe from "./globe";
-import Launch from "./launch";
+import Regions from "./regions";
 import { messages } from "./market.i18n";
 
 export default async function Market() {
@@ -18,10 +18,8 @@ export default async function Market() {
           <p className="mkt__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
             {t.lead}
           </p>{" "}
-          {/* bo‘lim savoliga javob: Robohub’siz ↔ Robohub bilan */}
-          <div data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
-            <Launch t={t.launch} />
-          </div>
+          {/* har mamlakatdagi marketpleyslar: ulanganlari va tez kunda qo'shiladiganlari */}
+          <Regions t={t.regions} names={t.countries} />
         </div>{" "}
         <div className="mkt__map" data-theme="dark" data-sr="" style={{ "--d": "160ms" } as CSSProperties}>
           <p className="mkt__map-label">{t.mapLabel}</p>{" "}

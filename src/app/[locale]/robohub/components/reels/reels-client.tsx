@@ -40,6 +40,9 @@ type Corner = "tl" | "tr" | "bl" | "br";
 const ROTATE = 12000;
 const CORNER_KEY = "rb-reels-corner";
 const HIDE_KEY = "rb-reels-hidden"; // × bosilsa — shu seans (tab yopilguncha) qaytib chiqmaydi
+// Sahifadagi boshqa joydan (sharhlar bo'limidagi video kartalar) to'liq ekran pleyerni ochish:
+// window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: index })) — burchakdagi kartochka yopilgan bo'lsa ham ishlaydi
+export const OPEN_EVENT = "rb-reels:open";
 const CORNERS: readonly Corner[] = ["tl", "tr", "bl", "br"];
 const ORIGIN = "https://www.youtube-nocookie.com";
 
@@ -152,7 +155,21 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     return () => window.removeEventListener("message", onMessage);
   }, [ready, count]);
 
-  if (!ready || count === 0 || hidden) return null;
+  // sahifadan ochish so'rovi (sharhlar bo'limi)
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const i = (e as CustomEvent<number>).detail;
+      if (typeof i !== "number" || i < 0 || i >= count) return;
+      setReady(true);
+      setDir(1);
+      setFull(i);
+    };
+    window.addEventListener(OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_EVENT, onOpen);
+  }, [count]);
+
+  if (count === 0 || (!ready && full === null)) return null;
+  const showCorner = ready && !hidden; // × bilan yopilgan bo'lsa — faqat to'liq ekran pleyer (sahifadan ochilganda)
 
   const reel = reels[index];
   const open = () => {
@@ -253,6 +270,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
 
   return (
     <>
+      {showCorner && (
       <div ref={wrapRef} className="reels is-on" data-corner={corner} style={{ "--rotate": `${ROTATE}ms` } as CSSProperties}>
         <button
           ref={cardRef}
@@ -303,6 +321,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           <Icon d="M7 7l10 10M17 7L7 17" />
         </button>
       </div>
+      )}
 
       {current &&
         createPortal(

@@ -1,13 +1,13 @@
 import { defineMessages } from "@/i18n/config";
 import type { CountryId } from "./globe";
-import type { LaunchText } from "./launch";
+import type { RegionsText } from "./regions";
 
 type MarketMessages = {
   titleStart: string;
   titleAccent: string;
   titleEnd: string;
   lead: string;
-  launch: LaunchText;
+  regions: RegionsText;
   mapLabel: string;
   mapTitle: string;
   mapText: string;
@@ -16,24 +16,11 @@ type MarketMessages = {
 
 export const messages = defineMessages<MarketMessages>({
   uz: {
-    titleStart: "Bitta mahsulot — ",
-    titleAccent: "besh mamlakatda",
-    titleEnd: " savdo",
-    lead: "Mahsulotni Robohub’da bir marta tayyorlang va Oʻzbekiston, Rossiya, Qozogʻiston, Qirgʻiziston hamda Tojikistondagi xaridorlarga chiqaring — narxlar, buyurtmalar va qoldiqlar bitta kabinetda.",
-    launch: {
-      without: {
-        label: "Robohub’siz",
-        num: "4",
-        unit: "ta alohida kabinet",
-        items: ["Har bir marketpleysga alohida kirish", "Narxni har birida qo‘lda o‘zgartirish", "Qoldiq mos kelmay, ortiqcha sotuv bo‘ladi", "Hisobotlarni Excel’da qo‘lda yig‘ish"],
-      },
-      with: {
-        label: "Robohub bilan",
-        num: "1",
-        unit: "ta kabinet",
-        items: ["Barcha marketpleyslar bitta oynada", "Narx bir joydan o‘zgartiriladi va yuboriladi", "Qoldiq avtomatik sinxron — ortiqcha sotuv yo‘q", "Besh mamlakat bo‘yicha bitta hisobot"],
-      },
-    },
+    titleStart: "Mahsulotlaringiz — ",
+    titleAccent: "turli mamlakatlar marketpleyslarida",
+    titleEnd: ".",
+    lead: "Allaqachon savdo qilyapsizmi yoki endi boshlayapsizmi? Robohub bilan mahalliy va xalqaro platformalarda savdoni yoʻlga qoʻying. Mavjud doʻkonlaringizni ulang yoki yangilarini oching — ulanish va ilk qadamlarda yordam beramiz.",
+    regions: { soon: "Tez kunda", cta: "Yangi platformalarda savdoni boshlash", yandex: "Yandex Market", count: ["{n} ta platforma", "{n} ta platforma", "{n} ta platforma"] },
     mapLabel: "Yagona platforma — barcha bozorlar",
     mapTitle: "Butun mintaqa boʻylab soting",
     mapText: "Moskvadan Toshkentgacha — besh mamlakatdagi savdoni yagona Robohub kabinetidan yuriting.",
@@ -46,24 +33,11 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   ru: {
-    titleStart: "Один товар — ",
-    titleAccent: "продажи в пяти странах",
-    titleEnd: "",
-    lead: "Подготовьте товар в Robohub один раз и выведите его к покупателям в Узбекистане, России, Казахстане, Кыргызстане и Таджикистане — цены, заказы и остатки в одном кабинете.",
-    launch: {
-      without: {
-        label: "Без Robohub",
-        num: "4",
-        unit: "отдельных кабинета",
-        items: ["Отдельный вход в каждый маркетплейс", "Цены меняются вручную в каждом", "Остатки расходятся — продажи сверх наличия", "Отчёты собираются вручную в Excel"],
-      },
-      with: {
-        label: "С Robohub",
-        num: "1",
-        unit: "кабинет",
-        items: ["Все маркетплейсы в одном окне", "Цена меняется в одном месте и отправляется", "Остатки синхронизируются — без продаж сверх наличия", "Один отчёт по пяти странам"],
-      },
-    },
+    titleStart: "Ваши товары — ",
+    titleAccent: "на маркетплейсах разных стран",
+    titleEnd: ".",
+    lead: "Уже продаёте или только начинаете? С Robohub запускайте продажи на местных и международных площадках. Подключайте действующие магазины или открывайте новые — мы поможем с подключением и первыми шагами.",
+    regions: { soon: "Скоро", cta: "Выйти на новые площадки", yandex: "Яндекс Маркет", count: ["{n} площадка", "{n} площадки", "{n} площадок"] },
     mapLabel: "Одна платформа — все рынки",
     mapTitle: "Продавайте по всему региону",
     mapText: "От Москвы до Ташкента — управляйте продажами в пяти странах из единого кабинета Robohub.",
@@ -76,24 +50,11 @@ export const messages = defineMessages<MarketMessages>({
     },
   },
   en: {
-    titleStart: "One product — ",
-    titleAccent: "sold in five countries",
-    titleEnd: "",
-    lead: "Prepare a product in Robohub once and bring it to buyers in Uzbekistan, Russia, Kazakhstan, Kyrgyzstan and Tajikistan — prices, orders and stock in one dashboard.",
-    launch: {
-      without: {
-        label: "Without Robohub",
-        num: "4",
-        unit: "separate dashboards",
-        items: ["A separate login for every marketplace", "Prices changed by hand in each one", "Stock drifts out of sync — overselling", "Reports pieced together in Excel"],
-      },
-      with: {
-        label: "With Robohub",
-        num: "1",
-        unit: "dashboard",
-        items: ["Every marketplace in one window", "Change a price in one place and send it out", "Stock syncs automatically — no overselling", "One report across five countries"],
-      },
-    },
+    titleStart: "Your products — ",
+    titleAccent: "on marketplaces in different countries",
+    titleEnd: ".",
+    lead: "Already selling or just getting started? With Robohub, launch sales on local and international platforms. Connect your existing stores or open new ones — we’ll help with setup and the first steps.",
+    regions: { soon: "Coming soon", cta: "Start selling on new platforms", yandex: "Yandex Market", count: ["{n} platform", "{n} platforms", "{n} platforms"] },
     mapLabel: "One platform — every market",
     mapTitle: "Sell across the whole region",
     mapText: "From Moscow to Tashkent — run sales in five countries from a single Robohub dashboard.",

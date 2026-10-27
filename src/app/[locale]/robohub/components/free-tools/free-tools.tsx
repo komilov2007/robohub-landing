@@ -30,7 +30,13 @@ export default async function FreeTools() {
             <article className="tool" data-sr="" style={{ "--d": "120ms" } as CSSProperties}>
               <div className="tool__head">
                 <div>
-                  <h3 className="tool__name">{c.name}</h3>{" "}
+                  <h3 className="tool__name">
+                    {/* Robohub belgisi — nom oldida */}
+                    <svg className="tool__by" viewBox="0 0 33.8675 15.06" aria-hidden="true">
+                      <use href="#rh-mark" />
+                    </svg>
+                    {c.name}
+                  </h3>{" "}
                   <p className="tool__desc">{c.desc}</p>
                 </div>{" "}
                 <a className="tool__go" href="/calculator/">
@@ -109,6 +115,43 @@ export default async function FreeTools() {
                         </span>{" "}
                         <input className="calc__range" id="calc-price-r" type="range" min="0" max="500000" step="1000" defaultValue="189000" aria-label={c.price} />
                       </label>
+                    </div>{" "}
+                    {/* 3-qadam: ish modeli — yetkazib berish narxiga ta'sir qiladi (free-tools.script.js → LOG) */}
+                    <p className="calc__step">
+                      <b>3</b>
+                      {c.step3}
+                    </p>{" "}
+                    <div className="calc__models" id="calc-models" role="radiogroup" aria-label={c.step3}>
+                      {c.models.map((m, i) => (
+                        <button key={m.id} type="button" role="radio" aria-checked={i === 0} data-model={m.id}>
+                          <b>{m.name}</b>
+                          <small>{m.desc}</small>
+                        </button>
+                      ))}
+                    </div>{" "}
+                    {/* 4-qadam: soliq va boshqa xarajatlar — ixtiyoriy, hisobga darhol qo'shiladi */}
+                    <p className="calc__step">
+                      <b>4</b>
+                      <span>
+                        {c.step4}
+                        <small>{c.step4Hint}</small>
+                      </span>
+                    </p>{" "}
+                    <div className="calc__pair">
+                      <label className="fld">
+                        <span>{c.tax}</span>{" "}
+                        <span className="fld__box">
+                          <input id="calc-tax" type="text" inputMode="decimal" placeholder={c.tax} autoComplete="off" />
+                          <i>%</i>
+                        </span>
+                      </label>{" "}
+                      <label className="fld">
+                        <span>{c.extra}</span>{" "}
+                        <span className="fld__box">
+                          <input id="calc-extra" type="text" inputMode="numeric" placeholder={c.extra} autoComplete="off" />
+                          <i>{cur}</i>
+                        </span>
+                      </label>
                     </div>
                   </div>{" "}
                   <div className="calc__res" aria-live="polite">
@@ -116,24 +159,61 @@ export default async function FreeTools() {
                     <div className="calc__card">
                       <p className="calc__q">{c.question}</p>{" "}
                       <p className="calc__sum">
-                        <b id="calc-left">{fmt(65650, g)}</b>
+                        <b id="calc-left">{fmt(60400, g)}</b>
                         <span id="calc-unit">{cur}</span>
                       </p>{" "}
-                      <div className="calc__bar" id="calc-bar" aria-hidden="true">
-                        <i className="is-fee" />
-                        <i className="is-cost" />
-                        <i className="is-left" />
-                      </div>{" "}
                       <p className="calc__kpis">
                         <span>
                           {`${c.margin} `}
-                          <b id="calc-margin">{`34${t.script.decimal}7%`}</b>
+                          <b id="calc-margin">{`32${t.script.decimal}0%`}</b>
                         </span>
                         <span>
                           {`${c.roi} `}
-                          <b id="calc-roi">{`69${t.script.decimal}1%`}</b>
+                          <b id="calc-roi">{`63${t.script.decimal}6%`}</b>
+                        </span>
+                        <span>
+                          {`${c.breakeven} `}
+                          <b id="calc-be">{fmt(117942, g)}</b>
                         </span>
                       </p>
+                    </div>{" "}
+                    {/* xaridor to'lagan narx: komissiya, yetkazish, tannarx va foydaga qanday bo'linadi */}
+                    <div className="calc__where">
+                      <h4>{c.where}</h4>
+                      <div className="calc__bar" id="calc-bar" aria-hidden="true">
+                        <i className="is-fee" />
+                        <i className="is-log" />
+                        <i className="is-tax" />
+                        <i className="is-cost" />
+                        <i className="is-left" />
+                      </div>
+                      <ul>
+                        <li className="is-fee">
+                          <span>{c.toMp}</span>
+                          <em id="calc-w-fee-p">15%</em>
+                          <b id="calc-w-fee">{fmt(28350, g)}</b>
+                        </li>
+                        <li className="is-log">
+                          <span>{c.toLog}</span>
+                          <em id="calc-w-log-p">3%</em>
+                          <b id="calc-w-log">{fmt(5250, g)}</b>
+                        </li>
+                        <li className="is-tax">
+                          <span>{c.toTax}</span>
+                          <em id="calc-w-tax-p">0%</em>
+                          <b id="calc-w-tax">0</b>
+                        </li>
+                        <li className="is-cost">
+                          <span>{c.toCost}</span>
+                          <em id="calc-w-cost-p">50%</em>
+                          <b id="calc-w-cost">{fmt(95000, g)}</b>
+                        </li>
+                        <li className="is-left">
+                          <span>{c.toYou}</span>
+                          <em id="calc-w-left-p">32%</em>
+                          <b id="calc-w-left">{fmt(60400, g)}</b>
+                        </li>
+                      </ul>
                     </div>{" "}
                     <div className="calc__detail">
                       <h4>{c.detail}</h4>{" "}
@@ -146,11 +226,19 @@ export default async function FreeTools() {
                           <span>{c.fee}</span>
                           <b id="calc-r-fee">{`− ${fmt(28350, g)} ${cur}`}</b>
                         </li>{" "}
-                        <li className="is-total" style={{ "--i": "2" } as CSSProperties}>
-                          <span>{c.payout}</span>
-                          <b id="calc-r-pay">{`${fmt(160650, g)} ${cur}`}</b>
+                        <li style={{ "--i": "2" } as CSSProperties}>
+                          <span>{c.logistics}</span>
+                          <b id="calc-r-log">{`− ${fmt(5250, g)} ${cur}`}</b>
                         </li>{" "}
-                        <li style={{ "--i": "3" } as CSSProperties}>
+                        <li className="is-total" style={{ "--i": "3" } as CSSProperties}>
+                          <span>{c.payout}</span>
+                          <b id="calc-r-pay">{`${fmt(155400, g)} ${cur}`}</b>
+                        </li>{" "}
+                        <li style={{ "--i": "4" } as CSSProperties}>
+                          <span>{c.taxRow}</span>
+                          <b id="calc-r-tax">{`0 ${cur}`}</b>
+                        </li>{" "}
+                        <li style={{ "--i": "5" } as CSSProperties}>
                           <span>{c.productCost}</span>
                           <b id="calc-r-cost">{`− ${fmt(95000, g)} ${cur}`}</b>
                         </li>
@@ -166,7 +254,9 @@ export default async function FreeTools() {
             <article className="tool" data-sr="" style={{ "--d": "220ms" } as CSSProperties}>
               <div className="tool__head">
                 <div>
-                  <h3 className="tool__name">{t.ai.name}</h3>{" "}
+                  <h3 className="tool__name">
+                    <span className="tool__ai">{t.ai.name}</span>
+                  </h3>{" "}
                   <p className="tool__desc">{t.ai.desc}</p>
                 </div>{" "}
                 {/* nisbiy: robohub.uz → robohub.uz/ai-studio, robohub-landing.vercel.app → …/ai-studio */}{" "}

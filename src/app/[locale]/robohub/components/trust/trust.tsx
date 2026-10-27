@@ -24,17 +24,16 @@ const ICONS = [
   </svg>,
 ];
 
-// Kartalar ostidagi qator: Robohub ulanadigan marketpleyslar — hero orbitasidagi sakkiztasi, shu tartibda.
+// Kartalar ostidagi qator: Robohub ulanadigan marketpleyslar — hero orbitasidagi yettitasi, shu tartibda.
 // Nomlari tarjima qilinmaydi (logotip ustiga olib borilganda va ekran o'quvchilar uchun).
 const MARKETPLACES = [
   { logo: "/marketplaces/uzum.svg", name: "Uzum Market" },
   { logo: "/robosell/icons/alif.svg", name: "alif shop" },
   { logo: "/marketplaces/wildberries.svg", name: "Wildberries" },
-  { logo: "/marketplaces/halyk.svg", name: "Halyk Market" },
-  { logo: "/marketplaces/ozon.svg", name: "Ozon" },
   { logo: "/robosell/icons/click-outline.svg", name: "Click" },
-  { logo: "/marketplaces/yandex.svg", name: "Yandex Market" },
+  { logo: "/marketplaces/ozon.svg", name: "Ozon" },
   { logo: "/robosell/icons/zoomrad.svg", name: "Zoomrad" },
+  { logo: "/marketplaces/yandex.svg", name: "Yandex Market" },
 ];
 // reach belgilari — reach tartibida: mamlakatlar (globus), bitta kabinet (monitor)
 const REACH_ICONS = [

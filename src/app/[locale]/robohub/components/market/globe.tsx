@@ -9,12 +9,13 @@ type GeoData = typeof import("./globe-data");
 // mamlakat o'z shakli va o'z joyida yashil bilan bo'yalgan; navbat bilan bittasi yonadi va globus sekin
 // o'sha tomonga buriladi. Sichqoncha bilan tortib aylantirsa ham bo'ladi.
 // Nomlar — market.i18n.ts da; server ota komponent (market.tsx) `names` prop orqali uzatadi.
+// Tartib chapdagi ro'yxat (regions.tsx) bilan bir xil: navbat va pastdagi tugmalar shu tartibda.
 // lon/lat — yorliq bog'lanadigan nuqta (mamlakat ichida); side — yorliq nuqtaning qaysi tomonida turishi.
 const COUNTRIES = [
   { id: "uz", lon: 63.5, lat: 41.6, side: "left" },
-  { id: "ru", lon: 60, lat: 60.5, side: "top" },
   { id: "kz", lon: 67.5, lat: 48.4, side: "right" },
   { id: "kg", lon: 74.8, lat: 41.4, side: "right" },
+  { id: "ru", lon: 60, lat: 60.5, side: "top" },
   { id: "tj", lon: 71, lat: 38.6, side: "bottom" },
 ] as const;
 
@@ -32,9 +33,24 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
   const activeRef = useRef(0);
   const pausedUntil = useRef(0);
 
+  // faol mamlakat bo'limga yoziladi (data-active) — chapdagi ro'yxat (regions.tsx) o'sha qatorni yoritadi
   useEffect(() => {
     activeRef.current = active;
+    stageRef.current?.closest("section")?.setAttribute("data-active", COUNTRIES[active].id);
   }, [active]);
+
+  // chapdagi ro'yxatda mamlakat qatori bosilsa — globus o'sha mamlakatga buriladi
+  useEffect(() => {
+    const sec = stageRef.current?.closest("section");
+    if (!sec) return;
+    const onClick = (e: MouseEvent) => {
+      const row = (e.target as HTMLElement).closest<HTMLElement>(".reg__row[data-c]");
+      const i = row ? COUNTRIES.findIndex((c) => c.id === row.dataset.c) : -1;
+      if (i >= 0) pick(i, e.timeStamp);
+    };
+    sec.addEventListener("click", onClick);
+    return () => sec.removeEventListener("click", onClick);
+  });
 
   useEffect(() => {
     const stage = stageRef.current;

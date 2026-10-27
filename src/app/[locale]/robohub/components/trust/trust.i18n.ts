@@ -12,8 +12,8 @@ export const messages = defineMessages({
     lead: "Kiyim-kechak va kosmetikadan elektronika va uy-roʻzgʻor buyumlarigacha — turli soha sotuvchilari savdosini Robohub orqali boshqaradi.",
     stats: [
       { value: "1 000", label: "ulangan sotuvchi" },
-      { value: "100 000", label: "tizimdagi mahsulot" },
-      { value: "700 000", label: "qayta ishlangan buyurtma" },
+      { value: "500 000", label: "tizimdagi mahsulot" },
+      { value: "900 000", label: "qayta ishlangan buyurtma" },
     ],
     mps: "Marketpleyslar",
     reach: [
@@ -28,8 +28,8 @@ export const messages = defineMessages({
     lead: "От одежды и косметики до электроники и товаров для дома — продавцы из разных сфер управляют продажами через Robohub.",
     stats: [
       { value: "1 000", label: "подключённых продавцов" },
-      { value: "100 000", label: "товаров в системе" },
-      { value: "700 000", label: "обработанных заказов" },
+      { value: "500 000", label: "товаров в системе" },
+      { value: "900 000", label: "обработанных заказов" },
     ],
     mps: "Маркетплейсы",
     reach: [
@@ -44,8 +44,8 @@ export const messages = defineMessages({
     lead: "From apparel and cosmetics to electronics and home goods — sellers from every niche manage their sales through Robohub.",
     stats: [
       { value: "1,000", label: "connected sellers" },
-      { value: "100,000", label: "products in the system" },
-      { value: "700,000", label: "orders processed" },
+      { value: "500,000", label: "products in the system" },
+      { value: "900,000", label: "orders processed" },
     ],
     mps: "Marketplaces",
     reach: [

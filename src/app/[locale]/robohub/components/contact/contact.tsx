@@ -6,7 +6,8 @@ import { messages } from "./contact.i18n";
 
 export default async function Contact() {
   const t = await getMessages(messages);
-  const first = t.quiz.steps[0];
+  const q = t.quiz;
+  const first = q.steps[0];
   return (
     <>
       <section className="contact" id="contact" data-theme="light" aria-labelledby="contact-title">
@@ -23,7 +24,20 @@ export default async function Contact() {
 
             {/* Quiz: bitta input, savollar ketma-ket almashadi (contact.script.js). Forma serverga yubormaydi —
                 oxirgi savoldan keyin javoblardan tayyor xat (mailto) ochiladi. Boshida birinchi savol render qilinadi */}
+            {/* qaysi qadamda ekani: "Qadam 1/3" va uchta chiziq */}
+            <p className="contact__steps" id="contact-steps" data-step="0" data-sr="" style={{ "--d": "180ms" } as CSSProperties}>
+              <span>
+                {q.step} <b>1</b>/{q.steps.length}
+              </span>
+              <span className="contact__bars" aria-hidden="true">
+                {q.steps.map((s) => (
+                  <i key={s.name} />
+                ))}
+              </span>
+            </p>
             <form className="contact__form" id="contact-form" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
+              {/* 1-qadamda tanlangan variantlar shu yerda chip bo'lib turadi (contact.script.js) */}
+              <span className="contact__chips" id="contact-chips" />
               <input
                 type={first.type}
                 name={first.name}
@@ -55,6 +69,26 @@ export default async function Contact() {
                 </span>
               </div>
             </form>
+            {/* 1-qadam: tayyor variantlar (bir nechtasini tanlash mumkin) va "Boshqa" */}
+            <div className="contact__opts" id="contact-opts" role="group" aria-label={first.placeholder} data-sr="" style={{ "--d": "220ms" } as CSSProperties}>
+              {q.options.map((o) => (
+                <button key={o} type="button" data-opt={o} aria-pressed="false">
+                  {o}
+                </button>
+              ))}
+              <button type="button" data-opt="other" aria-pressed="false" className="is-other">
+                {q.other}
+              </button>
+            </div>
+            {/* oxirgi qadam: telefon yoki email */}
+            <div className="contact__via" id="contact-via" role="group" hidden>
+              <button type="button" data-via="phone" aria-pressed="true">
+                {q.methods.phone}
+              </button>
+              <button type="button" data-via="email" aria-pressed="false">
+                {q.methods.email}
+              </button>
+            </div>
             <p className="contact__note" data-sr="" style={{ "--d": "240ms" } as CSSProperties}>
               {t.note}
             </p>
