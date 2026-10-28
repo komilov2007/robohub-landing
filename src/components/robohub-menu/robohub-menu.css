@@ -1,0 +1,51 @@
+/* "Imkoniyatlar" paneli (robohub-menu.tsx) — Kalkulyator va AI Studio header'larida; Academy'dagi (.ac-rmega) bilan bir xil.
+   Ranglar o'zida — har header'ning o'z o'zgaruvchilariga bog'liq emas. Panel header'ning to'liq enida, uning ostida:
+   band (li) va menyu (ul) position:static — panel eng yaqin joylashgan ota (sticky header) ga nisbatan turadi. */
+.rhm{position:static;display:flex;align-items:center;height:100%}
+/* menyu header balandligini to'liq egallaydi — sichqoncha "Imkoniyatlar"dan panelga tushayotganda hover uzilmaydi */
+nav:has(> ul > .rhm){align-self:stretch;display:flex;align-items:center}
+nav:has(> ul > .rhm) > ul{height:100%;align-items:center}
+.rhm__link{display:inline-flex;align-items:center;gap:7px}
+.rhm__mark{display:block;flex:none;width:24px;min-width:24px;height:11px;max-width:none;color:#00524F;transition:transform 300ms cubic-bezier(.33,1,.68,1)}
+.rhm__link:hover .rhm__mark{transform:translateY(-1px)}
+.rhm__caret{flex:none;margin-left:-2px;transition:transform 250ms cubic-bezier(.33,1,.68,1)}
+
+.rhm__panel{
+  --mx:max(24px,calc((100% - 1200px) / 2 + 24px));
+  position:absolute;left:0;right:0;top:100%;z-index:60;padding:20px var(--mx) 36px;
+  background:#fff;border-top:1px solid rgba(0,54,52,.1);
+  box-shadow:0 24px 48px rgba(0,30,28,.14),0 0 0 100vmax rgba(0,30,28,.18);
+  clip-path:inset(0 -100vmax -100vmax -100vmax);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);
+  transition:opacity 250ms ease,transform 320ms cubic-bezier(.33,1,.68,1),visibility 0s 320ms;
+  text-align:left;
+}
+@media (hover:hover){
+  .rhm:hover > .rhm__panel{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:60ms,60ms,0s}
+  .rhm:hover .rhm__caret{transform:rotate(180deg)}
+}
+.rhm:focus-within > .rhm__panel{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+
+.rhm__inner{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:32px}
+.rhm__title{margin:0 0 8px;padding-left:10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#4D6966}
+.rhm .rhm__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px;height:auto;margin:0;padding:0;list-style:none}
+.rhm .rhm__list{display:grid;gap:0;height:auto;margin:0;padding:0;list-style:none}
+.rhm__panel li{position:static;display:block;height:auto}
+.rhm__side{padding-left:24px;border-left:1px solid rgba(0,54,52,.12)}
+.rhm__item{
+  display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;row-gap:1px;align-items:start;
+  padding:7px 14px 7px 10px;border-radius:12px;text-decoration:none;transition:background 150ms ease;
+}
+.rhm__ico{
+  grid-row:span 2;box-sizing:border-box;width:34px;height:34px;padding:7px;margin-top:1px;border-radius:10px;
+  background:rgba(0,82,79,.09);color:#00524F;transition:background 150ms ease,color 150ms ease;
+}
+.rhm__item b{font-size:15px;font-weight:600;line-height:1.35;color:#06302E}
+.rhm__item span{font-size:13.5px;line-height:1.45;color:#4D6966}
+.rhm__item:hover,.rhm__item:focus-visible{background:rgba(0,82,79,.07);outline:0}
+.rhm__item:hover b{color:#00524F}
+.rhm__item:hover .rhm__ico{background:#00524F;color:#fff}
+.rhm__item.is-ai .rhm__ico{background:linear-gradient(135deg,#34E5E6,#B48CFF 55%,#FF8FC8);color:#fff}
+.rhm__item.is-ai b{justify-self:start;background:linear-gradient(90deg,#0E9F8E,#0BA5C4 35%,#8B5CF6 70%,#E0559B);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rhm__soon{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;vertical-align:2px;background:#E6F9E2;color:#00524F;font-size:10.5px;font-style:normal;font-weight:700;letter-spacing:.02em;line-height:1.5;white-space:nowrap;-webkit-text-fill-color:#00524F}
+@media (prefers-reduced-motion:reduce){ .rhm__panel,.rhm__caret,.rhm__mark{transition:none} }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
+import RobohubMenu from "@/components/robohub-menu/robohub-menu";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import type { Locale } from "@/i18n/config";
 import type { Content } from "../../calculator.content";
@@ -54,6 +55,8 @@ export default function Header({ nav, ui, locale }: { nav: Content["NAV"]; ui: C
         </a>
         <nav className="as-nav" aria-label={ui.mainMenu}>
           <ul>
+            {/* Robohub imkoniyatlari — Academy header'idagi kabi panel (src/components/robohub-menu) */}
+            <RobohubMenu locale={locale} linkClass="as-nav__link" />
             {nav.map((n) => (
               <li key={n.href}>
                 <a

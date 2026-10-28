@@ -6,6 +6,7 @@ import { PHONE, PHONE_TEL, academyHref, topicHref, robohubHome, robohubPricing }
 import { messages } from "./footer.i18n";
 import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
+import OfficeAddress from "@/components/office-address/office-address";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
 // Footer "Aloqa": ikon + oddiy matn (chegarasiz)
@@ -81,6 +82,7 @@ export default async function Footer() {
                   </a>
                 </li>
               ))}
+              <OfficeAddress />
             </ul>
           </div>
         </div>

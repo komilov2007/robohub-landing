@@ -2,7 +2,7 @@
 
 import type { Locale } from "@/i18n/config";
 import { messages } from "../../../components/header/header.i18n";
-import { AI_TOOL, FEAT_ICONS, SOON_TOOL, TOOL_ICONS } from "../../../components/header/menu-icons";
+import { AI_TOOL, FEAT_ICONS, FEAT_STEP, SOON_TOOL, TOOL_ICONS, featHash } from "../../../components/header/menu-icons";
 import { robohubHome } from "../../lib/links";
 
 // Academy header'idagi "Imkoniyatlar" — Robohub landingi header'idagi panelning o'zi (matn va ikonkalar o'sha yerdan).
@@ -37,7 +37,7 @@ export default function RobohubMenu({ locale }: { locale: Locale }) {
             <ul className="ac-rmega__grid">
               {t.features.items.map((x, i) => (
                 <li key={x.t}>
-                  <a className="ac-rmega__link" href={to(x.href)} target="_blank" rel="noopener">
+                  <a className="ac-rmega__link" href={to(featHash(FEAT_STEP[i]))} target="_blank" rel="noopener">
                     <Ico d={FEAT_ICONS[i]} />
                     <b>{x.t}</b>
                     <span>{x.d}</span>

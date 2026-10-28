@@ -18,3 +18,9 @@ export const TOOL_ICONS = [
 ];
 export const AI_TOOL = 1; // AI studiya — alohida rangda (AI Studio brendi)
 export const SOON_TOOL = 4; // Sotuvchilar forumi — hali ishga tushmagan, yonida "Tez kunda" belgisi
+
+// Imkoniyatlar panelidagi har band → "Imkoniyatlar" bo'limidagi qaysi karta (0 dan, features.i18n tools tartibida).
+// Ichki va tashqi tahlil — bitta karta. Landing ichida header.script.js sahifani shu kartaga aylantiradi ("feat:go");
+// boshqa sahifalardan (Academy, Kalkulyator, AI Studio menyusi) — featHash(i) havolasi: landing ochilib, sahna o'sha kartada.
+export const FEAT_STEP = [0, 1, 2, 3, 3, 4, 5];
+export const featHash = (step: number) => `#features-${step}`;

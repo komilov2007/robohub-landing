@@ -5,6 +5,7 @@ import { messages } from "./final-cta.i18n";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
+import OfficeAddress from "@/components/office-address/office-address";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
 // Footer "Aloqa": ikon + oddiy matn (chegarasiz)
@@ -86,6 +87,7 @@ export default async function FinalCta() {
                     </a>
                   </li>
                 ))}
+                <OfficeAddress />
               </ul>
             </div>
           </div>{" "}

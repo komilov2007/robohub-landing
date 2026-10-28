@@ -344,9 +344,19 @@ return (function () {
   // shuning uchun o'qish majburiy reflow bermaydi. layout() o'lchamlarni yozadi — sahnani o'qish (read)
   // keyingi kadrga qoldiriladi. Sahna (sticky, 100svh) o'lchami oyna o'lchami bilan birga o'zgaradi.
   var boot = true, kickRaf = 0;
+  // Boshqa sahifadan kelgan havola (Academy, Kalkulyator, AI Studio "Imkoniyatlar" menyusi): /#features-3 —
+  // sahna aynan o'sha kartada ochiladi (menu-icons.ts → featHash). Manzil keyin oddiy #features ga qaytadi.
+  var deep = /^#features-(\d+)$/.exec(location.hash);
   var ro = new ResizeObserver(function () {
     if (boot) { boot = false; lastY = window.scrollY; }
     layout(); cur = -1;
+    if (deep) {
+      var di = Number(deep[1]);
+      deep = null;
+      if (di <= N - 1 && sec.offsetHeight - H > 0) goTo(di);
+      else sec.scrollIntoView();
+      history.replaceState(history.state, "", location.pathname + location.search + "#features");
+    }
     cancelAnimationFrame(kickRaf);
     kickRaf = requestAnimationFrame(kick);
   });

@@ -3,7 +3,7 @@ import { getLocale } from "@/i18n/server";
 import HeaderScript from "./header-script";
 import { messages } from "./header.i18n";
 import { newTab } from "@/lib/sites";
-import { AI_TOOL, FEAT_ICONS, SOON_TOOL, TOOL_ICONS } from "./menu-icons";
+import { AI_TOOL, FEAT_ICONS, FEAT_STEP, SOON_TOOL, TOOL_ICONS } from "./menu-icons";
 
 // Ochiladigan bandlar yonidagi ▾ belgisi
 function Chevron() {
@@ -14,9 +14,6 @@ function Chevron() {
   );
 }
 
-// Imkoniyatlar panelidagi har band → "Imkoniyatlar" bo'limidagi qaysi karta (0 dan, features.i18n tools tartibida).
-// Ichki va tashqi tahlil — bitta karta. Bosilganda header.script.js sahifani shu kartaga aylantiradi.
-const FEAT_STEP = [0, 1, 2, 3, 3, 4, 5];
 
 
 function MenuIcon({ d }: { d: string }) {

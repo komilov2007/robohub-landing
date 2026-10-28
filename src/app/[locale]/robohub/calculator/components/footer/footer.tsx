@@ -1,6 +1,7 @@
 import Logo from "../logo/logo";
 import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
+import OfficeAddress from "@/components/office-address/office-address";
 import { ACADEMY_PATH } from "@/lib/sites";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 import { localeHref, type Locale } from "@/i18n/config";
@@ -95,6 +96,7 @@ export default function Footer({
                   </a>
                 </li>
               ))}
+              <OfficeAddress />
             </ul>
           </div>
         </div>

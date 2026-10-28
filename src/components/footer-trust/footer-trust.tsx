@@ -7,11 +7,10 @@ import "./footer-trust.css";
 // Logotip ustunida, marketpleys belgilari ostida, ikki qator:
 //   1) sarlavha va tashkilotlar logotiplari (kartasiz, yonma-yon), har biri ostida qisqa yorliq (rezident / sovrindor);
 //   2) guvohnomalar — kichik varaqlar qatori; bosilganda sahifada katta ochiladi (cert-lightbox), JS'siz — yangi oynada.
-// Fayllar: public/logo (logotiplar; Cyber Park — guvohnomadan qirqilgan, IT Park — asl oq SVG; to'q fonga moslangan),
+// Fayllar: public/logo (logotiplar: EBRD va President Tech Award — oq, to'q fonga moslangan),
 // public/certificates (guvohnomalar).
 const LOGOS = [
-  { src: "/logo/cyber-park.png", w: 550, h: 75, name: "Cyber Park" },
-  { src: "/logo/it-park.svg", w: 1993, h: 658, name: "IT Park Uzbekistan" },
+  { src: "/logo/ebrd.svg", w: 149, h: 78, name: "EBRD" },
   { src: "/logo/president-tech-award.svg", w: 400, h: 102, name: "President Tech Award" },
 ];
 const CERTS = [
@@ -22,8 +21,8 @@ const CERTS = [
 
 const messages = defineMessages({
   uz: {
-    title: "Rezident va sovrindor",
-    roles: ["Rezident", "Rezident", "Sovrindor"],
+    title: "Hamkor va sovrindor",
+    roles: ["Hamkor", "Sovrindor"],
     certsTitle: "Guvohnomalar",
     certs: ["Cyber Park", "IT Park", "Davlat ro‘yxati"],
     alts: [
@@ -34,8 +33,8 @@ const messages = defineMessages({
     close: "Yopish",
   },
   ru: {
-    title: "Резидент и призёр",
-    roles: ["Резидент", "Резидент", "Призёр"],
+    title: "Партнёр и призёр",
+    roles: ["Партнёр", "Призёр"],
     certsTitle: "Свидетельства",
     certs: ["Cyber Park", "IT Park", "Госрегистрация"],
     alts: [
@@ -46,8 +45,8 @@ const messages = defineMessages({
     close: "Закрыть",
   },
   en: {
-    title: "Resident & winner of",
-    roles: ["Resident", "Resident", "Winner"],
+    title: "Partner & winner of",
+    roles: ["Partner", "Winner"],
     certsTitle: "Certificates",
     certs: ["Cyber Park", "IT Park", "State registration"],
     alts: [
@@ -58,8 +57,8 @@ const messages = defineMessages({
     close: "Close",
   },
   kk: {
-    title: "Резидент және жүлдегер",
-    roles: ["Резидент", "Резидент", "Жүлдегер"],
+    title: "Серіктес және жүлдегер",
+    roles: ["Серіктес", "Жүлдегер"],
     certsTitle: "Куәліктер",
     certs: ["Cyber Park", "IT Park", "Мемлекеттік тіркеу"],
     alts: [
@@ -70,8 +69,8 @@ const messages = defineMessages({
     close: "Жабу",
   },
   ky: {
-    title: "Резидент жана байге ээси",
-    roles: ["Резидент", "Резидент", "Байге ээси"],
+    title: "Өнөктөш жана байге ээси",
+    roles: ["Өнөктөш", "Байге ээси"],
     certsTitle: "Күбөлүктөр",
     certs: ["Cyber Park", "IT Park", "Мамлекеттик каттоо"],
     alts: [
@@ -82,8 +81,8 @@ const messages = defineMessages({
     close: "Жабуу",
   },
   kaa: {
-    title: "Rezident hám sıylıq iyesi",
-    roles: ["Rezident", "Rezident", "Sıylıq iyesi"],
+    title: "Sherik hám sıylıq iyesi",
+    roles: ["Sherik", "Sıylıq iyesi"],
     certsTitle: "Gúwalıqlar",
     certs: ["Cyber Park", "IT Park", "Mámleketlik dizim"],
     alts: [
@@ -94,8 +93,8 @@ const messages = defineMessages({
     close: "Jabıw",
   },
   tg: {
-    title: "Резидент ва ҷоизадор",
-    roles: ["Резидент", "Резидент", "Ҷоизадор"],
+    title: "Шарик ва ҷоизадор",
+    roles: ["Шарик", "Ҷоизадор"],
     certsTitle: "Шаҳодатномаҳо",
     certs: ["Cyber Park", "IT Park", "Бақайдгирии давлатӣ"],
     alts: [

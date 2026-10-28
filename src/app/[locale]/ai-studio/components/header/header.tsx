@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
+import RobohubMenu from "@/components/robohub-menu/robohub-menu";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import { useRobohubOrigin } from "@/lib/robohub-origin";
 import { sellerUrl } from "@/lib/sites";   // kabinet — joriy tilda
@@ -65,7 +66,10 @@ export default function Header() {
         </a>
         <nav className="as-nav" aria-label={U.mainMenu}>
           <ul>
-            {NAV.map((n) => (
+            {/* Robohub imkoniyatlari — Academy header'idagi kabi panel (src/components/robohub-menu) */}
+            <RobohubMenu locale={locale} linkClass="as-nav__link" />
+            {/* o'z "Imkoniyatlar" bo'limi havolasi bu yerda takrorlanmaydi (yuqoridagi panel bilan bir xil nom) — mobil menyuda qoladi */}
+            {NAV.filter((n) => n.href !== "#features").map((n) => (
               <li key={n.href}>
                 <a
                   href={n.href}
