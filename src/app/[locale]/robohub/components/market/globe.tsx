@@ -134,6 +134,7 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
       if (!geo) return; // chegaralar hali yuklanmagan
       const { LAND, TARGETS } = geo;
       const R = Math.min(w, h) / 2 - 10; // shar to'liq ko'rinadi
+      if (R <= 0) return; // karta yashirin (telefonda display:none) — o'lchami 0, chiziladigan narsa yo'q
       const cx = w / 2;
       const cy = h / 2;
       const cur = COUNTRIES[activeRef.current];

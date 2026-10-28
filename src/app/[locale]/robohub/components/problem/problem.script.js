@@ -68,6 +68,95 @@ export function init() {
     setState(t >= SWITCH && t < BACK ? "after" : "before");
   }
 
+  // Telefon: video o'rniga HTML sahna (problem.tsx → .pain__stage), o'sha 13 s jadval bo'yicha. Soat — video emas,
+  // performance.now(): video umuman yuklanmaydi. Fon, sarlavha va tugmalar yuqoridagi apply() bilan xuddi videodagidek.
+  var stageEl = sec.querySelector(".pain__stage");
+  if (stageEl && window.matchMedia("(max-width: 600px)").matches) return initStage(stageEl);
+
+  function initStage(stage) {
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    var LOOP = 13;
+    var q = function (sel) { return [].slice.call(stage.querySelectorAll(sel)); };
+    var cells = q(".ps__cell"), mgrs = q(".ps__mgr"), boxesB = q(".ps__box--b"), tilesB = q(".ps--b .ps__mp");
+    var chips = q(".ps__chip"), boxesA = q(".ps__box--a"), tilesA = q(".ps--a .ps__mp");
+    var hubBox = stage.querySelector(".ps__box--hub"), stem = stage.querySelector(".ps__stem"), hub = stage.querySelector(".ps__hub");
+    var clamp01 = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+    // faqat o'zgarganda yoziladi (har kadrda DOM'ga keraksiz yozuv bo'lmasin)
+    function set(el, v) { if (el.dataset.s !== v) el.dataset.s = v; }
+    function setP(el, p) {
+      var v = String(Math.round(p * 1000) / 1000);
+      if (el.style.getPropertyValue("--p") !== v) el.style.setProperty("--p", v);
+      set(el, p > 0 && p < 1 ? "on" : "");
+    }
+    // t soniyadagi sahna: "" — kutmoqda, "on" — hozir bajarilmoqda, "done" — bajarildi
+    function render(t) {
+      var b = t < SWITCH;
+      // Robohubsiz: tovar qutisi tadbirkordan har menejerga tushadi, keyin vazifalar to'lqin bo'lib bajariladi
+      boxesB.forEach(function (el) { var r = +el.dataset.r; setP(el, b ? clamp01((t - 0.5 - r * 0.25) / 0.6) : 0); });
+      mgrs.forEach(function (el) { var r = +el.dataset.r; set(el, b && t >= 1.1 + r * 0.25 ? "done" : ""); });
+      cells.forEach(function (el) {
+        var s0 = 1.6 + +el.dataset.c * 0.62 + +el.dataset.r * 0.14;
+        set(el, !b || t < s0 ? "" : t < s0 + 0.5 ? "on" : "done");
+      });
+      tilesB.forEach(function (el) { set(el, b && t >= 5 + +el.dataset.i * 0.2 ? "done" : ""); });
+      // Robohub bilan: tadbirkor → kabinet (vazifalar bir marta belgilanadi) → 4 marketpleysga birdan
+      var a = t >= SWITCH;
+      set(stem, a && t >= 8.5 ? "on" : "");
+      setP(hubBox, a ? clamp01((t - 8.7) / 0.5) : 0);
+      set(hub, a && t >= 9.2 ? "on" : "");
+      chips.forEach(function (el) { set(el, a && t >= 9.4 + +el.dataset.i * 0.15 ? "done" : ""); });
+      boxesA.forEach(function (el) { setP(el, a ? clamp01((t - 10.45) / 0.55) : 0); });
+      tilesA.forEach(function (el) { set(el, a && t >= 11 + +el.dataset.i * 0.1 ? "done" : ""); });
+    }
+
+    var base = performance.now(), raf = 0, visible = false, held = 0;
+    function frame(now) {
+      var t = (((now - base) / 1000) % LOOP + LOOP) % LOOP;
+      apply(t);
+      render(t);
+      raf = requestAnimationFrame(frame);
+    }
+    function run(on) {
+      if (on === visible) return;
+      visible = on;
+      var now = performance.now();
+      if (on) { base = now - held * 1000; raf = requestAnimationFrame(frame); }
+      else { held = (((now - base) / 1000) % LOOP + LOOP) % LOOP; cancelAnimationFrame(raf); }
+    }
+    // tugma: sahna shu qismning boshidan ("Robohubsiz" — 0 s, to'q fonga o'tishsiz; "Robohub bilan" — 8 s)
+    function onStageSwitch(e) {
+      var btn = e.target.closest("[data-to]");
+      if (!btn) return;
+      var toAfter = btn.dataset.to === "after";
+      if (toAfter && sec.dataset.state === "after") return;
+      if (!toAfter) {
+        sec.classList.add("is-jump");
+        requestAnimationFrame(function () { requestAnimationFrame(function () { sec.classList.remove("is-jump"); }); });
+      }
+      var at = toAfter ? SWITCH : 0;
+      base = performance.now() - at * 1000;
+      held = at;
+      if (!visible) { apply(at); render(toAfter ? 12 : 7.9); }   // to'xtagan sahnada — qismning yakuniy holati
+    }
+    var swEl = sec.querySelector(".pain__switch");
+    if (swEl) swEl.addEventListener("click", onStageSwitch);
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var sio = null;
+    if (reduce) { apply(0); render(7.9); }   // harakatsiz: "Robohubsiz" sxemasi to'liq holatda
+    else if ("IntersectionObserver" in window) {
+      sio = new IntersectionObserver(function (es) { run(es[es.length - 1].isIntersecting); });
+      sio.observe(sec);
+    } else run(true);
+    return function cleanup() {
+      if (swEl) swEl.removeEventListener("click", onStageSwitch);
+      if (sio) sio.disconnect();
+      cancelAnimationFrame(raf);
+      sec.style.removeProperty("--mix");
+    };
+  }
+
   // Telefonda video suriladigan oynada (robohub.css, .pain__media): kadr sxema bo'ylab o'zi yuradi —
   // "Robohubsiz" qismida chapdan (tadbirkor) o'ngga (marketpleyslar), "Robohub bilan" qismida markazdagi panelda turadi.
   // Foydalanuvchi barmog'i bilan sursa — 4 soniya avtomatik surish to'xtaydi.

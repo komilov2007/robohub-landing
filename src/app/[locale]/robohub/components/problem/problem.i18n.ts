@@ -7,6 +7,8 @@ export const messages = defineMessages({
     eyebrow: "Taqqoslash",
     next: "Keyin esa —",
     own: "+ oʻz saytingiz va Telegram-bot",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 menejer · ×7 vazifa","har bir marketpleysda, har kuni"],"afterTop":["×7 vazifa — barcha","marketpleyslar uchun bir marta"],"boss":"Tadbirkor","bossSub":"tovar ishlab chiqaradi va sotmoqchi","manager":"Menejer","salary":"oylik ~$300","mps":"4 marketpleys","hubSub":"Bitta kabinet — barcha vazifalar bir marta yopiladi","tasks":["Kartochkalar","Qoldiqlar","Buyurtmalar","Reklama","Analitika","Hujjatlar","Yetkazish"]},
     before: {
       label: "Robohubsiz",
       title: ["Robohubsiz", "bir xil vazifalar har bir marketpleysda takrorlanadi"],
@@ -24,6 +26,8 @@ export const messages = defineMessages({
     eyebrow: "Сравнение",
     next: "А дальше —",
     own: "+ свой сайт и Telegram-бот",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 менеджера · ×7 задач","на каждом маркетплейсе, каждый день"],"afterTop":["×7 задач — один раз","для всех маркетплейсов"],"boss":"Предприниматель","bossSub":"производит товар и хочет продавать","manager":"Менеджер","salary":"~$300 в месяц","mps":"4 маркетплейса","hubSub":"Один кабинет — все задачи закрываются один раз","tasks":["Карточки","Остатки","Заказы","Реклама","Аналитика","Документы","Доставка"]},
     before: {
       label: "Без Robohub",
       title: ["Без Robohub", "одни и те же задачи повторяются на каждой площадке"],
@@ -41,6 +45,8 @@ export const messages = defineMessages({
     eyebrow: "Comparison",
     next: "Next up —",
     own: "+ your own website and Telegram bot",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 managers · ×7 tasks","on every marketplace, every day"],"afterTop":["×7 tasks — done once","for all marketplaces"],"boss":"Entrepreneur","bossSub":"makes products and wants to sell","manager":"Manager","salary":"~$300 / month","mps":"4 marketplaces","hubSub":"One dashboard — every task done once","tasks":["Listings","Stock","Orders","Ads","Analytics","Documents","Delivery"]},
     before: {
       label: "Without Robohub",
       title: ["Without Robohub,", "the same tasks repeat on every marketplace"],
@@ -58,6 +64,8 @@ export const messages = defineMessages({
     eyebrow: "Салыстыру",
     next: "Ал әрі қарай —",
     own: "+ өз сайтыңыз бен Telegram-бот",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 менеджер · ×7 тапсырма","әр маркетплейсте, күн сайын"],"afterTop":["×7 тапсырма — барлық","маркетплейстер үшін бір рет"],"boss":"Кәсіпкер","bossSub":"тауар шығарады және сатқысы келеді","manager":"Менеджер","salary":"айына ~$300","mps":"4 маркетплейс","hubSub":"Бір кабинет — барлық тапсырма бір рет жабылады","tasks":["Карточкалар","Қалдықтар","Тапсырыстар","Жарнама","Аналитика","Құжаттар","Жеткізу"]},
     before: {
       label: "Robohub-сыз",
       title: ["Robohub-сыз", "бірдей міндеттер әр маркетплейсте қайталанады"],
@@ -75,6 +83,8 @@ export const messages = defineMessages({
     eyebrow: "Салыштыруу",
     next: "Андан ары —",
     own: "+ өз сайтыңыз жана Telegram-бот",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 менеджер · ×7 тапшырма","ар бир маркетплейсте, күн сайын"],"afterTop":["×7 тапшырма — бардык","маркетплейстер үчүн бир жолу"],"boss":"Ишкер","bossSub":"товар өндүрөт жана саткысы келет","manager":"Менеджер","salary":"айына ~$300","mps":"4 маркетплейс","hubSub":"Бир кабинет — бардык тапшырмалар бир жолу жабылат","tasks":["Карточкалар","Калдыктар","Буйрутмалар","Жарнама","Аналитика","Документтер","Жеткирүү"]},
     before: {
       label: "Robohub-сыз",
       title: ["Robohub-сыз", "бирдей милдеттер ар бир маркетплейсте кайталанат"],
@@ -92,6 +102,8 @@ export const messages = defineMessages({
     eyebrow: "Salıstırıw",
     next: "Al keyin —",
     own: "+ óz saytıńız hám Telegram-bot",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 menejer · ×7 wazıypa","hár bir marketpleyste, hár kúni"],"afterTop":["×7 wazıypa — barlıq","marketpleysler ushın bir márte"],"boss":"Isbilermen","bossSub":"ónim islep shıǵaradı hám satpaqshı","manager":"Menejer","salary":"aylıǵı ~$300","mps":"4 marketpleys","hubSub":"Bir kabinet — barlıq wazıypalar bir márte orınlanadı","tasks":["Kartochkalar","Qaldıqlar","Buyırtpalar","Reklama","Analitika","Hújjetler","Jetkeriw"]},
     before: {
       label: "Robohub’sız",
       title: ["Robohub’sız", "birdey wazıypalar hár bir marketpleyste qaytalanadı"],
@@ -109,6 +121,8 @@ export const messages = defineMessages({
     eyebrow: "Муқоиса",
     next: "Ва баъд —",
     own: "+ сайти худатон ва Telegram-бот",
+    // telefondagi sxema sahnasi (problem.tsx → .pain__stage) yozuvlari
+    stage: {"beforeTop":["×4 менеҷер · ×7 вазифа","дар ҳар маркетплейс, ҳар рӯз"],"afterTop":["×7 вазифа — барои ҳамаи","маркетплейсҳо як бор"],"boss":"Соҳибкор","bossSub":"мол истеҳсол мекунад ва фурӯхтан мехоҳад","manager":"Менеҷер","salary":"~$300 дар як моҳ","mps":"4 маркетплейс","hubSub":"Як кабинет — ҳамаи вазифаҳо як бор иҷро мешаванд","tasks":["Кортҳо","Бақия","Фармоишҳо","Реклама","Аналитика","Ҳуҷҷатҳо","Расонидан"]},
     before: {
       label: "Бе Robohub",
       title: ["Бе Robohub", "вазифаҳои якхела дар ҳар маркетплейс такрор мешаванд"],

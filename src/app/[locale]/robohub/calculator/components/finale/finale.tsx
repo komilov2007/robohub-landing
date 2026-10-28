@@ -3,7 +3,7 @@ import HubOrbit from "@/components/hub-orbit/hub-orbit";
 
 // Yakuniy taklif — ixcham karta: chapda sarlavha, matn va tugmalar; o'ngda Robohub orbitasi (umumiy
 // komponent — Robohub yakuniy kartasidagi bilan bir xil). Kartaning chetidan sekin aylanuvchi mint nur o'tadi.
-// home — Robohub landingi joriy tilda: "Bepul boshlash" shu yerga olib boradi (yangi oynada)
+// home — Robohub landingi joriy tilda: "Hoziroq boshlash" shu yerga olib boradi (yangi oynada)
 export default function Finale({ final, home }: { final: Content["FINAL"]; home: string }) {
   return (
     <section className="cx-finale" id="start" aria-labelledby="cx-finale-title">

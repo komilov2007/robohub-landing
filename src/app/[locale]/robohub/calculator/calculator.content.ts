@@ -93,7 +93,7 @@ const TEXT = defineMessages({
     final: {
       title: "Har bir mahsulot foydasi —",
       accent: "bitta kabinetda",
-      cta: "Bepul boshlash",
+      cta: "Hoziroq boshlash",
       back: "Kalkulyatorga qaytish",
       notes: ["4 marketpleys", "Buyurtma va qoldiqlar", "Har bir mahsulot foydasi"],
     },
@@ -169,7 +169,7 @@ const TEXT = defineMessages({
     final: {
       title: "Прибыль каждого товара —",
       accent: "в одном кабинете",
-      cta: "Начать бесплатно",
+      cta: "Начать сейчас",
       back: "Вернуться к калькулятору",
       notes: ["4 маркетплейса", "Заказы и остатки", "Прибыль каждого товара"],
     },
@@ -245,7 +245,7 @@ const TEXT = defineMessages({
     final: {
       title: "Every product’s profit —",
       accent: "in one cabinet",
-      cta: "Start free",
+      cta: "Get started",
       back: "Back to the calculator",
       notes: ["4 marketplaces", "Orders and stock", "Profit per product"],
     },
@@ -321,7 +321,7 @@ const TEXT = defineMessages({
     final: {
       title: "Әр тауардың пайдасы —",
       accent: "бір кабинетте",
-      cta: "Тегін бастау",
+      cta: "Қазір бастау",
       back: "Калькуляторға оралу",
       notes: ["4 маркетплейс", "Тапсырыстар мен қалдықтар", "Әр тауардың пайдасы"],
     },
@@ -397,7 +397,7 @@ const TEXT = defineMessages({
     final: {
       title: "Ар бир товардын кирешеси —",
       accent: "бир кабинетте",
-      cta: "Акысыз баштоо",
+      cta: "Азыр баштоо",
       back: "Калькуляторго кайтуу",
       notes: ["4 маркетплейс", "Буйрутмалар жана калдыктар", "Ар бир товардын кирешеси"],
     },
@@ -473,7 +473,7 @@ const TEXT = defineMessages({
     final: {
       title: "Hár bir ónimniń paydası —",
       accent: "bir kabinette",
-      cta: "Biypul baslaw",
+      cta: "Házir baslaw",
       back: "Kalkulyatorǵa qaytıw",
       notes: ["4 marketpleys", "Buyırtpalar hám qaldıqlar", "Hár bir ónimniń paydası"],
     },
@@ -549,7 +549,7 @@ const TEXT = defineMessages({
     final: {
       title: "Фоидаи ҳар мол —",
       accent: "дар як кабинет",
-      cta: "Ройгон оғоз кунед",
+      cta: "Ҳозир оғоз кунед",
       back: "Бозгашт ба калкулятор",
       notes: ["4 маркетплейс", "Фармоишҳо ва бақияҳо", "Фоидаи ҳар мол"],
     },
