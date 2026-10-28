@@ -424,95 +424,16 @@
   .pain__frame{gap:var(--sp-3)}
   .pain__media{width:100%}
 }
-/* Telefon: video o'rniga sxemaning tik varianti (problem.tsx → .pain__stage), 13 s jadval — problem.script.js.
-   Ikki qatlam ustma-ust: "Robohubsiz" (to'q) va "Robohub bilan" (mint) — fon bilan bir xil --mix bo'yicha almashadi. */
-.pain__stage{display:none}
+/* Telefonda — portret video (robohub-13s-mobile.mp4, 1080×1350; problem.tsx da <source media>): ekran eniga to'liq.
+   Chetlardagi erish (mask) portret nisbatiga moslanadi — yon tomonlari ingichkaroq. */
 @media (max-width:600px){
-  .pain__media{display:none}
-  .pain__switch{position:relative;align-self:flex-start;order:-1}
-  .pain__stage{display:grid;align-self:stretch;--pink:#FF8FA3;--ink-d:#06302E}
-  .ps{grid-area:1/1;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-  .ps--b{opacity:calc(1 - var(--mix,0));color:#F1FFF0}
-  .ps--a{opacity:var(--mix,0);color:var(--ink-d)}
-  .ps svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .ps__top{text-align:center;font-size:10.5px;font-weight:800;letter-spacing:.07em;line-height:1.4;text-transform:uppercase;color:var(--pink)}
-  .ps--a .ps__top{color:var(--brand)}
-
-  /* tadbirkor */
-  .ps__boss{display:flex;align-items:center;gap:10px;align-self:center;width:min(100%,280px);padding:9px 12px;border-radius:12px;background:#0E5C55;color:#fff;box-shadow:0 12px 24px -14px rgba(0,0,0,.6)}
-  .ps--a .ps__boss{background:var(--brand)}
-  .ps__boss-ico{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--mint)}
-  .ps__boss-ico svg{width:15px;height:15px}
-  .ps__boss > span:last-child{display:grid;min-width:0;line-height:1.25}
-  .ps__boss b{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
-  .ps__boss small{font-size:10.5px;opacity:.82}
-
-  /* Robohubsiz: 4 menejer × 7 vazifa; chap chiziq tadbirkordan har qatorga */
-  .ps__rows{position:relative;display:grid;gap:8px;padding-left:14px}
-  .ps__rows::before{content:"";position:absolute;left:4px;top:-10px;bottom:18px;width:1.5px;background:rgba(241,255,240,.22)}
-  .ps__row{position:relative;display:grid;grid-template-columns:92px minmax(0,1fr);gap:5px;align-items:center;height:36px}
-  .ps__row::before{content:"";position:absolute;left:-10px;top:50%;width:10px;height:1.5px;background:rgba(241,255,240,.22)}
-  .ps__mgr{display:flex;align-items:center;gap:6px;min-width:0;height:36px;padding:0 6px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid rgba(241,255,240,.14);transition:border-color 300ms var(--ease),background 300ms var(--ease)}
-  .ps__mgr img{flex:none;width:18px;height:18px;border-radius:5px;background:#fff}
-  .ps__mgr > span{display:grid;min-width:0;line-height:1.15}
-  .ps__mgr b{overflow:hidden;font-size:8.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;text-overflow:ellipsis;white-space:nowrap;color:var(--pink)}
-  .ps__mgr small{overflow:hidden;font-size:9px;text-overflow:ellipsis;white-space:nowrap;color:#A8CFCA}
-  .ps__mgr[data-s="done"]{border-color:rgba(255,143,163,.55);background:rgba(255,143,163,.08)}
-  .ps__cells{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
-  .ps__cell{position:relative;display:grid;place-items:center;height:30px;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid rgba(241,255,240,.12);color:rgba(241,255,240,.55);transition:border-color 250ms var(--ease),background 250ms var(--ease),color 250ms var(--ease),transform 300ms var(--ease-soft)}
-  .ps__cell svg{width:13px;height:13px}
-  .ps__cell[data-s="on"]{border-color:var(--pink);background:rgba(255,143,163,.16);color:#fff;transform:scale(1.1)}
-  .ps__cell[data-s="done"]{border-color:rgba(255,143,163,.35);color:rgba(241,255,240,.75)}
-  .ps__cell[data-s="done"]::after{content:"";position:absolute;top:-3px;right:-3px;width:6px;height:6px;border-radius:50%;border:1.5px solid var(--pink);background:var(--ink-d)}
-
-  /* tovar qutisi — chiziq bo'ylab harakatlanadi (--p: 0…1, problem.script.js) */
-  .ps__box{position:absolute;z-index:2;width:14px;height:14px;border-radius:4px;background:#fff;box-shadow:0 4px 10px -2px rgba(0,0,0,.45);opacity:0;transition:opacity 150ms}
-  .ps__box::after{content:"";position:absolute;left:3px;right:3px;top:5px;height:3px;border-radius:1px;background:#E0559B}
-  .ps__box[data-s="on"]{opacity:1}
-  .ps__box--b{left:-17px;top:calc(11px - (1 - var(--p,0)) * (var(--r) * 44px + 30px))}
-
-  .ps__k{margin-top:4px;text-align:center;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pink)}
-  .ps__mps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-  .ps__mp{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;padding:8px 2px 7px;border-radius:11px;background:#fff;border:2px solid transparent;font-size:9.5px;font-weight:700;line-height:1.15;text-align:center;color:var(--ink-d);transition:border-color 300ms var(--ease)}
-  .ps__mp img{width:26px;height:26px;border-radius:7px}
-  .ps--b .ps__mp[data-s="done"]{border-color:var(--pink)}
-
-  /* Robohub bilan: tadbirkor → kabinet → 4 marketpleys */
-  .ps__stem{position:relative;align-self:center;width:2px;height:20px;margin-block:-4px;background:rgba(0,82,79,.2)}
-  .ps__stem::after{content:"";position:absolute;inset:0;background:var(--brand);transform:scaleY(0);transform-origin:top;transition:transform 400ms var(--ease-soft)}
-  .ps__stem[data-s="on"]::after{transform:none}
-  .ps__box--hub{left:-6px;top:calc(-14px + var(--p,0) * 28px)}
-  .ps__hub{padding:12px;border-radius:16px;background:#fff;box-shadow:0 18px 40px -24px rgba(0,54,52,.55),0 0 0 1px rgba(0,82,79,.08);transition:box-shadow 400ms var(--ease)}
-  .ps__hub[data-s="on"]{box-shadow:0 18px 40px -24px rgba(0,54,52,.55),0 0 0 2px var(--brand)}
-  .ps__logo{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--brand)}
-  .ps__logo svg{width:24px;height:auto;fill:currentColor;stroke:none}
-  .ps__hub small{display:block;margin:3px 0 10px;font-size:11px;line-height:1.35;color:#2F5A55}
-  .ps__chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
-  .ps__chip{position:relative;display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 9px;border-radius:8px;background:#EEF7EC;font-size:11px;font-weight:700;color:var(--ink-d);transition:background 300ms var(--ease)}
-  .ps__chip svg{width:12px;height:12px}
-  .ps__chip::after{content:"✓";position:absolute;top:-6px;right:-6px;display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:var(--brand);color:#fff;font-size:9px;font-weight:800;transform:scale(0);transition:transform 350ms var(--ease-soft)}
-  .ps__chip[data-s="done"]{background:#D9F5D3}
-  .ps__chip[data-s="done"]::after{transform:none}
-  /* shoxlanish: kabinetdan har marketpleys ustiga (plitkalar markazlari — 12.5% … 87.5%) */
-  .ps__tree{
-    position:relative;height:30px;margin:-4px 12.5%;
-    background:
-      linear-gradient(var(--brand),var(--brand)) 50% 0/2px 50% no-repeat,
-      linear-gradient(var(--brand),var(--brand)) 0 50%/100% 2px no-repeat,
-      linear-gradient(var(--brand),var(--brand)) 0 100%/2px 50% no-repeat,
-      linear-gradient(var(--brand),var(--brand)) 33.333% 100%/2px 50% no-repeat,
-      linear-gradient(var(--brand),var(--brand)) 66.667% 100%/2px 50% no-repeat,
-      linear-gradient(var(--brand),var(--brand)) 100% 100%/2px 50% no-repeat;
-    opacity:.35;transition:opacity 300ms var(--ease);
+  .pain__media{align-self:stretch;width:auto;margin-inline:calc(-1 * var(--sp-3))}
+  .pain__media video{
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent),linear-gradient(transparent,#000 3%,#000 97%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent),linear-gradient(transparent,#000 3%,#000 97%,transparent);
   }
-  .ps__tree:has(.ps__box[data-s="on"]){opacity:1}
-  .ps__box--a{left:calc(50% - 7px + (var(--i) * 33.333% - 50%) * min(1, var(--p,0) * 2));top:calc(-7px + var(--p,0) * 30px)}
-  .ps__ok{position:absolute;top:-6px;right:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--brand);color:#fff;transform:scale(0);transition:transform 350ms var(--ease-soft)}
-  .ps__ok svg{width:11px;height:11px;stroke-width:3}
-  .ps--a .ps__mp[data-s="done"]{border-color:var(--brand)}
-  .ps--a .ps__mp[data-s="done"] .ps__ok{transform:none}
+  .pain__switch{position:relative;align-self:flex-start;order:-1}
 }
-@media (max-width:600px) and (prefers-reduced-motion:reduce){ .ps *{transition:none !important} }
 @media (max-width:600px){
   .pain__title{font-size:22px}
 }
