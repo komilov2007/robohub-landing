@@ -6,7 +6,7 @@ export const messages = defineMessages({
   uz: {
     title: "Marketpleysdan omborgacha —",
     titleAccent: "hammasi ulangan.",
-    lead: "Robohub siz bilan Uzum, Yandex Market, Wildberries va Ozon oʻrtasida turadi — barcha buyurtmalarni oʻzi qabul qiladi va qoldiqlarni qaytarib yuboradi, shunda hammasini bitta oynadan, ortiqcha sotuvsiz boshqarasiz.",
+    lead: "Robohub Uzum, Yandex Market, Wildberries va Ozon buyurtmalarini oʻzi qabul qiladi va qoldiqlarni sinxronlaydi — hammasi bitta oynada, ortiqcha sotuvsiz.",
     stock: "Ombor va hisob",
     crm: "CRM",
     note: "Baʼzilari menejer bilan sozlanadi.",
@@ -50,7 +50,7 @@ export const messages = defineMessages({
   ru: {
     title: "От маркетплейса до склада —",
     titleAccent: "всё связано.",
-    lead: "Robohub стоит между вами и Uzum, Yandex Market, Wildberries и Ozon — сам принимает все заказы и обновляет остатки на площадках, так что вы управляете всем из одного окна, без продаж сверх наличия.",
+    lead: "Robohub сам принимает заказы с Uzum, Yandex Market, Wildberries и Ozon и синхронизирует остатки — всё в одном окне, без продаж сверх наличия.",
     stock: "Склад и учёт",
     crm: "CRM",
     note: "Некоторые настраиваются с менеджером.",
@@ -94,7 +94,7 @@ export const messages = defineMessages({
   en: {
     title: "Marketplace to warehouse —",
     titleAccent: "everything connected.",
-    lead: "Robohub sits between you and Uzum, Yandex Market, Wildberries and Ozon — it takes in every order and syncs stock back, so you run everything from one window with no overselling.",
+    lead: "Robohub takes in orders from Uzum, Yandex Market, Wildberries and Ozon and syncs stock — all in one window, with no overselling.",
     stock: "Warehouse and accounting",
     crm: "CRM",
     note: "Some are set up with a manager.",
@@ -138,7 +138,7 @@ export const messages = defineMessages({
   kk: {
     title: "Маркетплейстен қоймаға дейін —",
     titleAccent: "бәрі байланысқан.",
-    lead: "Robohub сіз бен Uzum, Yandex Market, Wildberries және Ozon арасында тұрады — барлық тапсырысты өзі қабылдап, қалдықтарды кері жібереді. Сөйтіп бәрін бір терезеден, артық сатусыз басқарасыз.",
+    lead: "Robohub Uzum, Yandex Market, Wildberries және Ozon тапсырыстарын өзі қабылдап, қалдықтарды синхрондайды — бәрі бір терезеде, артық сатусыз.",
     stock: "Қойма және есеп",
     crm: "CRM",
     note: "Кейбіреулері менеджермен бірге бапталады.",
@@ -182,7 +182,7 @@ export const messages = defineMessages({
   ky: {
     title: "Маркетплейстен кампага чейин —",
     titleAccent: "баары туташкан.",
-    lead: "Robohub сиз менен Uzum, Yandex Market, Wildberries жана Ozon ортосунда турат — бардык буйрутмаларды өзү кабыл алып, калдыктарды кайра жөнөтөт. Ошентип баарын бир терезеден, ашыкча сатуусуз башкарасыз.",
+    lead: "Robohub Uzum, Yandex Market, Wildberries жана Ozon буйрутмаларын өзү кабыл алып, калдыктарды синхрондойт — баары бир терезеде, ашыкча сатуусуз.",
     stock: "Кампа жана эсеп",
     crm: "CRM",
     note: "Айрымдары менеджер менен бирге жөндөлөт.",
@@ -226,7 +226,7 @@ export const messages = defineMessages({
   kaa: {
     title: "Marketpleysten skladqa shekem —",
     titleAccent: "barlıǵı baylanısqan.",
-    lead: "Robohub siz benen Uzum, Yandex Market, Wildberries hám Ozon arasında turadı — barlıq buyırtpalardı ózi qabıl etedi hám qaldıqlardı qayta jiberedi, solay etip hámmesin bir aynadan, artıqsha satıwsız basqarasız.",
+    lead: "Robohub Uzum, Yandex Market, Wildberries hám Ozon buyırtpaların ózi qabıl etip, qaldıqlardı sinxronlaydı — hámmesi bir aynada, artıqsha satıwsız.",
     stock: "Sklad hám esap",
     crm: "CRM",
     note: "Ayırımları menejer menen sazlanadı.",
@@ -270,7 +270,7 @@ export const messages = defineMessages({
   tg: {
     title: "Аз маркетплейс то анбор —",
     titleAccent: "ҳама пайваст аст.",
-    lead: "Robohub байни шумо ва Uzum, Yandex Market, Wildberries ва Ozon меистад — ҳамаи фармоишҳоро худаш қабул мекунад ва боқимондаро бармегардонад, то шумо ҳама чизро аз як равзана, бе фурӯши зиёдатӣ идора кунед.",
+    lead: "Robohub фармоишҳои Uzum, Yandex Market, Wildberries ва Ozon-ро худаш қабул карда, боқимондаро ҳамоҳанг мекунад — ҳамааш дар як равзана, бе фурӯши зиёдатӣ.",
     stock: "Анбор ва баҳисобгирӣ",
     crm: "CRM",
     note: "Баъзеашон бо менеҷер танзим мешаванд.",

@@ -6,10 +6,10 @@ import { defineMessages } from "@/i18n/config";
 export const messages = defineMessages({
   uz: {
     title: "Savdolaringiz uchun foydali vositalar",
-    lead: "Sotuvdan qoladigan foydani hisoblang va marketpleyslar uchun mahsulot rasmlarini tayyorlang.",
+    lead: "Foydani hisoblang va mahsulot rasmlarini tayyorlang.",
     calc: {
       name: "Marketpleys kalkulyatori",
-      desc: "Tannarx va sotuv narxini kiriting — platforma komissiyasidan keyin qancha foyda qolishini bilib oling. Bepul va roʻyxatdan oʻtmasdan.",
+      desc: "Narxni kiriting — komissiyadan keyingi foydani biling. Bepul.",
       go: "Foydani hisoblash",
       calcBtn: "Hisoblash",   // demo bilan o'ynalgandan keyin chiqadigan tugma — kalkulyatorga olib boradi
       win: "Kalkulyator",
@@ -53,7 +53,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Mahsulot rasmini yuklang va uslubni tanlang — AI mahsulot afzalliklarini koʻrsatadigan, kartochka uchun bezatilgan rasm tayyorlaydi.",
+      desc: "Rasm yuklang va uslubni tanlang — AI kartochka uchun rasm tayyorlaydi.",
       go: "Rasm yaratish",
       steps: ["Rasm yuklang", "Uslubni tanlang", "Tayyor rasm"],
       srcAlt: "Yuklangan oddiy mahsulot rasmi: qoʻldagi iPhone",
@@ -73,10 +73,10 @@ export const messages = defineMessages({
   },
   ru: {
     title: "Полезные инструменты для ваших продаж",
-    lead: "Рассчитайте прибыль с продажи и подготовьте изображения товаров для маркетплейсов.",
+    lead: "Считайте прибыль и готовьте фото товаров.",
     calc: {
       name: "Калькулятор маркетплейсов",
-      desc: "Укажите себестоимость и цену продажи — узнайте, сколько останется после комиссии площадки. Бесплатно и без регистрации.",
+      desc: "Введите цену — узнайте прибыль после комиссии. Бесплатно.",
       go: "Рассчитать прибыль",
       calcBtn: "Рассчитать",
       win: "Калькулятор",
@@ -121,7 +121,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Загрузите фото товара и выберите стиль — AI подготовит изображение для карточки с оформлением и акцентом на преимуществах продукта.",
+      desc: "Загрузите фото и выберите стиль — AI подготовит изображение для карточки.",
       go: "Создать изображение",
       steps: ["Загрузите фото", "Выберите стиль", "Готовое фото"],
       srcAlt: "Загруженное простое фото товара: iPhone в руке",
@@ -141,10 +141,10 @@ export const messages = defineMessages({
   },
   en: {
     title: "Useful tools for your sales",
-    lead: "Calculate the profit from a sale and prepare product images for marketplaces.",
+    lead: "Calculate profit and prepare product images.",
     calc: {
       name: "Marketplace calculator",
-      desc: "Enter the cost and selling price — see how much profit is left after the platform’s commission. Free, no sign-up.",
+      desc: "Enter a price — see your profit after commission. Free.",
       go: "Calculate profit",
       calcBtn: "Calculate",
       win: "Calculator",
@@ -188,7 +188,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Upload a product photo and choose a style — AI prepares a card-ready image designed to highlight the product’s benefits.",
+      desc: "Upload a photo and pick a style — AI makes a card-ready image.",
       go: "Create image",
       steps: ["Upload a photo", "Choose a style", "Ready image"],
       srcAlt: "Uploaded plain product photo: an iPhone in hand",
@@ -208,10 +208,10 @@ export const messages = defineMessages({
   },
   kk: {
     title: "Сауданыңызға арналған пайдалы құралдар",
-    lead: "Сатылымнан қалатын пайданы есептеңіз және маркетплейстерге арналған тауар суреттерін дайындаңыз.",
+    lead: "Пайданы есептеңіз және тауар суреттерін дайындаңыз.",
     calc: {
       name: "Маркетплейс калькуляторы",
-      desc: "Өзіндік құн мен сату бағасын енгізіңіз — алаң комиссиясынан кейін қанша пайда қалатынын біліңіз. Тегін және тіркеусіз.",
+      desc: "Бағаны енгізіңіз — комиссиядан кейінгі пайданы біліңіз. Тегін.",
       go: "Пайданы есептеу",
       calcBtn: "Есептеу",
       win: "Калькулятор",
@@ -255,7 +255,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Тауар суретін жүктеп, стильді таңдаңыз — AI тауардың артықшылықтарын көрсететін, карточкаға арналған безендірілген сурет дайындайды.",
+      desc: "Сурет жүктеп, стильді таңдаңыз — AI карточкаға сурет дайындайды.",
       go: "Сурет жасау",
       steps: ["Суретті жүктеңіз", "Стильді таңдаңыз", "Дайын сурет"],
       srcAlt: "Жүктелген қарапайым тауар суреті: қолдағы iPhone",
@@ -275,10 +275,10 @@ export const messages = defineMessages({
   },
   ky: {
     title: "Сатууңуз үчүн пайдалуу куралдар",
-    lead: "Сатуудан канча киреше калаарын эсептеңиз жана маркетплейстер үчүн товар сүрөттөрүн даярдаңыз.",
+    lead: "Кирешени эсептеңиз жана товар сүрөттөрүн даярдаңыз.",
     calc: {
       name: "Маркетплейс калькулятору",
-      desc: "Өздүк наркты жана сатуу баасын киргизиңиз — аянттын комиссиясынан кийин канча киреше калаарын билиңиз. Акысыз жана каттоосуз.",
+      desc: "Бааны киргизиңиз — комиссиядан кийинки кирешени билиңиз. Акысыз.",
       go: "Кирешени эсептөө",
       calcBtn: "Эсептөө",
       win: "Калькулятор",
@@ -322,7 +322,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Товардын сүрөтүн жүктөп, стилди тандаңыз — AI товардын артыкчылыктарын көрсөткөн, карточка үчүн кооздолгон сүрөт даярдайт.",
+      desc: "Сүрөт жүктөп, стилди тандаңыз — AI карточка үчүн сүрөт даярдайт.",
       go: "Сүрөт түзүү",
       steps: ["Сүрөт жүктөңүз", "Стилди тандаңыз", "Даяр сүрөт"],
       srcAlt: "Жүктөлгөн жөнөкөй товар сүрөтү: колдогу iPhone",
@@ -342,10 +342,10 @@ export const messages = defineMessages({
   },
   kaa: {
     title: "Sawdańız ushın paydalı qurallar",
-    lead: "Satıwdan qalatuǵın paydanı esaplań hám marketpleysler ushın ónim súwretlerin tayarlań.",
+    lead: "Paydanı esaplań hám ónim súwretlerin tayarlań.",
     calc: {
       name: "Marketpleys kalkulyatorı",
-      desc: "Ózine túser baha hám satıw bahasın kiritiń — platforma komissiyasınan keyin qansha payda qalatuǵının biliń. Biypul hám dizimnen ótpesten.",
+      desc: "Bahanı kiritiń — komissiyadan keyingi paydanı biliń. Biypul.",
       go: "Paydanı esaplaw",
       calcBtn: "Esaplaw",
       win: "Kalkulyator",
@@ -389,7 +389,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Ónim súwretin júklep, stildi tańlań — AI ónimniń artıqmashılıqların kórsetetuǵın, kartochka ushın bezelgen súwret tayarlaydı.",
+      desc: "Súwret júklep, stildi tańlań — AI kartochka ushın súwret tayarlaydı.",
       go: "Súwret jaratıw",
       steps: ["Súwret júkleń", "Stildi tańlań", "Tayar súwret"],
       srcAlt: "Júklengen ápiwayı ónim súwreti: qoldaǵı iPhone",
@@ -409,10 +409,10 @@ export const messages = defineMessages({
   },
   tg: {
     title: "Абзорҳои муфид барои савдои шумо",
-    lead: "Фоидаи фурӯшро ҳисоб кунед ва аксҳои молро барои маркетплейсҳо омода созед.",
+    lead: "Фоидаро ҳисоб кунед ва аксҳои молро омода созед.",
     calc: {
       name: "Калкулятори маркетплейс",
-      desc: "Арзиши аслӣ ва нархи фурӯшро ворид кунед — бифаҳмед, ки пас аз комиссияи платформа чӣ қадар фоида мемонад. Ройгон ва бе сабти ном.",
+      desc: "Нархро ворид кунед — фоидаро пас аз комиссия бифаҳмед. Ройгон.",
       go: "Ҳисоб кардани фоида",
       calcBtn: "Ҳисоб кардан",
       win: "Калкулятор",
@@ -456,7 +456,7 @@ export const messages = defineMessages({
     },
     ai: {
       name: "AI studio",
-      desc: "Акси молро бор кунед ва услубро интихоб намоед — AI барои карточка акси ороишёфтае омода мекунад, ки бартариҳои молро нишон медиҳад.",
+      desc: "Акс бор кунед ва услуб интихоб намоед — AI барои карточка акс омода мекунад.",
       go: "Сохтани акс",
       steps: ["Аксро бор кунед", "Услубро интихоб кунед", "Акси тайёр"],
       srcAlt: "Акси оддии боршудаи мол: iPhone дар даст",

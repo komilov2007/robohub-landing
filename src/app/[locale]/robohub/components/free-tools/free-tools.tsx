@@ -75,17 +75,17 @@ export default async function FreeTools() {
                 </p>{" "}
                 <div className="calc" id="calc">
                   <div className="calc__form">
-                    <p className="calc__step">
+                    <p className="calc__step calc__opt">
                       <b>1</b>
                       {c.step1}
                     </p>{" "}
-                    <label className="fld">
+                    <label className="fld calc__opt">
                       <span>{c.productLabel}</span>{" "}
                       <span className="fld__box">
                         <input id="calc-name" type="text" defaultValue={c.productValue} placeholder={c.productPlaceholder} autoComplete="off" />
                       </span>
                     </label>{" "}
-                    <div className="fld" id="calc-catbox">
+                    <div className="fld calc__opt" id="calc-catbox">
                       <span>{c.category}</span>{" "}
                       <p className="calc__ai">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -131,14 +131,14 @@ export default async function FreeTools() {
                       ))}
                     </div>{" "}
                     {/* 4-qadam: soliq va boshqa xarajatlar — ixtiyoriy, hisobga darhol qo'shiladi */}
-                    <p className="calc__step">
+                    <p className="calc__step calc__opt">
                       <b>4</b>
                       <span>
                         {c.step4}
                         <small>{c.step4Hint}</small>
                       </span>
                     </p>{" "}
-                    <div className="calc__pair">
+                    <div className="calc__pair calc__opt">
                       <label className="fld">
                         <span>{c.tax}</span>{" "}
                         <span className="fld__box">
@@ -221,7 +221,7 @@ export default async function FreeTools() {
                         </li>
                       </ul>
                     </div>{" "}
-                    <div className="calc__detail">
+                    <div className="calc__detail calc__opt">
                       <h4>{c.detail}</h4>{" "}
                       <ul>
                         <li style={{ "--i": "0" } as CSSProperties}>
@@ -250,7 +250,7 @@ export default async function FreeTools() {
                         </li>
                       </ul>
                     </div>{" "}
-                    <p className="calc__foot">{c.foot}</p>
+                    <p className="calc__foot calc__opt">{c.foot}</p>
                   </div>
                 </div>{" "}
                 <p className="win__note">{c.note}</p>

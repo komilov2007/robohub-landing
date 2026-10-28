@@ -119,10 +119,26 @@ export default async function Header() {
                         {item.label}
                         <Chevron />
                       </summary>
+                      {/* Academy'dagi ☰ menyu (RobohubMenuMobile) ko'rinishida: ikonkali bandlar, vositalar — alohida sarlavha ostida */}
                       <ul>
-                        {[...t.features.items, ...t.tools.items].map((x, i) => (
+                        {t.features.items.map((x, i) => (
                           <li key={x.t}>
-                            <a href={x.href} data-feat={FEAT_STEP[i]} {...newTab(x.href)}>{x.t}</a>
+                            <a href={x.href} data-feat={FEAT_STEP[i]} {...newTab(x.href)}>
+                              <MenuIcon d={FEAT_ICONS[i]} />
+                              {x.t}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mobile-menu__sub">{t.tools.title}</p>
+                      <ul>
+                        {t.tools.items.map((x, i) => (
+                          <li key={x.t}>
+                            <a href={x.href} className={i === AI_TOOL ? "is-ai" : undefined} {...newTab(x.href)}>
+                              <MenuIcon d={TOOL_ICONS[i]} />
+                              {x.t}
+                              {i === SOON_TOOL && <em className="menu-soon">{t.soon}</em>}
+                            </a>
                           </li>
                         ))}
                       </ul>

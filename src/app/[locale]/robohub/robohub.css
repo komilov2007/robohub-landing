@@ -158,8 +158,15 @@
 .mobile-menu__group summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none}
 .mobile-menu__group summary::-webkit-details-marker{display:none}
 .mobile-menu__group[open] .chev{transform:rotate(180deg)}
-.mobile-menu__group ul{padding:0 0 var(--sp-1) var(--sp-2);border-left:1px solid var(--line)}
-.mobile-menu__group ul a{padding:8px 0;font-size:15px;color:var(--text-dim)}
+/* "Imkoniyatlar" ichi — Academy'dagi ☰ menyu (robohub-menu.css → .rhm-m) kabi: ikonka + nom, vositalar alohida sarlavha ostida */
+.mobile-menu__group ul{display:grid;gap:2px;padding:0 0 var(--sp-1)}
+.mobile-menu__group ul a{display:flex;align-items:center;gap:12px;padding:7px 6px;border-radius:12px;font-size:15px;font-weight:600;color:var(--text)}
+.mobile-menu__group ul a:active{background:rgba(0,82,79,.07)}
+.mobile-menu__group .mega__ico{flex:none;width:34px;height:34px;margin:0}
+.mobile-menu__group a.is-ai .mega__ico{background:linear-gradient(135deg,#34E5E6,#B48CFF 55%,#FF8FC8);color:#fff}
+.mobile-menu__group a.is-ai{background:linear-gradient(90deg,rgba(52,229,230,.08),rgba(180,140,255,.1) 55%,rgba(255,143,200,.1))}
+.mobile-menu__group .menu-soon{margin-left:auto}
+.mobile-menu__sub{margin:10px 0 6px;padding:12px 6px 0;border-top:1px solid var(--line);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
 .mobile-menu__actions{display:grid;gap:var(--sp-1);margin-top:var(--sp-2)}
 .mobile-menu__actions .btn{width:100%}
 
@@ -547,7 +554,8 @@
   -webkit-mask-image:radial-gradient(circle 250px at var(--mx) var(--my),transparent 60%,#000 100%);
           mask-image:radial-gradient(circle 250px at var(--mx) var(--my),transparent 60%,#000 100%);
 }
-@media (hover:none){.trust__veil{display:none}}
+/* telefon/planshet (sensorli yoki tor ekran) — parda yo'q, logotiplar to'liq tiniq */
+@media (hover:none),(max-width:900px){.trust__veil{display:none}}
 /* matnli nom: plitka ichida ikki qatorgacha; rang (data-c) va shrift (data-f) navbat bilan */
 .trust__tile--word{
   padding:calc(var(--tile) * .07);text-align:center;overflow-wrap:anywhere;text-wrap:balance;
@@ -1215,6 +1223,18 @@
   .tool__go{align-self:stretch;justify-content:center}
   /* sig'magan marketpleys tablari so'z o'rtasida keskin kesilmaydi — o'ng chetda erib ketadi */
   .calc__mps{-webkit-mask-image:linear-gradient(90deg,#000 78%,transparent);mask-image:linear-gradient(90deg,#000 78%,transparent)}
+  /* telefonda demo ixcham (≈ yarim balandlik): faqat narxlar, ish modeli va natija qoladi;
+     mahsulot/kategoriya, soliq, batafsil jadval va izoh — to'liq kalkulyatorda (tugma orqali) */
+  .calc__opt{display:none}
+  .calc{gap:14px;padding:14px}
+  .calc__form{counter-reset:calc-step}
+  .calc__step{counter-increment:calc-step}
+  .calc__step b{font-size:0}
+  .calc__step b::before{content:counter(calc-step);font-size:12px}
+  .calc__step ~ .calc__step{margin-top:12px}
+  .calc__where{display:none}
+  .tools__lead{font-size:14.5px;max-width:30ch;margin-inline:auto}
+  .tool__desc{font-size:14px}
 }
 @media (max-width:359px){
   .ai__steps{font-size:9.5px;letter-spacing:-.01em}
@@ -1470,6 +1490,8 @@
 @media (max-width:980px){
   .integ__top{grid-template-columns:1fr;gap:var(--sp-4)}
   .integ__media{max-width:440px;margin:0 auto}
+  .integ__title{text-align:center;text-wrap:balance}
+  .integ__lead{margin-inline:auto;font-size:15.5px;text-align:center;text-wrap:pretty}
   .integ__models-grid{grid-template-columns:1fr}
   .integ-model h4{min-height:0}
 }
@@ -1879,8 +1901,17 @@
   .plan__main{padding:18px 14px 16px}
   .plan__in{padding:22px 18px;border-radius:22px}
 }
+/* telefon: "6 oy −5%" bitta qatorda (chegirma nom yonida), ixcham belgi.
+   ru/en'da nom uzun ("12 месяцев", "12 months") — o'shalarda chegirma pastga tushadi */
+@media (max-width:480px){
+  .plan__terms{border-radius:18px}
+  .plan__ind{border-radius:14px}
+  .plan__term{gap:5px;height:48px;padding:0 4px;border-radius:14px;font-size:14.5px;font-weight:600;line-height:1}
+  .plan__term small{padding:2px 6px;font-size:10.5px;line-height:1.3}
+  :lang(ru) .plan__term,:lang(en) .plan__term{flex-direction:column;gap:4px;height:58px}
+}
+@media (max-width:360px){ .plan__term{gap:3px;font-size:13px} .plan__term small{padding:2px 4px;font-size:10px} }
 @media (max-width:420px){
-  .plan__term{flex-direction:column;gap:1px;height:50px;font-size:14px}
   .plan__sums{grid-template-columns:1fr}
 }
 
