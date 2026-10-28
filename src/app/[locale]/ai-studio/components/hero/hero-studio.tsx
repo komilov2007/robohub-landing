@@ -2,21 +2,22 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
-import { BEFORE_IMG, fill } from "../../ai-studio.content";
+import { fill } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
 const AUTO_MS = 5200; // uslublar avtomatik almashish oralig'i (tab ostidagi chiziq shu vaqtda to'ladi)
 const STEP_COUNT = 4; // AI holati bosqichlari (matnlari — T.studio.steps)
 
 // Hero vizuali — "oldin → AI → keyin" kompozitsiyasi (wireframe'dagi ⟷ sxemasi):
-//  • chapda pastda kichik, qiyshiq turgan oddiy foto (oldin);
-//  • o'ngda katta, har doim to'liq tayyor infografika (keyin) — uslublar navbat bilan silliq almashadi,
-//    har almashganda infografika elementlari qaytadan yig'iladi va ustidan yorug'lik o'tadi;
+//  • chapda pastda kichik, qiyshiq turgan oddiy foto (oldin) — qo'ldagi iPhone;
+//  • o'ngda katta, haqiqiy AI Studio natijasi (keyin) — uslublar navbat bilan silliq almashadi,
+//    har almashganda ustidan yorug'lik o'tadi;
 //  • ular tutashgan joyda AI tugun: aylanuvchi halqa va qisqa holat yozuvi (Tahlil… → Tayyor).
 //  • sichqoncha bilan yengil parallaks: ikki karta qarama-qarshi tomonga siljiydi.
 // Foydalanuvchi uslub tanlasa — avtomatik almashish to'xtaydi.
 export default function HeroStudio() {
-  const { PRODUCT, VARIANTS, T } = useC();
+  const { STUDIO, T } = useC();
+  const VARIANTS = STUDIO.styles;
   const S = T.studio;
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
@@ -56,7 +57,6 @@ export default function HeroStudio() {
     setActive(i);
   };
 
-  const v = VARIANTS[active];
   const done = step === STEP_COUNT - 1;
 
   return (
@@ -64,7 +64,7 @@ export default function HeroStudio() {
       <span className="as-studio__halo" aria-hidden="true" />
 
       <div className="as-duo">
-        {/* keyin — katta tayyor infografika */}
+        {/* keyin — katta, haqiqiy AI natija */}
         <div className="as-after">
           <div className="as-after__card">
             {VARIANTS.map((x, i) => (
@@ -75,35 +75,9 @@ export default function HeroStudio() {
                 alt={i === active ? fill(S.afterAlt, { name: x.name }) : ""}
                 aria-hidden={i !== active}
                 loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : undefined}
               />
             ))}
-            <div className={`as-ig as-ig--${v.tone}`} key={`ig-${active}`} aria-hidden="true">
-              <div className="as-ig__head">
-                <span className="as-ig__kicker">{PRODUCT.kicker}</span>
-                <span className="as-ig__title">{PRODUCT.name}</span>
-              </div>
-              <span className="as-ig__hit">
-                <Icon name="fire" />
-                HIT
-              </span>
-              <span
-                className="as-ig__label"
-                style={{ left: `${v.label.x}%`, top: `${v.label.y}%`, width: `${v.label.w}%`, height: `${v.label.h}%` } as CSSProperties}
-              >
-                <b>{PRODUCT.brand}</b>
-                <i>{PRODUCT.sub}</i>
-              </span>
-              <ul className="as-ig__feats">
-                {PRODUCT.features.map((f, i) => (
-                  <li key={f.text} style={{ "--k": i } as CSSProperties}>
-                    <span>
-                      <Icon name={f.icon} />
-                    </span>
-                    {f.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
             <span className="as-after__shine" key={`sh-${active}`} aria-hidden="true" />
           </div>
           <span className="as-after__tag" aria-hidden="true">
@@ -114,7 +88,7 @@ export default function HeroStudio() {
 
         {/* oldin — kichik oddiy foto */}
         <figure className="as-before">
-          <img src={BEFORE_IMG} alt={S.beforeAlt} />
+          <img src={STUDIO.before} alt={S.beforeAlt} />
           <figcaption>{S.beforeCap}</figcaption>
         </figure>
 
@@ -139,9 +113,10 @@ export default function HeroStudio() {
             aria-selected={i === active}
             className={"as-vars__tab" + (i === active ? " is-active" : "")}
             onClick={() => select(i, true)}
+            title={x.name}
           >
             <img src={x.img} alt="" width={28} height={37} loading="lazy" />
-            {x.name}
+            <span className="as-vars__name">{x.name}</span>
             {auto && i === active && (
               <span
                 className="as-vars__bar"

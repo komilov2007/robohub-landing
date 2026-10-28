@@ -4,6 +4,7 @@ import { getLocale } from "@/i18n/server";
 import { getTopics } from "../../lib/academy";
 import { PHONE, PHONE_TEL, START_URL, academyHref, topicHref, robohubHome, robohubPricing } from "../../lib/links";
 import { messages } from "./footer.i18n";
+import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
@@ -43,6 +44,7 @@ export default async function Footer() {
                 <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
               ))}
             </p>
+            <FooterTrust />
           </div>
           <nav aria-label={t.topics}>
             <h3>{t.topics}</h3>

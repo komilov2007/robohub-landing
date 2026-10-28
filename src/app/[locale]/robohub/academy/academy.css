@@ -16,7 +16,7 @@
   --ac-glass-line:rgba(241,255,240,.14);
   --ac-shadow:0 30px 60px -36px rgba(0,54,52,.45);
   --ac-shadow-sm:0 14px 30px -18px rgba(0,54,52,.35);
-  --ac-sec:clamp(56px,7vw,96px);
+  --ac-sec:clamp(44px,7vw,96px);   /* telefonda bo'limlar orasi ixchamroq */
   --ac-gutter:6px;       /* to'q hero chetidagi ingichka oq joy */
   --ac-round:36px;       /* hero burchak radiusi */
   background:#fff;color:var(--text);
@@ -56,34 +56,39 @@ body:has(.ac){background:#fff}
   padding:3px 9px;border-radius:var(--r-pill);background:var(--ac-mint-soft);color:var(--brand);
   font-family:var(--font-head);font-size:11px;font-weight:700;letter-spacing:.02em;transition:background 400ms,color 400ms;
 }
-.ac-nav{margin-inline:auto}
-.ac-nav ul{display:flex;gap:var(--sp-4)}
+/* nav header balandligini to'liq egallaydi — sichqoncha "Mavzular"dan pastdagi panelga tushayotganda hover uzilmaydi */
+.ac-nav{align-self:stretch;margin-inline:auto}
+.ac-nav ul{display:flex;align-items:center;gap:var(--sp-4);height:100%}
 .ac-nav__link{position:relative;display:inline-block;padding:8px 2px;font-size:15px;font-weight:500;color:var(--text-dim);transition:color var(--t-mid) var(--ease)}
 .ac-nav__link::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;border-radius:2px;background:var(--hl);transform:scaleX(0);transition:transform var(--t-mid) var(--ease-soft)}
 .ac-nav__link:hover{color:var(--text)}
 .ac-nav__link:hover::after,.ac-nav__link.is-active::after{transform:scaleX(1)}
 .ac-nav__link.is-active{color:var(--text);font-weight:700}
-/* "Mavzular" — ochiladigan panel (8 mavzu) */
+/* "Mavzular" — ochiladigan panel (8 mavzu). li position:static — panel header'ga nisbatan joylashadi (to'liq kenglik) */
 .ac-nav li{position:relative}
+.ac-nav li.ac-nav__drop{position:static;display:flex;align-items:center;height:100%}
 .ac-nav button.ac-nav__link{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .ac-nav button.ac-nav__link.is-active{font-weight:700}
 .ac-nav__caret{transition:transform 250ms var(--ease-soft)}
 .ac-nav__drop.is-open .ac-nav__caret{transform:rotate(180deg)}
 .ac-nav__drop.is-open > .ac-nav__link{color:var(--text)}
-/* ---------- MEGA-MENYU ("Mavzular", topics-menu.tsx): 8 mavzu ikki ustunda ---------- */
+/* ---------- MEGA-MENYU ("Mavzular", topics-menu.tsx) — Robohub landingidagi kabi: header ostidan to'liq kenglikda
+   tushadi, orqadagi sahifa xiralashadi; ichi konteyner kengligida, 8 mavzu to'rt ustunda ---------- */
 .ac-mega{
-  position:absolute;left:50%;top:calc(100% + 18px);z-index:60;display:flex;flex-direction:column;
-  width:640px;margin-left:-320px;padding:14px 10px 10px;border-radius:30px;
+  --mx:max(var(--sp-3),calc((100% - var(--container)) / 2 + var(--sp-3)));   /* chetlar — .container bilan bir chiziqda */
+  position:absolute;left:0;right:0;top:100%;z-index:60;display:flex;flex-direction:column;
+  padding:20px var(--mx) 22px;
   background:#fff; /* header o'zi blur — ichma-ich backdrop-filter ishlamaydi, shuning uchun to'liq oq */
-  border:1px solid var(--line);box-shadow:0 50px 100px -40px rgba(0,43,41,.5),0 10px 30px -20px rgba(0,43,41,.3);
-  opacity:0;visibility:hidden;transform:translateY(-10px) scale(.98);transform-origin:50% 0;
-  transition:opacity 220ms var(--ease),transform 350ms var(--ease-soft),visibility 0s 350ms;
+  border-top:1px solid var(--line);
+  box-shadow:0 24px 48px rgba(0,30,28,.14),0 0 0 100vmax rgba(0,30,28,.18);
+  clip-path:inset(0 -100vmax -100vmax -100vmax);   /* soya headerning ustiga chiqmasin */
+  opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:opacity 250ms var(--ease),transform 320ms var(--ease-soft),visibility 0s 320ms;
 }
-.ac-mega::before{content:"";position:absolute;left:0;right:0;top:-20px;height:20px} /* sichqoncha o'tadigan "ko'prik" */
-.ac-nav__drop.is-open .ac-mega{opacity:1;visibility:visible;transform:none;transition:opacity 220ms var(--ease),transform 450ms cubic-bezier(.2,1.2,.3,1)}
+.ac-nav__drop.is-open .ac-mega{opacity:1;visibility:visible;transform:none;transition:opacity 250ms var(--ease),transform 320ms var(--ease-soft)}
 .ac-mega__label{display:flex;align-items:baseline;justify-content:space-between;padding:2px 12px 10px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
 .ac-mega__label span{font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--text-dim)}
-.ac-nav .ac-mega__grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.ac-nav .ac-mega__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px var(--sp-2)}
 .ac-nav .ac-mega__grid > li{position:static;min-width:0}
 .ac-nav__drop.is-open .ac-mega__grid > li{animation:ac-mega-in 500ms var(--ease-soft) calc(60ms + var(--i) * 35ms) backwards}
 .ac-mega__item{
@@ -105,7 +110,7 @@ body:has(.ac){background:#fff}
 .ac-mega__bar{position:relative;display:block;height:3px;margin-top:7px;border-radius:3px;background:rgba(0,82,79,.08);overflow:hidden}
 .ac-mega__bar i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--brand),var(--cyan));transform-origin:left;transform:scaleX(var(--p,0));transition:transform 900ms var(--ease-soft)}
 .ac-mega__all{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;padding:13px 14px;border-radius:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:13px 14px;border-radius:16px;
   background:var(--ac-soft);font-size:13.5px;font-weight:700;color:var(--brand);transition:background 250ms var(--ease)
 }
 .ac-mega__all svg{transition:transform 350ms var(--ease-soft)}

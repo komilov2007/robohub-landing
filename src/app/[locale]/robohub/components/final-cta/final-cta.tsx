@@ -3,6 +3,7 @@ import { localeHref } from "@/i18n/config";
 import { newTab } from "@/lib/sites";
 import { messages } from "./final-cta.i18n";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
+import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
@@ -52,32 +53,8 @@ export default async function FinalCta() {
                 <img src="/marketplaces/wildberries.svg" alt="" width="30" height="30" />
                 <img src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
               </p>{" "}
-              <ul className="foot__certs">
-                {t.certs.items.map((c) => (
-                  <li key={c.src}>
-                    <a className="foot__cert" href={c.src} target="_blank" rel="noopener">
-                      <span className="foot__cert-img">
-                        <img src={c.src} alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" />
-                      </span>
-                      <span className="foot__cert-text">
-                        <b>{c.title}</b>
-                        <em>{t.certs.open} ↗</em>
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <FooterTrust />
             </div>{" "}
-            <nav aria-label={t.pageLabel}>
-              <h3>{t.pageTitle}</h3>{" "}
-              <ul>
-                {t.page.map((item) => (
-                  <li key={item.href}>
-                    <a href={item.href} {...newTab(item.href)}>{item.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>{" "}
             <nav aria-label={t.tools}>
               <h3>{t.tools}</h3>{" "}
               <ul>
@@ -87,6 +64,16 @@ export default async function FinalCta() {
                 <li>
                   <a href={localeHref(locale, "/ai-studio")} {...newTab("/ai-studio")}>{t.infographics}</a>
                 </li>
+              </ul>
+            </nav>{" "}
+            <nav aria-label={t.pageLabel}>
+              <h3>{t.pageTitle}</h3>{" "}
+              <ul>
+                {t.page.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} {...newTab(item.href)}>{item.label}</a>
+                  </li>
+                ))}
               </ul>
             </nav>{" "}
             <div>

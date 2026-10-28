@@ -68,6 +68,26 @@ export function init() {
     setState(t >= SWITCH && t < BACK ? "after" : "before");
   }
 
+  // Telefonda video suriladigan oynada (robohub.css, .pain__media): kadr sxema bo'ylab o'zi yuradi —
+  // "Robohubsiz" qismida chapdan (tadbirkor) o'ngga (marketpleyslar), "Robohub bilan" qismida markazdagi panelda turadi.
+  // Foydalanuvchi barmog'i bilan sursa — 4 soniya avtomatik surish to'xtaydi.
+  var box = video.parentElement, userUntil = 0;
+  function panAt(t) {
+    if (t < 1) return 0;
+    if (t < 7) return (t - 1) / 6;
+    if (t < SWITCH) return 1 - ((t - 7) / (SWITCH - 7)) * 0.5;
+    if (t < BACK) return 0.5;
+    return 0.5 - ((t - BACK) / FADE) * 0.5;
+  }
+  function pan(t) {
+    var max = box.scrollWidth - box.clientWidth;
+    if (max < 8 || performance.now() < userUntil) return;
+    box.scrollLeft = Math.round(max * easeInOut(panAt(t)));
+  }
+  function onTouch() { userUntil = performance.now() + 4000; }
+  box.addEventListener("touchstart", onTouch, { passive: true });
+  box.addEventListener("wheel", onTouch, { passive: true });
+
   // Kadr bilan sinxron: requestVideoFrameCallback — ekranga chiqayotgan kadrning aniq vaqti (mediaTime).
   // Bo'lmasa (eski brauzerlar) — har animatsiya kadrida currentTime.
   var rvfc = "requestVideoFrameCallback" in HTMLVideoElement.prototype;
@@ -78,6 +98,7 @@ export function init() {
     // tugmadan keyin: yangi joydagi birinchi kadr ekranga chiqayotganda — aynan shu kadr bilan birga almashadi
     if (seeking) { if (Math.abs(t - seekTo) < 0.25) finishSeek(t); }
     else apply(t);
+    pan(t);
     schedule();
   }
   function schedule() {
@@ -151,6 +172,8 @@ export function init() {
     video.removeEventListener("seeked", onSeeked);
     clearTimeout(seekGuard);
     stop();
+    box.removeEventListener("touchstart", onTouch);
+    box.removeEventListener("wheel", onTouch);
     if (io) io.disconnect();
     sec.style.removeProperty("--mix");
   };

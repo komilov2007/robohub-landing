@@ -8,7 +8,7 @@ export const messages = defineMessages({
     accent: ["yagona", "kabinetdan"],
     end: ["boshqaring"],
     lead: "Mahsulotlarni marketpleyslarda joylashtiring, buyurtmalarni boshqaring, qoldiqlarni sinxronlang va foydangizni Robohub’da kuzating.",
-    facts: { mps: "Marketpleyslar", integrations: "Hisob tizimlari bilan integratsiyalar", ai: "AI yordamchi" },
+    facts: { mps: "Marketpleyslar", integrations: "Hisob tizimlari", ai: "AI yordamchi" },
     start: "Hoziroq boshlash",
     video: {
       button: "Qanday ishlaydi",
@@ -22,7 +22,7 @@ export const messages = defineMessages({
     accent: ["одного", "кабинета"],
     end: [],
     lead: "Размещайте товары на маркетплейсах, управляйте заказами, синхронизируйте остатки и отслеживайте прибыль через Robohub.",
-    facts: { mps: "Маркетплейсы", integrations: "Интеграции с учётными системами", ai: "AI-помощник" },
+    facts: { mps: "Маркетплейсы", integrations: "Учётные системы", ai: "AI-помощник" },
     start: "Начать сейчас",
     video: {
       button: "Как это работает",
@@ -36,7 +36,7 @@ export const messages = defineMessages({
     accent: ["one", "dashboard"],
     end: [],
     lead: "List products on marketplaces, manage orders, sync stock and track your profit with Robohub.",
-    facts: { mps: "Marketplaces", integrations: "Accounting system integrations", ai: "AI assistant" },
+    facts: { mps: "Marketplaces", integrations: "Accounting systems", ai: "AI assistant" },
     start: "Get started",
     video: {
       button: "How it works",

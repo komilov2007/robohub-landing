@@ -120,6 +120,7 @@ return (function () {
     }
     // birinchi karta ekran pastidan tashqarida boshlanadi
     lead = Math.min(2.6, Math.asin(Math.min(1, (H - cy + CH) / R)) / step);
+    tail = mobile ? 0.2 : 0.55;   // telefonda oxirgi kartadan keyin bo'sh "dum" qisqaroq — sahna tezroq bo'shaydi
     span = lead + (N - 1) + tail;
     sec.style.height = Math.round(H + span * per) + "px";
     items.forEach(function (it) {

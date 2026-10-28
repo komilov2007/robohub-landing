@@ -1,0 +1,68 @@
+/* Mukofotlar va guvohnomalar (footer-trust.tsx) — to'rtala landing footerida bir xil. To'q fonli footer uchun.
+   Ranglar o'zida (footerlarning o'zgaruvchilari har xil). Har selektor ".ftrust" ildizidan ikki marta (.ftrust.ftrust) —
+   har footerning o'z ul / li / a qoidalaridan (".foot ul", ".ac-footer li a", ".as-footer li a") ustun bo'lishi uchun.
+   Tile: chapda yorliq ("G'olib") + mukofot logotipi, o'ngda guvohnoma varag'i. */
+.ftrust.ftrust{margin-top:22px}
+.ftrust.ftrust .ftrust__title{margin:0 0 10px;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:#A8CFCA}
+.ftrust.ftrust .ftrust__list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.ftrust.ftrust .ftrust__list > li{display:block;min-width:0;margin:0;padding:0}
+/* keng ekranda qator logotip ustunidan kengroq: yonidagi ustunning bo'sh pastki qismiga cho'ziladi */
+@media (min-width:1181px){ .ftrust.ftrust{width:580px;max-width:calc(100vw - 48px)} }
+
+.ftrust.ftrust .ftrust__item{
+  position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  width:100%;height:100%;min-height:62px;margin:0;padding:8px 8px 8px 12px;
+  border:1px solid rgba(241,255,240,.13);border-radius:12px;color:#fff;opacity:1;text-decoration:none;font-size:inherit;
+  background:radial-gradient(70% 120% at 100% 50%,rgba(184,255,176,.12),transparent 70%),rgba(255,255,255,.035);
+  transition:border-color 250ms ease,background-color 250ms ease,transform 250ms cubic-bezier(.33,1,.68,1);
+}
+.ftrust.ftrust .ftrust__item::after{content:none}
+.ftrust.ftrust .ftrust__item:hover,.ftrust.ftrust .ftrust__item:focus-visible{border-color:rgba(184,255,176,.38);background-color:rgba(255,255,255,.07);transform:translateY(-2px)}
+.ftrust.ftrust .ftrust__item:focus-visible{outline:2px solid #B8FFB0;outline-offset:2px}
+
+.ftrust.ftrust .ftrust__text{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+.ftrust.ftrust .ftrust__text small{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1;color:#B8FFB0;white-space:nowrap}
+.ftrust.ftrust .ftrust__text b{font-size:12.5px;font-weight:700;line-height:1.2;color:#fff}
+.ftrust.ftrust .ftrust__logo{display:block;width:auto;height:24px;max-width:100%;margin:0;object-fit:contain;object-position:left center}
+.ftrust.ftrust .ftrust__logo[src*="ebrd"]{height:30px;border-radius:4px}
+
+/* guvohnoma varag'i va orqasidagi ikkinchi qog'oz; ustiga kelganda varaq to'g'rilanadi */
+.ftrust.ftrust .ftrust__paper{position:relative;flex:none;display:grid;place-items:center;width:46px;height:44px;line-height:0}
+.ftrust.ftrust .ftrust__paper::before{
+  content:"";position:absolute;inset:5px 4px;border-radius:2px;background:#DCE8E4;
+  transform:rotate(8deg) translate(3px,1px);transition:transform 400ms cubic-bezier(.33,1,.68,1);
+}
+.ftrust.ftrust .ftrust__paper img{
+  position:relative;display:block;width:auto;height:auto;max-width:46px;max-height:40px;margin:0;border-radius:2px;background:#fff;
+  box-shadow:0 6px 12px -4px rgba(0,0,0,.6);transform:rotate(-4deg);transition:transform 400ms cubic-bezier(.33,1,.68,1);
+}
+.ftrust.ftrust .ftrust__item:hover .ftrust__paper img,.ftrust.ftrust .ftrust__item:focus-visible .ftrust__paper img{transform:rotate(0) scale(1.1)}
+.ftrust.ftrust .ftrust__item:hover .ftrust__paper::before,.ftrust.ftrust .ftrust__item:focus-visible .ftrust__paper::before{transform:rotate(13deg) translate(5px,1px)}
+
+@media (max-width:640px){
+  .ftrust.ftrust .ftrust__item{flex-direction:column-reverse;justify-content:flex-end;gap:8px;padding:10px 8px;text-align:center}
+  .ftrust.ftrust .ftrust__text{align-items:center}
+  .ftrust.ftrust .ftrust__text small{white-space:normal;line-height:1.25;letter-spacing:.08em}
+  .ftrust.ftrust .ftrust__logo{height:20px;object-position:center}
+  .ftrust.ftrust .ftrust__logo[src*="ebrd"]{height:26px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ftrust.ftrust .ftrust__item,.ftrust.ftrust .ftrust__paper img,.ftrust.ftrust .ftrust__paper::before{transition:none}
+}
+
+/* to'liq ko'rinish oynasi (cert-lightbox.tsx) */
+.certbox{
+  max-width:min(1100px,calc(100vw - 32px));max-height:calc(100dvh - 32px);margin:auto;padding:0;border:0;border-radius:14px;
+  background:#fff;overflow:visible;box-shadow:0 40px 90px -20px rgba(0,0,0,.7);
+}
+.certbox[open]{animation:certbox-in 300ms cubic-bezier(.33,1,.68,1)}
+@keyframes certbox-in{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.certbox::backdrop{background:rgba(0,20,19,.8);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.certbox img{display:block;max-width:min(1100px,calc(100vw - 32px));max-height:calc(100dvh - 32px);width:auto;height:auto;border-radius:14px}
+.certbox__close{
+  position:absolute;top:-14px;right:-14px;z-index:1;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;cursor:pointer;
+  background:#fff;color:#06302E;box-shadow:0 8px 20px -6px rgba(0,0,0,.5);transition:transform 250ms cubic-bezier(.33,1,.68,1)
+}
+.certbox__close:hover{transform:rotate(90deg)}
+.certbox__close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+@media (max-width:640px){ .certbox__close{top:8px;right:8px} }

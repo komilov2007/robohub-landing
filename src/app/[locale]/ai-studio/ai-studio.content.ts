@@ -18,6 +18,7 @@ export const STUDIO_EMBED_URL = `${STUDIO_URL}?ai_topup=public-studio`;
 // "Kirish" — Robohub sotuvchi kabineti
 export const LOGIN_HREF = "https://seller.robohub.uz";
 export const EXAMPLES_HREF = "#examples";
+// oddiy krem fotosi — "Muammo" va "Qadamlar" bo'limlaridagi kichik vizuallar uchun (hero'da — iPhone, DATA.studio)
 export const BEFORE_IMG = "/ai/base_cosmetics.webp";
 export const TOKENS_PER_IMAGE = 3;
 // Narx — bitta manba: 1 rasm narxi (so'm); 1 token narxi undan hisoblanadi. Matnlardagi {img} va {tok} shu bilan to'ldiriladi.
@@ -26,21 +27,36 @@ export const TOKEN_PRICE = PRICE_PER_IMAGE / TOKENS_PER_IMAGE;
 /** So'm summasi: "1 500" (guruhlash — bo'linmas bo'sh joy, uch tilda bir xil) */
 export const money = (n: number) => Math.round(n).toLocaleString("ru-RU").replace(/\s/g, "\u00A0");
 
-export type GalleryCat = "electronics" | "fashion" | "accessories" | "beauty" | "home";
-type GalleryId =
-  | "headphones" | "sneakers" | "cream" | "watch" | "vitamins" | "palette"
-  | "toybox" | "cream-interior" | "chair" | "cream-life" | "dumbbells" | "tire";
+type GalleryProduct =
+  | "thermos" | "bag" | "earbuds" | "glasses" | "mug" | "headset"
+  | "mouse" | "keyboard" | "racket" | "backpack" | "pen" | "sneakers";
+type GenMode = "photo" | "infographic" | "pack"; // DATA.modes dagi id'lar
+/** Galereya rasmi: public/ai-studio/gallery/<name>.webp */
+const gal = (name: string) => `/ai-studio/gallery/${name}.webp`;
+/** Hero rasmi: public/ai-studio/hero/<name>.webp */
+const heroImg = (name: string) => `/ai-studio/hero/${name}.webp`;
 
 // ---------- tilga bog'liq bo'lmagan ma'lumotlar ----------
 const DATA = {
   nav: ["#features", "#how", "#examples", "#faq"] as const,
-  product: { brand: "AQUA", sub: "balance", volume: "250", icons: ["clock", "star", "shield"] as const },
-  // label — idishdagi oq yorliqning rasm ichidagi o'rni (%, rasm 3:4 = 750×1000)
+  product: { icons: ["clock", "star", "shield"] as const },
+  // Hero: haqiqiy AI Studio natijalari — qo'ldagi iPhone fotosi → 4 xil uslub (Robohub landingidagi o'sha rasmlar).
+  // Nomlari — T.studio.variants (tartib bir xil). Birinchisi sahifa ochilganda ko'rinadi.
+  studio: {
+    before: heroImg("iphone-before"),
+    styles: [
+      { id: "infographic", img: heroImg("iphone-infographic") },
+      { id: "desk", img: heroImg("iphone-desk") },
+      { id: "lifestyle", img: heroImg("iphone-lifestyle") },
+      { id: "cafe", img: heroImg("iphone-cafe") },
+    ],
+  },
+  // krem infografikasi — "Rejimlar", "Muammo" va "Qadamlar" bo'limlaridagi kichik vizuallar uchun
   variants: [
-    { id: "composition", img: "/ai/cosmetics_composition.webp", tone: "primary", label: { x: 25, y: 46, w: 50.5, h: 25 } },
-    { id: "interior", img: "/ai/cosmetics_everyday.webp", tone: "white", label: { x: 25, y: 46, w: 50.5, h: 25 } },
-    { id: "lifestyle", img: "/ai/cosmetics_in_use.webp", tone: "mint", label: { x: 30.5, y: 61.6, w: 27.5, h: 13.8 } },
-  ] as { id: string; img: string; tone: "primary" | "white" | "mint"; label: { x: number; y: number; w: number; h: number } }[],
+    { id: "composition", img: "/ai/cosmetics_composition.webp" },
+    { id: "interior", img: "/ai/cosmetics_everyday.webp" },
+    { id: "lifestyle", img: "/ai/cosmetics_in_use.webp" },
+  ],
   markets: [
     { name: "Uzum Market", icon: "/marketplaces/uzum.svg" },
     { name: "Wildberries", icon: "/marketplaces/wildberries.svg" },
@@ -58,22 +74,28 @@ const DATA = {
     { id: "time", icon: "clock", solIcon: "send" },
     { id: "ctr", icon: "eyeOff", solIcon: "trend" },
   ] as const,
-  // NAMUNA: mahsulot fotolari loyihadagi umumiy rasmlardan, "keyin" tomoni — fotodan quriladigan kompozitsiya
-  // (kosmetikada — haqiqiy AI natija)
+  // Haqiqiy natijalar: telefonda olingan oddiy foto (oldin) → AI Studio rasmi (keyin).
+  //   mode — qaysi rejimda yaratilgan (kartadagi yozuv shundan: "Infografika · 3 token").
+  //   Har mahsulot bir marta (sumka ham — bitta karta). Kompyuterda 6 ustunli grid 2 qator = 12 karta;
+  //   12 tadan kam bo‘lsa kompyuterda faqat birinchi to‘liq qator ko‘rinadi (gallery.tsx, .is-short). wide — 2 ustun.
+  // Tartib muhim: telefonda birinchi 4 tasi, planshetda 6 tasi, kompyuterda hammasi ko‘rinadi.
+  //   Infografika va foto navbatma-navbat — grid shaxmat kabi aralash ko‘rinadi.
   gallery: [
-    { id: "headphones", cat: "electronics", before: "/categories/electronics.webp", tone: "primary" },
-    { id: "sneakers", cat: "fashion", before: "/categories/shoes.webp", tone: "mint" },
-    { id: "cream", cat: "beauty", before: "/ai/base_cosmetics.webp", after: "/ai/cosmetics_composition.webp", tone: "white" },
-    { id: "watch", cat: "accessories", before: "/categories/accessories.webp", tone: "dark" },
-    { id: "vitamins", cat: "beauty", before: "/categories/health.webp", tone: "white" },
-    { id: "palette", cat: "beauty", before: "/categories/beauty.webp", tone: "mint" },
-    { id: "toybox", cat: "home", before: "/categories/kids.webp", tone: "primary" },
-    { id: "cream-interior", cat: "beauty", before: "/ai/base_cosmetics.webp", after: "/ai/cosmetics_everyday.webp", tone: "white" },
-    { id: "chair", cat: "home", before: "/categories/home.webp", tone: "mint" },
-    { id: "cream-life", cat: "beauty", before: "/ai/base_cosmetics.webp", after: "/ai/cosmetics_in_use.webp", tone: "white" },
-    { id: "dumbbells", cat: "home", before: "/categories/sport.webp", tone: "dark" },
-    { id: "tire", cat: "accessories", before: "/categories/auto.webp", tone: "dark" },
-  ] as { id: GalleryId; cat: GalleryCat; before: string; after?: string; tone: "primary" | "mint" | "white" | "dark" }[],
+    // 1-qator
+    { product: "thermos", mode: "infographic", before: gal("thermos-before"), after: gal("thermos-after") },
+    { product: "mug", mode: "photo", before: gal("mug-before"), after: gal("mug-after") },
+    { product: "bag", mode: "infographic", before: gal("bag-before"), after: gal("bag-infographic") },
+    { product: "headset", mode: "photo", before: gal("headset-before"), after: gal("headset-after") },
+    { product: "earbuds", mode: "infographic", before: gal("earbuds-before"), after: gal("earbuds-after") },
+    { product: "racket", mode: "photo", before: gal("racket-before"), after: gal("racket-after") },
+    // 2-qator
+    { product: "sneakers", mode: "photo", before: gal("sneakers-before"), after: gal("sneakers-after") },
+    { product: "glasses", mode: "infographic", before: gal("glasses-before"), after: gal("glasses-after") },
+    { product: "pen", mode: "photo", before: gal("pen-before"), after: gal("pen-after") },
+    { product: "keyboard", mode: "infographic", before: gal("keyboard-before"), after: gal("keyboard-after") },
+    { product: "backpack", mode: "photo", before: gal("backpack-before"), after: gal("backpack-after") },
+    { product: "mouse", mode: "photo", before: gal("mouse-before"), after: gal("mouse-after") },
+  ] as { product: GalleryProduct; mode: GenMode; before: string; after: string; wide?: boolean }[],
   steps: ["upload", "mode", "prompt", "generate"] as const,
   modes: [
     { id: "photo", tokens: 3, featured: false },
@@ -87,7 +109,7 @@ const DATA = {
   lessons: [16, 15, 22],
 };
 
-type Gallery = Record<GalleryId, { name: string; kicker: string; feats: string[] }>;
+type Gallery = Record<GalleryProduct, string>;
 
 // ---------- tarjimalar ----------
 const uz = {
@@ -126,16 +148,14 @@ const uz = {
   studio: {
     steps: ["Tahlil", "Fon", "Dizayn", "Tayyor"],
     ready: "Tayyor · 28 s",
-    beforeAlt: "Oddiy mahsulot fotosi: oq fonda krem idishi",
+    beforeAlt: "Oddiy mahsulot fotosi: qo‘ldagi iPhone",
     beforeCap: "Oldin · oddiy foto",
-    afterTag: "Keyin · AI infografika",
-    afterAlt: "AI infografika, “{name}” uslubi",
-    tabs: "Infografika uslubi",
-    variants: ["Kompozitsiya", "Interyer", "Hayotiy"],
+    afterTag: "Keyin · AI Studio",
+    afterAlt: "AI Studio natijasi, “{name}” uslubi",
+    tabs: "Rasm uslubi",
+    variants: ["Infografika", "Kompozitsiya", "Hayotiy", "Kundalik"],
   },
   product: {
-    name: "Namlovchi krem",
-    kicker: "Yuz va tana uchun",
     features: ["48 soat namlik", "100% tabiiy tarkib", "Barcha teri turlari"],
   },
   trust: {
@@ -181,23 +201,23 @@ const uz = {
   gallery: {
     title: "Natijalarni ko‘ring",
     cta: "Shunaqasini yaratish",
-    meta: "Infografika · 3 token · {img} so‘m",
     before: "Oldin",
     after: "Keyin",
     photoAlt: "{name} — oddiy foto",
+    resultAlt: "{name} — AI Studio natijasi",
     items: {
-      headphones: { name: "Simsiz quloqchin", kicker: "Bluetooth 5.3", feats: ["40 soat ishlash", "Shovqin filtri", "Yengil korpus"] },
-      sneakers: { name: "Krossovka", kicker: "Yangi kolleksiya", feats: ["Nafas oluvchi", "Yumshoq taglik", "36–45 o‘lcham"] },
-      cream: { name: "Namlovchi krem", kicker: "Yuz va tana uchun", feats: ["48 soat namlik", "Tabiiy tarkib", "250 ml"] },
-      watch: { name: "Mexanik soat", kicker: "Zanglamas po‘lat", feats: ["Suvga chidamli", "Safir oyna", "2 yil kafolat"] },
-      vitamins: { name: "Vitamin kompleksi", kicker: "60 kapsula", feats: ["Immunitet uchun", "Kuniga 1 marta", "Sertifikatlangan"] },
-      palette: { name: "Ko‘z soyalari palitrasi", kicker: "24 rang", feats: ["Uzoq turadi", "Mat va shimmer", "Gipoallergen"] },
-      toybox: { name: "O‘yinchoq qutisi", kicker: "Bolalar xonasi uchun", feats: ["Yog‘och", "G‘ildirakli", "Xavfsiz bo‘yoq"] },
-      "cream-interior": { name: "Tungi krem", kicker: "Interyer uslubi", feats: ["Tiklovchi", "Gialuron", "Tungi parvarish"] },
-      chair: { name: "Yumshoq kreslo", kicker: "Skandinav uslubi", feats: ["Yog‘och oyoqlar", "Yuviladigan g‘ilof", "Yetkazib berish"] },
-      "cream-life": { name: "Qo‘l kremi", kicker: "Hayotiy uslub", feats: ["Tez singadi", "Yopishmaydi", "Kundalik"] },
-      dumbbells: { name: "Gantel to‘plami", kicker: "2–24 kg", feats: ["Rezina qoplama", "Sirpanmaydi", "Uy uchun"] },
-      tire: { name: "Yozgi shina", kicker: "R16 · 205/55", feats: ["Ho‘l yo‘lda ushlaydi", "Kam shovqin", "Yoqilg‘i tejaydi"] },
+      thermos: "Termos krujka",
+      bag: "Krossbodi sumka",
+      earbuds: "Simsiz quloqchin",
+      glasses: "Kompyuter ko‘zoynagi",
+      mug: "Keramik krujka",
+      headset: "Geymer quloqchini",
+      mouse: "Simsiz sichqoncha",
+      keyboard: "Kompyuter klaviaturasi",
+      racket: "Stol tennisi raketkasi",
+      backpack: "Sport ryukzagi",
+      pen: "Sharikli ruchka",
+      sneakers: "Charm krossovka",
     } as Gallery,
   },
   steps: {
@@ -318,16 +338,14 @@ const ru: Dict = {
   studio: {
     steps: ["Анализ", "Фон", "Дизайн", "Готово"],
     ready: "Готово · 28 с",
-    beforeAlt: "Обычное фото товара: баночка крема на белом фоне",
+    beforeAlt: "Обычное фото товара: iPhone в руке",
     beforeCap: "До · обычное фото",
-    afterTag: "После · AI-инфографика",
-    afterAlt: "AI-инфографика, стиль «{name}»",
-    tabs: "Стиль инфографики",
-    variants: ["Композиция", "Интерьер", "Лайфстайл"],
+    afterTag: "После · AI Studio",
+    afterAlt: "Результат AI Studio, стиль «{name}»",
+    tabs: "Стиль изображения",
+    variants: ["Инфографика", "Композиция", "Лайфстайл", "Повседневный"],
   },
   product: {
-    name: "Увлажняющий крем",
-    kicker: "Для лица и тела",
     features: ["48 часов увлажнения", "100% натуральный состав", "Для всех типов кожи"],
   },
   trust: {
@@ -373,23 +391,23 @@ const ru: Dict = {
   gallery: {
     title: "Посмотрите на результат",
     cta: "Создать такое же",
-    meta: "Инфографика · 3 токена · {img} сум",
     before: "До",
     after: "После",
     photoAlt: "{name} — обычное фото",
+    resultAlt: "{name} — результат AI Studio",
     items: {
-      headphones: { name: "Беспроводные наушники", kicker: "Bluetooth 5.3", feats: ["40 часов работы", "Шумоподавление", "Лёгкий корпус"] },
-      sneakers: { name: "Кроссовки", kicker: "Новая коллекция", feats: ["Дышащие", "Мягкая подошва", "Размеры 36–45"] },
-      cream: { name: "Увлажняющий крем", kicker: "Для лица и тела", feats: ["48 часов увлажнения", "Натуральный состав", "250 мл"] },
-      watch: { name: "Механические часы", kicker: "Нержавеющая сталь", feats: ["Водонепроницаемые", "Сапфировое стекло", "Гарантия 2 года"] },
-      vitamins: { name: "Витаминный комплекс", kicker: "60 капсул", feats: ["Для иммунитета", "1 раз в день", "Сертифицирован"] },
-      palette: { name: "Палетка теней", kicker: "24 оттенка", feats: ["Стойкие", "Мат и шиммер", "Гипоаллергенно"] },
-      toybox: { name: "Ящик для игрушек", kicker: "Для детской комнаты", feats: ["Дерево", "На колёсиках", "Безопасная краска"] },
-      "cream-interior": { name: "Ночной крем", kicker: "Интерьерный стиль", feats: ["Восстанавливает", "Гиалурон", "Ночной уход"] },
-      chair: { name: "Мягкое кресло", kicker: "Скандинавский стиль", feats: ["Деревянные ножки", "Съёмный чехол", "Доставка"] },
-      "cream-life": { name: "Крем для рук", kicker: "Лайфстайл", feats: ["Быстро впитывается", "Не липкий", "На каждый день"] },
-      dumbbells: { name: "Набор гантелей", kicker: "2–24 кг", feats: ["Резиновое покрытие", "Не скользят", "Для дома"] },
-      tire: { name: "Летняя шина", kicker: "R16 · 205/55", feats: ["Сцепление на мокрой дороге", "Низкий шум", "Экономит топливо"] },
+      thermos: "Термокружка",
+      bag: "Сумка кросс-боди",
+      earbuds: "Беспроводные наушники",
+      glasses: "Компьютерные очки",
+      mug: "Керамическая кружка",
+      headset: "Игровая гарнитура",
+      mouse: "Беспроводная мышь",
+      keyboard: "Компьютерная клавиатура",
+      racket: "Ракетка для настольного тенниса",
+      backpack: "Спортивный рюкзак",
+      pen: "Шариковая ручка",
+      sneakers: "Кожаные кроссовки",
     },
   },
   steps: {
@@ -507,16 +525,14 @@ const en: Dict = {
   studio: {
     steps: ["Analysis", "Background", "Design", "Done"],
     ready: "Done · 28 s",
-    beforeAlt: "Plain product photo: a cream jar on a white background",
+    beforeAlt: "Plain product photo: an iPhone in hand",
     beforeCap: "Before · plain photo",
-    afterTag: "After · AI infographic",
-    afterAlt: "AI infographic, “{name}” style",
-    tabs: "Infographic style",
-    variants: ["Composition", "Interior", "Lifestyle"],
+    afterTag: "After · AI Studio",
+    afterAlt: "AI Studio result, “{name}” style",
+    tabs: "Image style",
+    variants: ["Infographic", "Composition", "Lifestyle", "Everyday"],
   },
   product: {
-    name: "Moisturizing cream",
-    kicker: "For face and body",
     features: ["48-hour hydration", "100% natural formula", "For all skin types"],
   },
   trust: {
@@ -562,23 +578,23 @@ const en: Dict = {
   gallery: {
     title: "See the results",
     cta: "Create one like this",
-    meta: "Infographic · 3 tokens · {img} UZS",
     before: "Before",
     after: "After",
     photoAlt: "{name} — plain photo",
+    resultAlt: "{name} — AI Studio result",
     items: {
-      headphones: { name: "Wireless headphones", kicker: "Bluetooth 5.3", feats: ["40 hours of play", "Noise filter", "Lightweight body"] },
-      sneakers: { name: "Sneakers", kicker: "New collection", feats: ["Breathable", "Soft sole", "Sizes 36–45"] },
-      cream: { name: "Moisturizing cream", kicker: "For face and body", feats: ["48-hour hydration", "Natural formula", "250 ml"] },
-      watch: { name: "Mechanical watch", kicker: "Stainless steel", feats: ["Water resistant", "Sapphire glass", "2-year warranty"] },
-      vitamins: { name: "Vitamin complex", kicker: "60 capsules", feats: ["Immune support", "Once a day", "Certified"] },
-      palette: { name: "Eyeshadow palette", kicker: "24 shades", feats: ["Long-lasting", "Matte & shimmer", "Hypoallergenic"] },
-      toybox: { name: "Toy box", kicker: "For the kids’ room", feats: ["Solid wood", "On wheels", "Safe paint"] },
-      "cream-interior": { name: "Night cream", kicker: "Interior style", feats: ["Restoring", "Hyaluronic", "Night care"] },
-      chair: { name: "Upholstered armchair", kicker: "Scandinavian style", feats: ["Wooden legs", "Washable cover", "Delivery"] },
-      "cream-life": { name: "Hand cream", kicker: "Lifestyle", feats: ["Absorbs fast", "Non-sticky", "Everyday use"] },
-      dumbbells: { name: "Dumbbell set", kicker: "2–24 kg", feats: ["Rubber coating", "Non-slip", "For home"] },
-      tire: { name: "Summer tire", kicker: "R16 · 205/55", feats: ["Wet-road grip", "Low noise", "Fuel saving"] },
+      thermos: "Travel mug",
+      bag: "Crossbody bag",
+      earbuds: "Wireless earbuds",
+      glasses: "Computer glasses",
+      mug: "Ceramic mug",
+      headset: "Gaming headset",
+      mouse: "Wireless mouse",
+      keyboard: "Computer keyboard",
+      racket: "Table tennis racket",
+      backpack: "Sports backpack",
+      pen: "Ballpoint pen",
+      sneakers: "Leather sneakers",
     },
   },
   steps: {
@@ -691,12 +707,14 @@ export function buildContent(locale: Locale, path = "/") {
     NAV: DATA.nav.map((href, i) => ({ href, label: t.nav[i] })),
     HERO: t.hero,
     PRODUCT: {
-      ...DATA.product,
-      name: t.product.name,
-      kicker: t.product.kicker,
       features: DATA.product.icons.map((icon, i) => ({ icon, text: t.product.features[i] })),
     },
-    VARIANTS: DATA.variants.map((v, i) => ({ ...v, name: t.studio.variants[i] })),
+    VARIANTS: DATA.variants,
+    // hero: oddiy foto + uslublar (nomi bilan)
+    STUDIO: {
+      before: DATA.studio.before,
+      styles: DATA.studio.styles.map((s, i) => ({ ...s, name: t.studio.variants[i] })),
+    },
     TRUST: {
       eyebrow: t.trust.eyebrow,
       markets: DATA.markets,
@@ -705,7 +723,16 @@ export function buildContent(locale: Locale, path = "/") {
     PROBLEM: { ...t.problem, cards: DATA.problem.map((p, i) => ({ ...p, ...t.problem.cards[i] })) },
     GALLERY: {
       ...t.gallery,
-      items: DATA.gallery.map((g) => ({ ...g, ...t.gallery.items[g.id] })),
+      items: DATA.gallery.map((g) => {
+        // kartadagi yozuv rejimlar bo‘limidan olinadi: "Infografika · 3 token", "5 to‘plam · 15 token"
+        const m = DATA.modes.findIndex((x) => x.id === g.mode);
+        const tokens = DATA.modes[m].tokens;
+        return {
+          ...g,
+          name: t.gallery.items[g.product],
+          meta: `${t.modes.items[m].name} · ${tokens} ${plural(tokens, t.forms.token)}`,
+        };
+      }),
     },
     STEPS_SECTION: { ...t.steps, steps: DATA.steps.map((id, i) => ({ id, ...t.steps.items[i] })) },
     MODES: { ...t.modes, pack: DATA.pack, items: DATA.modes.map((m, i) => ({ ...m, ...t.modes.items[i] })) },

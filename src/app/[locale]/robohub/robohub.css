@@ -306,10 +306,12 @@
   .hero__lead{font-size:15px}
   .hero__cta{flex-direction:column}
   .hero__cta .btn{width:100%}
-  /* tor ekranda bandlar deyarli har biri alohida qatorda — ajratuvchi nuqta o'rniga oraliq */
-  .hero__facts{gap:8px 18px}
-  .hero__facts li{margin-left:0}
+  /* telefonda bandlar — teng kapsulalar (chip): qator qayerda bo'linmasin, tartibli ko'rinadi */
+  .hero__facts{gap:8px;margin-left:0;padding-left:0;overflow:visible;font-size:13px}
+  .hero__facts li{margin-left:0;height:34px;padding:0 12px;border-radius:var(--r-pill);background:rgba(0,82,79,.06);border:1px solid rgba(0,82,79,.1)}
+  .hero__facts li:first-child{padding-left:6px}
   .hero__facts li::before{display:none}
+  .hero{padding-top:var(--sp-4)}
 }
 
 /* ============================================================
@@ -421,6 +423,13 @@
   .pain{margin-top:-28px;padding:var(--sp-8) 0 calc(var(--sp-8) + 28px);border-radius:28px 28px 0 0}
   .pain__frame{gap:var(--sp-3)}
   .pain__media{width:100%}
+}
+/* Telefonda sxema 250px balandlikda (kenglikka siqilsa ~107px — o'qib bo'lmaydi): video gorizontal suriladigan
+   oynada, problem.script.js uni videoning vaqtiga qarab o'zi suradi (barmoq bilan ham surish mumkin) */
+@media (max-width:600px){
+  .pain__media{align-self:stretch;width:auto;min-width:0;margin-inline:calc(-1 * var(--sp-3));overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .pain__media::-webkit-scrollbar{display:none}
+  .pain__media video{width:auto;height:250px;max-width:none}
   .pain__switch{position:relative;align-self:flex-start;order:-1}
 }
 @media (max-width:600px){
@@ -631,8 +640,9 @@
 /* Markazga kelganda (is-on — features.script.js): karta yorug' halqa bilan "yonadi",
    matn esa raqam → sarlavha → izoh tartibida ketma-ket oqib chiqadi. */
 .feat-card{transition:box-shadow 500ms var(--ease-soft)}
-/* video karta: video fon rangidagi karta ichida to'liq ko'rinadi */
-.feat-card:has(.fd__video){background:#075B4E}
+/* video karta: video fon rangidagi karta ichida to'liq ko'rinadi. #065A4E — videoning o'z fon rangi (kadrdan o'lchangan).
+   Video faylga rang profili yozilgan (sRGB, BT.601) — shusiz Safari/iOS uni boshqacha o'qib, fon ikki xil bo'lib qolardi. */
+.feat-card:has(.fd__video){background:#065A4E}
 .fd__video{display:block;width:100%;height:100%;object-fit:contain}
 .feat-card.is-on{box-shadow:0 0 0 3px rgba(184,255,176,.55),0 34px 70px -26px rgba(0,43,41,.5)}
 .feat-text__n{transition:color 400ms}
@@ -2057,33 +2067,38 @@
 
 /* orbita — umumiy komponent: src/components/hub-orbit */
 
+/* ---------- telefondagi pastki panel (mobile-cta): "Kirish" + "Ariza qoldirish" ---------- */
+.mcta{display:none}
+@media (max-width:599px){
+  .mcta{
+    position:fixed;z-index:45;left:0;right:0;bottom:0;display:grid;grid-template-columns:auto 1fr;gap:8px;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(255,255,255,.9);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);
+    border-top:1px solid var(--line);box-shadow:0 -10px 30px -12px rgba(0,30,28,.22);
+    transform:translateY(110%);transition:transform 380ms var(--ease-soft);
+  }
+  .mcta.is-on{transform:none}
+  .mcta a{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:var(--r-pill);font-size:15px;font-weight:700;white-space:nowrap}
+  .mcta__login{padding:0 18px;border:1px solid var(--line-strong);color:var(--text)}
+  .mcta__start{background:var(--brand);color:#fff;box-shadow:0 10px 22px -12px rgba(0,82,79,.8)}
+  .mcta__start:active,.mcta__login:active{transform:scale(.97)}
+  /* panel ochiq paytda sahifa oxiri u ostida qolib ketmasin */
+  body:has(.mcta.is-on) .foot{padding-bottom:72px}
+}
+@media (max-width:599px) and (prefers-reduced-motion:reduce){ .mcta{transition:none} }
+
 /* ---------- footer ---------- */
-.foot{padding-top:var(--sp-5)}
+.foot{padding-top:var(--sp-4)}   /* footer ixcham: oraliqlar qisqartirilgan */
 .foot__grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,.8fr)) minmax(0,1.1fr);gap:var(--sp-4)}
 .foot__logo{display:block;width:132px;height:32px;margin-bottom:14px;color:#fff}
 .foot__about{max-width:30ch;font-size:14.5px;color:var(--text-dim)}
 .foot__mps{display:flex;gap:8px;margin-top:var(--sp-2)}
 .foot__mps img{width:30px;height:30px;border-radius:9px;transition:transform var(--t-mid) var(--ease-soft)}
 .foot__mps img:hover{transform:translateY(-4px)}
-/* Guvohnomalar: ikki ixcham karta yonma-yon — kichik nusxa + nom + "Ko'rish"; bosilganda to'liq rasm yangi oynada.
-   .foot ul / .foot ul a umumiy qoidalari (grid, tagiga chiziq) bu yerga tegmasin — shuning uchun ul.foot__certs. */
-.foot ul.foot__certs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:380px;margin-top:var(--sp-3)}
-.foot ul.foot__certs a.foot__cert{
-  display:flex;align-items:center;gap:12px;height:100%;padding:10px 12px 10px 10px;
-  border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.04);
-  transition:border-color var(--t-mid) var(--ease),background var(--t-mid) var(--ease);
-}
-.foot ul.foot__certs a.foot__cert::after{content:none}
-.foot ul.foot__certs a.foot__cert:hover,.foot ul.foot__certs a.foot__cert:focus-visible{border-color:var(--line-strong);background:rgba(255,255,255,.07)}
-.foot__cert-img{flex:none;display:grid;place-items:center;width:46px;height:46px;overflow:hidden;border-radius:7px;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.25)}
-.foot__cert-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 500ms var(--ease-soft)}
-.foot__cert:hover .foot__cert-img img{transform:scale(1.08)}
-.foot__cert-text{display:grid;gap:3px;min-width:0}
-.foot__cert-text b{font-size:13px;font-weight:700;line-height:1.25;color:#fff}
-.foot__cert-text em{font-size:12px;font-style:normal;font-weight:600;color:var(--mint)}
-.foot h3{margin-bottom:14px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--text-dim)}
-.foot ul{display:grid;gap:2px;font-size:15px;font-weight:500}
-.foot ul a{position:relative;display:inline-block;padding-block:5px;transition:color var(--t-fast) var(--ease)}
+/* mukofotlar va guvohnomalar — umumiy komponent: src/components/footer-trust */
+.foot h3{margin-bottom:10px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--text-dim)}
+.foot ul{display:grid;gap:0;font-size:15px;font-weight:500}
+.foot ul a{position:relative;display:inline-block;padding-block:4px;transition:color var(--t-fast) var(--ease)}
 .foot ul a::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1.5px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--t-mid) var(--ease)}
 .foot ul a:hover{color:#fff}
 .foot ul a:hover::after{transform:scaleX(1)}
@@ -2093,7 +2108,7 @@
 .foot__contacts svg{flex:none;color:var(--text-dim);transition:color var(--t-fast) var(--ease)}
 .foot__contacts a:hover svg{color:#fff}
 /* aloqa kartasi */
-.foot__bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:var(--sp-4);padding-top:var(--sp-2);border-top:1px solid var(--line);font-size:13.5px;color:var(--text-dim)}
+.foot__bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:var(--sp-3);padding-top:var(--sp-2);border-top:1px solid var(--line);font-size:13.5px;color:var(--text-dim)}
 .foot__bar span{display:flex;gap:20px}
 .foot__bar a{display:inline-block;padding-block:6px}
 .foot__bar a:hover{color:#fff}
@@ -2165,21 +2180,28 @@ body:has(.feat__skip.is-on) .totop{opacity:0;visibility:hidden;transform:transla
 .reels.is-drag .reels__card{cursor:grabbing;transform:scale(1.05);box-shadow:0 30px 60px -18px rgba(0,30,28,.6),0 0 0 1px rgba(0,54,52,.12)}
 @media (min-width:768px){ .reels{--w:132px} }
 /* telefonda ixchamroq — kontentni kamroq yopadi; sarlavha yashirin, faqat nom qoladi */
+/* Telefonda — "stories" doirasi (64px): kontentni deyarli yopmaydi. Halqa brend ranglarida aylanadi,
+   ichida muqova / jonli video; bosilsa to'liq ekran pleyer (o'zgarishsiz). Pastki panel (.mcta) chiqqanda — uning ustida. */
 @media (max-width:599px){
-  .reels{--w:78px;--gx:12px;--gy:14px}
-  .reels__card{border-radius:14px;border-width:2px}
-  .reels__cap b{display:none}
-  .reels__cap{padding:18px 6px 6px}
+  .reels{--w:64px;--gx:14px;--gy:16px;aspect-ratio:1;transition:opacity 300ms var(--ease),transform 400ms var(--ease-soft),bottom 350ms var(--ease-soft),visibility 0s}
+  .reels .reels__card{border:0;border-radius:50%;background:conic-gradient(from 0deg,var(--mint),var(--cyan),#00A39C,var(--mint));box-shadow:0 12px 28px -10px rgba(0,30,28,.6)}
+  .reels::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--mint);pointer-events:none;animation:reels-pulse 2.6s ease-out infinite}
+  .reels .reels__poster,.reels .reels__frame{inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:50%;border:2px solid #fff}
+  .reels .reels__bars,.reels .reels__cap,.reels .reels__play{display:none}
+  .reels .reels__hide{top:-4px;right:-4px;width:20px;height:20px;border-width:1.5px}
+  .reels .reels__hide svg{width:10px;height:10px}
+  body:has(.mcta.is-on) .reels[data-corner^="b"]{bottom:calc(var(--gy) + 64px + env(safe-area-inset-bottom))}
 }
+@keyframes reels-pulse{from{transform:scale(.94);opacity:.9}to{transform:scale(1.28);opacity:0}}
+@media (prefers-reduced-motion:reduce){ .reels::after{animation:none;opacity:0} }
 @keyframes reels-in{from{opacity:0;transform:translateY(24px) scale(.9)}}
 body:has(.feat__skip.is-on) .reels[data-corner="br"]{opacity:0;visibility:hidden;transform:translateY(12px) scale(.94);transition-delay:0s,0s,300ms}
 /* "tepaga" — kartochkaning chap tomonida, pastki chiziq bo'yicha */
 body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px) + 108px + 12px)}
 /* telefonda: tugma video kartochkaning ustida, uning o'rtasida — yonma-yon joy egallamaydi
    (karta 78px kenglik, 9:16 → ~139px balandlik, pastdan 14px) */
-@media (max-width:599px){
-  body:has(.reels.is-on[data-corner="br"]) .totop{width:40px;height:40px;right:calc(12px + (78px - 40px) / 2);bottom:calc(14px + 78px * 16 / 9 + 10px)}
-}
+/* telefonda "tepaga" tugmasi yo'q: pastki panel (.mcta) va reels doirasi bilan burchak to'lib ketmasin */
+@media (max-width:599px){ .totop{display:none} }
 @media (min-width:768px){ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px) + 132px + 14px)} }
 
 .reels__card{

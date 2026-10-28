@@ -16,7 +16,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Qanday ishlaydi" },
       { href: "#reviews", label: "Mijozlar" },
       { href: "#pricing", label: "Tariflar" },
-      { href: ACADEMY_PATH, label: "Akademiya" },
+      { href: ACADEMY_PATH, label: "Academy" },
     ],
     features: {
       title: "Robohub imkoniyatlari",
@@ -54,7 +54,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Как это работает" },
       { href: "#reviews", label: "Клиенты" },
       { href: "#pricing", label: "Тарифы" },
-      { href: localeHref("ru", ACADEMY_PATH), label: "Академия" },
+      { href: localeHref("ru", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Возможности Robohub",

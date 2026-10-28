@@ -2,44 +2,11 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
-import { SIGNUP_HREF, fill, type Content } from "../../ai-studio.content";
+import { SIGNUP_HREF, fill } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
-type Item = Content["GALLERY"]["items"][number];
-
-// "Keyin" tomoni: haqiqiy AI rasm bo'lsa — rasm + yozuvlar; bo'lmasa — fotodan quriladigan gorizontal infografika
-function After({ it }: { it: Item }) {
-  return (
-    <div className={`as-gc__after as-gc--${it.tone}` + (it.after ? " has-photo" : "")}>
-      {it.after ? (
-        <img className="as-gc__full" src={it.after} alt="" loading="lazy" />
-      ) : (
-        <span className="as-gc__stage">
-          <img src={it.before} alt="" loading="lazy" />
-          <span className="as-gc__badge">
-            <Icon name="fire" />
-            HIT
-          </span>
-        </span>
-      )}
-      <div className="as-gc__copy">
-        <span className="as-gc__kicker">{it.kicker}</span>
-        <span className="as-gc__title">{it.name}</span>
-        <ul className="as-gc__feats">
-          {it.feats.map((f) => (
-            <li key={f}>
-              <Icon name="check" />
-              {f}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-// 04 — Oldin / keyin galereyasi: to'liq kenglikdagi zich grid.
-//  • Har karta o'zi doim aylanib turadi: oddiy foto → mint skaner chizig'i o'tadi → AI infografika → yana foto.
+// 04 — Oldin / keyin galereyasi: haqiqiy natijalar — telefondagi oddiy foto → AI Studio rasmi.
+//  • Har karta o'zi doim aylanib turadi: oddiy foto → mint skaner chizig'i o'tadi → AI natija → yana foto.
 //    Kartalarning fazasi siljitilgan, shuning uchun grid bo'ylab "to'lqin" bo'lib ketadi (sof CSS).
 //  • Oxirgi qator xira tortiladi, ustida CTA.
 export default function Gallery() {
@@ -68,14 +35,15 @@ export default function Gallery() {
         <h2 className="as-gal__title" id="as-gal-title" data-rv>
           {GALLERY.title}
         </h2>
-
       </div>
 
-      <div className={"as-gal__grid-wrap" + (items.length > 4 ? " has-fade" : "")}>
+      <div className={"as-gal__grid-wrap" + (items.length > 4 ? " has-fade" : "") + (items.length < 12 ? " is-short" : "")}>
         <ul className="as-gcs">
           {items.map((it, i) => (
-            <li className="as-gc" key={it.id} style={{ "--k": i } as CSSProperties}>
-              <After it={it} />
+            <li className={"as-gc" + (it.wide ? " is-wide" : "")} key={it.after} style={{ "--k": i } as CSSProperties}>
+              <div className="as-gc__after">
+                <img src={it.after} alt={fill(GALLERY.resultAlt, { name: it.name })} loading="lazy" />
+              </div>
               <div className="as-gc__before">
                 <img src={it.before} alt={fill(GALLERY.photoAlt, { name: it.name })} loading="lazy" />
               </div>
@@ -89,7 +57,7 @@ export default function Gallery() {
               </span>
               <span className="as-gc__meta">
                 <b>{it.name}</b>
-                {GALLERY.meta}
+                {it.meta}
               </span>
             </li>
           ))}

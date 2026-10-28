@@ -50,7 +50,6 @@ function Card({ c, i, t, onMore, hidden }: { c: Chat; i: number; t: T; onMore: (
         ) : (
           <span />
         )}
-        <time>{c.time}</time>
       </div>
     </li>
   );
@@ -105,7 +104,6 @@ export default function ReviewsChats({ chats, t }: { chats: Chat[]; t: T }) {
               <p className="chat__text">{cur.text}</p>
               <div className="chat__foot">
                 <span />
-                <time>{cur.time}</time>
               </div>
             </div>
           </div>,

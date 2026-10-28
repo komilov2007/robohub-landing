@@ -16,6 +16,7 @@ import FinalCta from "../components/final-cta/final-cta";
 import ScrollReveal from "../components/scroll-reveal/scroll-reveal";
 import ToTop from "../components/to-top/to-top";
 import Reels from "../components/reels/reels";
+import MobileCta from "../components/mobile-cta/mobile-cta";
 import { messages as faqMessages } from "../components/faq/faq.i18n";
 import { getLocale } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
@@ -73,6 +74,7 @@ export default async function Page() {
       <ScrollReveal />
       <ToTop />
       <Reels />
+      <MobileCta />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Logo from "../logo/logo";
+import FooterTrust from "@/components/footer-trust/footer-trust";
 import { getC } from "../../content.server";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
@@ -40,6 +41,7 @@ export default async function Footer() {
                 <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
               ))}
             </p>
+            <FooterTrust />
           </div>
 
           {FOOTER.cols.map((c) => (
