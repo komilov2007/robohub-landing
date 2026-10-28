@@ -8,7 +8,7 @@ type T = { login: string; start: string };
 // Hero'dagi tugmalar ekrandan chiqqach paydo bo'ladi. "Aloqa" bo'limiga yetilgach — va undan pastda (yakuniy blok,
 // footer) — hech qachon chiqmaydi: u yerda aloqa yo'li sahifaning o'zida bor. "Imkoniyatlar" sahnasida esa
 // "O'tkazib yuborish" tugmasiga joy beradi (robohub.css). Kompyuterda ko'rinmaydi (.mcta).
-export default function MobileCtaClient({ t }: { t: T }) {
+export default function MobileCtaClient({ t, loginHref }: { t: T; loginHref: string }) {
   const [on, setOn] = useState(false);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function MobileCtaClient({ t }: { t: T }) {
 
   return (
     <div className={`mcta${on ? " is-on" : ""}`} aria-hidden={!on}>
-      <a className="mcta__login" href="#login" tabIndex={on ? 0 : -1}>
+      <a className="mcta__login" href={loginHref} target="_blank" rel="noopener" tabIndex={on ? 0 : -1}>
         {t.login}
       </a>
       <a

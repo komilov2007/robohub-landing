@@ -9,7 +9,7 @@ import RobohubMenu from "./robohub-menu";
 import Icon from "../svg-icon/svg-icon";
 import LangSelect from "@/components/lang-select/lang-select";
 import { getTopics, lessonsByTopic } from "../../lib/academy";
-import { loginUrl, robohubHome, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
+import { robohubHome, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./header.i18n";
 
@@ -138,11 +138,9 @@ export default function Header() {
         </nav>
         <div className="ac-header__actions">
           <LangSelect locale={locale} label={t.lang} path={path} />
-          <a href={loginUrl(locale)} className="btn btn--ghost">
-            {t.login}
-          </a>
+          {/* yagona tugma — "Kirish": Robohub landingi yangi oynada */}
           <a href={robohubHome(locale)} target="_blank" rel="noopener" className="btn btn--accent">
-            {t.start}
+            {t.login}
           </a>
         </div>
         <button
@@ -183,11 +181,8 @@ export default function Header() {
             YouTube ↗
           </a>
           <div className="ac-mmenu__actions">
-            <a href={loginUrl(locale)} className="btn btn--lg btn--outline">
-              {t.login}
-            </a>
             <a href={robohubHome(locale)} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
-              {t.start}
+              {t.login}
             </a>
           </div>
         </div>

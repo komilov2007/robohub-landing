@@ -1,6 +1,6 @@
 import { getLocale, getMessages } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
-import { newTab, POLICY_URL } from "@/lib/sites";
+import { newTab, POLICY_URL, sellerUrl } from "@/lib/sites";
 import { messages } from "./final-cta.i18n";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import FooterTrust from "@/components/footer-trust/footer-trust";
@@ -32,7 +32,7 @@ export default async function FinalCta() {
             </h2>{" "}
             <p className="end__lead">{t.lead}</p>{" "}
             <div className="end__btns">
-              <a className="btn btn--lg btn--primary" href="#login">
+              <a className="btn btn--lg btn--primary" href={sellerUrl(locale)} target="_blank" rel="noopener">
                 {t.start}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>

@@ -1,3 +1,4 @@
+import AnnounceBar from "@/components/announce-bar/announce-bar";
 import Header from "../components/header/header";
 import ContactModal from "../components/contact/contact-modal";
 import Hero from "../components/hero/hero";
@@ -54,6 +55,8 @@ export default async function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
+      {/* tepadagi polosa — "Ro'yxatdan o'tish" (sotuvchi kabineti) */}
+      <AnnounceBar locale={locale} cta="register" />
       <Header />
       <ContactModal />
       <main>

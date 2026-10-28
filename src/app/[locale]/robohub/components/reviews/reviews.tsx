@@ -5,6 +5,7 @@ import { messages as reelsMessages } from "../reels/reels.i18n";
 import { CHATS } from "./chats";
 import ReviewsBulge from "./reviews-bulge";
 import ReviewsChats from "./reviews-chats";
+import ReviewsScroll from "./reviews-scroll";
 import ReviewsVideos from "./reviews-client";
 import { messages } from "./reviews.i18n";
 
@@ -13,7 +14,7 @@ import { messages } from "./reviews.i18n";
 export default async function Reviews() {
   const t = await getMessages(messages);
   const rt = await getMessages(reelsMessages);
-  const videos = REELS.map((r) => ({ id: r.id, name: r.name ?? rt.client, lang: rt.langs[r.lang], flag: r.lang }));
+  const videos = REELS.map((r) => ({ id: r.id, name: r.name ?? rt.client, lang: rt.langs[r.lang], flag: r.lang, wide: r.wide }));
   return (
     <section className="revs" id="reviews" data-theme="dark" aria-labelledby="revs-title">
       <div className="container">
@@ -33,6 +34,8 @@ export default async function Reviews() {
       </div>
       {/* Telegram'dagi fikrlar: bir xil kartalar bitta qatorda, o'zi sekin suriladi */}
       <ReviewsBulge />
+      {/* ikkala lenta: o'zi suriladi + barmoq / sichqoncha bilan yonga surish */}
+      <ReviewsScroll />
       <ReviewsChats chats={CHATS} t={{ anon: t.anon, group: "RoboHub Sellers", more: t.more, close: t.close }} />
     </section>
   );

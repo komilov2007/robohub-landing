@@ -1554,6 +1554,9 @@
 /* Teez va MMarket yozuvlari qalinroq — boshqalari bilan teng ko'rinishi uchun biroz kichikroq */
 .reg__mp--wide img[src*="teez"],.reg__mp--wide img[src*="mmarket"]{height:9px}
 .reg__cta{margin-top:var(--sp-3)}
+/* telefonda — qisqa matn ("Savdoni boshlash"), kompyuterda — to'liq */
+.reg__cta-short{display:none}
+@media (max-width:600px){ .reg__cta-full{display:none} .reg__cta-short{display:inline} }
 
 /* REGIONS — telefon (regions.tsx → RegionsMobile): kompyuterda yashirin.
    Tepada mamlakat tablari (gorizontal suriladi), ostida tanlangan mamlakat kartasi: ulangan marketpleyslar
@@ -1700,8 +1703,7 @@
   width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;padding:14px 0 18px;
   -webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 4%,rgba(0,0,0,.85) 9%,#000 14%,#000 86%,rgba(0,0,0,.85) 91%,rgba(0,0,0,.45) 96%,transparent);mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 4%,rgba(0,0,0,.85) 9%,#000 14%,#000 86%,rgba(0,0,0,.85) 91%,rgba(0,0,0,.45) 96%,transparent);
 }
-.revs__track{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:revs-roll var(--dur,60s) linear infinite}
-.revs__vmarquee:hover .revs__track,.revs__vmarquee:focus-within .revs__track{animation-play-state:paused}
+.revs__track{display:flex;width:max-content;margin:0;padding:0;list-style:none}
 .revs__track li{flex:none;width:clamp(170px,17vw,220px);margin-right:14px;will-change:transform,opacity}
 .revs__video{
   position:relative;display:block;width:100%;aspect-ratio:9/16;padding:0;overflow:hidden;border-radius:20px;border:0;cursor:pointer;
@@ -1731,9 +1733,13 @@
   overflow:hidden;padding:4px 0 10px;
   -webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 4%,rgba(0,0,0,.85) 9%,#000 14%,#000 86%,rgba(0,0,0,.85) 91%,rgba(0,0,0,.45) 96%,transparent);mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 4%,rgba(0,0,0,.85) 9%,#000 14%,#000 86%,rgba(0,0,0,.85) 91%,rgba(0,0,0,.45) 96%,transparent);
 }
-.revs__chats{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:revs-roll 90s linear infinite}
-.revs__marquee:hover .revs__chats,.revs__marquee:focus-within .revs__chats{animation-play-state:paused}
-@keyframes revs-roll{to{transform:translateX(-50%)}}
+.revs__chats{display:flex;width:max-content;margin:0;padding:0;list-style:none}
+/* ikkala lenta — gorizontal scroll: o'zi suriladi (reviews-scroll.tsx), barmoq / sichqoncha / trackpad bilan ham.
+   overflow-x:auto — oddiy surish; scrollbar ko'rinmaydi; kompyuterda sichqoncha bilan tortiladi (is-drag) */
+.revs__vmarquee,.revs__marquee{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
+.revs__vmarquee::-webkit-scrollbar,.revs__marquee::-webkit-scrollbar{display:none}
+.revs__vmarquee.is-drag,.revs__marquee.is-drag{cursor:grabbing;user-select:none}
+.revs__vmarquee.is-drag *,.revs__marquee.is-drag *{pointer-events:none}
 /* telefonda ekran tor — chetdagi xiralik ingichkaroq, ko'proq karta aniq ko'rinadi */
 @media (max-width:700px){
   .revs__vmarquee,.revs__marquee{
@@ -1769,7 +1775,6 @@
 .chat__close{flex:none;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:#EEF3F1;color:#14231F;cursor:pointer}
 .chat__close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
 @media (max-width:600px){ .chat{width:280px;height:224px} .chat__text{-webkit-line-clamp:5;max-height:calc(1.45em * 5)} }
-@media (prefers-reduced-motion:reduce){ .revs__chats,.revs__track{animation:none} .revs__marquee,.revs__vmarquee{overflow-x:auto} }
 
 @media (max-width:900px){
   .revs{padding:var(--sp-6) 0 calc(var(--sp-6) + 28px);border-radius:28px 28px 0 0;margin-top:-28px}
@@ -2271,15 +2276,15 @@ body:has(.feat__skip.is-on) .totop{opacity:0;visibility:hidden;transform:transla
 .reels.is-drag .reels__card{cursor:grabbing;transform:scale(1.05);box-shadow:0 30px 60px -18px rgba(0,30,28,.6),0 0 0 1px rgba(0,54,52,.12)}
 @media (min-width:768px){ .reels{--w:132px} }
 /* telefonda ixchamroq — kontentni kamroq yopadi; sarlavha yashirin, faqat nom qoladi */
-/* Telefonda — kichik vertikal kartochka (48×64, burchaklari yumaloq): kontentni deyarli yopmaydi.
+/* Telefonda — vertikal kartochka (96×128, burchaklari yumaloq): kontentni deyarli yopmaydi.
    Ichida muqova / jonli video; bosilsa to'liq ekran pleyer (o'zgarishsiz). Pastki panel (.mcta) chiqqanda — uning ustida. */
 @media (max-width:599px){
-  .reels{--w:48px;--gx:14px;--gy:16px;aspect-ratio:3/4;transition:opacity 300ms var(--ease),transform 400ms var(--ease-soft),bottom 350ms var(--ease-soft),visibility 0s}
-  .reels .reels__card{border:0;border-radius:12px;background:#fff;box-shadow:0 10px 24px -10px rgba(0,30,28,.55),0 0 0 1px rgba(0,54,52,.12)}
-  .reels .reels__poster,.reels .reels__frame{inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);border-radius:10px;border:0}
+  .reels{--w:96px;--gx:14px;--gy:16px;aspect-ratio:3/4;transition:opacity 300ms var(--ease),transform 400ms var(--ease-soft),bottom 350ms var(--ease-soft),visibility 0s}
+  .reels .reels__card{border:0;border-radius:16px;background:#fff;box-shadow:0 10px 24px -10px rgba(0,30,28,.55),0 0 0 1px rgba(0,54,52,.12)}
+  .reels .reels__poster,.reels .reels__frame{inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:13px;border:0}
   .reels .reels__bars,.reels .reels__cap,.reels .reels__play{display:none}
-  .reels .reels__hide{top:-6px;right:-6px;width:18px;height:18px;border-width:1.5px}
-  .reels .reels__hide svg{width:9px;height:9px}
+  .reels .reels__hide{top:-7px;right:-7px;width:22px;height:22px;border-width:1.5px}
+  .reels .reels__hide svg{width:11px;height:11px}
   body:has(.mcta.is-on) .reels[data-corner^="b"]{bottom:calc(var(--gy) + 64px + env(safe-area-inset-bottom))}
 }
 @keyframes reels-in{from{opacity:0;transform:translateY(24px) scale(.9)}}
@@ -2457,8 +2462,20 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   .reels-full__nav{gap:6px}
   .reels-full__btn{width:40px;height:40px}
   .reels-full__btn svg{width:20px;height:20px}
-  .reels-full__close{top:10px;right:10px}
+  .reels-full__close{top:16px;right:10px}
+  /* stories: tepada chiziqlar, ↑/↓ o'rniga — chetlarni bosish va surish */
+  .reels-full__nav{display:none}
+  .reels-full__side{padding-top:16px}
+  .reels-full__stories{position:absolute;z-index:3;top:calc(6px + env(safe-area-inset-top));left:12px;right:12px;display:flex;gap:4px;pointer-events:none}
+  .reels-full__stories i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.28);transition:background 300ms var(--ease)}
+  .reels-full__stories i.is-done{background:rgba(255,255,255,.85)}
+  .reels-full__stories i.is-on{background:var(--mint)}
+  .reels-full__tap{display:block;position:absolute;z-index:2;top:0;bottom:90px;width:24%;padding:0;border:0;background:transparent;-webkit-tap-highlight-color:transparent}
+  .reels-full__tap--prev{left:0}
+  .reels-full__tap--next{right:0}
 }
+.reels-full__stories,.reels-full__tap{display:none}
+@media (max-width:600px){ .reels-full__stories{display:flex} .reels-full__tap{display:block} }
 @media (prefers-reduced-motion:reduce){
   .reels,.reels-full,.reels-full__stage,.reels-full__bg,.reels-full__side,.reels-full__eq s{animation:none}
   .reels__bars b[data-run]{animation:none}
@@ -2518,3 +2535,37 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   .contact__cc-menu button{padding:7px 8px;gap:6px;font-size:13px}
   .contact__cc-menu button b{display:none} /* telefonda: bayroq + kod */
 }
+
+/* ============================================================
+   IMKONIYATLAR — telefon (<820px): oddiy vertikal "zanjir" (features.script.js → initChain, .feat--chain).
+   Qotadigan sahna yo'q: sarlavha, so'ng qadamlar ketma-ket — chapda raqamli doira va ularni bog'lovchi chiziq,
+   o'ngda matn va karta. Qadam ekranga kirganda karta pastdan suzib chiqadi (.is-on — setActive).
+   ============================================================ */
+.feat.feat--chain{height:auto;padding:56px 0 48px}
+.feat--chain .feat__stage{position:static;height:auto;overflow:visible;padding:0 20px;-webkit-mask-image:none;mask-image:none}
+.feat--chain .feat__intro{position:static;gap:14px;padding:0}
+.feat--chain .feat__hint,.feat--chain .feat__rim,.feat--chain .feat__hud,.feat--chain .feat__skip{display:none}
+.feat-chain{position:relative;display:grid;gap:30px;max-width:460px;margin:32px auto 0;padding:0;list-style:none}
+.feat-chain__item{position:relative;padding-left:46px}
+/* zanjir chizig'i: har qadam raqamidan keyingisiga */
+.feat-chain__item::before{
+  content:"";position:absolute;left:16px;top:38px;bottom:-30px;width:2px;border-radius:2px;
+  background:linear-gradient(var(--brand),rgba(0,82,79,.18));
+}
+.feat-chain__item:last-child::before{display:none}
+.feat--chain .feat-card,.feat--chain .feat-text{position:relative;left:auto;top:auto;visibility:visible;will-change:auto}
+.feat--chain .feat-text{width:auto}
+.feat--chain .feat-text__n{
+  position:absolute;left:-46px;top:0;display:grid;place-items:center;width:34px;height:34px;margin:0;border-radius:50%;
+  background:var(--brand);color:#fff;font-size:12px;letter-spacing:0;box-shadow:0 0 0 5px var(--bg);
+}
+.feat--chain .feat-text__n,.feat--chain .feat-text.is-on .feat-text__n{color:#fff}   /* doira foni brend rangida */
+.feat--chain .feat-text h3{padding-top:5px;font-size:19px}
+.feat--chain .feat-text p{max-width:none}
+.feat--chain .feat-text__try{margin-top:12px}
+.feat--chain .feat-card{
+  width:100%;height:auto;aspect-ratio:1/.84;margin-top:16px;
+  transition:opacity 600ms var(--ease),transform 700ms var(--ease-soft),box-shadow 500ms var(--ease-soft);
+}
+.feat--chain .feat-card:not(.is-on){opacity:0;transform:translateY(18px) scale(.98)}
+@media (prefers-reduced-motion:reduce){ .feat--chain .feat-card{transition:none} .feat--chain .feat-card:not(.is-on){opacity:1;transform:none} }

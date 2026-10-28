@@ -2,7 +2,7 @@ import LangSelect from "@/components/lang-select/lang-select";
 import { getLocale } from "@/i18n/server";
 import HeaderScript from "./header-script";
 import { messages } from "./header.i18n";
-import { newTab } from "@/lib/sites";
+import { newTab, sellerUrl } from "@/lib/sites";
 import { AI_TOOL, FEAT_ICONS, FEAT_STEP, SOON_TOOL, TOOL_ICONS } from "./menu-icons";
 
 // Ochiladigan bandlar yonidagi ▾ belgisi
@@ -99,7 +99,7 @@ export default async function Header() {
           </nav>{" "}
           <div className="header__actions">
             <LangSelect locale={locale} label={t.lang} />{" "}
-            <a className="btn btn--ghost" href="#login">{t.login}</a>{" "}
+            <a className="btn btn--ghost" href={sellerUrl(locale, "")} target="_blank" rel="noopener">{t.login}</a>{" "}
             <a className="btn btn--accent" href="#contact" data-open="contact-modal">{t.start}</a>{" "}
             <button className="burger" id="burger" type="button" aria-label={t.menuOpen} data-label-open={t.menuOpen} data-label-close={t.menuClose} aria-expanded="false" aria-controls="mobile-menu">
               <span />
@@ -134,7 +134,7 @@ export default async function Header() {
               ))}
             </ul>{" "}
             <div className="mobile-menu__actions">
-              <a className="btn btn--ghost" href="#login">{t.login}</a>{" "}
+              <a className="btn btn--ghost" href={sellerUrl(locale, "")} target="_blank" rel="noopener">{t.login}</a>{" "}
               <a className="btn btn--accent" href="#contact" data-open="contact-modal">{t.start}</a>
             </div>
           </div>

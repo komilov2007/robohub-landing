@@ -1,70 +1,83 @@
 "use client";
 
 import { Fragment, useState, useSyncExternalStore } from "react";
-import { defineMessages, type Locale } from "@/i18n/config";
+import { defineMessages, localeHref, type Locale } from "@/i18n/config";
+import { useRobohubOrigin } from "@/lib/robohub-origin";
+import { sellerUrl } from "@/lib/sites";
 import "./announce-bar.css";
 
 // Header ustidagi reklama polosasi — rb-market'dagi AnnounceBar nusxasi (o'sha matn va xatti-harakat).
 // Oddiy oqimda turadi: biroz skroll qilinsa yuqoriga chiqib ketadi, sticky header esa joyida qoladi.
-// Butun polosa — bitta havola (robohub.uz/register); yopish tugmasi undan tashqarida, yopilgani brauzerda eslab qolinadi.
-// Hozircha faqat AI Studio va Kalkulyator landinglarida.
-
-const REGISTER_HREF = "https://robohub.uz/register";
-const KEY = "rb-announce-signup";
+// Butun polosa — bitta havola; yopish tugmasi undan tashqarida, yopilgani brauzerda eslab qolinadi (har holat alohida).
+// Ikki holat (cta):
+//   "more"     — AI Studio, Kalkulyator, Academy: "Batafsil" → Robohub landingi (joriy muhitda — src/lib/robohub-origin.ts);
+//   "register" — Robohub landingining o'zi: "Ro'yxatdan o'tish" → sotuvchi kabinetida ro'yxatdan o'tish (joriy tilda).
+type Cta = "more" | "register";
+const KEYS: Record<Cta, string> = { more: "rb-announce-signup", register: "rb-announce-register" };
 
 // Matnlar — rb-market tarjimalaridan (announce_signup_calc, register)
 const messages = defineMessages({
   uz: {
     text: "Robohub — <accent>4 ta marketpleys bitta kabinetda</accent>",
+    more: "Batafsil",
     cta: "Ro'yxatdan o'tish",
     close: "Yopish",
   },
   ru: {
     text: "Robohub — <accent>4 маркетплейса в одном кабинете</accent>",
+    more: "Подробнее",
     cta: "Зарегистрироваться",
     close: "Закрыть",
   },
   en: {
     text: "Robohub — <accent>4 marketplaces in one dashboard</accent>",
+    more: "Learn more",
     cta: "Register",
     close: "Close",
   },
   kk: {
     text: "Robohub — <accent>4 маркетплейс бір кабинетте</accent>",
+    more: "Толығырақ",
     cta: "Тіркелу",
     close: "Жабу",
   },
   ky: {
     text: "Robohub — <accent>4 маркетплейс бир кабинетте</accent>",
+    more: "Кененирээк",
     cta: "Катталуу",
     close: "Жабуу",
   },
   kaa: {
     text: "Robohub — <accent>4 marketpleys bir kabinette</accent>",
+    more: "Tolıǵıraq",
     cta: "Dizimnen ótiw",
     close: "Jabıw",
   },
   tg: {
     text: "Robohub — <accent>4 маркетплейс дар як кабинет</accent>",
+    more: "Муфассал",
     cta: "Бақайдгирӣ",
     close: "Пӯшидан",
   },
 });
 
 // Saqlash joyi bloklangan bo'lishi mumkin — eslab qola olmaydigan polosa ochilmaydigan sahifadan yaxshiroq
-const wasDismissed = () => {
+const wasDismissed = (key: string) => {
   try {
-    return localStorage.getItem(KEY) === "1";
+    return localStorage.getItem(key) === "1";
   } catch {
     return false;
   }
 };
 const noop = () => () => {};
 
-export default function AnnounceBar({ locale }: { locale: Locale }) {
+export default function AnnounceBar({ locale, cta = "more" }: { locale: Locale; cta?: Cta }) {
   const t = messages[locale];
+  const origin = useRobohubOrigin();
+  const href = cta === "register" ? sellerUrl(locale) : `${origin}${localeHref(locale, "/")}`;
+  const KEY = KEYS[cta];
   // Serverda va gidratsiyada — ko'rinadi; brauzerda avval yopilgan bo'lsa, darhol yashiriladi
-  const dismissed = useSyncExternalStore(noop, wasDismissed, () => false);
+  const dismissed = useSyncExternalStore(noop, () => wasDismissed(KEY), () => false);
   const [closed, setClosed] = useState(false);
   if (dismissed || closed) return null;
 
@@ -79,7 +92,7 @@ export default function AnnounceBar({ locale }: { locale: Locale }) {
 
   return (
     <aside className="announce">
-      <a className="announce__link" href={REGISTER_HREF}>
+      <a className="announce__link" href={href} {...(cta === "register" ? { target: "_blank", rel: "noopener" } : {})}>
         <span className="announce__icon" aria-hidden="true">
           {/* Robohub belgisi (∞) — logotipning faqat ikonka qismi */}
           <svg viewBox="0 7.97 33.8675 15.06">
@@ -101,7 +114,7 @@ export default function AnnounceBar({ locale }: { locale: Locale }) {
             )}
         </span>
         <span className="announce__cta">
-          {t.cta}
+          {cta === "register" ? t.cta : t.more}
           <span className="announce__arrow" aria-hidden="true">
             →
           </span>

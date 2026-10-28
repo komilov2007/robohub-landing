@@ -8,6 +8,7 @@ import RegionsAuto from "./regions-auto";
 export type RegionsText = {
   soon: string;
   cta: string;
+  ctaShort: string; // telefonda tugmadagi qisqa matn
   yandex: string;
   count: [string, string, string];
 };
@@ -223,7 +224,8 @@ export default function Regions({
         data-sr=""
         style={{ "--d": "560ms" } as CSSProperties}
       >
-        {t.cta}
+        <span className="reg__cta-full">{t.cta}</span>
+        <span className="reg__cta-short">{t.ctaShort}</span>
         <span className="arrow" aria-hidden="true">
           →
         </span>

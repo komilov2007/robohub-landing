@@ -16,7 +16,7 @@ import { idle } from "@/lib/idle";
 import { fontClass } from "../../fonts";
 
 type Lang = "uz" | "ru";
-type Reel = { id: string; name?: string; lang: Lang };
+type Reel = { id: string; name?: string; lang: Lang; wide?: boolean };
 type Texts = {
   title: string;
   open: string;
@@ -53,7 +53,8 @@ const previewSrc = (id: string) =>
   `${base(id)}&autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=${id}&enablejsapi=1`;
 // to'liq ekran: ovoz bilan (bosish — foydalanuvchi harakati, brauzer ruxsat beradi), video tugaganini bilish uchun JS API
 const fullSrc = (id: string) => `${base(id)}&autoplay=1&controls=1&enablejsapi=1`;
-const poster = (id: string) => `https://i.ytimg.com/vi/${id}/oar2.jpg`; // Shorts'ning vertikal muqovasi
+// Shorts'ning vertikal muqovasi; oddiy (gorizontal) videoda — odatiy muqova
+const poster = (id: string, wide?: boolean) => `https://i.ytimg.com/vi/${id}/${wide ? "hqdefault" : "oar2"}.jpg`;
 
 // video tili: bayroq + yozuv ("Oʻzbek tilida")
 const LangTag = ({ lang, label }: { lang: Lang; label: string }) => (
@@ -87,6 +88,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
   const drag = useRef<{ x: number; y: number; moved: boolean } | null>(null);
   const dragged = useRef(false); // sudralgan bo'lsa — keyingi "click" ochmaydi
   const touchY = useRef<number | null>(null);
+  const touchX = useRef(0);
   const wheelAt = useRef(0);
   const count = reels.length;
 
@@ -258,12 +260,17 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     step(e.deltaY > 0 ? 1 : -1);
   };
   // telefonda video atrofidagi joyni yuqoriga/pastga surish — keyingi/oldingi (reels kabi)
-  const onTouchStart = (e: TouchEvent) => (touchY.current = e.touches[0].clientY);
+  // surish: yuqoriga/chapga — keyingi, pastga/o'ngga — oldingi (telefonda stories kabi; video ustida — chetdagi bosish joylari orqali)
+  const onTouchStart = (e: TouchEvent) => {
+    touchY.current = e.touches[0].clientY;
+    touchX.current = e.touches[0].clientX;
+  };
   const onTouchEnd = (e: TouchEvent) => {
     if (touchY.current === null) return;
     const dy = e.changedTouches[0].clientY - touchY.current;
+    const dx = e.changedTouches[0].clientX - touchX.current;
     touchY.current = null;
-    if (Math.abs(dy) > 50) step(dy < 0 ? 1 : -1);
+    if (Math.abs(dx) > Math.abs(dy) ? Math.abs(dx) > 50 : Math.abs(dy) > 50) step((Math.abs(dx) > Math.abs(dy) ? dx : dy) < 0 ? 1 : -1);
   };
 
   const current = full === null ? null : reels[full];
@@ -284,7 +291,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           aria-label={`${t.open}: ${t.title}`}
           title={t.drag}
         >
-          <img className="reels__poster" src={poster(reel.id)} alt="" draggable={false} />
+          <img className="reels__poster" src={poster(reel.id, reel.wide)} alt="" draggable={false} />
           {!still && full === null && (
             <iframe
               ref={previewRef}
@@ -336,12 +343,20 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
             onTouchEnd={onTouchEnd}
             onClick={(e) => e.target === e.currentTarget && close()}
           >
+            {/* telefonda: tepada stories chiziqlari — har video bitta bo'lak, ko'rilganlari to'lgan */}
+            {count > 1 && (
+              <span className="reels-full__stories" aria-hidden="true">
+                {reels.map((r, i) => (
+                  <i key={r.id} className={i < full! ? "is-done" : i === full ? "is-on" : undefined} />
+                ))}
+              </span>
+            )}
             {/* orqa fon — joriy videoning xira muqovasi */}
-            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id)} alt="" aria-hidden="true" />
+            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id, current.wide)} alt="" aria-hidden="true" />
 
             <div className="reels-full__wrap">
               <div className="reels-full__stage" key={current.id} data-dir={dir}>
-                <img className="reels-full__poster" src={poster(current.id)} alt="" />
+                <img className="reels-full__poster" src={poster(current.id, current.wide)} alt="" />
                 <iframe
                   ref={frameRef}
                   className="reels-full__frame"
@@ -355,6 +370,13 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                     listen(frameRef.current);
                   }}
                 />
+                {/* telefonda: video chetlarini bosish — oldingi / keyingi (stories kabi); o'rtasi YouTube boshqaruvlari uchun ochiq */}
+                {count > 1 && (
+                  <>
+                    <button type="button" className="reels-full__tap reels-full__tap--prev" onClick={() => step(-1)} aria-label={t.prev} />
+                    <button type="button" className="reels-full__tap reels-full__tap--next" onClick={() => step(1)} aria-label={t.next} />
+                  </>
+                )}
               </div>
 
               {/* o'ng panel (telefonda — tepadagi qator): sarlavha, mijozlar, ↑/↓, CTA */}
@@ -375,7 +397,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   {reels.map((r, i) => (
                     <li key={r.id}>
                       <button type="button" className={i === full ? "is-on" : undefined} aria-current={i === full || undefined} onClick={() => go(i)}>
-                        <img src={poster(r.id)} alt="" />
+                        <img src={poster(r.id, r.wide)} alt="" />
                         <span>
                           <b>{r.name ?? t.client}</b>
                           {/* ikkinchi qator — video tili (sarlavhada "Robohub mijozlari" bor, takrorlanmaydi) */}

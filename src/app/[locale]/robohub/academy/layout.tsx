@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { defineMessages } from "@/i18n/config";
 import { getLocale } from "@/i18n/server";
+import AnnounceBar from "@/components/announce-bar/announce-bar";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Fx from "./components/fx/fx";
@@ -84,6 +85,8 @@ export default async function AcademyLayout({ children }: LayoutProps<"/[locale]
         <a className="ac-skip" href="#ac-main">
           {messages[locale].skip}
         </a>
+        {/* tepadagi polosa — "Batafsil" (Robohub landingi) */}
+        <AnnounceBar locale={locale} />
         <Header />
         <main id="ac-main">{children}</main>
         <Footer />

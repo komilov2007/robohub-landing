@@ -150,6 +150,56 @@ return (function () {
     if (v) { if (on && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause(); }
   }
 
+  // Telefon (<820px): qotadigan skroll sahnasi o'rniga oddiy vertikal "zanjir" — har qadam: raqam, matn, karta;
+  // qadamlar chap chiziq bilan bog'langan (robohub.css → .feat--chain). Qadam ekranga kirganda karta animatsiyasi yoqiladi.
+  if (matchMedia("(max-width: 819px)").matches) return initChain();
+
+  function initChain() {
+    sec.classList.add("feat--chain");
+    var list = document.createElement("ol");
+    list.className = "feat-chain";
+    var lis = items.map(function (it, i) {
+      var li = document.createElement("li");
+      li.className = "feat-chain__item";
+      li.dataset.i = i;
+      li.appendChild(it.text);
+      li.appendChild(it.card);
+      list.appendChild(li);
+      return li;
+    });
+    stage.appendChild(list);
+    // ko'rinishga kirgan qadam bir marta "yonadi"; video faqat ekranda o'ynaydi
+    var cio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var it = items[+e.target.dataset.i];
+        if (e.isIntersecting) { it.act = false; setActive(it, true); }
+        else { var v = it.card.querySelector("video"); if (v) v.pause(); }
+      });
+    }, { threshold: 0.3 });
+    lis.forEach(function (li) { cio.observe(li); });
+    // menyudan (header.script.js "feat:go") yoki boshqa sahifadan (/#features-3) — o'sha qadamga
+    function toStep(i, smooth) {
+      var li = lis[i];
+      if (!li) return false;
+      var y = li.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: y, behavior: smooth && !reduce ? "smooth" : "auto" });
+      return true;
+    }
+    function onChainGo(e) { if (toStep(e.detail, true)) e.preventDefault(); }
+    document.addEventListener("feat:go", onChainGo);
+    var dm = /^#features-(\d+)$/.exec(location.hash);
+    if (dm) {
+      requestAnimationFrame(function () { toStep(Number(dm[1]), false); });
+      history.replaceState(history.state, "", location.pathname + location.search + "#features");
+    }
+    return function cleanup() {
+      cio.disconnect();
+      document.removeEventListener("feat:go", onChainGo);
+      list.remove();
+      sec.classList.remove("feat--chain");
+    };
+  }
+
   var cur = -1, target = 0, lastIdx = -1, raf = 0;
 
   function render(p) {
