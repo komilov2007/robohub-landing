@@ -7,6 +7,7 @@ export const messages = defineMessages({
     titleAccent: "bog‘laning",
     lead: "Savolingiz bormi yoki demo kerakmi? Raqamingizni qoldiring — tez javob beramiz.",
     send: "Yuborish",
+    close: "Yopish",   // modal oynani yopish tugmasi (contact-modal.tsx)
     note: "Yuborish bosilganda pochta dasturingizda tayyor xat ochiladi.",
     // barcha savollardan keyin forma o'rnida chiqadigan tasdiq
     done: "Soʻrov yuborildi",
@@ -40,6 +41,7 @@ export const messages = defineMessages({
     titleAccent: "Robohub",
     lead: "Есть вопрос или нужна демонстрация? Оставьте номер — мы быстро ответим.",
     send: "Отправить",
+    close: "Закрыть",
     note: "После нажатия «Отправить» в почтовой программе откроется готовое письмо.",
     done: "Заявка отправлена",
     doneSub: "Скоро свяжемся с вами",
@@ -68,6 +70,7 @@ export const messages = defineMessages({
     titleAccent: "Robohub team",
     lead: "Have a question or want a demo? Leave your number — we’ll get back to you fast.",
     send: "Send",
+    close: "Close",
     note: "Clicking Send opens a ready-made email in your mail app.",
     done: "Request sent",
     doneSub: "We’ll get back to you soon",

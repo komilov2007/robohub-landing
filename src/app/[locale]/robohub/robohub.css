@@ -444,8 +444,8 @@
    ============================================================ */
 .trust{
   --tile:72px;--gap:14px;
-  --col:620px;   /* matn ustuni (sarlavha) kengligi — devor maskasi ham shundan hisoblanadi */
-  --stats-w:400px;   /* raqam kartalari kengligi — devorning pastki qismi shu chetdan boshlanadi */
+  --col:660px;   /* matn ustuni (sarlavha) kengligi — devor maskasi ham shundan hisoblanadi */
+  --stats-w:480px;   /* raqam kartalari kengligi — devorning pastki qismi shu chetdan boshlanadi */
   --pad:clamp(24px,5vw,80px);   /* full width: matn konteynerga emas, section chetiga yopishadi */
   position:relative;z-index:1;padding:var(--sp-12) 0;   /* pastki 40px ni MUAMMO varag'i yopadi */
   border-radius:40px 40px 0 0;background:var(--bg);overflow:hidden;
@@ -1995,6 +1995,32 @@
 .contact__ways{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;margin-top:var(--sp-3);font-size:14.5px;font-weight:700}
 .contact__ways a{display:flex;align-items:center;gap:8px;padding-block:6px;white-space:nowrap;transition:color 300ms var(--ease)}
 .contact__ways a:hover{color:var(--brand)}
+
+/* ---------- "Ariza qoldirish" modali (contact-modal.tsx): ekran o'rtasida, ichida aloqa formasi ----------
+   Ochish/yopish — header.script.js (showModal). Ichi "Aloqa" bo'limi bilan bir xil (.contact__* uslublari). */
+.cmodal{
+  width:min(600px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;
+  border:0;border-radius:28px;background:#F4F7F5;color:var(--text);overflow:auto;overscroll-behavior:contain;
+  box-shadow:0 40px 90px -30px rgba(0,30,28,.55);
+}
+.cmodal::backdrop{background:rgba(0,27,26,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cmodal[open]{animation:cmodal-in 320ms var(--ease-soft)}
+.cmodal[open]::backdrop{animation:cmodal-fade 320ms var(--ease)}
+.cmodal.is-closing{animation:cmodal-out 220ms var(--ease) forwards}
+.cmodal.is-closing::backdrop{animation:cmodal-fade 220ms var(--ease) reverse forwards}
+@keyframes cmodal-in{from{opacity:0;transform:translateY(16px) scale(.97)}}
+@keyframes cmodal-out{to{opacity:0;transform:translateY(10px) scale(.98)}}
+@keyframes cmodal-fade{from{opacity:0}}
+.cmodal__box{position:relative;max-width:none;padding:48px 32px 32px}
+.cmodal__close{
+  position:absolute;top:14px;right:14px;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;
+  color:var(--text-dim);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),transform var(--t-mid) var(--ease-soft);
+}
+.cmodal__close:hover{background:rgba(0,54,52,.07);color:var(--text);transform:rotate(90deg)}
+.cmodal__close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.cmodal__close:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+@media (max-width:600px){ .cmodal__box{padding:52px 18px 24px} .cmodal{border-radius:22px} }
+@media (prefers-reduced-motion:reduce){ .cmodal[open],.cmodal.is-closing,.cmodal::backdrop{animation:none} }
 .contact__ways svg{width:17px;height:17px;flex:none;color:var(--brand)}
 
 @media (max-width:900px){

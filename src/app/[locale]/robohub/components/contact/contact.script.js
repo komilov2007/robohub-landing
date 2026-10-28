@@ -6,17 +6,19 @@
 //  3) aloqa: Telefon (+998 (XX) XXX-XX-XX formatida, 9 raqam) yoki Email — tanlov tugmalari bilan
 // Har qadam almashganda tepadagi "1/3" ko'rsatkich va input silliq almashadi (robohub.css → .is-swap).
 // Backend yo'q: oxirgi qadamdan keyin hello@robohub.uz manziliga tayyor xat (mailto) ochiladi.
-export function init(t) {
-  var form = document.getElementById("contact-form");
+// id — elementlar id'larining prefiksi (contact-quiz.tsx): "contact" — bo'lim, "cmodal" — header'dagi modal oyna.
+export function init(t, id) {
+  id = id || "contact";
+  var form = document.getElementById(id + "-form");
   if (!form) return;
   var input = form.querySelector("input");
   var button = form.querySelector("button[type=submit]");
   var done = form.querySelector(".contact__done");
-  var steps = document.getElementById("contact-steps");
+  var steps = document.getElementById(id + "-steps");
   var stepNum = steps && steps.querySelector("b");
-  var opts = document.getElementById("contact-opts");
-  var via = document.getElementById("contact-via");
-  var chips = document.getElementById("contact-chips");
+  var opts = document.getElementById(id + "-opts");
+  var via = document.getElementById(id + "-via");
+  var chips = document.getElementById(id + "-chips");
   var last = t.steps.length - 1;
   var step = 0;
   var answers = [];

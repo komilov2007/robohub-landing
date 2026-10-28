@@ -117,7 +117,7 @@ export default async function Header() {
           <div className="header__actions">
             <LangSelect locale={locale} label={t.lang} />{" "}
             <a className="btn btn--ghost" href="#login">{t.login}</a>{" "}
-            <a className="btn btn--accent" href="#start">{t.start}</a>{" "}
+            <a className="btn btn--accent" href="#contact" data-open="contact-modal">{t.start}</a>{" "}
             <button className="burger" id="burger" type="button" aria-label={t.menuOpen} data-label-open={t.menuOpen} data-label-close={t.menuClose} aria-expanded="false" aria-controls="mobile-menu">
               <span />
               <span />
@@ -152,7 +152,7 @@ export default async function Header() {
             </ul>{" "}
             <div className="mobile-menu__actions">
               <a className="btn btn--ghost" href="#login">{t.login}</a>{" "}
-              <a className="btn btn--accent" href="#start">{t.start}</a>
+              <a className="btn btn--accent" href="#contact" data-open="contact-modal">{t.start}</a>
             </div>
           </div>
         </div>

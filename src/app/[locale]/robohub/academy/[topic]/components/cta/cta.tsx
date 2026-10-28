@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { nextTopic, type Topic } from "../../../lib/academy";
 import { START_URL, topicHref } from "../../../lib/links";
-import { RobohubMark } from "../../../components/logo/logo";
+import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import { getLocale } from "@/i18n/server";
 import { messages } from "./cta.i18n";
 
-const MARKETPLACES = ["uzum", "wildberries", "yandex", "ozon"];
-
-// CTA — bosh sahifadagi "Yordam" bloki uslubida: harakatlanuvchi gradient fon, aylanuvchi halqalar
-// va marketpleyslar orbitasi, magnit tugmalar (data-magnet).
+// CTA — bosh sahifadagi "Yordam" bloki uslubida: harakatlanuvchi gradient fon, o'ngda Robohub orbitasi
+// (umumiy komponent — Robohub, AI Studio va Kalkulyator yakuniy kartalaridagi bilan bir xil, biroz kichikroq), magnit tugmalar.
 export default async function Cta({ topic }: { topic: Topic }) {
   const locale = await getLocale();
   const t = messages[locale];
@@ -39,18 +37,7 @@ export default async function Cta({ topic }: { topic: Topic }) {
               </Link>
             </div>
           </div>
-          <div className="acx-end__orbit" aria-hidden="true">
-            <span className="acx-end__ring acx-end__ring--3" />
-            <span className="acx-end__ring acx-end__ring--2" />
-            <span className="acx-end__ring acx-end__ring--1">
-              {MARKETPLACES.map((m) => (
-                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={54} height={54} loading="lazy" />
-              ))}
-            </span>
-            <span className="acx-end__mark">
-              <RobohubMark />
-            </span>
-          </div>
+          <HubOrbit className="acx-end__hub acx-end__hub--sm" />
         </div>
       </div>
     </section>

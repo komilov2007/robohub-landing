@@ -1,13 +1,11 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
-import { TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/contacts";
+import ContactQuiz from "./contact-quiz";
 import ContactScript from "./contact-script";
 import { messages } from "./contact.i18n";
 
 export default async function Contact() {
   const t = await getMessages(messages);
-  const q = t.quiz;
-  const first = q.steps[0];
   return (
     <>
       <section className="contact" id="contact" data-theme="light" aria-labelledby="contact-title">
@@ -21,103 +19,11 @@ export default async function Contact() {
             <p className="contact__lead" data-sr="" style={{ "--d": "140ms" } as CSSProperties}>
               {t.lead}
             </p>
-
-            {/* Quiz: bitta input, savollar ketma-ket almashadi (contact.script.js). Forma serverga yubormaydi —
-                oxirgi savoldan keyin javoblardan tayyor xat (mailto) ochiladi. Boshida birinchi savol render qilinadi */}
-            {/* qaysi qadamda ekani: "Qadam 1/3" va uchta chiziq */}
-            <p className="contact__steps" id="contact-steps" data-step="0" data-sr="" style={{ "--d": "180ms" } as CSSProperties}>
-              <span>
-                {q.step} <b>1</b>/{q.steps.length}
-              </span>
-              <span className="contact__bars" aria-hidden="true">
-                {q.steps.map((s) => (
-                  <i key={s.name} />
-                ))}
-              </span>
-            </p>
-            <form className="contact__form" id="contact-form" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
-              {/* 1-qadamda tanlangan variantlar shu yerda chip bo'lib turadi (contact.script.js) */}
-              <span className="contact__chips" id="contact-chips" />
-              <input
-                type={first.type}
-                name={first.name}
-                autoComplete={first.autoComplete}
-                placeholder={first.placeholder}
-                aria-label={first.placeholder}
-                required
-              />
-              <button type="submit" aria-label={t.send}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 12h15M13 6l6 6-6 6" />
-                </svg>
-              </button>
-              {/* Tasdiq: oxirgi javobdan keyin forma doiraga "yopilib", shu holatga ochiladi (.is-done) */}
-              <div className="contact__done" role="status" aria-hidden="true">
-                <span className="contact__done-ico">
-                  <svg viewBox="0 0 33.8675 15.06" aria-hidden="true">
-                    <use href="#rh-mark" />
-                  </svg>
-                  <i>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M5 12.5l4.5 4.5L19 7.5" />
-                    </svg>
-                  </i>
-                </span>
-                <span className="contact__done-text">
-                  <b>{t.done}</b>
-                  <small>{t.doneSub}</small>
-                </span>
-              </div>
-            </form>
-            {/* 1-qadam: tayyor variantlar (bir nechtasini tanlash mumkin) va "Boshqa" */}
-            <div className="contact__opts" id="contact-opts" role="group" aria-label={first.placeholder} data-sr="" style={{ "--d": "220ms" } as CSSProperties}>
-              {q.options.map((o) => (
-                <button key={o} type="button" data-opt={o} aria-pressed="false">
-                  {o}
-                </button>
-              ))}
-              <button type="button" data-opt="other" aria-pressed="false" className="is-other">
-                {q.other}
-              </button>
-            </div>
-            {/* oxirgi qadam: telefon yoki email */}
-            <div className="contact__via" id="contact-via" role="group" hidden>
-              <button type="button" data-via="phone" aria-pressed="true">
-                {q.methods.phone}
-              </button>
-              <button type="button" data-via="email" aria-pressed="false">
-                {q.methods.email}
-              </button>
-            </div>
-            <p className="contact__note" data-sr="" style={{ "--d": "240ms" } as CSSProperties}>
-              {t.note}
-            </p>
-
-            <p className="contact__ways" data-sr="" style={{ "--d": "280ms" } as CSSProperties}>
-              <a href={TELEGRAM_URL} target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.8.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.9 8.9-8c.4-.4-.1-.5-.6-.2L6.2 12.8 1.5 11.3c-1-.3-1-1 .2-1.5L20.200 2.7c.9-.3 1.600.2 1.300 1.600z" />
-                </svg>
-                {TELEGRAM_HANDLE}
-              </a>
-              <a href="tel:+998781138212">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" />
-                </svg>
-                +998 78 113 82 12
-              </a>
-              <a href="mailto:hello@robohub.uz">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="3" y="5" width="18" height="14" rx="3" />
-                  <path d="M4 8l8 5 8-5" />
-                </svg>
-                hello@robohub.uz
-              </a>
-            </p>
+            <ContactQuiz t={t} id="contact" reveal />
           </div>
         </div>
       </section>
-      <ContactScript t={t.quiz} />
+      <ContactScript t={t.quiz} id="contact" />
     </>
   );
 }

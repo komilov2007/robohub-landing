@@ -1,4 +1,4 @@
-import { grotesk, inter, onest } from "./fonts";
+import { grotesk, inter } from "./fonts";
 import AnnounceBar from "@/components/announce-bar/announce-bar";
 import Header from "./components/header/header";
 import Hero from "./components/hero/hero";
@@ -60,7 +60,7 @@ export default async function StudioPage({ path = "/" }: { path?: string }) {
   };
   return (
     <ContentProvider value={c}>
-    <div className={`as ${inter.variable} ${grotesk.variable} ${onest.variable}`} id="top">
+    <div className={`as ${inter.variable} ${grotesk.variable}`} id="top">
       {/* Header ustidagi reklama polosasi — skroll qilinsa chiqib ketadi */}
       <AnnounceBar locale={c.locale} />
       <Header />

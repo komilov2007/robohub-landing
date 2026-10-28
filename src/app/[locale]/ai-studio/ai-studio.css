@@ -136,7 +136,7 @@
   --hf-ink:#0E2A28;--hf-muted:#4A5E5C;--hf-paper:#FFFDF4;--hf-y:#FFD500;--hf-teal:#00524F;--hf-teal-hover:#003634;
   --hf-line:#E6DFC4;--hf-line-strong:rgba(0,54,52,.26);--hf-h:72px;
   --hf-ease:cubic-bezier(.2,.8,.2,1);--hf-ease-soft:cubic-bezier(.33,1,.68,1);
-  font-family:var(--ff-as-onest),"Segoe UI",system-ui,sans-serif;
+  font-family:var(--ff-inter),"Segoe UI",system-ui,sans-serif;   /* header/footer — Robohub landingi bilan bir xil (Inter) */
 }
 .as-header .as-wrap,.as-footer .as-wrap{max-width:1200px;padding:0 24px}
 .as-header{
@@ -161,7 +161,7 @@
   position:relative;overflow:hidden;padding:3px 10px;border-radius:999px;color:#fff;
   background:linear-gradient(100deg,#7B3FF2 0%,#5B5BF7 38%,#2F86F6 62%,#C04CF0 100%);
   box-shadow:0 4px 12px -4px rgba(123,63,242,.55),inset 0 0 0 1px rgba(255,255,255,.18);
-  font-family:var(--ff-unbounded),"Segoe UI",system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.02em;
+  font-family:var(--ff-grotesk),var(--ff-inter),"Segoe UI",system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.02em;
 }
 .as-header .as-logo__tag::after,.as-footer .as-logo__tag::after{
   content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;pointer-events:none;

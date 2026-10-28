@@ -5,12 +5,13 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Fx from "./components/fx/fx";
 import { AcademyLocale } from "./components/locale/locale";
+import { grotesk, inter } from "../../../fonts";
 import "./academy.css";
 import "./motion.css";
 
 // Robohub Academy — Robohub saytining /academy sahifasi (robohub.uz/academy, robohub-landing.vercel.app/academy).
 // Kodi landing bilan aralashmaydi: hamma narsa shu papkada, uslublar .ac ildiziga bog'langan (landing uslublari — (landing) guruhida).
-// Ko'rinish Robohub landingiga mos: umumiy tokenlar, shriftlar (Unbounded + Manrope) va .btn — globals.css dan.
+// Ko'rinish Robohub landingiga mos: umumiy tokenlar, shriftlar (Space Grotesk + Inter — Robohub landingi, AI Studio va Kalkulyator bilan bir xil; academy.css .ac) va .btn — globals.css dan.
 // Uch tilda: /academy (uz), /ru/academy, /en/academy. Videolar o'zbekcha — hamma tilda bitta.
 export const messages = defineMessages({
   uz: {
@@ -50,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AcademyLayout({ children }: LayoutProps<"/[locale]/robohub/academy">) {
   const locale = await getLocale();
   return (
-    <div className="ac">
+    <div className={`ac ${inter.variable} ${grotesk.variable}`}>
       <AcademyLocale locale={locale}>
         <a className="ac-skip" href="#ac-main">
           {messages[locale].skip}

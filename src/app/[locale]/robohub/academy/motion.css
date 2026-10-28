@@ -131,6 +131,11 @@
 .acx-btn--ghost:hover{background:rgba(241,255,240,.12);border-color:rgba(241,255,240,.6)}
 /* o'ng tomondagi animatsiya — umumiy komponent (src/components/hub-orbit), Robohub yakuniy kartasidagi bilan bir xil */
 .acx-end .acx-end__hub{justify-self:center;width:min(100%,300px)}
+/* dars sahifasidagi CTA — karta pastroq bo'lishi uchun kichikroq */
+.acx-end .acx-end__hub--sm{width:min(100%,230px)}
+.acx-end__hub--sm .hub-orbit__ring img{--s:36px}
+.acx-end__hub--sm .hub-orbit__mark{width:66px;height:66px;margin:-33px;border-radius:21px}
+.acx-end__hub--sm .hub-orbit__mark svg{width:38px;height:17px}
 
 
 /* ============================================================

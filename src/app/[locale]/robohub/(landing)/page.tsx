@@ -1,4 +1,5 @@
 import Header from "../components/header/header";
+import ContactModal from "../components/contact/contact-modal";
 import Hero from "../components/hero/hero";
 import Trust from "../components/trust/trust";
 import Problem from "../components/problem/problem";
@@ -53,6 +54,7 @@ export default async function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
       <Header />
+      <ContactModal />
       <main>
         <Hero />
         <Trust />

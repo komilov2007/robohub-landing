@@ -80,6 +80,31 @@ export function init() {
     panel.addEventListener("touchmove", block, { passive: false });
   });
 
+  /* "Ariza qoldirish" (data-open="contact-modal") — aloqa formasi ekran o'rtasidagi oynada (contact-modal.tsx).
+     showModal: fokus oyna ichida qoladi, Esc yopadi; orqa fonga (oynaning o'ziga, qutidan tashqari) bosilsa yoki ✕ — yopiladi.
+     Yopilish animatsiyasi uchun avval .is-closing, animatsiya tugagach close(). <dialog> bo'lmasa — oddiy #contact havolasi. */
+  var modal = document.getElementById("contact-modal");
+  if (modal && typeof modal.showModal === "function") {
+    var closeModal = function () {
+      if (!modal.open || modal.classList.contains("is-closing")) return;
+      modal.classList.add("is-closing");
+      setTimeout(function () { modal.classList.remove("is-closing"); modal.close(); }, 220);
+    };
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest('[data-open="contact-modal"]');
+      if (!a) return;
+      e.preventDefault();
+      setMenu(false);
+      modal.showModal();
+      var input = modal.querySelector("input");
+      if (input) input.focus({ preventScroll: true });
+    });
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal || e.target.closest("[data-close]")) closeModal();
+    });
+    modal.addEventListener("cancel", function (e) { e.preventDefault(); closeModal(); });   // Esc — animatsiya bilan
+  }
+
   var items = document.querySelectorAll(".nav__item--menu");
   function closeItem(item) {
     item.classList.add("is-off");

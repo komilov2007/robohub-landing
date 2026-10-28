@@ -1,5 +1,5 @@
 import { getLocale } from "@/i18n/server";
-import { grotesk, inter, onest } from "../../ai-studio/fonts";
+import { grotesk, inter } from "../../ai-studio/fonts";
 import Reveal from "../../ai-studio/components/reveal/reveal";
 import AnnounceBar from "@/components/announce-bar/announce-bar";
 import Header from "./components/header/header";
@@ -55,7 +55,7 @@ export default async function Page() {
   ];
 
   return (
-    <div className={`as cc ${inter.variable} ${grotesk.variable} ${onest.variable}`} id="top">
+    <div className={`as cc ${inter.variable} ${grotesk.variable}`} id="top">
       {/* Header ustidagi reklama polosasi — skroll qilinsa chiqib ketadi */}
       <AnnounceBar locale={locale} />
       <Header nav={c.NAV} ui={c.T.ui} locale={locale} />

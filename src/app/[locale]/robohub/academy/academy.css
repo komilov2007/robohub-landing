@@ -1,10 +1,14 @@
 /* ============================================================
    ROBOHUB ACADEMY — uslublar.
    Dizayn tili Robohub landingidan: umumiy tokenlar (--brand, --mint, --cyan, --bg-dark-2, data-theme),
-   shriftlar (Unbounded + Manrope) va .btn / .container — src/app/globals.css.
+   .btn / .container — src/app/globals.css. Shriftlar — Space Grotesk + Inter (pastda, .ac).
    Bu fayldagi hamma narsa .ac ildiziga bog'langan va ac- prefiksli: boshqa saytlarga tegmaydi.
    ============================================================ */
 .ac{
+  /* shriftlar — Robohub landingi, AI Studio va Kalkulyator bilan bir xil: sarlavhalar Space Grotesk (kirill — Inter), matn Inter */
+  --font-head:var(--ff-grotesk),var(--ff-inter),"Segoe UI",system-ui,sans-serif;
+  --font-body:var(--ff-inter),"Segoe UI",system-ui,sans-serif;
+  font-family:var(--font-body);
   --ac-soft:#F3F7F5;     /* yumshoq bo'lim foni */
   --ac-sage:#E3ECE7;     /* sxema, skrinshot joyi */
   --ac-mint-soft:#E6F9E2;

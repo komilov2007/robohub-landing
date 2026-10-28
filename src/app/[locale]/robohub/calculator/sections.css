@@ -315,7 +315,7 @@
 /* ============================================================
    FOOTER — Robohub Academy footer'i bilan bir xil (academy.css → .ac-footer; tokenlar globals.css, data-theme="dark")
    ============================================================ */
-.cc .ac-footer{background:var(--bg-dark-2);color:var(--text);padding:64px 0 28px;border-radius:40px 40px 0 0;font-family:var(--ff-as-onest),"Segoe UI",system-ui,sans-serif}
+.cc .ac-footer{background:var(--bg-dark-2);color:var(--text);padding:64px 0 28px;border-radius:40px 40px 0 0;font-family:var(--ff-inter),"Segoe UI",system-ui,sans-serif}
 .cc .ac-footer .as-wrap{max-width:1200px;padding:0 24px}
 .ac-footer__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,.8fr) minmax(0,.9fr);gap:40px}
 .ac-footer__logo{display:inline-flex;align-items:center;gap:10px;color:#fff}
