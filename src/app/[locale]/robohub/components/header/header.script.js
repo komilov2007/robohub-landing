@@ -58,7 +58,7 @@ export function init() {
   menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
 
-  /* Ochiladigan bandlar (Imkoniyatlar, Akademiya) — CSS'da :hover / :focus-within bilan ochiladi.
+  /* Ochiladigan band (Imkoniyatlar) — CSS'da :hover / :focus-within bilan ochiladi.
      Havola bosilganda yoki Esc'da panel yopiladi va sichqoncha banddan chiqmaguncha qayta ochilmaydi
      (aks holda sahifa scroll qilinayotganda panel sichqoncha ostida ochiq qolardi). */
   /* Imkoniyatlar bandlari (data-feat — karta raqami): "Imkoniyatlar" sahnasi (features.script.js) "feat:go"
@@ -74,7 +74,7 @@ export function init() {
 
   /* Ochiq panel ustida g'ildirak / svayp sahifani aylantirmaydi. stopPropagation — window'dagi
      boshqa g'ildirak tinglovchilari (features.script.js qadamli skrolli) ham ishlamasin. */
-  [].forEach.call(document.querySelectorAll(".mega,.drop"), function (panel) {
+  [].forEach.call(document.querySelectorAll(".mega"), function (panel) {
     function block(e) { e.preventDefault(); e.stopPropagation(); }
     panel.addEventListener("wheel", block, { passive: false });
     panel.addEventListener("touchmove", block, { passive: false });

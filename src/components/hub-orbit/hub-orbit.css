@@ -1,0 +1,49 @@
+/* Yakuniy kartalar animatsiyasi (hub-orbit.tsx). To'q fonli karta ichiga mo'ljallangan.
+   Aylana yo'q: har 7 soniyada markazdagi belgidan har bir marketpleysga chiziq chiziladi (navbat bilan, --i),
+   chiziq yetib borganda logotip "otilib" chiqadi; turgan paytda chiziqlar bo'ylab yorug' nuqta yuguradi; oxirida hammasi so'nadi. */
+.hub-orbit{position:relative;width:min(100%,290px);aspect-ratio:1;margin:0 auto}
+.hub-orbit__ring{position:absolute;inset:9%}
+.hub-orbit__spoke{
+  position:absolute;left:50%;top:50%;width:50%;height:2px;margin-top:-1px;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(184,255,176,.05),rgba(184,255,176,.55));border-radius:2px;
+  transform:rotate(var(--a)) scaleX(0);animation:hub-line 7s cubic-bezier(.4,0,.2,1) calc(var(--i) * 90ms) infinite;
+}
+/* chiziq bo'ylab markazdan logotipga yuguradigan nuqta */
+.hub-orbit__spoke::after{
+  content:"";position:absolute;top:50%;left:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;
+  background:#B8FFB0;box-shadow:0 0 10px 2px rgba(184,255,176,.7);opacity:0;
+  animation:hub-dot 1.8s linear calc(var(--i) * 260ms + 1s) infinite;
+}
+@keyframes hub-line{0%{transform:rotate(var(--a)) scaleX(0);opacity:1}11%,88%{transform:rotate(var(--a)) scaleX(1);opacity:1}100%{transform:rotate(var(--a)) scaleX(1);opacity:0}}
+@keyframes hub-dot{0%{left:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+.hub-orbit__ring img{
+  --s:42px;z-index:1;
+  position:absolute;left:calc(50% + 50% * cos(var(--a)));top:calc(50% + 50% * sin(var(--a)));
+  width:var(--s);height:var(--s);margin:calc(var(--s) / -2);border-radius:28%;object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(0,30,28,.35));
+  animation:hub-pop 7s cubic-bezier(.2,.9,.25,1) calc(var(--i) * 90ms) infinite backwards;
+}
+/* fonsiz (shaffof) logotiplar — qolganlari kabi oq yumaloq plitka ichida */
+.hub-orbit__ring img.is-plain{padding:6px;background:#fff}
+@keyframes hub-pop{0%,8%{opacity:0;transform:scale(.3)}14%{opacity:1;transform:scale(1.15)}19%,88%{opacity:1;transform:none}100%{opacity:0;transform:scale(.85)}}
+
+.hub-orbit__mark{
+  position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px;display:grid;place-items:center;border-radius:26px;
+  background:#fff;color:#00524F;box-shadow:0 20px 44px rgba(0,30,28,.4);
+}
+.hub-orbit__mark svg{display:block;width:46px;height:20.5px}
+.hub-orbit__mark::before,.hub-orbit__mark::after{content:"";position:absolute;inset:-8px;border-radius:34px;border:1.5px solid rgba(255,255,255,.35);animation:hub-ring 3.2s cubic-bezier(.2,.8,.2,1) infinite;pointer-events:none}
+.hub-orbit__mark::after{animation-delay:1.6s}
+@keyframes hub-ring{from{transform:scale(.95);opacity:.9}to{transform:scale(1.7);opacity:0}}
+
+@media (max-width:900px){
+  .hub-orbit{width:230px}
+  .hub-orbit__ring img{--s:34px}
+  .hub-orbit__ring img.is-plain{padding:5px}
+  .hub-orbit__mark{width:66px;height:66px;margin:-33px;border-radius:21px}
+  .hub-orbit__mark svg{width:38px;height:17px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hub-orbit__ring img,.hub-orbit__spoke,.hub-orbit__spoke::after,.hub-orbit__mark::before,.hub-orbit__mark::after{animation:none}
+  .hub-orbit__spoke{transform:rotate(var(--a))}
+}

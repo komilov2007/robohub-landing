@@ -1340,23 +1340,14 @@
 .as-final__notes li{display:inline-flex;align-items:center;gap:6px}
 .as-final__notes .as-i{width:16px;height:16px;color:var(--mint)}
 .as-final .as-btn--glow::after{border-color:var(--mint)}
-.as-final__wall{display:none}
-.as-final__col{overflow:hidden}
-.as-final__track{display:flex;flex-direction:column;animation:as-vscroll 34s linear infinite;animation-direction:var(--dir)}
-.as-final__track img{width:100%;aspect-ratio:3/4;margin-bottom:14px;object-fit:cover;border-radius:18px;border:3px solid rgba(255,255,255,.14);box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
-@keyframes as-vscroll{to{transform:translateY(-50%)}}
-[data-off] .as-final__track,[data-off] .as-final__glow{animation-play-state:paused}
+/* o'ngdagi animatsiya — umumiy komponent (src/components/hub-orbit) */
+.as-final .as-final__hub{display:none}
+[data-off] .as-final__glow,[data-off] .as-final__hub *{animation-play-state:paused}
 @media (min-width:900px){
   .as-final{padding:120px 0}
   .as-final__card{min-height:520px;padding:64px}
   .as-final__copy{max-width:52%}
-  .as-final__wall{
-    position:absolute;z-index:1;top:-10%;bottom:-10%;right:3%;width:40%;display:grid;grid-template-columns:1fr 1fr;gap:14px;
-    transform:rotate(8deg);
-    -webkit-mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);
-    mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 86%,transparent);
-  }
-  .as-final__card:hover .as-final__track{animation-duration:20s}
+  .as-final .as-final__hub{display:block;position:absolute;z-index:1;right:7%;top:50%;width:min(34%,320px);transform:translateY(-50%)}
 }
 
 /* ============================================================

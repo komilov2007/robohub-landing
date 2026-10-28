@@ -16,7 +16,7 @@ import Odometer from "./components/odometer/odometer";
 import Aurora from "./components/aurora/aurora";
 import MpPeek from "./components/mp-peek/mp-peek";
 import Icon, { ICONS } from "./components/svg-icon/svg-icon";
-import { RobohubMark } from "./components/logo/logo";
+import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import "./home.css";
 
 // Academy bosh sahifasi ("tirik aurora" dizayni, uslublar — home.css):
@@ -183,18 +183,7 @@ export default async function AcademyHome() {
                 </a>
               </div>
             </div>
-            <div className="acx-end__orbit" aria-hidden="true">
-              <span className="acx-end__ring acx-end__ring--3" />
-              <span className="acx-end__ring acx-end__ring--2" />
-              <span className="acx-end__ring acx-end__ring--1">
-                {MARKETPLACES.map((m) => (
-                  <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={54} height={54} loading="lazy" />
-                ))}
-              </span>
-              <span className="acx-end__mark">
-                <RobohubMark />
-              </span>
-            </div>
+            <HubOrbit className="acx-end__hub" />
           </div>
         </div>
       </section>

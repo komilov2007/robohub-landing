@@ -1,10 +1,9 @@
 import { defineMessages, localeHref, type Locale } from "@/i18n/config";
 import { ACADEMY_PATH } from "@/lib/sites";
 
-// nav — asosiy menyu. menu berilgan band ustiga sichqoncha kelganda ochiladigan panelni ko'rsatadi:
-//   "features" — tepadan tushadigan katta panel (imkoniyatlar + vositalar), "academy" — kichik ro'yxat.
-//   href — bandning o'z havolasi (bosilganda / JS ishlamasa shu yerga o'tadi).
-// features / tools / academy — panellar ichidagi bandlar: t — nom, d — qisqa izoh.
+// nav — asosiy menyu. menu: "features" — band ustiga sichqoncha kelganda tepadan katta panel tushadi
+//   (imkoniyatlar + vositalar). href — bandning o'z havolasi (bosilganda / JS ishlamasa shu yerga o'tadi).
+// features / tools — panel ichidagi bandlar: t — nom, d — qisqa izoh. Ikonkalar header.tsx da (shu tartibda).
 const academy = (l: Locale, hash: string) => `${localeHref(l, ACADEMY_PATH)}${hash}`;
 const page = (l: Locale, path: string) => localeHref(l, path);
 
@@ -17,8 +16,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Qanday ishlaydi" },
       { href: "#reviews", label: "Mijozlar" },
       { href: "#pricing", label: "Tariflar" },
-      { href: ACADEMY_PATH, label: "Akademiya", menu: "academy" },
-      { href: "#about", label: "Kompaniya haqida" },
+      { href: ACADEMY_PATH, label: "Akademiya" },
     ],
     features: {
       title: "Robohub imkoniyatlari",
@@ -39,13 +37,9 @@ export const messages = defineMessages({
         { href: page("uz", "/ai-studio"), t: "AI studiya", d: "Mahsulot rasmlari va infografikasini yarating." },
         { href: "#integrations", t: "Hisob tizimlari bilan integratsiyalar", d: "Ombor hisobini marketpleyslar bilan bog‘lang." },
         { href: "#regions", t: "Marketpleyslar va mamlakatlar", d: "Savdo uchun yangi platformalar va bozorlarni tanlang." },
+        { href: academy("uz", "#help"), t: "Sotuvchilar forumi", d: "Boshqa sotuvchilar bilan tajriba almashing." },
       ],
     },
-    academy: [
-      { href: academy("uz", "#lessons"), t: "Videodarslar" },
-      { href: academy("uz", "#topics"), t: "Qo‘llanmalar" },
-      { href: academy("uz", "#help"), t: "Sotuvchilar forumi" },
-    ],
     lang: "Til tanlash",
     login: "Kirish",
     start: "Hoziroq boshlash",
@@ -60,8 +54,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Как это работает" },
       { href: "#reviews", label: "Клиенты" },
       { href: "#pricing", label: "Тарифы" },
-      { href: localeHref("ru", ACADEMY_PATH), label: "Академия", menu: "academy" },
-      { href: "#about", label: "О компании" },
+      { href: localeHref("ru", ACADEMY_PATH), label: "Академия" },
     ],
     features: {
       title: "Возможности Robohub",
@@ -82,13 +75,9 @@ export const messages = defineMessages({
         { href: page("ru", "/ai-studio"), t: "AI-студия", d: "Создавайте изображения и инфографику товаров." },
         { href: "#integrations", t: "Интеграции с системами учёта", d: "Свяжите складской учёт с маркетплейсами." },
         { href: "#regions", t: "Маркетплейсы и страны", d: "Выбирайте новые площадки и рынки для продаж." },
+        { href: academy("ru", "#help"), t: "Форум продавцов", d: "Делитесь опытом с другими продавцами." },
       ],
     },
-    academy: [
-      { href: academy("ru", "#lessons"), t: "Видеоуроки" },
-      { href: academy("ru", "#topics"), t: "Инструкции" },
-      { href: academy("ru", "#help"), t: "Форум продавцов" },
-    ],
     lang: "Выбор языка",
     login: "Войти",
     start: "Начать сейчас",
@@ -103,8 +92,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "How it works" },
       { href: "#reviews", label: "Customers" },
       { href: "#pricing", label: "Pricing" },
-      { href: localeHref("en", ACADEMY_PATH), label: "Academy", menu: "academy" },
-      { href: "#about", label: "About us" },
+      { href: localeHref("en", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub features",
@@ -125,13 +113,9 @@ export const messages = defineMessages({
         { href: page("en", "/ai-studio"), t: "AI studio", d: "Create product images and infographics." },
         { href: "#integrations", t: "Accounting integrations", d: "Connect your inventory system to marketplaces." },
         { href: "#regions", t: "Marketplaces and countries", d: "Pick new platforms and markets to sell on." },
+        { href: academy("en", "#help"), t: "Seller forum", d: "Share experience with other sellers." },
       ],
     },
-    academy: [
-      { href: academy("en", "#lessons"), t: "Video lessons" },
-      { href: academy("en", "#topics"), t: "Guides" },
-      { href: academy("en", "#help"), t: "Seller forum" },
-    ],
     lang: "Choose language",
     login: "Log in",
     start: "Get started",

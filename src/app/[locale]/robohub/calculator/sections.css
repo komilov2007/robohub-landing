@@ -305,16 +305,7 @@
 .cx-finale h2 span{color:var(--mint)}
 .cx-finale__copy > p{max-width:560px;margin-top:14px;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.75)}
 .cx-finale__cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
-.cx-finale__mps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.cx-finale__mps li{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
-  font-size:14px;font-weight:600;
-}
-.cx-finale__card[data-in] .cx-finale__mps li{animation:cx-plug .6s var(--spring) both}
-@keyframes cx-plug{from{opacity:0;transform:translateX(20px) scale(.92)}}
-.cx-finale__mps img{width:36px;height:36px;border-radius:10px}
-.cx-finale__mps span{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.cx-finale__mps i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--mint);color:var(--primary);font-style:normal;font-size:12px;font-weight:700}
+.cx-finale__hub{justify-self:center}
 @media (max-width:479px){ .cx-finale__cta .cx-btn{flex:1 1 100%} }
 @media (min-width:900px){
   .cx-finale{padding:24px 0 112px}

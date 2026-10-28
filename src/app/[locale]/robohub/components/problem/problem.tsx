@@ -13,7 +13,8 @@ const NEXT = [
 
 // 2. MUAMMO — head (sarlavha) → media (sxema videosi) → foot ("keyin esa").
 // Video 0–8 s "Robohubsiz", keyin "Robohub bilan" sxemasini ko'rsatadi; problem.script.js videoning vaqtiga qarab
-// data-state ni almashtiradi va head/foot dagi ikki variantdan mosini ko'rsatadi. Video bezak (aria-hidden) —
+// data-state ni almashtiradi va head/foot dagi ikki variantdan mosini ko'rsatadi. "Robohub bilan" qismida
+// bo'lim foni mint rangga o'tadi (video bilan bir vaqtda silliq almashadi), tepa o'ngdagi tugmalar videoni shu qismga o'tkazadi. Video bezak (aria-hidden) —
 // mazmuni matnda.
 export default async function Problem() {
   const t = await getMessages(messages);
@@ -46,6 +47,15 @@ export default async function Problem() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* qaysi sxema ko'rinayotgani va unga o'tish: bosilganda video shu qismga o'tadi (problem.script.js) */}
+        <div className="pain__switch" role="group" aria-label={t.eyebrow}>
+          {sides.map((side) => (
+            <button type="button" data-to={side} aria-pressed={side === "before"} key={side}>
+              {t[side].label}
+            </button>
+          ))}
         </div>
 
         <div className="pain__media" data-sr="">

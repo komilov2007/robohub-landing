@@ -1,8 +1,8 @@
 import { SIGNUP_HREF, type Content } from "../../calculator.content";
-import { CALCULATOR_MARKETPLACES, MARKETPLACE_META } from "../calculator/constants";
+import HubOrbit from "@/components/hub-orbit/hub-orbit";
 
-// Yakuniy taklif — ixcham karta: chapda sarlavha, matn va tugmalar; o'ngda to'rt marketpleys "kabinet" ichida
-// bitta-bitta ulanadi. Kartaning chetidan sekin aylanuvchi mint nur o'tadi.
+// Yakuniy taklif — ixcham karta: chapda sarlavha, matn va tugmalar; o'ngda Robohub orbitasi (umumiy
+// komponent — Robohub yakuniy kartasidagi bilan bir xil). Kartaning chetidan sekin aylanuvchi mint nur o'tadi.
 export default function Finale({ final }: { final: Content["FINAL"] }) {
   return (
     <section className="cx-finale" id="start" aria-labelledby="cx-finale-title">
@@ -22,15 +22,7 @@ export default function Finale({ final }: { final: Content["FINAL"] }) {
               </a>
             </div>
           </div>
-          <ul className="cx-finale__mps" aria-hidden="true">
-            {CALCULATOR_MARKETPLACES.map((mp, i) => (
-              <li key={mp} style={{ animationDelay: `${0.3 + i * 0.15}s` }}>
-                <img src={MARKETPLACE_META[mp].icon} alt="" width={36} height={36} />
-                <span>{MARKETPLACE_META[mp].label}</span>
-                <i>✓</i>
-              </li>
-            ))}
-          </ul>
+          <HubOrbit className="cx-finale__hub" />
         </div>
       </div>
     </section>

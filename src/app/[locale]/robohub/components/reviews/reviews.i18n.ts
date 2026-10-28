@@ -5,9 +5,9 @@ import { defineMessages } from "@/i18n/config";
 // Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi ishlatiladi.
 export const messages = defineMessages({
   uz: {
-    titleStart: "Bizga ishonmang — ",
-    titleAccent: "sotuvchilarni tinglang",
-    lead: "Robohub’dan foydalanayotgan sotuvchilarning videosharhlari va Telegram’dagi fikrlari.",
+    titleStart: "Robohub bilan savdo qanday? ",
+    titleAccent: "Mijozlardan eshiting.",
+    lead: "Ularning tajribasi sizga tanlashda yordam beradi.",
     videos: "Videosharhlar",
     chats: "Telegram’dagi fikrlar",
     prev: "Oldingi",
@@ -18,9 +18,9 @@ export const messages = defineMessages({
     close: "Yopish",
   },
   ru: {
-    titleStart: "Не верьте нам — ",
-    titleAccent: "послушайте продавцов",
-    lead: "Видеоотзывы продавцов, которые работают с Robohub, и их сообщения в Telegram.",
+    titleStart: "Как продаётся с Robohub? ",
+    titleAccent: "Слово клиентам.",
+    lead: "Их опыт поможет вам сделать свой выбор.",
     videos: "Видеоотзывы",
     chats: "Отзывы в Telegram",
     prev: "Назад",
@@ -31,9 +31,9 @@ export const messages = defineMessages({
     close: "Закрыть",
   },
   en: {
-    titleStart: "Don’t take our word — ",
-    titleAccent: "hear it from sellers",
-    lead: "Video reviews from sellers who use Robohub, and their messages on Telegram.",
+    titleStart: "What is selling with Robohub like? ",
+    titleAccent: "Hear it from our customers.",
+    lead: "Their experience will help you make your choice.",
     videos: "Video reviews",
     chats: "Reviews on Telegram",
     prev: "Previous",

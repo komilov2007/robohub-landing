@@ -2,6 +2,7 @@ import LangSelect from "@/components/lang-select/lang-select";
 import { getLocale } from "@/i18n/server";
 import HeaderScript from "./header-script";
 import { messages } from "./header.i18n";
+import { newTab } from "@/lib/sites";
 
 // Ochiladigan bandlar yonidagi ▾ belgisi
 function Chevron() {
@@ -15,6 +16,33 @@ function Chevron() {
 // Imkoniyatlar panelidagi har band → "Imkoniyatlar" bo'limidagi qaysi karta (0 dan, features.i18n tools tartibida).
 // Ichki va tashqi tahlil — bitta karta. Bosilganda header.script.js sahifani shu kartaga aylantiradi.
 const FEAT_STEP = [0, 1, 2, 3, 3, 4, 5];
+
+// Panel bandlari ikonkalari (24×24, chiziqli) — header.i18n dagi tartibda: avval imkoniyatlar, keyin vositalar.
+const FEAT_ICONS = [
+  "M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8", // mahsulotlar
+  "M3 21V9l9-6 9 6v12M7 21v-8h10v8M7 17h10", // qoldiqlar va omborlar
+  "M9 4h6v3H9zM7 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-1M9 12h6M9 16h4", // buyurtmalar
+  "M3 21h18M7 17v-5M12 17V7M17 17v-8", // ichki tahlil
+  "M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4M8 13l2-2 2 2 2.5-3", // tashqi tahlil
+  "M3 10v4a1 1 0 0 0 1 1h3l5 4V5L7 9H4a1 1 0 0 0-1 1zM16 9a3 3 0 0 1 0 6M18.5 6.5a7 7 0 0 1 0 11", // reklama
+  "M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM8.5 11h7M8.5 14.5h4", // xabarlar va sharhlar
+];
+const TOOL_ICONS = [
+  "M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8.5 7h7M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5V18M8.5 18h.01M12 18h.01", // kalkulyator
+  "M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z", // AI studiya
+  "M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0zM12 17v4", // integratsiyalar
+  "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18", // marketpleyslar va mamlakatlar
+  "M9 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8", // sotuvchilar forumi
+];
+const AI_TOOL = 1; // AI studiya — alohida rangda (AI Studio brendi)
+
+function MenuIcon({ d }: { d: string }) {
+  return (
+    <svg className="mega__ico" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={d} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export default async function Header() {
   const locale = await getLocale();
@@ -44,7 +72,7 @@ export default async function Header() {
             <ul className="nav__list">
               {t.nav.map((item) => (
                 <li key={item.href} className={item.menu ? `nav__item nav__item--menu nav__item--${item.menu}` : "nav__item"}>
-                  <a className="nav__link" href={item.href}>
+                  <a className="nav__link" href={item.href} {...newTab(item.href)}>
                     {item.label}
                     {item.menu && <Chevron />}
                   </a>
@@ -57,6 +85,7 @@ export default async function Header() {
                             {t.features.items.map((x, i) => (
                               <li key={x.t}>
                                 <a className="mega__link" href={x.href} data-feat={FEAT_STEP[i]}>
+                                  <MenuIcon d={FEAT_ICONS[i]} />
                                   <b>{x.t}</b>
                                   <span>{x.d}</span>
                                 </a>
@@ -67,9 +96,10 @@ export default async function Header() {
                         <div className="mega__col mega__col--side">
                           <p className="mega__title">{t.tools.title}</p>
                           <ul className="mega__list">
-                            {t.tools.items.map((x) => (
+                            {t.tools.items.map((x, i) => (
                               <li key={x.t}>
-                                <a className="mega__link" href={x.href}>
+                                <a className={i === AI_TOOL ? "mega__link mega__link--ai" : "mega__link"} href={x.href} {...newTab(x.href)}>
+                                  <MenuIcon d={TOOL_ICONS[i]} />
                                   <b>{x.t}</b>
                                   <span>{x.d}</span>
                                 </a>
@@ -79,15 +109,6 @@ export default async function Header() {
                         </div>
                       </div>
                     </div>
-                  )}
-                  {item.menu === "academy" && (
-                    <ul className="drop">
-                      {t.academy.map((x) => (
-                        <li key={x.t}>
-                          <a className="drop__link" href={x.href}>{x.t}</a>
-                        </li>
-                      ))}
-                    </ul>
                   )}
                 </li>
               ))}
@@ -116,15 +137,15 @@ export default async function Header() {
                         <Chevron />
                       </summary>
                       <ul>
-                        {(item.menu === "features" ? [...t.features.items, ...t.tools.items] : t.academy).map((x, i) => (
+                        {[...t.features.items, ...t.tools.items].map((x, i) => (
                           <li key={x.t}>
-                            <a href={x.href} data-feat={item.menu === "features" ? FEAT_STEP[i] : undefined}>{x.t}</a>
+                            <a href={x.href} data-feat={FEAT_STEP[i]} {...newTab(x.href)}>{x.t}</a>
                           </li>
                         ))}
                       </ul>
                     </details>
                   ) : (
-                    <a href={item.href}>{item.label}</a>
+                    <a href={item.href} {...newTab(item.href)}>{item.label}</a>
                   )}
                 </li>
               ))}

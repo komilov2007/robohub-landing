@@ -10,12 +10,13 @@ export const messages = defineMessages({
     start: "Hoziroq boshlash ",
     pricing: "Tariflarni koʻrish",
     about: "Marketpleys sotuvchilari uchun yagona kabinet.",
-    // IT Park guvohnomasi (public/certificates/it-park.webp) — footer'da, logotip ostida
-    cert: {
-      title: "IT Park rezidenti",
-      text: "Robohub — “Robosell” MChJ mahsuloti. Kompaniya 2025-yil 15-yanvardan IT Park Uzbekistan rezidenti.",
-      alt: "IT Park Uzbekistan rezidenti guvohnomasi — “Robosell” MChJ",
-      open: "Guvohnomani ko‘rish",
+    // Guvohnomalar (public/certificates) — footer'da, logotip ostida: kichik nusxa + nom, bosilganda to'liq rasm
+    certs: {
+      open: "Ko‘rish",
+      items: [
+        { src: "/certificates/it-park.webp", w: 1280, h: 887, title: "IT Park rezidenti", alt: "IT Park Uzbekistan rezidenti guvohnomasi — “Robosell” MChJ" },
+        { src: "/certificates/robohub-guvohnoma.webp", w: 1240, h: 1755, title: "Davlat ro‘yxatidan o‘tgan", alt: "Yuridik shaxs davlat ro‘yxatidan o‘tganligi to‘g‘risidagi guvohnoma — “Robohub” MChJ" },
+      ],
     },
     pageLabel: "Sahifa boʻlimlari",
     pageTitle: "Sahifa",
@@ -43,11 +44,12 @@ export const messages = defineMessages({
     start: "Начать сейчас ",
     pricing: "Смотреть тарифы",
     about: "Единый кабинет для продавцов на маркетплейсах.",
-    cert: {
-      title: "Резидент IT Park",
-      text: "Robohub — продукт ООО «Robosell». Компания — резидент IT Park Uzbekistan с 15 января 2025 года.",
-      alt: "Свидетельство резидента IT Park Uzbekistan — ООО «Robosell»",
-      open: "Посмотреть свидетельство",
+    certs: {
+      open: "Посмотреть",
+      items: [
+        { src: "/certificates/it-park.webp", w: 1280, h: 887, title: "Резидент IT Park", alt: "Свидетельство резидента IT Park Uzbekistan — ООО «Robosell»" },
+        { src: "/certificates/robohub-guvohnoma.webp", w: 1240, h: 1755, title: "Госрегистрация", alt: "Свидетельство о государственной регистрации юридического лица — ООО «Robohub»" },
+      ],
     },
     pageLabel: "Разделы страницы",
     pageTitle: "Страница",
@@ -75,11 +77,12 @@ export const messages = defineMessages({
     start: "Get started ",
     pricing: "See pricing",
     about: "One dashboard for marketplace sellers.",
-    cert: {
-      title: "IT Park resident",
-      text: "Robohub is a product of Robosell LLC, an IT Park Uzbekistan resident since 15 January 2025.",
-      alt: "IT Park Uzbekistan resident certificate — Robosell LLC",
-      open: "View certificate",
+    certs: {
+      open: "View",
+      items: [
+        { src: "/certificates/it-park.webp", w: 1280, h: 887, title: "IT Park resident", alt: "IT Park Uzbekistan resident certificate — Robosell LLC" },
+        { src: "/certificates/robohub-guvohnoma.webp", w: 1240, h: 1755, title: "State registered", alt: "Certificate of state registration of a legal entity — Robohub LLC" },
+      ],
     },
     pageLabel: "Page sections",
     pageTitle: "Page",

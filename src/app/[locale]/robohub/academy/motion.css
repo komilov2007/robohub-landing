@@ -129,20 +129,8 @@
 .acx-btn--light:hover{background:var(--mint);box-shadow:0 22px 46px -14px rgba(184,255,176,.55)}
 .acx-btn--ghost{border:1px solid rgba(241,255,240,.32);color:#fff}
 .acx-btn--ghost:hover{background:rgba(241,255,240,.12);border-color:rgba(241,255,240,.6)}
-.acx-end__orbit{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:320px;width:100%;justify-self:center}
-.acx-end__orbit > span{grid-area:1/1}
-.acx-end__ring{position:relative;border-radius:50%;aspect-ratio:1}
-.acx-end__ring--1{width:100%;border:1.5px dashed rgba(241,255,240,.32);animation:acx-spin 36s linear infinite}
-.acx-end__ring--2{width:72%;border:1px solid rgba(241,255,240,.16);animation:acx-spin 24s linear infinite reverse;background:rgba(241,255,240,.03)}
-.acx-end__ring--2::before{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
-.acx-end__ring--3{width:46%;border:1px solid rgba(241,255,240,.1);animation:acx-breathe 4s ease-in-out infinite}
-.acx-end__ring--1 img{position:absolute;width:56px;height:56px;margin:-28px;border-radius:16px;box-shadow:0 14px 28px -10px rgba(0,0,0,.55);animation:acx-spin 36s linear infinite reverse}
-.acx-end__ring--1 img:nth-child(1){left:50%;top:0}
-.acx-end__ring--1 img:nth-child(2){left:100%;top:50%}
-.acx-end__ring--1 img:nth-child(3){left:50%;top:100%}
-.acx-end__ring--1 img:nth-child(4){left:0;top:50%}
-.acx-end__mark{position:relative;width:100px;height:100px;border-radius:30px;background:#fff;color:var(--brand);display:grid;place-items:center;box-shadow:0 22px 44px -14px rgba(0,0,0,.5);animation:acx-glow 3s ease-in-out infinite}
-.acx-end__mark svg{width:60px;height:auto}
+/* o'ng tomondagi animatsiya — umumiy komponent (src/components/hub-orbit), Robohub yakuniy kartasidagi bilan bir xil */
+.acx-end .acx-end__hub{justify-self:center;width:min(100%,300px)}
 
 
 /* ============================================================
@@ -191,7 +179,7 @@
 
 @media (max-width:1023px){
   .acx-end{grid-template-columns:minmax(0,1fr)}
-  .acx-end__orbit{display:none}
+  .acx-end .acx-end__hub{display:none}
 }
 @media (max-width:767px){
   .acx-hide-sm{display:none}

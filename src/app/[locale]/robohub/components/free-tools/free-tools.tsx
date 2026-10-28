@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { localeHref } from "@/i18n/config";
 import FreeToolsScript from "./free-tools-script";
 import { messages } from "./free-tools.i18n";
 
@@ -9,6 +10,7 @@ function fmt(n: number, group: string) {
 }
 
 export default async function FreeTools() {
+  const locale = await getLocale();
   const t = await getMessages(messages);
   const c = t.calc;
   const g = t.script.group;
@@ -38,11 +40,7 @@ export default async function FreeTools() {
                     {c.name}
                   </h3>{" "}
                   <p className="tool__desc">{c.desc}</p>
-                </div>{" "}
-                <a className="tool__go" href="/calculator/">
-                  {`${c.go} `}
-                  <span className="arrow" aria-hidden="true">→</span>
-                </a>
+                </div>
               </div>{" "}
               {/* Interfeys yozuvlari haqiqiy kalkulyatordan olingan.
              NAMUNA HISOB: komissiya shartli 15% deb olingan, haqiqiy tarif emas —
@@ -249,6 +247,11 @@ export default async function FreeTools() {
                 </div>{" "}
                 <p className="win__note">{c.note}</p>
               </div>
+              {/* tugma oyna ostida; vosita yangi oynada ochiladi (nisbiy — shu domendagi sahifa, joriy tilda) */}
+              <a className="tool__go" href={localeHref(locale, "/calculator")} target="_blank" rel="noopener">
+                {`${c.go} `}
+                <span className="arrow" aria-hidden="true">→</span>
+              </a>
             </article>{" "}
             {/* ===== 2) AI infografika ===== */}{" "}
             <article className="tool" data-sr="" style={{ "--d": "220ms" } as CSSProperties}>
@@ -258,12 +261,7 @@ export default async function FreeTools() {
                     <span className="tool__ai">{t.ai.name}</span>
                   </h3>{" "}
                   <p className="tool__desc">{t.ai.desc}</p>
-                </div>{" "}
-                {/* nisbiy: robohub.uz → robohub.uz/ai-studio, robohub-landing.vercel.app → …/ai-studio */}{" "}
-                <a className="tool__go" href="/ai-studio">
-                  {`${t.ai.go} `}
-                  <span className="arrow" aria-hidden="true">→</span>
-                </a>
+                </div>
               </div>{" "}
               {/* Rasmlar va uslub nomlari haqiqiy AI infografika sahifasidan (public/ai/) */}{" "}
               <div className="win win--ai" data-theme="dark">
@@ -358,6 +356,11 @@ export default async function FreeTools() {
                   </div>
                 </div>
               </div>
+              {/* tugma oyna ostida; vosita yangi oynada ochiladi (nisbiy — shu domendagi sahifa, joriy tilda) */}
+              <a className="tool__go" href={localeHref(locale, "/ai-studio")} target="_blank" rel="noopener">
+                {`${t.ai.go} `}
+                <span className="arrow" aria-hidden="true">→</span>
+              </a>
             </article>
           </div>
         </div>

@@ -47,17 +47,42 @@ const REACH_ICONS = [
   </svg>,
 ];
 
+// Ayrim logotiplar plitkada mayda yoki xunuk chiqadi (faylning o'zida bo'sh joy ko'p, yoki banner ko'rinishida) —
+// shular uchun alohida sozlama (fayl nomi bo'yicha): fill — rasm plitkani to'liq egallaydi (o'z foni bilan),
+// wide — ikki plitka kengligida, pad — ichki bo'sh joy (standart 14%, keng plitkada 12% 20%), zoom — kattalashtirish.
+const TUNE: Record<string, { fill?: boolean; wide?: boolean; pad?: string; zoom?: number }> = {
+  beltop: { fill: true, wide: true },
+  albino: { wide: true, pad: "16% 14%" },
+  "telefon-center-xiva": { wide: true, pad: "12% 14%" },
+  "doremi-baby": { wide: true, pad: "8% 22%" },
+  "li-ning": { pad: "8%" },
+  joma: { pad: "9%" },
+  "art-focus": { pad: "3%" },
+  "comfort-man": { pad: "6%" },
+  "kids-plate": { pad: "3%" },
+  cosmica: { fill: true, zoom: 1.4 },
+  mixmart: { fill: true, zoom: 1.3 },
+};
+const tuneOf = (logo: string) => TUNE[logo.slice(logo.lastIndexOf("/") + 1, logo.lastIndexOf("."))] ?? {};
+
 // Plitka: logotip yoki matnli nom. Kvadrat, oʻz fonli logotip (object-cover) plitkani toʻliq egallaydi,
 // qolganlari oq plitka ichida; juda keng logotip (DI sport, Beltop...) ikki plitka kengligida — kvadratda mayda boʻlib qoladi.
 // Nomning rangi (data-c) va shrifti (data-f) qator va oʻrniga qarab almashadi.
-const Tile = ({ c, k }: { c: Company; k: number }) =>
-  c.logo ? (
+const Tile = ({ c, k }: { c: Company; k: number }) => {
+  if (!c.logo) {
+    return (
+      <span className="trust__tile trust__tile--word" data-c={k % 6} data-f={k % 4}>
+        {c.name}
+      </span>
+    );
+  }
+  const tune = tuneOf(c.logo);
+  const fill = tune.fill ?? c.imgClass?.includes("object-cover");
+  const wide = tune.wide ?? Boolean(c.width && c.height && c.width / c.height >= 2.8);
+  return (
     <span
-      className={
-        "trust__tile" +
-        (c.imgClass?.includes("object-cover") ? " trust__tile--fill" : "") +
-        (c.width && c.height && c.width / c.height >= 2.8 ? " trust__tile--wide" : "")
-      }
+      className={"trust__tile" + (fill ? " trust__tile--fill" : "") + (wide ? " trust__tile--wide" : "")}
+      style={{ "--logo-pad": tune.pad, "--logo-z": tune.zoom } as CSSProperties}
     >
       <img
         src={c.logo}
@@ -70,11 +95,8 @@ const Tile = ({ c, k }: { c: Company; k: number }) =>
         draggable={false}
       />
     </span>
-  ) : (
-    <span className="trust__tile trust__tile--word" data-c={k % 6} data-f={k % 4}>
-      {c.name}
-    </span>
   );
+};
 
 export default async function Trust() {
   const t = await getMessages(messages);
