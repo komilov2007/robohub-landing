@@ -560,3 +560,45 @@ button.cc-chip:hover,.cc-chip.is-active{background:var(--primary-soft);border-co
 @media (prefers-reduced-motion:reduce){
   .cc-real__track i{transform:none}
 }
+
+/* Telefon: kalkulyator yig'iq holda — yuqori qismi ko'rinadi (≈560px), pasti oq soyaga singib ketadi,
+   ustida "Hisoblash" tugmasi; bosilsa (yashirin checkbox) to'liq ochiladi. Kompyuterda — doim to'liq, tugma yo'q. */
+.cc-fold__chk{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.cc-fold__btn{display:none}
+@media (max-width:600px){
+  .cc-fold{max-height:560px;overflow:hidden;border-radius:24px}
+  .cc-fold::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;z-index:4;height:220px;pointer-events:none;
+    background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.88) 55%,#fff);
+  }
+  .cc-fold__btn{
+    position:absolute;z-index:5;left:50%;bottom:22px;transform:translateX(-50%);
+    display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 26px;border-radius:999px;
+    background:var(--primary,#00524F);color:#fff;font-size:16px;font-weight:700;white-space:nowrap;cursor:pointer;
+    box-shadow:0 16px 32px -12px rgba(0,61,59,.6);
+  }
+  .cc-fold__btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .cc-fold__chk:checked + .cc-fold{max-height:none;overflow:visible}
+  .cc-fold__chk:checked + .cc-fold::after,.cc-fold__chk:checked + .cc-fold .cc-fold__btn{display:none}
+}
+
+/* Telefon: kalkulyator yig'iq holda — yuqori qismi ko'rinadi (≈560px), pasti oq soyaga singib ketadi,
+   ustida "Hisoblash" tugmasi; bosilsa (yashirin checkbox) to'liq ochiladi. Kompyuterda — doim to'liq, tugma yo'q. */
+.cc-fold__chk{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.cc-fold__btn{display:none}
+@media (max-width:600px){
+  .cc-fold{max-height:560px;overflow:hidden;border-radius:24px}
+  .cc-fold::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;z-index:4;height:220px;pointer-events:none;
+    background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.88) 55%,#fff);
+  }
+  .cc-fold__btn{
+    position:absolute;z-index:5;left:50%;bottom:22px;transform:translateX(-50%);
+    display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 26px;border-radius:999px;
+    background:var(--primary,#00524F);color:#fff;font-size:16px;font-weight:700;white-space:nowrap;cursor:pointer;
+    box-shadow:0 16px 32px -12px rgba(0,61,59,.6);
+  }
+  .cc-fold__btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .cc-fold__chk:checked + .cc-fold{max-height:none;overflow:visible}
+  .cc-fold__chk:checked + .cc-fold::after,.cc-fold__chk:checked + .cc-fold .cc-fold__btn{display:none}
+}

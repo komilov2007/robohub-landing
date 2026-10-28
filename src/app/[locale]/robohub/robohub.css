@@ -538,10 +538,16 @@
 .trust__tile--wide{width:calc(var(--tile) * 2 + var(--gap))}
 .trust__tile--wide img{padding:var(--logo-pad,12% 20%)}
 .trust__tile--wide.trust__tile--fill img{padding:0}
-/* plitkalar biroz xira turadi — ustiga kelganda tiniqlashadi (qator ham to'xtaydi) */
-.trust__tile{opacity:.88;filter:saturate(.95);transition:opacity 300ms var(--ease),filter 300ms var(--ease),transform 300ms var(--ease-soft)}
-.trust__tile:hover{opacity:1;filter:none;transform:translateY(-3px)}
-@media (hover:none){.trust__tile{opacity:.9;filter:none}}
+/* Devor ustidagi parda: logotiplar tiniq (blur yo'q), faqat biroz qoraytiriladi; kursor atrofida 500px (radius 250px)
+   doira to'liq yorug' (teshik). --mx/--my — kursorning devor ichidagi o'rni (trust.script.js); kursor yo'q bo'lsa doira ekrandan tashqarida. */
+.trust__veil{
+  --mx:-999px;--my:-999px;
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:rgba(0,24,22,.28);
+  -webkit-mask-image:radial-gradient(circle 250px at var(--mx) var(--my),transparent 60%,#000 100%);
+          mask-image:radial-gradient(circle 250px at var(--mx) var(--my),transparent 60%,#000 100%);
+}
+@media (hover:none){.trust__veil{display:none}}
 /* matnli nom: plitka ichida ikki qatorgacha; rang (data-c) va shrift (data-f) navbat bilan */
 .trust__tile--word{
   padding:calc(var(--tile) * .07);text-align:center;overflow-wrap:anywhere;text-wrap:balance;
@@ -1558,82 +1564,33 @@
 .reg__cta-short{display:none}
 @media (max-width:600px){ .reg__cta-full{display:none} .reg__cta-short{display:inline} }
 
-/* REGIONS — telefon (regions.tsx → RegionsMobile): kompyuterda yashirin.
-   Tepada mamlakat tablari (gorizontal suriladi), ostida tanlangan mamlakat kartasi: ulangan marketpleyslar
-   2 ustunli plitkalarda, "tez kunda" — xira plitkalar. Tanlov — yashirin radio tugmalar (JS'siz).
-   Yer shari kartasi (.mkt__map) telefonda ko'rsatilmaydi — ma'lumot shu kartada. */
-.regm{display:none}
+/* BOZORLAR — telefon (≤600px): chapdagi ro'yxat o'rniga yer shari kartasi; faol mamlakat yorlig'i ostida
+   shu mamlakatdagi marketpleyslar kartochkasi ochiladi (globe.tsx → .globe__card). Kompyuterda kartochka yo'q —
+   u yerda chapdagi ro'yxat bor. */
+.globe__card{display:none}
 @media (max-width:600px){
-  /* .mkt .mkt__map — asosiy .mkt__map{display:flex} qoidasi faylda pastroqda, undan ustun bo'lishi uchun */
-  .mkt .reg__list,.mkt .mkt__map{display:none}
+  .mkt .reg__list{display:none}
   .mkt__lead{margin-bottom:var(--sp-3);font-size:15.5px}
-  .regm{display:block}
-  .regm__r{position:absolute;opacity:0;pointer-events:none}
-  /* tablar — segmented control: karta bilan bir xil enli kapsula, 5 ta teng katakda bayroqlar;
-     tanlangani ostida oq "slayder" suriladi (--i — tanlangan tartib raqami, :checked bo'yicha). Nom — kartada. */
-  .regm__tabs{
-    --n:5;--i:0;position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));
-    margin:0 0 10px;padding:4px;border-radius:18px;background:rgba(0,82,79,.08);
-  }
-  .regm__tabs::before{
-    content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / var(--n));border-radius:14px;
-    background:#fff;box-shadow:0 6px 16px -8px rgba(0,54,52,.45),0 0 0 1px rgba(0,54,52,.06);
-    transform:translateX(calc(var(--i) * 100%));transition:transform 420ms var(--ease-soft);
-  }
-  #regm-kz:checked ~ .regm__tabs{--i:1}
-  #regm-kg:checked ~ .regm__tabs{--i:2}
-  #regm-ru:checked ~ .regm__tabs{--i:3}
-  #regm-tj:checked ~ .regm__tabs{--i:4}
-  .regm__tabs label{
-    position:relative;z-index:1;display:grid;place-items:center;height:44px;border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;
-  }
-  .regm__tabs label span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .regm__tabs img{width:28px;height:28px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1.5px #fff,0 0 0 2.5px rgba(0,54,52,.1);
-    opacity:.7;filter:saturate(.6);transform:scale(.9);transition:opacity 300ms var(--ease),filter 300ms var(--ease),transform 420ms var(--ease-soft)}
-  #regm-uz:checked ~ .regm__tabs [data-c="uz"] img,#regm-kz:checked ~ .regm__tabs [data-c="kz"] img,#regm-kg:checked ~ .regm__tabs [data-c="kg"] img,
-  #regm-ru:checked ~ .regm__tabs [data-c="ru"] img,#regm-tj:checked ~ .regm__tabs [data-c="tj"] img{opacity:1;filter:none;transform:scale(1.08)}
-  #regm-uz:focus-visible ~ .regm__tabs [data-c="uz"],#regm-kz:focus-visible ~ .regm__tabs [data-c="kz"],#regm-kg:focus-visible ~ .regm__tabs [data-c="kg"],
-  #regm-ru:focus-visible ~ .regm__tabs [data-c="ru"],#regm-tj:focus-visible ~ .regm__tabs [data-c="tj"]{outline:2px solid var(--brand);outline-offset:-2px}
-
-  .regm__panel{display:none;position:relative;overflow:hidden;padding:16px;border-radius:22px;background:#fff;border:1px solid var(--line);box-shadow:0 24px 50px -36px rgba(0,54,52,.45)}
-  #regm-uz:checked ~ .regm__panels [data-c="uz"],#regm-kz:checked ~ .regm__panels [data-c="kz"],#regm-kg:checked ~ .regm__panels [data-c="kg"],
-  #regm-ru:checked ~ .regm__panels [data-c="ru"],#regm-tj:checked ~ .regm__panels [data-c="tj"]{display:block;animation:regm-in 350ms var(--ease-soft)}
-  .regm__head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .regm__head img{flex:none;width:40px;height:40px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #fff,0 0 0 3px rgba(0,54,52,.1)}
-  .regm__head span{display:grid;line-height:1.25}
-  .regm__head b{font-size:17px;font-weight:800;color:var(--ink)}
-  .regm__head small{font-size:13px;font-weight:600;color:var(--text-dim)}
-  .regm__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
-  .regm__tile{display:flex;align-items:center;gap:10px;min-width:0;height:52px;padding:0 12px;border-radius:14px;background:#F3F9F1;font-size:14px;font-weight:700;color:var(--ink)}
-  .regm__tile img{flex:none;width:28px;height:28px;border-radius:8px;object-fit:contain;background:#fff}
-  .regm__tile span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-  .regm__tile.is-wide{justify-content:center}
-  .regm__tile.is-wide img{width:auto;max-width:90px;height:16px;border-radius:0;background:none}
-  .regm__tile.is-soon{background:#fff;border:1px dashed rgba(0,54,52,.18);color:var(--text-dim)}
-  .regm__tile.is-soon img{filter:grayscale(1);opacity:.6}
-  .regm__soon{margin:14px 0 8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
   .reg__cta{width:100%;justify-content:center;white-space:normal;text-align:center}
-
-  /* animatsiya: karta almashganda bayroq "otilib" chiqadi, plitkalar ketma-ket uchib kiradi;
-     tepada — keyingi mamlakatga qadar to'ladigan chiziq (avtomatik almashish, regions-auto.tsx) */
-  .regm__head img{animation:regm-pop 520ms var(--ease-soft) both}
-  .regm__head span{animation:regm-in 420ms var(--ease-soft) 80ms both}
-  .regm__tile{animation:regm-tile 440ms var(--ease-soft) both;animation-delay:calc(140ms + var(--i,0) * 70ms)}
-  .regm__soon{animation:regm-in 400ms var(--ease-soft) 260ms both}
-  .regm__bar{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(0,82,79,.08)}
-  .regm__bar::after{content:"";position:absolute;inset:0;background:var(--brand);transform:scaleX(0);transform-origin:left}
-  .regm.is-run .regm__bar::after{animation:regm-fill var(--hold,3600ms) linear forwards}
-  .regm.is-manual .regm__bar{display:none}
+  .globe__pin.is-on .globe__card{
+    position:absolute;z-index:3;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:12px;
+    background:#fff;box-shadow:0 14px 30px -10px rgba(0,20,19,.55);
+    animation:globe-card-in 380ms var(--ease-soft) both;
+  }
+  /* joylashuv — yorliq qayerda bo'lsa, kartochka uning ostida */
+  .globe__pin--left.is-on .globe__card{right:9px;top:15px}
+  .globe__pin--right.is-on .globe__card{left:9px;top:15px}
+  .globe__pin--top.is-on .globe__card{left:0;top:10px;transform:translateX(-50%)}
+  .globe__pin--bottom.is-on .globe__card{left:0;top:38px;transform:translateX(-50%)}
+  .globe__mps{display:flex;gap:5px}
+  .globe__mps img{width:24px;height:24px;border-radius:7px;object-fit:contain;background:#fff;box-shadow:0 0 0 1px rgba(0,54,52,.08)}
+  .globe__soon{display:flex;align-items:center;gap:6px;padding-top:6px;border-top:1px solid rgba(0,54,52,.1)}
+  .globe__soon em{font-size:8.5px;font-style:normal;font-weight:800;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;color:#4D6966}
+  .globe__soon img{width:16px;height:16px;border-radius:50%;object-fit:contain;filter:grayscale(1);opacity:.7}
+  .globe__soon img.is-wide{width:auto;max-width:44px;height:10px;border-radius:0}
 }
-@keyframes regm-in{from{opacity:0;transform:translateY(8px)}}
-@keyframes regm-pop{0%{opacity:0;transform:scale(.4) rotate(-25deg)}70%{transform:scale(1.12)}100%{opacity:1;transform:none}}
-@keyframes regm-tile{from{opacity:0;transform:translateY(12px) scale(.94)}}
-@keyframes regm-fill{to{transform:scaleX(1)}}
-@media (prefers-reduced-motion:reduce){
-  .regm__panel,.regm__head img,.regm__head span,.regm__tile,.regm__soon{animation:none !important}
-  .regm__tabs::before,.regm__tabs img{transition:none}
-  .regm__bar{display:none}
-}
+@keyframes globe-card-in{from{opacity:0;translate:0 -6px;scale:.92}}
+@media (prefers-reduced-motion:reduce){ .globe__pin.is-on .globe__card{animation:none} }
 
 /* xarita kartasi */
 .mkt__map{
@@ -2382,7 +2339,7 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 .reels-full__frame.is-ready{opacity:1}
 
 /* o'ng panel */
-.reels-full__side{display:flex;flex-direction:column;gap:18px;width:280px;animation:reels-side 500ms var(--ease-soft) 100ms backwards}
+.reels-full__side{display:flex;flex-direction:column;gap:18px;width:280px;max-height:calc(100dvh - 48px);min-height:0;animation:reels-side 500ms var(--ease-soft) 100ms backwards}
 @keyframes reels-side{from{opacity:0;transform:translateX(16px)}}
 .reels-full__head{display:flex;align-items:center;gap:12px;min-width:0}
 .reels-full__avatar{
@@ -2394,7 +2351,9 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 .reels-full__title b{font-size:17px;font-weight:800;line-height:1.25;text-wrap:balance}
 .reels-full__title small{font-size:13px;color:rgba(255,255,255,.7)}
 
-.reels-full__list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+/* ro'yxat uzun bo'lsa — o'zi aylanadi (sahifa/video almashmaydi), ↑↓ va CTA doim ko'rinadi */
+.reels-full__list{display:flex;flex-direction:column;gap:8px;flex:0 1 auto;min-height:0;margin:0;padding:2px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent}
+.reels-full__list li{flex:none}
 .reels-full__list button{
   display:flex;align-items:center;gap:12px;width:100%;padding:8px 12px 8px 8px;
   border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.06);
@@ -2569,3 +2528,15 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 }
 .feat--chain .feat-card:not(.is-on){opacity:0;transform:translateY(18px) scale(.98)}
 @media (prefers-reduced-motion:reduce){ .feat--chain .feat-card{transition:none} .feat--chain .feat-card:not(.is-on){opacity:1;transform:none} }
+
+/* Telefon: "Uch qadam" sarlavhasi markazda; FBS / FBO / DBS kartalari — gorizontal swiper
+   (barmoq bilan suriladi, karta joyiga "o'tiradi"; keyingi karta chetdan ko'rinib turadi) */
+@media (max-width:600px){
+  .how__title{text-align:center}
+  .integ__models-grid{
+    display:flex;gap:12px;margin-inline:calc(-1 * var(--sp-3));padding:4px var(--sp-3) 12px;
+    overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--sp-3);scrollbar-width:none;
+  }
+  .integ__models-grid::-webkit-scrollbar{display:none}
+  .integ__models-grid > .integ-model{flex:0 0 85%;scroll-snap-align:start}
+}

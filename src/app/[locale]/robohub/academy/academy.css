@@ -192,7 +192,10 @@ body:has(.ac){background:#fff}
 .ac-mmenu__topics a svg{flex:none;color:var(--brand)}
 .ac-mmenu__topics small{margin-left:auto;font-size:12px;font-weight:700;color:var(--text-dim)}
 .ac-mmenu__topics a[aria-current]{background:var(--ac-mint-soft);color:var(--brand)}
-.ac-mmenu__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 0 22px}
+.ac-mmenu__actions{display:grid;grid-template-columns:1fr;gap:10px;padding:16px 0 22px}
+/* ☰ menyudagi til tanlash: ro'yxat yuqoriga ochiladi (pastda tugma bor) */
+.ac-mmenu__lang{display:flex;padding-top:16px}
+.ac-mmenu__lang .lang-select__menu{top:auto;bottom:calc(100% + 8px);left:0;right:auto;transform-origin:bottom left}
 
 /* qidiruv (hero ichida — oq quti, ostida shisha chiplar) */
 .ac-search{width:100%}
@@ -308,10 +311,9 @@ body:has(.ac){background:#fff}
 @media (max-width:480px){ .ac-header__inner{gap:10px} }
 
 @media (max-width:1023px){
-  /* mobilda tugmalar burger menyuda; til tanlash — header'da qoladi */
-  .ac-nav,.ac-header__actions .btn{display:none}
-  .ac-header__actions{margin-left:auto}
-  .ac-burger{display:block;flex:none;margin-left:8px}
+  /* mobilda tugma va til tanlash — ☰ menyu ichida */
+  .ac-nav,.ac-header__actions{display:none}
+  .ac-burger{display:block;flex:none;margin-left:auto}
   
   
   

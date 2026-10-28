@@ -18,8 +18,17 @@ export default function CalculatorSection({ calc, dict, locale }: { calc: Conten
             {calc.lead}
           </p>
         </header>
-        <div className="cc-section__tool">
+        {/* Telefonda kalkulyatorning yuqori qismi ko'rinadi, pasti soyaga singib ketadi; "Hisoblash" bosilsa to'liq ochiladi.
+            JS'siz: yashirin checkbox + label (calculator.css → .cc-fold). Kompyuterda doim to'liq. */}
+        <input type="checkbox" id="cc-fold" className="cc-fold__chk" aria-hidden="true" tabIndex={-1} />
+        <div className="cc-section__tool cc-fold">
           <MarketplaceCalculator dict={dict} locale={locale} />
+          <label htmlFor="cc-fold" className="cc-fold__btn">
+            {dict.calculate ?? "Hisoblash"}
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </label>
         </div>
       </div>
     </section>

@@ -253,8 +253,10 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     else return;
     e.preventDefault();
   };
-  // sichqoncha g'ildiragi (video tashqarisida) — bitta aylantirish = bitta video
+  // sichqoncha g'ildiragi (video tashqarisida) — bitta aylantirish = bitta video;
+  // o'ng paneldagi ro'yxat ustida — faqat ro'yxat aylanadi, video almashmaydi
   const onWheel = (e: WheelEvent) => {
+    if ((e.target as Element).closest(".reels-full__side")) return;
     if (Math.abs(e.deltaY) < 20 || e.timeStamp - wheelAt.current < 700) return;
     wheelAt.current = e.timeStamp;
     step(e.deltaY > 0 ? 1 : -1);

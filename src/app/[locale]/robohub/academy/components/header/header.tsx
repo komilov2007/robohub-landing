@@ -8,6 +8,7 @@ import TopicsMenu from "./topics-menu";
 import RobohubMenu from "./robohub-menu";
 import Icon from "../svg-icon/svg-icon";
 import LangSelect from "@/components/lang-select/lang-select";
+import { RobohubMenuMobile } from "@/components/robohub-menu/robohub-menu";
 import { getTopics, lessonsByTopic } from "../../lib/academy";
 import { robohubHome, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
 import { useAcademyLocale } from "../locale/locale";
@@ -162,6 +163,7 @@ export default function Header() {
           <Link href={academyHref(locale)} className="ac-mmenu__link" aria-current={isHome ? "page" : undefined}>
             {t.homeLink}
           </Link>
+          <RobohubMenuMobile locale={locale} />
           <p className="ac-mmenu__label">{t.topics}</p>
           <ul className="ac-mmenu__topics">
             {topics.map((x) => (
@@ -180,6 +182,9 @@ export default function Header() {
           <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener" className="ac-mmenu__link">
             YouTube ↗
           </a>
+          <div className="ac-mmenu__lang">
+            <LangSelect locale={locale} label={t.lang} path={path} />
+          </div>
           <div className="ac-mmenu__actions">
             <a href={robohubHome(locale)} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
               {t.login}

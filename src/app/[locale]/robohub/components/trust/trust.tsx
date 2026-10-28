@@ -134,6 +134,8 @@ export default async function Trust() {
               </ul>
             </div>
           ))}
+          {/* xiralik pardasi — kursor atrofida tiniq doira (robohub.css, trust.script.js) */}
+          <div className="trust__veil" />
         </div>
 
         {/* raqamlar: uchta karta ustma-ust (ustun) */}

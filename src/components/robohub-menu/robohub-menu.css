@@ -3,8 +3,11 @@
    band (li) va menyu (ul) position:static — panel eng yaqin joylashgan ota (sticky header) ga nisbatan turadi. */
 .rhm{position:static;display:flex;align-items:center;height:100%}
 /* menyu header balandligini to'liq egallaydi — sichqoncha "Imkoniyatlar"dan panelga tushayotganda hover uzilmaydi */
-nav:has(> ul > .rhm){align-self:stretch;display:flex;align-items:center}
-nav:has(> ul > .rhm) > ul{height:100%;align-items:center}
+/* faqat kompyuterda: telefonda header menyusi yashirin (o'rniga ☰ panel) — display bu yerda o'zgartirilmaydi */
+@media (min-width:1024px){
+  nav:has(> ul > .rhm){align-self:stretch;display:flex;align-items:center}
+  nav:has(> ul > .rhm) > ul{height:100%;align-items:center}
+}
 .rhm__link{display:inline-flex;align-items:center;gap:7px}
 .rhm__mark{display:block;flex:none;width:24px;min-width:24px;height:11px;max-width:none;color:#00524F;transition:transform 300ms cubic-bezier(.33,1,.68,1)}
 .rhm__link:hover .rhm__mark{transform:translateY(-1px)}
@@ -49,3 +52,15 @@ nav:has(> ul > .rhm) > ul{height:100%;align-items:center}
 .rhm__item.is-ai b{justify-self:start;background:linear-gradient(90deg,#0E9F8E,#0BA5C4 35%,#8B5CF6 70%,#E0559B);-webkit-background-clip:text;background-clip:text;color:transparent}
 .rhm__soon{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;vertical-align:2px;background:#E6F9E2;color:#00524F;font-size:10.5px;font-style:normal;font-weight:700;letter-spacing:.02em;line-height:1.5;white-space:nowrap;-webkit-text-fill-color:#00524F}
 @media (prefers-reduced-motion:reduce){ .rhm__panel,.rhm__caret,.rhm__mark{transition:none} }
+
+/* Telefon ☰ paneli: "Imkoniyatlar" — ochiladigan ro'yxat (RobohubMenuMobile) */
+.rhm-m{border-bottom:1px solid rgba(0,54,52,.1)}
+.rhm-m summary{display:flex;align-items:center;justify-content:space-between;padding:14px 0;font-size:17px;font-weight:600;color:#06302E;list-style:none;cursor:pointer}
+.rhm-m summary::-webkit-details-marker{display:none}
+.rhm-m__caret{flex:none;color:#4D6966;transition:transform 250ms ease}
+.rhm-m[open] .rhm-m__caret{transform:rotate(180deg)}
+.rhm-m ul{display:grid;gap:2px;margin:0;padding:0 0 12px;list-style:none}
+.rhm-m a{display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:10px;font-size:15px;font-weight:600;color:#06302E;text-decoration:none}
+.rhm-m a:active{background:rgba(0,82,79,.07)}
+.rhm-m .rhm__ico{grid-row:auto;width:32px;height:32px;margin:0;flex:none}
+.rhm-m a.is-ai .rhm__ico{background:linear-gradient(135deg,#34E5E6,#B48CFF 55%,#FF8FC8);color:#fff}

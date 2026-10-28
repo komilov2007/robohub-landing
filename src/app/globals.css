@@ -171,3 +171,10 @@ ul,ol{margin:0;padding:0;list-style:none}
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
 
+
+/* Footerlarning pastki qatori (© va havolalar) — telefonda markazda, ustma-ust; to'rtala sayt uchun bitta joyda.
+   "body" — saytlarning o'z CSS'idagi justify-content:space-between dan ustun bo'lishi uchun (ular keyin yuklanadi). */
+@media (max-width:600px){
+  body .foot__bar,body .as-footer__bar,body .ac-footer__bar{flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
+  body .foot__bar span{justify-content:center}
+}

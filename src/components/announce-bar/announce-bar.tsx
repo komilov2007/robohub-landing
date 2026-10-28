@@ -18,43 +18,43 @@ const KEYS: Record<Cta, string> = { more: "rb-announce-signup", register: "rb-an
 // Matnlar — rb-market tarjimalaridan (announce_signup_calc, register)
 const messages = defineMessages({
   uz: {
-    text: "Robohub — <accent>4 ta marketpleys bitta kabinetda</accent>",
+    text: "Robohub — <accent>Barcha marketpleyslar bitta kabinetda</accent>",
     more: "Batafsil",
     cta: "Ro'yxatdan o'tish",
     close: "Yopish",
   },
   ru: {
-    text: "Robohub — <accent>4 маркетплейса в одном кабинете</accent>",
+    text: "Robohub — <accent>Все маркетплейсы в одном кабинете</accent>",
     more: "Подробнее",
     cta: "Зарегистрироваться",
     close: "Закрыть",
   },
   en: {
-    text: "Robohub — <accent>4 marketplaces in one dashboard</accent>",
+    text: "Robohub — <accent>All marketplaces in one dashboard</accent>",
     more: "Learn more",
     cta: "Register",
     close: "Close",
   },
   kk: {
-    text: "Robohub — <accent>4 маркетплейс бір кабинетте</accent>",
+    text: "Robohub — <accent>Барлық маркетплейстер бір кабинетте</accent>",
     more: "Толығырақ",
     cta: "Тіркелу",
     close: "Жабу",
   },
   ky: {
-    text: "Robohub — <accent>4 маркетплейс бир кабинетте</accent>",
+    text: "Robohub — <accent>Бардык маркетплейстер бир кабинетте</accent>",
     more: "Кененирээк",
     cta: "Катталуу",
     close: "Жабуу",
   },
   kaa: {
-    text: "Robohub — <accent>4 marketpleys bir kabinette</accent>",
+    text: "Robohub — <accent>Barlıq marketpleysler bir kabinette</accent>",
     more: "Tolıǵıraq",
     cta: "Dizimnen ótiw",
     close: "Jabıw",
   },
   tg: {
-    text: "Robohub — <accent>4 маркетплейс дар як кабинет</accent>",
+    text: "Robohub — <accent>Ҳамаи маркетплейсҳо дар як кабинет</accent>",
     more: "Муфассал",
     cta: "Бақайдгирӣ",
     close: "Пӯшидан",

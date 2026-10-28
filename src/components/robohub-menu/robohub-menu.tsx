@@ -77,3 +77,42 @@ function Ico({ d }: { d: string }) {
     </svg>
   );
 }
+
+// Telefondagi ☰ panel uchun: "Imkoniyatlar" — ochiladigan ro'yxat (<details>), ichida imkoniyatlar va vositalar
+// (Robohub landingidagi mobil menyu kabi). Havolalar — yuqoridagi panel bilan bir xil.
+export function RobohubMenuMobile({ locale }: { locale: Locale }) {
+  const t = messages[locale] ?? messages.uz;
+  const origin = useRobohubOrigin();
+  const home = localeHref(locale, "/");
+  const to = (href: string) => (href.startsWith("#") ? `${origin}${home}${href}` : `${origin}${href}`);
+  const label = t.nav.find((n) => "menu" in n && n.menu === "features")?.label ?? t.features.title;
+  return (
+    <details className="rhm-m">
+      <summary>
+        {label}
+        <svg className="rhm-m__caret" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </summary>
+      <ul>
+        {t.features.items.map((x, i) => (
+          <li key={x.t}>
+            <a href={to(featHash(FEAT_STEP[i]))} target="_blank" rel="noopener">
+              <Ico d={FEAT_ICONS[i]} />
+              {x.t}
+            </a>
+          </li>
+        ))}
+        {t.tools.items.map((x, i) => (
+          <li key={x.t}>
+            <a href={to(x.href)} target="_blank" rel="noopener" className={i === AI_TOOL ? "is-ai" : undefined}>
+              <Ico d={TOOL_ICONS[i]} />
+              {x.t}
+              {i === SOON_TOOL && <em className="rhm__soon">{t.soon}</em>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}

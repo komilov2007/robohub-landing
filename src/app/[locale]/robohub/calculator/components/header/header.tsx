@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
-import RobohubMenu from "@/components/robohub-menu/robohub-menu";
+import RobohubMenu, { RobohubMenuMobile } from "@/components/robohub-menu/robohub-menu";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import type { Locale } from "@/i18n/config";
 import type { Content } from "../../calculator.content";
@@ -92,6 +92,7 @@ export default function Header({ nav, ui, locale }: { nav: Content["NAV"]; ui: C
 
       <div id="cc-mobile-menu" className="as-mmenu" inert={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
         <div className="as-wrap">
+          <RobohubMenuMobile locale={locale} />
           {nav.map((n) => (
             <a key={n.href} href={n.href} className="as-mmenu__link" aria-current={active === n.href ? "location" : undefined}>
               {n.label}

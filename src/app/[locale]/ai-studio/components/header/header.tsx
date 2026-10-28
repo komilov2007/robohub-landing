@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
-import RobohubMenu from "@/components/robohub-menu/robohub-menu";
+import RobohubMenu, { RobohubMenuMobile } from "@/components/robohub-menu/robohub-menu";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import { useRobohubOrigin } from "@/lib/robohub-origin";
 import { sellerUrl } from "@/lib/sites";   // kabinet — joriy tilda
@@ -107,6 +107,7 @@ export default function Header() {
 
       <div id="as-mobile-menu" className="as-mmenu" inert={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
         <div className="as-wrap">
+          <RobohubMenuMobile locale={locale} />
           {NAV.map((n) => (
             <a key={n.href} href={n.href} className="as-mmenu__link" aria-current={active === n.href ? "location" : undefined}>
               {n.label}

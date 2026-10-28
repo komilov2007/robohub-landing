@@ -20,18 +20,27 @@ const COUNTRIES = [
 ] as const;
 
 export type CountryId = (typeof COUNTRIES)[number]["id"];
+// telefondagi kartochka uchun: har mamlakatning marketpleyslari (market.tsx tayyorlaydi — regions-data.ts dan)
+type GlobeMp = { name: string; logo: string; wide: boolean };
+export type GlobeMps = Record<CountryId, { now: GlobeMp[]; soon: GlobeMp[] }>;
 
 const BASE = { lon: 68, lat: 40 };   // globus shu nuqtaga qarab turadi
 const HOLD = 4600;                    // har mamlakat shuncha vaqt yonib turadi (ms) — shoshmasdan
 const RAD = Math.PI / 180;
 
-export default function Globe({ names }: { names: Record<CountryId, string> }) {
+export default function Globe({ names, mps, soon }: { names: Record<CountryId, string>; mps?: GlobeMps; soon?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pinRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
   const pausedUntil = useRef(0);
+  // tugma yoki shar ustidagi bosish: shu mamlakat yonadi, avtomatik navbat 7 s to'xtaydi, globus unga buriladi
+  const pick = (i: number, at: number) => {
+    pausedUntil.current = at + 7000;
+    setActive(i);
+    requestAnimationFrame(() => stageRef.current?.dispatchEvent(new Event("globe:pick")));
+  };
 
   // faol mamlakat bo'limga yoziladi (data-active) — chapdagi ro'yxat (regions.tsx) o'sha qatorni yoritadi
   useEffect(() => {
@@ -342,11 +351,6 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
   }, []);
 
   // at — bosish vaqti (hodisaning timeStamp'i, performance.now() bilan bir xil soat)
-  const pick = (i: number, at: number) => {
-    pausedUntil.current = at + 7000;
-    setActive(i);
-    requestAnimationFrame(() => stageRef.current?.dispatchEvent(new Event("globe:pick")));
-  };
 
   return (
     <div className="globe">
@@ -365,6 +369,24 @@ export default function Globe({ names }: { names: Record<CountryId, string> }) {
               <img src={`/flags/${c.id}.svg`} alt="" width="14" height="14" />
               {names[c.id]}
             </b>
+            {/* telefonda: faol mamlakat nomi ostida — shu yerdagi marketpleyslar kartochkasi (robohub.css → .globe__card) */}
+            {mps && (
+              <span className="globe__card">
+                <span className="globe__mps">
+                  {mps[c.id].now.map((m) => (
+                    <img key={m.name} src={m.logo} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                  ))}
+                </span>
+                {mps[c.id].soon.length > 0 && (
+                  <span className="globe__soon">
+                    <em>{soon}</em>
+                    {mps[c.id].soon.map((m) => (
+                      <img key={m.name} src={m.logo} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                    ))}
+                  </span>
+                )}
+              </span>
+            )}
           </span>
         ))}
       </div>

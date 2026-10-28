@@ -2,8 +2,46 @@
 // Kartalardagi sonlar (1 000+, 100 000+, 700 000+) karta birinchi marta ekranga kirganda noldan "teriladi".
 // Ming ajratuvchisi asl matndan olinadi (uz/ru — uzilmas bo'shliq, en — vergul), shuning uchun har tilda o'z ko'rinishi.
 // JS ishlamasa yoki harakat kamaytirilgan bo'lsa — serverdagi yakuniy son o'zgarmay turadi.
+// Logotiplar devoridagi xira parda teshigi kursorga ergashadi (veil).
 // Tozalash funksiyasini qaytaradi.
 export function init() {
+  var stopVeil = veil();
+  var stopCount = count();
+  return function () { stopVeil(); stopCount(); };
+}
+
+// Parda teshigi kursorga ergashadi: --mx/--my devorga nisbatan (px). Faqat sichqonchali qurilmalarda.
+function veil() {
+  var section = document.getElementById("trust");
+  var wall = section && section.querySelector(".trust__wall");
+  var el = wall && wall.querySelector(".trust__veil");
+  if (!el || !matchMedia("(hover: hover)").matches) return function () {};
+  var x = 0, y = 0, raf = 0;
+  function paint() {
+    raf = 0;
+    var r = wall.getBoundingClientRect();
+    el.style.setProperty("--mx", x - r.left + "px");
+    el.style.setProperty("--my", y - r.top + "px");
+  }
+  function move(e) {
+    x = e.clientX; y = e.clientY;
+    if (!raf) raf = requestAnimationFrame(paint);
+  }
+  function leave() {
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    el.style.removeProperty("--mx");
+    el.style.removeProperty("--my");
+  }
+  section.addEventListener("pointermove", move);
+  section.addEventListener("pointerleave", leave);
+  return function () {
+    section.removeEventListener("pointermove", move);
+    section.removeEventListener("pointerleave", leave);
+    leave();
+  };
+}
+
+function count() {
   var els = document.querySelectorAll("#trust [data-count]");
   if (!els.length || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return function () {};
