@@ -23,7 +23,6 @@ export default async function TopicsRail({ topic }: { topic: Topic }) {
     <section className="acx-rail" data-theme="light" aria-labelledby="ac-rail-title">
       <div className="container">
         <div className="acx-head" data-reveal>
-          <p className="acx-kicker">{t.kicker}</p>
           <h2 id="ac-rail-title" className="acx-h2">
             {t.title} <span className="acx-mark">{t.mark}</span>
           </h2>

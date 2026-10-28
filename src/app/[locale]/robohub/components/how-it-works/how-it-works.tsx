@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
-import { ACADEMY_PATH, newTab } from "@/lib/sites";
+import { ACADEMY_PATH, newTab, sellerUrl } from "@/lib/sites";
 import HowItWorksScript from "./how-it-works-script";
 import { messages } from "./how-it-works.i18n";
 
@@ -174,7 +174,7 @@ export default async function HowItWorks() {
             </li>
           </ol>{" "}
           <div className="how__cta" data-sr="">
-            <a className="btn btn--lg btn--primary" href="#start">
+            <a className="btn btn--lg btn--primary" href={sellerUrl(locale)} target="_blank" rel="noopener">
               {`${t.start} `}
               <span className="arrow" aria-hidden="true">→</span>
             </a>{" "}

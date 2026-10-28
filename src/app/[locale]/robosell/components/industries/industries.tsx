@@ -9,10 +9,6 @@ export default function Industries() {
     <section className="rs-ind" aria-labelledby="ind-title">
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span>07</span>
-            {INDUSTRIES.eyebrow}
-          </p>
           <h2 className="rs-title" id="ind-title" data-rv="">
             {INDUSTRIES.title}
           </h2>

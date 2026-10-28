@@ -101,21 +101,6 @@
 }
 @keyframes as-ring{0%{opacity:.5;transform:scale(.96)}70%,100%{opacity:0;transform:scale(1.12)}}
 
-/* ============================================================
-   YORLIQLAR (bo'lim sarlavhasi ustidagi chiplar) — Inter
-   ============================================================ */
-.as-chip{
-  display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 14px;border-radius:999px;
-  background:var(--white);border:1px solid var(--line);box-shadow:0 6px 18px -12px rgba(17,22,37,.25);
-  font-family:var(--ff-body);font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:var(--black);
-}
-.as-chip__dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--primary)}
-.as-chip__dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--primary);animation:as-ping 2s var(--ease) infinite}
-.as-chip__ai{
-  display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-radius:999px;
-  background:var(--mint-soft);color:var(--primary);font-size:12px;font-weight:700;
-}
-.as-chip__ai .as-i{width:12px;height:12px;animation:as-twinkle 2.4s ease-in-out infinite}
 
 .as-eyebrow{
   display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 14px 0 5px;border-radius:999px;
@@ -349,7 +334,7 @@
 @keyframes as-coin{0%,60%,100%{transform:none}20%{transform:translateY(-4px) rotate(18deg)}}
 .as-fm--dots i{width:9px;height:9px;border-radius:3px;background:var(--line-2);animation:as-dot 2.5s ease-in-out calc(var(--k) * .18s) infinite}
 @keyframes as-dot{0%,100%{background:var(--line-2);transform:none}30%{background:var(--primary);transform:translateY(-3px)}}
-[data-off] .as-fm *,[data-off] .as-mark::after,[data-off] .as-chip__ai .as-i{animation-play-state:paused}
+[data-off] .as-fm *,[data-off] .as-mark::after{animation-play-state:paused}
 
 @media (min-width:1024px){
   .as-hero{padding:60px 0 88px;min-height:min(calc(100svh - 72px),848px)}
@@ -433,38 +418,42 @@
 .as-node.is-done .as-node__txt{background:var(--white);color:var(--primary);border:1px solid var(--line)}
 @keyframes as-step{from{opacity:0;transform:translateY(6px)}}
 
-/* uslub tanlash */
+/* uslub tanlash — "Uslubni tanlang" kartalari kabi: 4 ta rasm-karta yonma-yon, ostida nom;
+   tanlangani mint ramka va ✓ bilan, pastida avtomatik almashish chizig'i */
+/* fonsiz; kengligi va chap chekkasi tepadagi katta karta bilan bir xil (.as-duo bilan bir xil o'lcham: max 540px, chapdan 20%) */
 .as-vars{
-  position:relative;z-index:3;display:flex;gap:3px;max-width:100%;padding:5px;border-radius:999px;overflow-x:auto;scrollbar-width:none;
-  background:var(--white);border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(0,61,59,.45);
+  position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:540px;padding:0 0 0 20%;
 }
 .as-vars__tab{
-  position:relative;overflow:hidden;flex:none;display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 13px 0 6px;border-radius:999px;
-  color:var(--dim);font-size:13px;font-weight:600;white-space:nowrap;transition:background .35s var(--ease),color .25s;
+  position:relative;display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:0;padding:0 0 4px;border-radius:12px;
+  color:var(--dim);font-size:12px;font-weight:600;text-align:left;transition:color .25s;
 }
-.as-vars__tab img{width:30px;height:30px;border-radius:50%;object-fit:cover;transition:transform .4s var(--spring)}
-/* joy yetmasa (4 uslub nomi sig'masa) — faqat faol tabda nom, qolganlarida rasmcha; nom ekran o'quvchi va title'da qoladi.
-   Chegara — 4 nom to'liq sig'adigan kenglik: uz/en ~505px, ru nomlari uzunroq (~570px) */
-@container (max-width:520px){
-  .as-vars__tab:not(.is-active){gap:0;padding-right:6px}
-  .as-vars__tab:not(.is-active) .as-vars__name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.as-vars__tab img{
+  display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px;
+  outline:2px solid transparent;outline-offset:-2px;box-shadow:0 0 0 1px var(--line);
+  transition:outline-color .3s var(--ease),transform .4s var(--spring),filter .3s;
+  filter:saturate(.9) brightness(.97);
 }
-@container (max-width:580px){
-  :lang(ru) .as-vars__tab:not(.is-active){gap:0;padding-right:6px}
-  :lang(ru) .as-vars__tab:not(.is-active) .as-vars__name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-}
+.as-vars__name{padding:0 2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .as-vars__tab:hover{color:var(--primary)}
-.as-vars__tab:hover img{transform:scale(1.1)}
-.as-vars__tab.is-active{background:var(--primary);color:var(--white)}
+.as-vars__tab:hover img{transform:translateY(-2px);filter:none}
+.as-vars__tab.is-active{color:var(--primary)}
+.as-vars__tab.is-active img{outline-color:var(--primary);filter:none}
+/* ✓ — tanlangan kartaning o'ng tepa burchagida */
+.as-vars__tab.is-active::after{
+  content:"✓";position:absolute;top:5px;right:5px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;
+  background:var(--mint);color:var(--primary);font-size:11px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.2)
+}
 .as-vars__bar{
-  position:absolute;left:18px;right:18px;bottom:4px;height:2px;border-radius:2px;background:var(--mint);
+  position:absolute;left:4px;right:4px;bottom:0;height:2px;border-radius:2px;background:var(--primary);
   transform:scaleX(0);transform-origin:left;animation:as-fill var(--auto) linear forwards;
 }
 @keyframes as-fill{to{transform:scaleX(1)}}
+@media (max-width:420px){ .as-vars{gap:6px} .as-vars__tab{font-size:11px} }
 [data-off] .as-vars__bar,[data-off] .as-studio__halo,[data-off] .as-after__card,[data-off] .as-before img,
 [data-off] .as-node__ring,[data-off] .as-node__core::after{animation-play-state:paused}
 @media (max-width:479px){
-  .as-duo{padding-left:17%}
+  .as-duo,.as-vars{padding-left:17%}
   .as-node{left:8.5%}
   .as-node__txt{display:none}
   .as-node__core{width:52px;height:52px}
@@ -1068,6 +1057,25 @@
   background-size:300% 100%;background-position:150% 0;animation:as-flash 4s ease-in-out 1s infinite;
 }
 @keyframes as-flash{0%{background-position:150% 0}35%,100%{background-position:-50% 0}}
+
+/* Foto: 4 uslub navbat bilan (har biri 2.5s, aylana 10s). --k — tartib; manfiy kechikish fazani suradi:
+   k-element [k·2.5s; k·2.5s+2.5s) oralig'ida ko'rinadi. Rasm, uning nomi va ro'yxatdagi bandi bir xil vaqtda. */
+.as-mv--photo>img.as-ps{position:absolute;inset:0;opacity:0;animation:as-ps 10s linear infinite;animation-delay:calc((4 - var(--k)) * -2.5s)}
+.as-mv--photo .as-mv__chip.as-ps{opacity:0;animation:as-ps 10s linear infinite;animation-delay:calc((4 - var(--k)) * -2.5s)}
+@keyframes as-ps{0%{opacity:0}4%,25%{opacity:1}29%,100%{opacity:0}}
+.as-pstyles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 0;padding:0;list-style:none}
+.as-pstyles li{
+  display:flex;align-items:center;gap:7px;min-width:0;padding:4px 8px 4px 4px;border-radius:10px;
+  font-size:12px;font-weight:600;line-height:1.2;color:var(--dim);
+  animation:as-ps-on 10s linear infinite;animation-delay:calc((4 - var(--k)) * -2.5s);
+}
+.as-pstyles img{flex:none;width:28px;height:28px;border-radius:7px;object-fit:cover;box-shadow:0 0 0 1px var(--line)}
+@keyframes as-ps-on{0%,29%,100%{background:transparent;color:var(--dim)}4%,25%{background:var(--mint-soft,#E6F7E4);color:var(--primary)}}
+[data-off] .as-ps,[data-off] .as-pstyles li{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  .as-mv--photo>img.as-ps,.as-mv--photo .as-mv__chip.as-ps,.as-pstyles li{animation:none}
+  .as-mv--photo>img.as-ps:last-of-type,.as-mv--photo .as-mv__chip.as-ps:last-child{opacity:1}
+}
 
 /* Infografika: chaqiriqlar */
 .as-callouts{position:absolute;inset:0}

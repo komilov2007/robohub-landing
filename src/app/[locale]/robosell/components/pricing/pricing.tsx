@@ -9,10 +9,6 @@ export default function Pricing() {
       <div className="rs-price__bg" aria-hidden="true" />
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span>08</span>
-            {PRICING.eyebrow}
-          </p>
           <h2 className="rs-title" id="price-title" data-rv="">
             {PRICING.title}
           </h2>

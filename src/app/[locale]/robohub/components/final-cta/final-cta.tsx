@@ -1,6 +1,6 @@
 import { getLocale, getMessages } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
-import { newTab } from "@/lib/sites";
+import { newTab, POLICY_URL } from "@/lib/sites";
 import { messages } from "./final-cta.i18n";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import FooterTrust from "@/components/footer-trust/footer-trust";
@@ -34,8 +34,7 @@ export default async function FinalCta() {
               <a className="btn btn--lg btn--primary" href="#login">
                 {t.start}
                 <span className="arrow" aria-hidden="true">→</span>
-              </a>{" "}
-              <a className="btn btn--lg btn--outline" href="#pricing">{t.pricing}</a>
+              </a>
             </div>
           </div>{" "}
           <HubOrbit className="end__orbit" />
@@ -93,7 +92,7 @@ export default async function FinalCta() {
           <div className="foot__bar">
             <p>© 2026 Robohub</p>{" "}
             <span>
-              <a href="#privacy">{t.privacy}</a>
+              <a href={POLICY_URL} target="_blank" rel="noopener">{t.privacy}</a>
               <a href="#support">{t.help}</a>
             </span>
           </div>

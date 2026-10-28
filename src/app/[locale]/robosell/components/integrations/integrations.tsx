@@ -8,10 +8,6 @@ export default function Integrations() {
     <section className="rs-int" id="integrations" aria-labelledby="int-title">
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span>06</span>
-            {INTEGRATIONS.eyebrow}
-          </p>
           <h2 className="rs-title" id="int-title" data-rv="">
             {INTEGRATIONS.title}
           </h2>

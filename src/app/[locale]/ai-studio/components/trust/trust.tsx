@@ -9,15 +9,9 @@ export default async function Trust() {
   // lenta uzluksiz bo'lishi uchun ro'yxat ikki marta takrorlanadi (ikkinchisi ekran o'quvchidan yashirin)
   const loop = [...TRUST.markets, ...TRUST.markets];
   return (
-    <section className="as-trust" aria-labelledby="as-trust-title" data-pause>
+    <section className="as-trust" aria-label={TRUST.eyebrow} data-pause>
       <div className="as-trust__panel">
         <span className="as-trust__glow" aria-hidden="true" />
-        <div className="as-wrap">
-          <p className="as-eyebrow as-eyebrow--dark" id="as-trust-title" data-rv>
-            <span>02</span>
-            {TRUST.eyebrow}
-          </p>
-        </div>
 
         <div className="as-marquee" data-rv style={{ "--d": "100ms" } as CSSProperties}>
           <ul className="as-marquee__track">

@@ -5,7 +5,7 @@ export const PHONE_HREF = "tel:+998781138212";
 // Mobil raqam — hozircha faqat ariza formasi (/application) header'ida
 export const PHONE_MOBILE = "+998 99 985 72 26";
 export const PHONE_MOBILE_HREF = "tel:+998999857226";
-export const EMAIL = "hello@robohub.uz";
+export const EMAIL = "info@robohub.uz";
 export const EMAIL_HREF = `mailto:${EMAIL}`;
 // Telegram orqali murojaat — barcha saytlarda (Robohub, Academy, AI Studio, Robosell) bitta: @robohubsupport
 export const TELEGRAM_HANDLE = "@robohubsupport";

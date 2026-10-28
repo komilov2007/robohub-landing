@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { getLocale } from "@/i18n/server";
 import { getLessons, getTopics, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
-import { ACADEMY_BASE, PHONE, PHONE_TEL, START_URL } from "./lib/links";
+import { ACADEMY_BASE, PHONE, PHONE_TEL, robohubHome } from "./lib/links";
 import { jsonLd, pageMetadata, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
 import { localeHref } from "@/i18n/config";
 import { messages as metaMessages } from "./layout";
@@ -144,7 +144,6 @@ export default async function AcademyHome() {
       <section className="acx-topics" id="topics" data-theme="light" aria-labelledby="ac-topics-title">
         <div className="container">
           <div className="acx-head" data-reveal>
-            <p className="acx-kicker">{t.topicsKicker}</p>
             <h2 id="ac-topics-title" className="acx-h2">
               {t.topicsTitle} <span className="acx-mark">{t.topicsMark}</span>
             </h2>
@@ -168,7 +167,6 @@ export default async function AcademyHome() {
               <span />
             </div>
             <div className="acx-end__text">
-              <p className="acx-kicker acx-kicker--dark">{t.helpKicker}</p>
               <h2 id="ac-help-title" className="acx-h2">
                 {t.helpTitle} <span className="acx-grad">{t.helpMark}</span>
               </h2>
@@ -178,7 +176,7 @@ export default async function AcademyHome() {
                 <a href={PHONE_TEL} className="acx-btn acx-btn--light" data-magnet>
                   <Icon d={ICONS.phone} size={18} /> {PHONE}
                 </a>
-                <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--ghost" data-magnet>
+                <a href={robohubHome(locale)} target="_blank" rel="noopener" className="acx-btn acx-btn--ghost" data-magnet>
                   {t.start}
                 </a>
               </div>

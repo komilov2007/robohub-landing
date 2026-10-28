@@ -39,15 +39,6 @@ export default async function Hero() {
 
       <div className="as-wrap as-hero__grid">
         <div className="as-hero__copy">
-          <p className="as-chip as-in" style={{ "--d": "60ms" } as CSSProperties}>
-            <span className="as-chip__dot" aria-hidden="true" />
-            {HERO.badge}
-            <span className="as-chip__ai">
-              <Icon name="ai" />
-              AI
-            </span>
-          </p>
-
           <h1 className="as-hero__title" id="as-hero-title">
             {words.map((w, i) => (
               <Fragment key={i}>

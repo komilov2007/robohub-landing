@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Icon from "../icon/svg-icon";
 import { STUDIO_EMBED_URL, STUDIO_URL } from "../../ai-studio.content";
 import { useC } from "../../content-context";
+import { useFixRobohubLinks } from "@/lib/robohub-origin";
 
 // AI infografika studiyasini landing ustida to'liq ekranli oynada (iframe) ochadi.
 //  • Sahifadagi STUDIO_URL ga olib boradigan har qanday havola ("Sinab ko'rish", "Bepul sinab ko'rish",
@@ -19,6 +20,8 @@ export default function StudioModal() {
   const [mounted, setMounted] = useState(false); // iframe bir marta yaratiladi
   const [loaded, setLoaded] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
+  // footer va Academy kartalaridagi robohub.uz havolalari — lokalda/Vercel'da o'sha muhitdagi Robohub'ga (src/lib/robohub-origin.ts)
+  useFixRobohubLinks();
   const opener = useRef<HTMLElement | null>(null);
 
   // studiya havolalarini ushlash (event delegation)

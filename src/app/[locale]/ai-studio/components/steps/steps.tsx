@@ -5,7 +5,7 @@ import Icon from "../icon/svg-icon";
 import { plural, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
-const STEP_MS = 4200;
+const STEP_MS = 1800;   // qadamlar orasidagi vaqt (tez almashadi)
 const FORMATS = ["JPG", "PNG", "WEBP", "HEIC"];
 
 // 1 — yuklash oynasi: fayllar tushadi, progress to'ladi, Ctrl+V tugmasi bosiladi
@@ -70,7 +70,7 @@ function PromptMock({ active }: { active: boolean }) {
       i += 1;
       setN(i);
       if (i >= text.length) window.clearInterval(t);
-    }, 45);
+    }, 22); // 3-qadam matni STEP_MS ichida to'liq yozilib ulgurishi uchun
     return () => {
       window.clearInterval(t);
       setN(0);
@@ -157,10 +157,6 @@ export default function Steps() {
       <span className="as-how__bg" aria-hidden="true" />
       <div className="as-wrap as-how__grid">
         <div className="as-how__side">
-          <p className="as-eyebrow" data-rv>
-            <span>05</span>
-            {STEPS_SECTION.eyebrow}
-          </p>
           <h2 className="as-h2" id="as-how-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {STEPS_SECTION.title} <span className="as-h2__accent">{STEPS_SECTION.accent}</span>
           </h2>

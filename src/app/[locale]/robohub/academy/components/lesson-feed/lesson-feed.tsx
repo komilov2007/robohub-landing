@@ -82,7 +82,6 @@ export default function LessonFeed() {
       <div className="container">
         <div className="acx-feed__head" data-reveal>
           <div>
-            <p className="acx-kicker">{t.kicker}</p>
             <h2 id="ac-feed-title" className="acx-h2">
               {t.title(TOTAL_LESSONS)} <span className="acx-grad">{t.titleMark}</span>
             </h2>

@@ -8,6 +8,20 @@ export function init(t) {
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canWatch = "IntersectionObserver" in window;
   function byId(id) { return document.getElementById(id); }
+
+  /* Kalkulyator demosiga foydalanuvchi tegsa (kiritish, surgich, tanlov) — chap ustun oxirida "Hisoblash" tugmasi chiqadi.
+     Demo o'zi qiymat yozganda hodisa chiqmaydi, faqat haqiqiy harakat (isTrusted) hisobga olinadi. */
+  (function () {
+    var box = byId("calc"), go = box && box.querySelector(".calc__go");
+    if (!go) return;
+    function touched(e) {
+      if (e && e.isTrusted === false) return;
+      box.classList.add("is-touched");
+      go.removeAttribute("tabindex");
+      ["input", "change", "pointerdown"].forEach(function (n) { box.removeEventListener(n, touched); });
+    }
+    ["input", "change", "pointerdown"].forEach(function (n) { box.addEventListener(n, touched); });
+  })();
   function fmt(n) { return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, t.group); }
   function pct(n) { return (n < 0 ? "−" : "") + (Math.round(Math.abs(n) * 10) / 10).toFixed(1).replace(".", t.decimal) + "%"; }
   function digits(s) { return Number(String(s).replace(/\D/g, "")) || 0; }

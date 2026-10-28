@@ -19,12 +19,6 @@ export default function Hero({ hero }: { hero: Content["HERO"] }) {
         <span className="cc-hero3__beam" />
       </div>
       <div className="as-wrap cc-hero3__inner">
-        <p className="cc-hero3__badge as-in" style={{ "--d": "60ms" } as CSSProperties}>
-          <span className="cc-hero3__dot" aria-hidden="true" />
-          {hero.badge}
-          <span>{hero.badgeTag}</span>
-        </p>
-
         <h1 className="cc-hero3__title" id="cc-hero-title">
           {before.map((w, i) => (
             <Fragment key={i}>

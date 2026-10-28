@@ -5,10 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../logo/logo";
 import TopicsMenu from "./topics-menu";
+import RobohubMenu from "./robohub-menu";
 import Icon from "../svg-icon/svg-icon";
 import LangSelect from "@/components/lang-select/lang-select";
 import { getTopics, lessonsByTopic } from "../../lib/academy";
-import { loginUrl, START_URL, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
+import { loginUrl, robohubHome, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./header.i18n";
 
@@ -103,11 +104,8 @@ export default function Header() {
         <Logo href={academyHref(locale)} label={t.logoLabel} />
         <nav className="ac-nav" aria-label={t.navLabel}>
           <ul>
-            <li>
-              <Link href={academyHref(locale)} className={`ac-nav__link${isHome ? " is-active" : ""}`} aria-current={isHome ? "page" : undefined}>
-                Academy
-              </Link>
-            </li>
+            {/* Robohub imkoniyatlari — landing header'idagi panel (robohub-menu.tsx), hamma band Robohub'ga olib boradi */}
+            <RobohubMenu locale={locale} />
             <li
               ref={dropRef}
               className={`ac-nav__drop${drop ? " is-open" : ""}`}
@@ -143,7 +141,7 @@ export default function Header() {
           <a href={loginUrl(locale)} className="btn btn--ghost">
             {t.login}
           </a>
-          <a href={START_URL} target="_blank" rel="noopener" className="btn btn--accent">
+          <a href={robohubHome(locale)} target="_blank" rel="noopener" className="btn btn--accent">
             {t.start}
           </a>
         </div>
@@ -188,7 +186,7 @@ export default function Header() {
             <a href={loginUrl(locale)} className="btn btn--lg btn--outline">
               {t.login}
             </a>
-            <a href={START_URL} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
+            <a href={robohubHome(locale)} target="_blank" rel="noopener" className="btn btn--lg btn--primary">
               {t.start}
             </a>
           </div>

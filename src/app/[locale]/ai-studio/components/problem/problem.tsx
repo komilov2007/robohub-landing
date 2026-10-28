@@ -98,10 +98,6 @@ export default async function Problem() {
       <span className="as-prob__bg" aria-hidden="true" />
       <div className="as-wrap">
         <header className="as-prob__head">
-          <p className="as-eyebrow" data-rv>
-            <span>03</span>
-            {PROBLEM.eyebrow}
-          </p>
           <h2 className="as-h2" id="as-prob-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {PROBLEM.title} <span className="as-h2__accent">{PROBLEM.accent}</span>
           </h2>

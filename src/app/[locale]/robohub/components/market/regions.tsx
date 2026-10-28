@@ -83,7 +83,7 @@ export default function Regions({ t, names }: { t: RegionsText; names: Record<Co
           </li>
         ))}
       </ul>
-      <a className="btn btn--lg btn--primary reg__cta" href="#start" data-sr="" style={{ "--d": "560ms" } as CSSProperties}>
+      <a className="btn btn--lg btn--primary reg__cta" href="#contact" data-open="contact-modal" data-sr="" style={{ "--d": "560ms" } as CSSProperties}>
         {t.cta}
         <span className="arrow" aria-hidden="true">
           →

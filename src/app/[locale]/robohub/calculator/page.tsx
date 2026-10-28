@@ -17,6 +17,7 @@ import { buildContent } from "./calculator.content";
 import { messages } from "./calculator.i18n";
 import { localeHref } from "@/i18n/config";
 import { jsonLd as ldScript, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import ProductPeek from "@/components/product-peek/product-peek";
 
 // Marketpleys kalkulyatori landingi — robohub.uz/calculator (/ru, /en ham). Konsepsiya: "sotuvdan qancha foyda qoladi?".
 // Tartib: hero (pul oqimi) → muammo (komissiya — hammasi emas) → KALKULYATOR (markazda) →
@@ -67,9 +68,11 @@ export default async function Page() {
         <Race compare={c.COMPARE} race={c.S.race} who={c.WHO} />
         <Journey steps={c.STEPS} demo={c.S.journey} cta={c.HERO.cta} />
         <Faq faq={c.FAQ} chat={c.S.chat} />
-        <Finale final={c.FINAL} />
+        <Finale final={c.FINAL} home={localeHref(locale, "/")} />
       </main>
       <Footer footer={c.FOOTER} nav={c.NAV} tag={c.T.ui.tag} home={c.T.ui.home} locale={locale} />
+      {/* footer ostida — kabinet skrinshoti va "Kirish" (ro'yxatdan o'tish) */}
+      <ProductPeek locale={locale} label={c.T.ui.login} bg="#002B29" />
       <Reveal />
       <Motion />
       <script type="application/ld+json" dangerouslySetInnerHTML={ldScript(jsonLd)} />

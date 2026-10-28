@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
-import HeroVideo from "./hero-video";
+import { getLocale, getMessages } from "@/i18n/server";
+import { newTab, sellerUrl } from "@/lib/sites";
 import { messages } from "./hero.i18n";
 
 // Ichki halqa: ulangan marketpleyslar — katta plitkalar, halqa bo'ylab teng tarqaladi.
@@ -30,6 +30,8 @@ const SYSTEMS: { name: string; logo: string }[] = [
 
 export default async function Hero() {
   const t = await getMessages(messages);
+  // "Hozir boshlash" — sotuvchi kabinetida ro'yxatdan o'tish, joriy tilda (yangi oynada)
+  const register = sellerUrl(await getLocale());
   return (
     <>
       <section className="hero" id="hero" data-theme="light" aria-labelledby="hero-title">
@@ -74,12 +76,10 @@ export default async function Hero() {
               <li>{t.facts.ai}</li>
             </ul>
             <div className="hero__cta hero__rise">
-              <a className="btn btn--lg btn--primary" href="#start">
+              <a className="btn btn--lg btn--primary" href={register} {...newTab(register)}>
                 {`${t.start} `}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>
-              {/* ikkinchi tugma — video: bosilganda oynada ochiladi */}
-              <HeroVideo t={t.video} />
             </div>
           </div>
 

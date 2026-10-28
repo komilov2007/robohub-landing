@@ -20,10 +20,6 @@ export default function Pricing() {
     <section className="as-price" id="pricing" aria-labelledby="as-price-title" data-pause>
       <div className="as-wrap">
         <header className="as-sec-head">
-          <p className="as-eyebrow" data-rv>
-            <span>07</span>
-            {PRICING.eyebrow}
-          </p>
           <h2 className="as-h2" id="as-price-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {PRICING.title} <span className="as-h2__accent">{PRICING.accent}</span>
           </h2>

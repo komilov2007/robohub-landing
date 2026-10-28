@@ -14,6 +14,7 @@ import FinalCta from "./components/final-cta/final-cta";
 import Footer from "./components/footer/footer";
 import Reveal from "./components/reveal/reveal";
 import StudioModal from "./components/studio-modal/studio-modal";
+import ProductPeek from "@/components/product-peek/product-peek";
 import { ContentProvider } from "./content-context";
 import { getC } from "./content.server";
 import { PRICE_PER_IMAGE } from "./ai-studio.content";
@@ -77,6 +78,8 @@ export default async function StudioPage({ path = "/" }: { path?: string }) {
         <FinalCta />
       </main>
       <Footer />
+      {/* footer ostida — kabinet skrinshoti va "Kirish" (ro'yxatdan o'tish) */}
+      <ProductPeek locale={c.locale} label={c.T.ui.login} bg="#002A28" />
       <Reveal />
       <StudioModal />
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />

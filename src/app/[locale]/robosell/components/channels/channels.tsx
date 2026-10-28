@@ -9,10 +9,6 @@ export default function Channels() {
       <div className="rs-ch__bg" aria-hidden="true" />
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker rs-kicker--dark" data-rv="">
-            <span>04</span>
-            {CHANNELS.eyebrow}
-          </p>
           <h2 className="rs-title rs-title--light" id="ch-title" data-rv="">
             {CHANNELS.title}
           </h2>

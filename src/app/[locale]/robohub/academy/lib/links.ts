@@ -37,6 +37,7 @@ const withHash = (locale: Locale, hash: string) => `${locale === "uz" ? "/" : lo
 export const robohubPricing = (locale: Locale) => withHash(locale, "#pricing"); // "/#pricing", "/ru#pricing"
 export const loginUrl = (locale: Locale) => withHash(locale, "#login");
 // "Hoziroq boshlash" tugmalari (header, footer, bosh sahifa va mavzu CTA'lari) — sotuvchi kabineti
+// (Hoziroq boshlash tugmalari endi Robohub landingiga olib boradi — robohubHome)
 export const START_URL = "https://seller.robohub.uz";
 export { YOUTUBE_URL as YOUTUBE_CHANNEL } from "@/lib/contacts";
 export const PHONE = "+998 78 113 82 12";

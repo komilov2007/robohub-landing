@@ -10,10 +10,6 @@ export default function Faq() {
     <section className="rs-fq" id="faq" aria-labelledby="faq-title">
       <div className="rs-wrap rs-fq__in">
         <div className="rs-fq__side">
-          <p className="rs-kicker" data-rv="">
-            <span>09</span>
-            {FAQ.eyebrow}
-          </p>
           <h2 className="rs-title" id="faq-title" data-rv="">
             {FAQ.title}
           </h2>

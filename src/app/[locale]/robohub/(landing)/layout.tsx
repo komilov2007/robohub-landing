@@ -22,6 +22,26 @@ export const messages = defineMessages({
     description:
       "Run your Uzum Market, Wildberries, Ozon and Yandex Market stores from one dashboard: orders, product cards, prices and analytics.",
   },
+  kk: {
+    title: "Robohub — Uzum, Wildberries, Ozon және Yandex Market бір кабинетте",
+    description:
+      "Uzum Market, Wildberries, Ozon және Yandex Market дүкендеріңізді бір кабинеттен басқарыңыз: тапсырыстар, тауар карточкалары, бағалар және аналитика.",
+  },
+  ky: {
+    title: "Robohub — Uzum, Wildberries, Ozon жана Yandex Market бир кабинетте",
+    description:
+      "Uzum Market, Wildberries, Ozon жана Yandex Market дүкөндөрүңүздү бир кабинеттен башкарыңыз: буйрутмалар, товар карточкалары, баалар жана аналитика.",
+  },
+  kaa: {
+    title: "Robohub — Uzum, Wildberries, Ozon hám Yandex Market bir kabinette",
+    description:
+      "Uzum Market, Wildberries, Ozon hám Yandex Market dúkanlarıńızdı bir kabinetten basqarıń: buyırtpalar, ónim kartochkaları, bahalar hám analitika.",
+  },
+  tg: {
+    title: "Robohub — Uzum, Wildberries, Ozon ва Yandex Market дар як кабинет",
+    description:
+      "Мағозаҳои худро дар Uzum Market, Wildberries, Ozon ва Yandex Market аз як кабинет идора кунед: фармоишҳо, кортҳои мол, нархҳо ва таҳлил.",
+  },
 });
 
 export async function generateMetadata(): Promise<Metadata> {

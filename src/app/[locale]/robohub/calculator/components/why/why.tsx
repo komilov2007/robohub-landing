@@ -19,10 +19,6 @@ export default function Why({ why, receipt }: { why: Content["WHY"]; receipt: Co
       <div className="as-prob__bg" aria-hidden="true" />
       <div className="as-wrap cc-why__grid">
         <header className="cc-why__copy">
-          <p className="as-eyebrow" data-rv>
-            <span>01</span>
-            {why.eyebrow}
-          </p>
           <h2 className="as-h2" id="cc-why-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {why.title} <span className="as-h2__accent">{why.accent}</span>
           </h2>

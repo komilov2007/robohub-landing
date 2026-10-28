@@ -52,10 +52,12 @@ const unwrap = <T>(body: unknown): T => {
   return body as T;
 };
 
-/** Accept-Language — sahifa tili (root layout <html lang> ga qo'yadi); server xato matnlarini shu tilda qaytaradi. */
-const pageLocale = (): Locale => {
+/** Accept-Language — sahifa tili (root layout <html lang> ga qo'yadi); server xato matnlarini shu tilda qaytaradi.
+ *  Server faqat uz/ru/en biladi: qozoq, qirg'iz, tojik sahifasida — ruscha, qoraqalpoq sahifasida — o'zbekcha. */
+const pageLocale = (): Extract<Locale, "uz" | "ru" | "en"> => {
   const lang = typeof document === "undefined" ? "" : document.documentElement.lang;
-  return lang === "ru" || lang === "en" ? lang : "uz";
+  if (lang === "ru" || lang === "en") return lang;
+  return lang === "kk" || lang === "ky" || lang === "tg" ? "ru" : "uz";
 };
 
 async function request<T>(path: string, init: { method: "GET" | "POST"; body?: unknown; params?: Record<string, string | undefined> }) {

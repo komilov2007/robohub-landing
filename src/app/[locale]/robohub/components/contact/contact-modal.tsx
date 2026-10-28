@@ -22,7 +22,7 @@ export default async function ContactModal() {
             <span className="accent">{t.titleAccent}</span>
           </h2>
           <p className="contact__lead">{t.lead}</p>
-          <ContactQuiz t={t} id="cmodal" formOnly />
+          <ContactQuiz t={t} id="cmodal" />
         </div>
       </dialog>
       <ContactScript t={t.quiz} id="cmodal" />

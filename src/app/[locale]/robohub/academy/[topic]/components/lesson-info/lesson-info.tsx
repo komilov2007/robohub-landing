@@ -39,7 +39,6 @@ export default function LessonInfo({ topic }: { topic: Topic }) {
         <div key={lesson.n} className="acx-about__lesson">
           {/* 1. Sarlavha — oddiy, tugmasiz */}
           <header className="acx-about__head">
-            <p className="acx-kicker">{t.kicker(c.lessonN(lesson.n))}</p>
             <h2 id="ac-about-title" className="acx-about__title">
               {lesson.title}
             </h2>

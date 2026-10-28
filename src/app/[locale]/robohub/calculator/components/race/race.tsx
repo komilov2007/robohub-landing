@@ -27,10 +27,6 @@ export default function Race({
     <section className="cx-race" aria-labelledby="cx-race-title">
       <div className="as-wrap cx-race__grid">
         <header className="cx-head" data-io>
-          <span className="cx-kicker cx-kicker--light">
-            <i />
-            {race.eyebrow}
-          </span>
           <h2 id="cx-race-title">{compare.title}</h2>
           <p>
             {lead}

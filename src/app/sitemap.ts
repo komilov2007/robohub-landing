@@ -12,18 +12,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = await requestOrigin();
   const site = siteFromHost(new URL(base).host);
 
-  // Landing: uch tilda, har biri qolgan ikkitasiga hreflang bilan bog'langan
-  const home: MetadataRoute.Sitemap[number] = {
-    url: base,
+  // Landing: har tilda, har biri qolgan tillardagi nusxasiga hreflang bilan bog'langan
+  const homeLanguages: Record<string, string> = {};
+  for (const l of locales) homeLanguages[l] = l === "uz" ? base : `${base}${localeHref(l, "/")}`;
+  homeLanguages["x-default"] = base;
+  const landing: MetadataRoute.Sitemap = locales.map((l) => ({
+    url: homeLanguages[l],
     changeFrequency: "weekly",
-    priority: 1,
-    alternates: { languages: { uz: base, ru: `${base}/ru`, en: `${base}/en`, "x-default": base } },
-  };
-  const landing: MetadataRoute.Sitemap = [
-    home,
-    { ...home, url: `${base}/ru`, priority: 0.8 },
-    { ...home, url: `${base}/en`, priority: 0.8 },
-  ];
+    priority: l === "uz" ? 1 : 0.8,
+    alternates: { languages: homeLanguages },
+  }));
 
   // AI Studio o'z domenida — canonical robohub.uz/ai-studio (u Robohub sitemap'ida), bu yerda beriladigan sahifa yo'q
   if (site === "ai-studio") return [];

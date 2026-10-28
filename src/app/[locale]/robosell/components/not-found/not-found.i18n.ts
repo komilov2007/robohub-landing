@@ -1,6 +1,6 @@
 import { defineMessages } from "@/i18n/config";
 
-// Robosell 404 sahifasi matnlari. Landing matni hozircha o'zbekcha, lekin 404 — uch tilda (/ru, /en manzillar ham ochiladi).
+// Robosell 404 sahifasi matnlari. Landing matni hozircha o'zbekcha, lekin 404 — barcha tillarda (/ru, /en, /kk ... manzillar ham ochiladi).
 // buttons — chatdagi bot tugmalari: href — bosh sahifadagi bo'lim (#pricing ...), bo'sh — bosh sahifaning o'zi.
 export const messages = defineMessages({
   uz: {
@@ -70,6 +70,98 @@ export const messages = defineMessages({
       { label: "💳 Pricing", href: "#pricing" },
       { label: "⚙️ Features", href: "#features" },
       { label: "❓ FAQ", href: "#faq" },
+    ],
+  },
+  kk: {
+    title: "Бет табылмады — Robosell",
+    badge: "Қате 404",
+    heading: "Дүкенде мұндай бет жоқ",
+    text: "Сілтеменің мерзімі өткен немесе мекенжай қате терілген болуы мүмкін. Уайымдамаңыз — қажетті бөлімді басты беттен бір басумен табасыз.",
+    home: "Басты бетке",
+    write: "Telegram’да жазу",
+    logo: "Robosell — басты бет",
+    chat: {
+      name: "Robosell bot",
+      status: "онлайн",
+      me: "Осы бетті ашып беріңізші",
+      bot: "Өкінішке қарай, мұндай бет табылмады 😕",
+      code: "Код: 404 · бет жоқ",
+      offer: "Төмендегілердің бірін таңдаңыз 👇",
+    },
+    buttons: [
+      { label: "🏠 Басты бет", href: "" },
+      { label: "💳 Тарифтер", href: "#pricing" },
+      { label: "⚙️ Мүмкіндіктер", href: "#features" },
+      { label: "❓ Сұрақтар", href: "#faq" },
+    ],
+  },
+  ky: {
+    title: "Барак табылган жок — Robosell",
+    badge: "Ката 404",
+    heading: "Дүкөндө мындай барак жок",
+    text: "Балким, шилтеменин мөөнөтү өткөн же дарек ката терилген. Кабатыр болбоңуз — керектүү бөлүмдү башкы беттен бир басуу менен табасыз.",
+    home: "Башкы бетке",
+    write: "Telegram’да жазуу",
+    logo: "Robosell — башкы бет",
+    chat: {
+      name: "Robosell bot",
+      status: "онлайн",
+      me: "Ушул баракты ачып бериңизчи",
+      bot: "Тилекке каршы, мындай барак табылган жок 😕",
+      code: "Код: 404 · барак жок",
+      offer: "Төмөнкүлөрдүн бирин тандаңыз 👇",
+    },
+    buttons: [
+      { label: "🏠 Башкы бет", href: "" },
+      { label: "💳 Тарифтер", href: "#pricing" },
+      { label: "⚙️ Мүмкүнчүлүктөр", href: "#features" },
+      { label: "❓ Суроолор", href: "#faq" },
+    ],
+  },
+  kaa: {
+    title: "Bet tabılmadı — Robosell",
+    badge: "Qáte 404",
+    heading: "Dúkanda bunday bet joq",
+    text: "Múmkin, siltemeniń múddeti ótken yamasa mánzil qáte jazılǵan. Qáweterlenbeń — kerekli bólimdi bas betten bir basıw menen tabasız.",
+    home: "Bas betke",
+    write: "Telegram’da jazıw",
+    logo: "Robosell — bas bet",
+    chat: {
+      name: "Robosell bot",
+      status: "onlayn",
+      me: "Usı betti ashıp beriń",
+      bot: "Ókinishke oray, bunday bet tabılmadı 😕",
+      code: "Kod: 404 · bet joq",
+      offer: "Tómendegilerdiń birin tańlań 👇",
+    },
+    buttons: [
+      { label: "🏠 Bas bet", href: "" },
+      { label: "💳 Tarifler", href: "#pricing" },
+      { label: "⚙️ Múmkinshilikler", href: "#features" },
+      { label: "❓ Sorawlar", href: "#faq" },
+    ],
+  },
+  tg: {
+    title: "Саҳифа ёфт нашуд — Robosell",
+    badge: "Хатои 404",
+    heading: "Дар мағоза чунин саҳифа нест",
+    text: "Шояд пайванд кӯҳна шудааст ё суроға хато навишта шудааст. Хавотир нашавед — бахши лозимиро аз саҳифаи асосӣ бо як клик меёбед.",
+    home: "Ба саҳифаи асосӣ",
+    write: "Дар Telegram навиштан",
+    logo: "Robosell — саҳифаи асосӣ",
+    chat: {
+      name: "Robosell bot",
+      status: "онлайн",
+      me: "Лутфан, ин саҳифаро кушоед",
+      bot: "Афсӯс, чунин саҳифа ёфт нашуд 😕",
+      code: "Рамз: 404 · саҳифа вуҷуд надорад",
+      offer: "Яке аз имконоти зерро интихоб кунед 👇",
+    },
+    buttons: [
+      { label: "🏠 Саҳифаи асосӣ", href: "" },
+      { label: "💳 Тарифҳо", href: "#pricing" },
+      { label: "⚙️ Имкониятҳо", href: "#features" },
+      { label: "❓ Саволҳо", href: "#faq" },
     ],
   },
 });

@@ -45,10 +45,6 @@ export default function Faq({ faq, chat }: { faq: Content["FAQ"]; chat: Content[
     <section className="cx-faq" id="faq" aria-labelledby="cx-faq-title">
       <div className="as-wrap cx-faq__grid">
         <header className="cx-head" data-io>
-          <span className="cx-kicker cx-kicker--light">
-            <i />
-            {faq.eyebrow}
-          </span>
           <h2 id="cx-faq-title">{faq.title}</h2>
           <a className="cx-btn cx-btn--line" href={TELEGRAM_URL} target="_blank" rel="noopener">
             {chat.tg} <span aria-hidden="true">↗</span>

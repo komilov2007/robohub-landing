@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type CSSProperties } from "react";
+import { intlLocale } from "@/i18n/config";
 import { useT } from "./i18n";
 import { formatMoney } from "./format";
 import { Callout, CIcon, Money, Spinner } from "./ui";
@@ -212,7 +213,7 @@ function Table({
   const asOf = (date?: string) => {
     const week = date ? new Date(date) : null;
     return week && !Number.isNaN(week.getTime())
-      ? new Intl.DateTimeFormat(lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "uz-Latn-UZ", { day: "numeric", month: "short" }).format(week)
+      ? new Intl.DateTimeFormat(intlLocale[lang], { day: "numeric", month: "short" }).format(week)
       : "";
   };
 

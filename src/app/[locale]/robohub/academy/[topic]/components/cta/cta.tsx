@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { nextTopic, type Topic } from "../../../lib/academy";
-import { START_URL, topicHref } from "../../../lib/links";
+import { robohubHome, topicHref } from "../../../lib/links";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import { getLocale } from "@/i18n/server";
 import { messages } from "./cta.i18n";
@@ -22,14 +22,13 @@ export default async function Cta({ topic }: { topic: Topic }) {
             <span />
           </div>
           <div className="acx-end__text">
-            <p className="acx-kicker acx-kicker--dark">{t.kicker}</p>
             <h2 id="ac-cta-title" className="acx-h2">
               {title.before} <span className="acx-grad">{title.mark}</span>
               {title.after && ` ${title.after}`}
             </h2>
             <p>{t.text}</p>
             <div className="acx-end__btns">
-              <a href={START_URL} target="_blank" rel="noopener" className="acx-btn acx-btn--light" data-magnet>
+              <a href={robohubHome(locale)} target="_blank" rel="noopener" className="acx-btn acx-btn--light" data-magnet>
                 {t.start} <span aria-hidden="true">→</span>
               </a>
               <Link href={topicHref(locale, next.slug)} className="acx-btn acx-btn--ghost" data-magnet>

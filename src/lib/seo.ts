@@ -8,7 +8,15 @@ export const ROBOHUB_ORIGIN = "https://robohub.uz";
 // Robosell o'z domeni ulanganda shu yerda almashtiriladi
 export const ROBOSELL_ORIGIN = "https://robosell-landing.vercel.app";
 
-export const OG_LOCALE: Record<Locale, string> = { uz: "uz_UZ", ru: "ru_RU", en: "en_US" };
+export const OG_LOCALE: Record<Locale, string> = {
+  uz: "uz_UZ",
+  ru: "ru_RU",
+  en: "en_US",
+  kk: "kk_KZ",
+  ky: "ky_KG",
+  kaa: "kaa_UZ",
+  tg: "tg_TJ",
+};
 
 type PageSeo = {
   origin: string;

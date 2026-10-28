@@ -25,9 +25,29 @@ const messages = defineMessages({
     close: "Закрыть",
   },
   en: {
-    text: "Robohub — <accent>4 marketplaces in one cabinet</accent>",
+    text: "Robohub — <accent>4 marketplaces in one dashboard</accent>",
     cta: "Register",
     close: "Close",
+  },
+  kk: {
+    text: "Robohub — <accent>4 маркетплейс бір кабинетте</accent>",
+    cta: "Тіркелу",
+    close: "Жабу",
+  },
+  ky: {
+    text: "Robohub — <accent>4 маркетплейс бир кабинетте</accent>",
+    cta: "Катталуу",
+    close: "Жабуу",
+  },
+  kaa: {
+    text: "Robohub — <accent>4 marketpleys bir kabinette</accent>",
+    cta: "Dizimnen ótiw",
+    close: "Jabıw",
+  },
+  tg: {
+    text: "Robohub — <accent>4 маркетплейс дар як кабинет</accent>",
+    cta: "Бақайдгирӣ",
+    close: "Пӯшидан",
   },
 });
 

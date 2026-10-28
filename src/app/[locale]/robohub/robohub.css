@@ -537,7 +537,7 @@
 .trust__tile--wide img{padding:var(--logo-pad,12% 20%)}
 .trust__tile--wide.trust__tile--fill img{padding:0}
 /* plitkalar biroz xira turadi — ustiga kelganda tiniqlashadi (qator ham to'xtaydi) */
-.trust__tile{opacity:.6;filter:saturate(.7);transition:opacity 300ms var(--ease),filter 300ms var(--ease),transform 300ms var(--ease-soft)}
+.trust__tile{opacity:.88;filter:saturate(.95);transition:opacity 300ms var(--ease),filter 300ms var(--ease),transform 300ms var(--ease-soft)}
 .trust__tile:hover{opacity:1;filter:none;transform:translateY(-3px)}
 @media (hover:none){.trust__tile{opacity:.9;filter:none}}
 /* matnli nom: plitka ichida ikki qatorgacha; rang (data-c) va shrift (data-f) navbat bilan */
@@ -662,7 +662,7 @@
 }
 .feat-text__try i{font-style:normal;transition:transform 300ms var(--ease-soft)}
 .feat-text:hover .feat-text__try,.feat-text__try:focus-visible{opacity:1;color:var(--brand);border-color:rgba(0,82,79,.35)}
-.feat-text__try:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+.feat-text__try:hover,.feat-text:hover .feat-text__try:hover{background:var(--brand);border-color:var(--brand);color:#fff;opacity:1}
 .feat-text__try:hover i{transform:translateX(3px)}
 .feat-text:not(.is-on) .feat-text__try{pointer-events:none}
 @media (hover:none){.feat-text__try{opacity:.85}}
@@ -913,6 +913,9 @@
 .tool__name{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:clamp(19px,1.9vw,24px);line-height:1.2;letter-spacing:-.02em;white-space:nowrap}
 .tool__by{flex:none;width:1.4em;height:auto;fill:currentColor;color:var(--mint)}   /* kalkulyator nomi oldida Robohub belgisi */
 /* AI studio — generatsiya ranglarida (gradient matn) */
+/* AI studio belgisi — generatsiya ranglaridagi kvadrat, ichida yulduzcha */
+.tool__ai-ico{flex:none;display:grid;place-items:center;width:1.4em;height:1.4em;border-radius:.4em;background:linear-gradient(135deg,#34E5E6,#B48CFF 55%,#FF8FC8);box-shadow:0 6px 16px -6px rgba(180,140,255,.7)}
+.tool__ai-ico svg{width:62%;height:62%;fill:#fff}
 .tool__ai{background:linear-gradient(90deg,#B8FFB0,#34E5E6 45%,#B48CFF 75%,#FF8FC8);-webkit-background-clip:text;background-clip:text;color:transparent}
 /* ruschada nomlar uzunroq ("AI-инфографика") — tor ustunda tugma bilan bir qatorga sig'ishi uchun biroz kichikroq */
 :lang(ru) .tool__name{font-size:clamp(18px,1.55vw,21px)}
@@ -973,6 +976,17 @@
   font-size:12.5px;font-weight:600;color:var(--brand);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .calc__pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+/* "Hisoblash" — demoga tegilgach chiqadi (free-tools.script.js), chap ustunning bo'sh pastki qismida */
+.calc__go{
+  display:flex;align-items:center;justify-content:center;gap:8px;height:42px;margin-top:14px;border-radius:12px;
+  background:var(--brand);color:#fff;font-size:14.5px;font-weight:700;
+  opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;
+  transition:opacity 350ms var(--ease),transform 400ms var(--ease-soft),visibility 0s 400ms,background var(--t-fast) var(--ease);
+}
+.calc.is-touched .calc__go{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}
+.calc__go:hover{background:#003634}
+.calc__go span{transition:transform var(--t-fast) var(--ease-soft)}
+.calc__go:hover span{transform:translateX(3px)}
 /* surgich: maydon ostida, qiymatni tez o'zgartirish uchun */
 .calc__range{
   -webkit-appearance:none;appearance:none;display:block;width:100%;height:20px;margin:4px 0 0;background:none;cursor:pointer;
@@ -1783,6 +1797,11 @@
 .plan__soon img{width:13px;height:13px;margin-left:-4px}
 .plan__soon .is-wide img{width:auto;max-width:56px;height:10px;margin:0;border-radius:0;background:none}
 .plan__soon .is-wide img[src*="teez"],.plan__soon .is-wide img[src*="mmarket"]{height:7.5px}   /* qalin yozuvlar — boshqalari bilan teng ko'rinsin */
+/* tez kunda logotiplari: odatda kulrang; ustiga kelganda ~1px kattalashib, asl rangiga qaytadi */
+.plan__soon span{cursor:default;transition:transform 200ms var(--ease)}
+.plan__soon img{filter:grayscale(1);opacity:.65;transition:filter 200ms var(--ease),opacity 200ms var(--ease)}
+.plan__soon span:hover{transform:scale(1.05)}
+.plan__soon span:hover img{filter:none;opacity:1}
 .plan__mps img{width:36px;height:36px;border-radius:11px}
 .plan__label{margin-bottom:14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
 /* "Tarifga nimalar kiradi": akkordeon. Keng ekranda panel balandligi chap qismga teng (contain:size —
@@ -1790,7 +1809,7 @@
 @media (min-width:901px){ .plan__in{contain:size} }
 .plan__list{
   flex:1 1 0;min-height:0;display:grid;align-content:start;gap:2px;
-  margin:0 -14px 0 -8px;padding:0 10px 0 8px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  margin:0 -14px 0 -8px;padding:0 10px 0 8px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:auto;   /* ro'yxat oxirida g'ildirak sahifaga o'tadi */
   scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:rgba(184,255,176,.4) transparent;
 }
 .plan__list::-webkit-scrollbar{width:6px}
@@ -1920,7 +1939,6 @@
 .contact__form > button:hover{background:var(--mint)}
 .contact__form > button:hover svg{transform:translateX(3px)}
 .contact__form > button:active{transform:scale(.94)}
-.contact__note{margin-top:12px;font-size:13px;color:var(--text-dim)}
 /* qadam ko'rsatkichi: "Qadam 1/3" + uchta chiziq (joriy va o'tganlari to'ladi) */
 .contact__steps{display:flex;align-items:center;gap:12px;margin-top:var(--sp-3);font-size:13px;font-weight:600;color:var(--text-dim)}
 .contact__steps b{color:var(--brand)}
@@ -1972,12 +1990,12 @@
    undan boshlanadi (both) — shuning uchun reduced-motion da animatsiyani o'chirish kifoya. */
 .contact__form{position:relative}
 .contact__form.is-done{
-  max-width:340px;padding:6px;overflow:hidden;
+  max-width:460px;padding:6px;overflow:hidden;
   box-shadow:0 22px 40px -24px rgba(0,43,41,.7);
   animation:contact-close 1100ms var(--ease-soft) both;
 }
-.contact__form.is-done input,.contact__form.is-done > button,.contact__form.is-done .contact__chips{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity 200ms var(--ease),transform 300ms var(--ease)}
-.contact__done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:6px;color:#fff;text-align:left;visibility:hidden}
+.contact__form.is-done input,.contact__form.is-done > button,.contact__form.is-done .contact__chips,.contact__form.is-done .contact__cc{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity 200ms var(--ease),transform 300ms var(--ease)}
+.contact__done{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding:6px;color:#fff;text-align:left;visibility:hidden}
 .is-done .contact__done{visibility:visible}
 .contact__done-ico{position:relative;width:48px;height:48px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--brand)}
 .contact__done-ico > svg{width:30px;height:auto}
@@ -1992,7 +2010,7 @@
 .is-done .contact__done-text{animation:contact-text 500ms var(--ease-soft) 620ms both}
 .is-done .contact__done-ico i{animation:contact-pop 420ms var(--ease-soft) 900ms both}
 .is-done .contact__done-ico i svg{animation:contact-check 380ms var(--ease) 1050ms both}
-@keyframes contact-close{0%{max-width:460px}40%,55%{max-width:60px}100%{max-width:340px}}
+@keyframes contact-close{0%{max-width:460px}40%,55%{max-width:60px}100%{max-width:460px}}
 @keyframes contact-pop{0%{transform:scale(0) rotate(-35deg)}70%{transform:scale(1.12)}100%{transform:none}}
 @keyframes contact-text{from{max-width:0;margin-left:0;opacity:0;transform:translateX(-8px)}}
 @keyframes contact-ping{from{box-shadow:0 0 0 0 rgba(184,255,176,.65)}}
@@ -2375,3 +2393,49 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   .reels,.reels-full,.reels-full__stage,.reels-full__bg,.reels-full__side,.reels-full__eq s{animation:none}
   .reels__bars b[data-run]{animation:none}
 }
+
+/* "Tez kunda" belgisi — Imkoniyatlar panelida hali ishga tushmagan band yonida (header.tsx, SOON_TOOL) */
+.menu-soon{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:var(--r-pill);vertical-align:2px;
+  background:color-mix(in srgb,var(--hl) 16%,transparent);color:var(--hl);
+  font-family:var(--font-body,inherit);font-size:10.5px;font-style:normal;font-weight:700;letter-spacing:.02em;line-height:1.5;white-space:nowrap}
+
+/* "Qayta yuborish" — tasdiq ichida o'ngda; bosilsa forma boshidan (contact.script.js) */
+.contact__again{
+  display:inline-flex;align-items:center;gap:7px;flex:none;height:40px;margin-left:auto;padding:0 14px;border:1px solid rgba(241,255,240,.22);border-radius:var(--r-pill);
+  background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;
+  transition:background 250ms var(--ease),border-color 250ms var(--ease);
+}
+.contact__again svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 500ms var(--ease-soft)}
+.contact__again:hover{background:var(--mint);border-color:var(--mint);color:var(--ink)}
+.contact__again:hover svg{transform:rotate(-180deg)}
+.contact__again:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.is-done .contact__again{animation:contact-text 500ms var(--ease-soft) 900ms both}
+@media (max-width:420px){ .contact__again{width:40px;padding:0;justify-content:center} .contact__again span{display:none} }
+
+/* Telefon kodi: bayroq + kod tugmasi inputdan chapda; bosilsa ro'yxat ochiladi (contact.script.js) */
+.contact__form:has(.contact__cc:not([hidden])){padding-left:6px}
+.contact__cc{position:relative;flex:none}
+.contact__cc[hidden]{display:none}
+.contact__cc-btn{
+  display:inline-flex;align-items:center;gap:7px;height:48px;padding:0 12px 0 10px;border:0;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.08);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:background 250ms var(--ease);
+}
+.contact__cc-btn:hover,.contact__cc-btn[aria-expanded="true"]{background:rgba(255,255,255,.16)}
+.contact__cc-btn:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.contact__cc-btn img,.contact__cc-menu img{display:block;width:20px;height:20px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+.contact__cc-btn svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.7;transition:transform 250ms var(--ease-soft)}
+.contact__cc-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.contact__cc-menu{
+  position:absolute;left:0;top:calc(100% + 12px);z-index:20;min-width:170px;margin:0;padding:6px;list-style:none;
+  background:#fff;border:1px solid rgba(0,54,52,.12);border-radius:16px;box-shadow:0 18px 40px rgba(0,30,28,.22);
+}
+.contact__cc-menu[hidden]{display:none}
+.contact__cc-menu button{
+  display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border:0;border-radius:10px;background:none;
+  color:var(--ink);font:inherit;font-size:14px;text-align:left;cursor:pointer;
+}
+.contact__cc-menu button b{min-width:24px;font-weight:700}
+.contact__cc-menu button span{color:#4D6966}
+.contact__cc-menu button:hover,.contact__cc-menu button:focus-visible{background:rgba(0,82,79,.08);outline:0}
+.contact__cc-menu button[aria-selected="true"]{background:rgba(0,82,79,.1)}
+.contact__cc-menu button[aria-selected="true"] span{color:#00524F}

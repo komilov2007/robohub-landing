@@ -7,10 +7,6 @@ export default function DashboardSection() {
     <section className="rs-dsec" id="features" aria-labelledby="dash-title">
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span>05</span>
-            {DASHBOARD.eyebrow}
-          </p>
           <h2 className="rs-title" id="dash-title" data-rv="">
             {DASHBOARD.title}
           </h2>

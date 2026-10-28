@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
 import { localeHref } from "@/i18n/config";
+import { aiImage } from "@/lib/ai-images";
 import FreeToolsScript from "./free-tools-script";
 import { messages } from "./free-tools.i18n";
 
@@ -11,6 +12,8 @@ function fmt(n: number, group: string) {
 
 export default async function FreeTools() {
   const locale = await getLocale();
+  // infografika — joriy tildagi yozuvlar bilan (src/lib/ai-images.ts)
+  const phoneInfographic = aiImage("phone", locale);
   const t = await getMessages(messages);
   const c = t.calc;
   const g = t.script.group;
@@ -150,7 +153,12 @@ export default async function FreeTools() {
                           <i>{cur}</i>
                         </span>
                       </label>
-                    </div>
+                    </div>{" "}
+                    {/* demoga tegilgach chiqadi (free-tools.script.js → .calc.is-touched): to'liq kalkulyatorga, yangi oynada */}
+                    <a className="calc__go" href={localeHref(locale, "/calculator")} target="_blank" rel="noopener" tabIndex={-1}>
+                      {c.calcBtn}
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>{" "}
                   <div className="calc__res" aria-live="polite">
                     <p className="calc__res-title">{c.resTitle}</p>{" "}
@@ -258,6 +266,11 @@ export default async function FreeTools() {
               <div className="tool__head">
                 <div>
                   <h3 className="tool__name">
+                    <span className="tool__ai-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" />
+                      </svg>
+                    </span>
                     <span className="tool__ai">{t.ai.name}</span>
                   </h3>{" "}
                   <p className="tool__desc">{t.ai.desc}</p>
@@ -349,8 +362,8 @@ export default async function FreeTools() {
                       <img src="/ai/iphone4.png" alt="" width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[2]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone2.jpg">
-                      <img src="/ai/iphone2.jpg" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img={phoneInfographic}>
+                      <img src={phoneInfographic} alt="" width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[3]}</span>
                     </button>
                   </div>

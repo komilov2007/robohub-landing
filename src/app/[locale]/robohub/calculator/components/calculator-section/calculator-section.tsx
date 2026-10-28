@@ -11,10 +11,6 @@ export default function CalculatorSection({ calc, dict, locale }: { calc: Conten
     <section className="cc-section" id={CALC_SECTION_ID} aria-labelledby="cc-calc-title">
       <div className="as-wrap">
         <header className="as-sec-head">
-          <p className="as-eyebrow" data-rv>
-            <span>02</span>
-            {calc.eyebrow}
-          </p>
           <h2 className="as-h2" id="cc-calc-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {calc.title} <span className="as-h2__accent">{calc.accent}</span>
           </h2>

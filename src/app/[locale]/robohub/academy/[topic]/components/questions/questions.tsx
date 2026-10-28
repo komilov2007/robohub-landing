@@ -13,7 +13,6 @@ export default async function Questions({ topic }: { topic: Topic }) {
     <section id="questions" className="acx-qa-sec" data-theme="light" aria-labelledby="ac-questions-title">
       <div className="container">
         <div className="acx-head" data-reveal>
-          <p className="acx-kicker">{t.kicker}</p>
           <h2 id="ac-questions-title" className="acx-h2">
             {t.title} <span className="acx-mark">{t.mark}</span>
           </h2>

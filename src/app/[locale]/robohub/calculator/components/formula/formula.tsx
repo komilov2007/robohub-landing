@@ -59,10 +59,6 @@ export default function Formula({ formula, features }: { formula: Content["S"]["
       <span className="cx-formula__spot" aria-hidden="true" />
       <div className="as-wrap">
         <header className="cx-head cx-head--dark" data-io>
-          <span className="cx-kicker">
-            <i />
-            {formula.eyebrow}
-          </span>
           <h2 id="cx-formula-title">{formula.title}</h2>
           <p>{formula.lead}</p>
         </header>

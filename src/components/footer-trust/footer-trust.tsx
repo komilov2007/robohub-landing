@@ -4,62 +4,106 @@ import CertLightbox from "./cert-lightbox";
 import "./footer-trust.css";
 
 // Mukofotlar va guvohnomalar — to'rtala landing footerida bir xil (Robohub, Academy, AI Studio, Kalkulyator).
-// Logotip ustunida, marketpleys belgilari ostida. Har tile: chapda yorliq ("G'olib") va mukofot logotipi
-// (yoki hujjat nomi), o'ngda guvohnoma varag'i. Bosilganda guvohnoma sahifada katta ochiladi (cert-lightbox).
-// Fayllar: public/logo (mukofot logotiplari), public/certificates (guvohnomalar).
-type Item = {
-  cert: string; // guvohnoma rasmi
-  w: number;
-  h: number;
-  logo?: { src: string; w: number; h: number; name: string }; // mukofot — bo'lsa, tile'da yorliq + logotip
-  name?: string; // mukofot bo'lmasa — tile'dagi nom
-};
-
-const ITEMS: Item[] = [
-  {
-    cert: "/certificates/it-park.webp", w: 1280, h: 887,
-    logo: { src: "/logo/president-tech-award.svg", w: 400, h: 102, name: "President Tech Award" },
-  },
-  {
-    cert: "/certificates/cyber-park.webp", w: 1600, h: 1132,
-    logo: { src: "/logo/ebrd.svg", w: 149, h: 78, name: "EBRD" },
-  },
-  { cert: "/certificates/robohub-guvohnoma.webp", w: 1240, h: 1755 },
+// Logotip ustunida, marketpleys belgilari ostida, ikki qator:
+//   1) sarlavha va tashkilotlar logotiplari (kartasiz, yonma-yon), har biri ostida qisqa yorliq (rezident / sovrindor);
+//   2) guvohnomalar — kichik varaqlar qatori; bosilganda sahifada katta ochiladi (cert-lightbox), JS'siz — yangi oynada.
+// Fayllar: public/logo (logotiplar; Cyber Park — guvohnomadan qirqilgan, IT Park — asl oq SVG; to'q fonga moslangan),
+// public/certificates (guvohnomalar).
+const LOGOS = [
+  { src: "/logo/cyber-park.png", w: 550, h: 75, name: "Cyber Park" },
+  { src: "/logo/it-park.svg", w: 1993, h: 658, name: "IT Park Uzbekistan" },
+  { src: "/logo/president-tech-award.svg", w: 400, h: 102, name: "President Tech Award" },
+];
+const CERTS = [
+  { src: "/certificates/cyber-park.webp", w: 1600, h: 1132 },
+  { src: "/certificates/it-park.webp", w: 1280, h: 887 },
+  { src: "/certificates/robohub-guvohnoma.webp", w: 1240, h: 1755 },
 ];
 
 const messages = defineMessages({
   uz: {
-    title: "Mukofotlar va guvohnomalar",
-    winner: "G‘olib",
-    close: "Yopish",
-    state: { label: "Rasmiy ro‘yxatda", name: "“Robohub” MChJ" },
+    title: "Rezident va sovrindor",
+    roles: ["Rezident", "Rezident", "Sovrindor"],
+    certsTitle: "Guvohnomalar",
+    certs: ["Cyber Park", "IT Park", "Davlat ro‘yxati"],
     alts: [
-      "President Tech Award g‘olibi — IT Park rezidenti guvohnomasi",
-      "EBRD (Yevropa tiklanish va taraqqiyot banki) g‘olibi — Cyber Park rezidenti guvohnomasi",
+      "Cyber Park rezidenti guvohnomasi № 0016-26 R-152 — “Robohub” MChJ",
+      "IT Park Uzbekistan rezidenti guvohnomasi — “Robosell” MChJ",
       "Yuridik shaxs davlat ro‘yxatidan o‘tganligi to‘g‘risidagi guvohnoma — “Robohub” MChJ",
     ],
+    close: "Yopish",
   },
   ru: {
-    title: "Награды и свидетельства",
-    winner: "Победитель",
-    close: "Закрыть",
-    state: { label: "Госрегистрация", name: "ООО «Robohub»" },
+    title: "Резидент и призёр",
+    roles: ["Резидент", "Резидент", "Призёр"],
+    certsTitle: "Свидетельства",
+    certs: ["Cyber Park", "IT Park", "Госрегистрация"],
     alts: [
-      "Победитель President Tech Award — свидетельство резидента IT Park",
-      "Победитель EBRD (Европейский банк реконструкции и развития) — сертификат резидента Cyber Park",
+      "Сертификат резидента Cyber Park № 0016-26 R-152 — ООО «Robohub»",
+      "Свидетельство резидента IT Park Uzbekistan — ООО «Robosell»",
       "Свидетельство о государственной регистрации юридического лица — ООО «Robohub»",
     ],
+    close: "Закрыть",
   },
   en: {
-    title: "Awards and certificates",
-    winner: "Winner of",
-    close: "Close",
-    state: { label: "State registered", name: "Robohub LLC" },
+    title: "Resident & winner of",
+    roles: ["Resident", "Resident", "Winner"],
+    certsTitle: "Certificates",
+    certs: ["Cyber Park", "IT Park", "State registration"],
     alts: [
-      "President Tech Award winner — IT Park resident certificate",
-      "EBRD (European Bank for Reconstruction and Development) winner — Cyber Park resident certificate",
+      "Cyber Park resident certificate No. 0016-26 R-152 — Robohub LLC",
+      "IT Park Uzbekistan resident certificate — Robosell LLC",
       "Certificate of state registration of a legal entity — Robohub LLC",
     ],
+    close: "Close",
+  },
+  kk: {
+    title: "Резидент және жүлдегер",
+    roles: ["Резидент", "Резидент", "Жүлдегер"],
+    certsTitle: "Куәліктер",
+    certs: ["Cyber Park", "IT Park", "Мемлекеттік тіркеу"],
+    alts: [
+      "Cyber Park резиденті сертификаты № 0016-26 R-152 — «Robohub» ЖШҚ",
+      "IT Park Uzbekistan резиденті куәлігі — «Robosell» ЖШҚ",
+      "Заңды тұлғаны мемлекеттік тіркеу туралы куәлік — «Robohub» ЖШҚ",
+    ],
+    close: "Жабу",
+  },
+  ky: {
+    title: "Резидент жана байге ээси",
+    roles: ["Резидент", "Резидент", "Байге ээси"],
+    certsTitle: "Күбөлүктөр",
+    certs: ["Cyber Park", "IT Park", "Мамлекеттик каттоо"],
+    alts: [
+      "Cyber Park резидентинин сертификаты № 0016-26 R-152 — «Robohub» ЖЧК",
+      "IT Park Uzbekistan резидентинин күбөлүгү — «Robosell» ЖЧК",
+      "Юридикалык жакты мамлекеттик каттоо жөнүндө күбөлүк — «Robohub» ЖЧК",
+    ],
+    close: "Жабуу",
+  },
+  kaa: {
+    title: "Rezident hám sıylıq iyesi",
+    roles: ["Rezident", "Rezident", "Sıylıq iyesi"],
+    certsTitle: "Gúwalıqlar",
+    certs: ["Cyber Park", "IT Park", "Mámleketlik dizim"],
+    alts: [
+      "Cyber Park rezidenti gúwalıǵı № 0016-26 R-152 — “Robohub” JShJ",
+      "IT Park Uzbekistan rezidenti gúwalıǵı — “Robosell” JShJ",
+      "Yuridikalıq shaxstı mámleketlik dizimnen ótkeriw haqqında gúwalıq — “Robohub” JShJ",
+    ],
+    close: "Jabıw",
+  },
+  tg: {
+    title: "Резидент ва ҷоизадор",
+    roles: ["Резидент", "Резидент", "Ҷоизадор"],
+    certsTitle: "Шаҳодатномаҳо",
+    certs: ["Cyber Park", "IT Park", "Бақайдгирии давлатӣ"],
+    alts: [
+      "Сертификати резиденти Cyber Park № 0016-26 R-152 — ҶДММ «Robohub»",
+      "Шаҳодатномаи резиденти IT Park Uzbekistan — ҶДММ «Robosell»",
+      "Шаҳодатнома дар бораи бақайдгирии давлатии шахси ҳуқуқӣ — ҶДММ «Robohub»",
+    ],
+    close: "Пӯшидан",
   },
 });
 
@@ -70,22 +114,22 @@ export default async function FooterTrust() {
       <h3 className="ftrust__title" id="ftrust-title">
         {t.title}
       </h3>
-      <ul className="ftrust__list">
-        {ITEMS.map((it, i) => (
-          <li key={it.cert}>
-            <a className="ftrust__item" href={it.cert} target="_blank" rel="noopener" data-cert={it.cert} data-cert-alt={t.alts[i]} title={t.alts[i]}>
-              <span className="ftrust__text">
-                <small>{it.logo ? t.winner : t.state.label}</small>
-                {it.logo ? (
-                  <img className="ftrust__logo" src={it.logo.src} alt={it.logo.name} width={it.logo.w} height={it.logo.h} loading="lazy" />
-                ) : (
-                  <b>{t.state.name}</b>
-                )}
-              </span>
-              {/* guvohnoma varag'i — orqasida ikkinchi qog'oz (::before) */}
+      <ul className="ftrust__logos">
+        {LOGOS.map((l, i) => (
+          <li key={l.src}>
+            <img src={l.src} alt={`${t.roles[i]} — ${l.name}`} width={l.w} height={l.h} loading="lazy" />          </li>
+        ))}
+      </ul>
+
+      <h3 className="ftrust__title ftrust__title--sub">{t.certsTitle}</h3>
+      <ul className="ftrust__certs">
+        {CERTS.map((c, i) => (
+          <li key={c.src}>
+            <a className="ftrust__cert" href={c.src} target="_blank" rel="noopener" data-cert={c.src} data-cert-alt={t.alts[i]} title={t.alts[i]}>
               <span className="ftrust__paper">
-                <img src={it.cert} alt="" width={it.w} height={it.h} loading="lazy" decoding="async" />
+                <img src={c.src} alt="" width={c.w} height={c.h} loading="lazy" decoding="async" />
               </span>
+              <span className="ftrust__name">{t.certs[i]}</span>
             </a>
           </li>
         ))}

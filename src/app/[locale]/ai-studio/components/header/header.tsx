@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 import Logo from "../logo/logo";
 import LangSelect from "@/components/lang-select/lang-select";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
-import { LOGIN_HREF } from "../../ai-studio.content";
+import { useRobohubOrigin } from "@/lib/robohub-origin";
+import { sellerUrl } from "@/lib/sites";   // kabinet — joriy tilda
+import { STUDIO_URL } from "../../ai-studio.content";
+import { localeHref } from "@/i18n/config";
 import { useC } from "../../content-context";
 
 // Header — Robohub Academy header'i bilan bir xil dizayn (robohub/academy header):
 // sticky, qog'oz fon + blur, scroll'da chegara va soya; o'rtada menyu (faol/hover — sariq chiziq),
-// o'ngda til tanlash (UZ/RU/EN), "Kirish" va "Bepul boshlash". Mobilda — header ostidan ochiladigan panel (Esc yopadi).
+// o'ngda til tanlash, "Kirish" (Robohub landingi; kabinetga kirgan bo'lsa — "Kabinet") va "Bepul sinab ko'rish"
+// (STUDIO_URL — studio-modal AI infografika studiyasini sahifa ustidagi oynada ochadi). Mobilda — header ostidan ochiladigan panel (Esc yopadi).
 // Faol bo'lim — scroll bo'yicha aniqlanadi.
 export default function Header() {
   const { NAV, T, locale, path } = useC();
@@ -19,6 +23,9 @@ export default function Header() {
   const [active, setActive] = useState<string | null>(null);
   // kabinetga kirgan sotuvchiga tugma matni "Kirish" o'rniga "Kabinet" (havola o'sha)
   const authed = useRobohubAuthed();
+  // "Kirish" — Robohub landingi (joriy tilda); kabinetga kirgan bo'lsa — "Kabinet" (seller.robohub.uz)
+  const robohub = useRobohubOrigin(); // lokalda, Vercel'da va robohub.uz da — o'sha muhitdagi Robohub landingi
+  const login = authed ? sellerUrl(locale, "") : `${robohub}${localeHref(locale, "/")}`;
 
   useEffect(() => {
     let raf = 0;
@@ -73,8 +80,11 @@ export default function Header() {
         </nav>
         <div className="as-header__actions">
           <LangSelect locale={locale} label={U.lang} path={path} />
-          <a href={LOGIN_HREF} className="as-hbtn as-hbtn--accent">
+          <a href={login} className="as-hbtn as-hbtn--ghost">
             {authed ? CABINET_LABEL[locale] : U.login}
+          </a>
+          <a href={STUDIO_URL} className="as-hbtn as-hbtn--accent">
+            {T.hero.primary}
           </a>
         </div>
         <button
@@ -102,8 +112,11 @@ export default function Header() {
             <LangSelect locale={locale} label={U.lang} path={path} />
           </div>
           <div className="as-mmenu__actions">
-            <a href={LOGIN_HREF} className="as-hbtn as-hbtn--lg as-hbtn--primary">
+            <a href={login} className="as-hbtn as-hbtn--lg as-hbtn--outline">
               {authed ? CABINET_LABEL[locale] : U.login}
+            </a>
+            <a href={STUDIO_URL} className="as-hbtn as-hbtn--lg as-hbtn--primary">
+              {T.hero.primary}
             </a>
           </div>
         </div>

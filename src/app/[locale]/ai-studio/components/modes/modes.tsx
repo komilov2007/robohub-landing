@@ -7,18 +7,39 @@ import { getC } from "../../content.server";
 //  Foto — kamera "vizori": burchak qavslari nafas oladi, ustidan yorug'lik o'tadi;
 //  Infografika — afzalliklar chiziq bilan mahsulotga "ulanadi";
 //  5 to'plam — 5 ta rasm yelpig'ich bo'lib ochilib-yopilib turadi.
-function PhotoViz({ clean }: { clean: string }) {
+type PhotoStyles = Content["MODES"]["photoStyles"];
+
+// Foto: 4 uslub (studiyadagi kabi) navbat bilan almashadi — rasm va uning nomi; faqat CSS animatsiya (--k — tartib raqami)
+function PhotoViz({ styles }: { styles: PhotoStyles }) {
   return (
     <div className="as-mv as-mv--photo">
-      <img src="/ai/cosmetics_studio.webp" alt="" loading="lazy" />
+      {styles.map((s, i) => (
+        <img key={s.img} className="as-ps" src={s.img} alt="" loading="lazy" style={{ "--k": i } as CSSProperties} />
+      ))}
       <span className="as-vf" aria-hidden="true">
         <i /><i /><i /><i />
       </span>
-      <span className="as-mv__chip">
-        <Icon name="check" />
-        {clean}
-      </span>
+      {styles.map((s, i) => (
+        <span key={s.name} className="as-mv__chip as-ps" style={{ "--k": i } as CSSProperties} aria-hidden="true">
+          <Icon name="check" />
+          {s.name}
+        </span>
+      ))}
     </div>
+  );
+}
+
+// Foto kartasi matni ostida — 4 uslubning hammasi (kichik rasm + nom); hozir ko'rinayotgani ajralib turadi
+function PhotoStyleList({ styles }: { styles: PhotoStyles }) {
+  return (
+    <ul className="as-pstyles">
+      {styles.map((s, i) => (
+        <li key={s.name} style={{ "--k": i } as CSSProperties}>
+          <img src={s.img} alt="" loading="lazy" width={28} height={28} />
+          {s.name}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -63,10 +84,6 @@ export default async function Modes() {
       <div className="as-wrap">
         <header className="as-modes__head">
           <div>
-            <p className="as-eyebrow" data-rv>
-              <span>06</span>
-              {MODES.eyebrow}
-            </p>
             <h2 className="as-h2" id="as-modes-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
               {MODES.title} <span className="as-h2__accent">{MODES.accent}</span>
             </h2>
@@ -93,13 +110,14 @@ export default async function Modes() {
                   {MODES.popular}
                 </span>
               )}
-              {m.id === "photo" && <PhotoViz clean={MODES.clean} />}
+              {m.id === "photo" && <PhotoViz styles={MODES.photoStyles} />}
               {m.id === "infographic" && <InfoViz img={VARIANTS[0].img} features={PRODUCT.features} />}
               {m.id === "pack" && <PackViz pack={MODES.pack} />}
 
               <div className="as-mc__body">
                 <h3 className="as-mc__name">{m.name}</h3>
                 <p className="as-mc__text">{m.text}</p>
+                {m.id === "photo" && <PhotoStyleList styles={MODES.photoStyles} />}
                 <div className="as-mc__foot">
                   <span className="as-mc__price">
                     <span className="as-mc__coin">

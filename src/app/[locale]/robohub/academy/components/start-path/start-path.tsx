@@ -31,7 +31,6 @@ export default function StartPath() {
     <section className="acx-path" id="start" data-theme="light" aria-labelledby="ac-path-title">
       <div className="container">
         <div className="acx-head" data-reveal>
-          <p className="acx-kicker">{t.kicker}</p>
           <h2 id="ac-path-title" className="acx-h2">
             {t.title} <span className="acx-mark">{t.titleMark}</span>
           </h2>

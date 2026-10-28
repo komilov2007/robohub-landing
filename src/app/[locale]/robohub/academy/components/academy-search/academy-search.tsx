@@ -9,23 +9,49 @@ import { lessonHref } from "../../lib/links";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./academy-search.i18n";
 
-// Academy qidiruvi (7.1): joriy tildagi title, summary, points va mavzu nomi bo'yicha.
-// Kichik harf, o‘/o' va g‘/g' (ruschada ё/е) farqi hisobga olinmaydi (normalize). Klaviatura: ↑ ↓ Enter Esc.
+// Academy qidiruvi (7.1): har dars barcha tillardagi title, summary, points va mavzu nomi bo'yicha topiladi —
+// sahifa tili qanday bo'lishidan qat'i nazar ("склад", "sklad", "ombor", "warehouse" — hammasi Ombor darslarini topadi).
+// Kirill va lotin bir xil ko'rinishga keltiriladi (translit): "склад" → "sklad". Natija — joriy tildagi dars.
+// Kichik harf, o‘/o' va g‘/g' (ruschada ё/е), diakritika (ә қ ң, á ń ó …) farqi hisobga olinmaydi. Klaviatura: ↑ ↓ Enter Esc.
+const CYR: Record<string, string> = {
+  а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ж: "j", з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o",
+  п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "x", ц: "s", ч: "ch", ш: "sh", щ: "sh", ъ: "", ы: "i", ь: "", э: "e",
+  ю: "yu", я: "ya", ў: "o", қ: "q", ғ: "g", ҳ: "h", һ: "h", ә: "a", ө: "o", ү: "u", ұ: "u", ң: "n", ҷ: "j", ӣ: "i", ӯ: "u",
+  і: "i",
+};
+// Kirill (o'zbek, rus, qozoq, qirg'iz, tojik) → lotin; so'ng lotin diakritikasi olib tashlanadi
+// (qoraqalpoqcha á ǵ ı ń ó ú → a g i n o u): "sabaq", "сабақ", "sabáq" bir xil ko'rinadi.
+const latin = (s: string) =>
+  normalize(s.normalize("NFC"))
+    .replace(/[\u0400-\u04ff]/g, (ch) => CYR[ch] ?? ch)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ı/g, "i");
+// qidiruv indeksi tuziladigan tillar (kontenti bo'lgan har bir til; yangi til qo'shilsa — shu yerda ham)
+const SEARCH_LOCALES: Locale[] = ["uz", "ru", "en", "kk", "ky", "kaa", "tg"];
+
 type Entry = { lesson: Lesson; topicName: string; title: string; hay: string };
 const indexes = new Map<Locale, Entry[]>();
 function buildIndex(locale: Locale): Entry[] {
   const cached = indexes.get(locale);
   if (cached) return cached;
-  const index = getLessonsSorted(locale).map((l) => {
-    const topicName = getTopic(l.topic, locale)?.name ?? "";
-    return {
-      lesson: l,
-      topicName,
-      title: " " + normalize(l.title),
-      // boshida bo'shliq: o'zak faqat so'z boshidan qidiriladi (" missi" — "komissiya" ga mos kelmaydi)
-      hay: " " + normalize([l.title, l.summary, ...l.points, topicName].join(" ")),
-    };
-  });
+  // dars raqami (n) bo'yicha barcha tillardagi matnlar bitta "pichan"ga yig'iladi
+  const all = new Map<number, string[]>();
+  const titles = new Map<number, string[]>();
+  for (const loc of SEARCH_LOCALES) {
+    for (const l of getLessonsSorted(loc)) {
+      const topicName = getTopic(l.topic, loc)?.name ?? "";
+      all.set(l.n, [...(all.get(l.n) ?? []), l.title, l.summary, ...l.points, topicName]);
+      titles.set(l.n, [...(titles.get(l.n) ?? []), l.title]);
+    }
+  }
+  const index = getLessonsSorted(locale).map((l) => ({
+    lesson: l,
+    topicName: getTopic(l.topic, locale)?.name ?? "",
+    // boshida bo'shliq: o'zak faqat so'z boshidan qidiriladi (" missi" — "komissiya" ga mos kelmaydi)
+    title: " " + latin((titles.get(l.n) ?? [l.title]).join(" ")),
+    hay: " " + latin((all.get(l.n) ?? [l.title]).join(" ")),
+  }));
   indexes.set(locale, index);
   return index;
 }
@@ -34,11 +60,11 @@ function buildIndex(locale: Locale): Entry[] {
 // so'zning boshidagi o'zagi qidiriladi: uzunligining ~60%, kamida 4 harf ("guruhlayman" → "guruhla").
 const stem = (w: string) => (w.length <= 4 ? w : w.slice(0, Math.max(4, Math.ceil(w.length * 0.6))));
 
-// stop — savol so'zlari (har darsda bor, qidiruvga ta'sir qilmasin), *.i18n.ts dan
+// stop — savol so'zlari (har darsda bor, qidiruvga ta'sir qilmasin), barcha tillardagi *.i18n.ts dan
+const STOP = new Set(SEARCH_LOCALES.flatMap((l) => messages[l].stop.map(latin)));
 function search(query: string, locale: Locale) {
-  const stop = new Set(messages[locale].stop);
-  const all = normalize(query).split(" ").filter(Boolean);
-  const words = all.filter((w) => !stop.has(w));
+  const all = latin(query).split(" ").filter(Boolean);
+  const words = all.filter((w) => !STOP.has(w));
   const terms = (words.length ? words : all).map(stem);
   if (!terms.length) return [];
   // So'zlarning kamida 2/3 qismi topilishi kerak; sarlavhadagi moslik ikki baravar og'ir

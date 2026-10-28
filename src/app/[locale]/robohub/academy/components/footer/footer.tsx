@@ -2,7 +2,7 @@ import Link from "next/link";
 import { RobohubLogo } from "../logo/logo";
 import { getLocale } from "@/i18n/server";
 import { getTopics } from "../../lib/academy";
-import { PHONE, PHONE_TEL, START_URL, academyHref, topicHref, robohubHome, robohubPricing } from "../../lib/links";
+import { PHONE, PHONE_TEL, academyHref, topicHref, robohubHome, robohubPricing } from "../../lib/links";
 import { messages } from "./footer.i18n";
 import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
@@ -66,7 +66,7 @@ export default async function Footer() {
                 <a href={robohubPricing(locale)}>{t.pricing}</a>
               </li>
               <li>
-                <a href={START_URL} target="_blank" rel="noopener">{t.start}</a>
+                <a href={robohubHome(locale)} target="_blank" rel="noopener">{t.start}</a>
               </li>
             </ul>
           </nav>

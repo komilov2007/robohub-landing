@@ -67,6 +67,51 @@ body:has(.ac){background:#fff}
 /* "Mavzular" — ochiladigan panel (8 mavzu). li position:static — panel header'ga nisbatan joylashadi (to'liq kenglik) */
 .ac-nav li{position:relative}
 .ac-nav li.ac-nav__drop{position:static;display:flex;align-items:center;height:100%}
+/* "Imkoniyatlar" — Robohub landingi paneli (robohub-menu.tsx): header ostidan to'liq kenglikda, sahifa xiralashadi.
+   Ochilish — :hover (sichqoncha) yoki klaviatura fokusi. Bandlar Robohub saytiga olib boradi. */
+.ac-nav li.ac-nav__rh{position:static;display:flex;align-items:center;height:100%}
+.ac-nav__rh-link{display:inline-flex;align-items:center;gap:7px}
+/* Robohub belgisi matndan o'ngda — fonsiz, brend rangida */
+.ac-nav__rh-chip{
+  display:inline-flex;align-items:center;flex:none;color:var(--brand);
+  transition:transform 300ms var(--ease-soft);
+}
+/* aniq o'lcham (logo nisbati 33.87×15.06 ≈ 2.25:1) — aks holda flex ichida svg siqilib qoladi */
+.ac-nav__rh-mark{display:block;flex:none;width:24px;min-width:24px;height:11px;max-width:none}
+.ac-nav__rh-link:hover .ac-nav__rh-chip{transform:translateY(-1px)}
+.ac-nav__rh-link .ac-nav__caret{margin-left:-2px}
+.ac-rmega{
+  --mx:max(var(--sp-3),calc((100% - var(--container)) / 2 + var(--sp-3)));
+  position:absolute;left:0;right:0;top:100%;z-index:60;padding:20px var(--mx) 36px;
+  background:#fff;border-top:1px solid var(--line);
+  box-shadow:0 24px 48px rgba(0,30,28,.14),0 0 0 100vmax rgba(0,30,28,.18);
+  clip-path:inset(0 -100vmax -100vmax -100vmax);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);
+  transition:opacity 250ms var(--ease),transform 320ms var(--ease-soft),visibility 0s 320ms;
+}
+@media (hover:hover){ .ac-nav__rh:hover > .ac-rmega{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:60ms,60ms,0s} .ac-nav__rh:hover .ac-nav__caret{transform:rotate(180deg)} }
+.ac-nav__rh:focus-within > .ac-rmega{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+.ac-rmega__inner{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--sp-4)}
+.ac-rmega__title{margin-bottom:var(--sp-1);padding-left:10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
+.ac-nav .ac-rmega__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px var(--sp-2)}
+.ac-nav .ac-rmega__list{display:grid;gap:0}
+.ac-nav .ac-rmega li{position:static}
+.ac-rmega__side{padding-left:var(--sp-3);border-left:1px solid var(--line)}
+.ac-rmega__link{
+  display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;row-gap:1px;align-items:start;
+  padding:7px 14px 7px 10px;border-radius:var(--r-md);transition:background var(--t-fast) var(--ease);
+}
+.ac-rmega__ico{
+  grid-row:span 2;box-sizing:border-box;width:34px;height:34px;padding:7px;margin-top:1px;border-radius:10px;
+  background:rgba(0,82,79,.09);color:var(--brand);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease);
+}
+.ac-rmega__link b{font-family:var(--font-head);font-size:15px;font-weight:600;color:var(--text)}
+.ac-rmega__link span{font-size:13.5px;line-height:1.45;color:var(--text-dim)}
+.ac-rmega__link:hover,.ac-rmega__link:focus-visible{background:rgba(0,82,79,.07)}
+.ac-rmega__link:hover b{color:var(--brand)}
+.ac-rmega__link:hover .ac-rmega__ico{background:var(--brand);color:#fff}
+.ac-rmega__link.is-ai .ac-rmega__ico{background:linear-gradient(135deg,#34E5E6,#B48CFF 55%,#FF8FC8);color:#fff}
+.ac-rmega__link.is-ai b{justify-self:start;background:linear-gradient(90deg,#0E9F8E,#0BA5C4 35%,#8B5CF6 70%,#E0559B);-webkit-background-clip:text;background-clip:text;color:transparent}
 .ac-nav button.ac-nav__link{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:15px;font-weight:500;cursor:pointer}
 .ac-nav button.ac-nav__link.is-active{font-weight:700}
 .ac-nav__caret{transition:transform 250ms var(--ease-soft)}
@@ -331,3 +376,8 @@ body:has(.ac){background:#fff}
 @media (max-width:767px){
   .ac{--ac-gutter:4px;--ac-round:26px}
 }
+
+/* "Tez kunda" belgisi — Robohub imkoniyatlari panelida hali ishga tushmagan band yonida (robohub-menu.tsx, SOON_TOOL) */
+.ac .menu-soon{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:var(--r-pill);vertical-align:2px;
+  background:var(--ac-mint-soft);color:var(--brand);
+  font-size:10.5px;font-style:normal;font-weight:700;letter-spacing:.02em;line-height:1.5;white-space:nowrap}

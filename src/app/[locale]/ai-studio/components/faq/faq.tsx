@@ -14,10 +14,6 @@ export default function Faq() {
     <section className="as-faq" id="faq" aria-labelledby="as-faq-title">
       <div className="as-wrap as-faq__grid">
         <header className="as-faq__head">
-          <p className="as-eyebrow" data-rv>
-            <span>09</span>
-            {FAQ.eyebrow}
-          </p>
           <h2 className="as-h2" id="as-faq-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {FAQ.title} <span className="as-h2__accent">{FAQ.accent}</span>
           </h2>

@@ -12,7 +12,15 @@ import type { Locale } from "@/i18n/config";
 // Faqat "bor/yo'q" o'qiladi — tokenlar hech qayerga yuborilmaydi.
 
 /** rb-market'dagi ai_landing_cabinet tarjimasi */
-export const CABINET_LABEL: Record<Locale, string> = { uz: "Kabinet", ru: "Кабинет", en: "Dashboard" };
+export const CABINET_LABEL: Record<Locale, string> = {
+  uz: "Kabinet",
+  ru: "Кабинет",
+  en: "Dashboard",
+  kk: "Кабинет",
+  ky: "Кабинет",
+  kaa: "Kabinet",
+  tg: "Кабинет",
+};
 
 type Session = { tokens?: { access?: string } };
 

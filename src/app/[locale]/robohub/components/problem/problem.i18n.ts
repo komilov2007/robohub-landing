@@ -54,4 +54,72 @@ export const messages = defineMessages({
       cost: "Any new marketplace = the same dashboard",
     },
   },
+  kk: {
+    eyebrow: "Салыстыру",
+    next: "Ал әрі қарай —",
+    own: "+ өз сайтыңыз бен Telegram-бот",
+    before: {
+      label: "Robohub-сыз",
+      title: ["Robohub-сыз", "бірдей міндеттер әр маркетплейсте қайталанады"],
+      lead: "Әр маркетплейс — өз кабинеті, өз ережелері, өз есептері мен мерзімдері. Кәсіпкер бір міндетті әрқайсысында қайтадан орындайды.",
+      cost: "Әр жаңа маркетплейс = +$300/ай",
+    },
+    after: {
+      label: "Robohub-пен",
+      title: ["Robohub-пен", "барлық маркетплейсті бір кабинеттен басқарасыз"],
+      lead: "Uzum Market, Wildberries, Ozon және Yandex Market үшін бір терезе. Әр міндет бір рет орындалады — және бірден барлық маркетплейстерге жіберіледі.",
+      cost: "Кез келген жаңа маркетплейс = сол кабинет",
+    },
+  },
+  ky: {
+    eyebrow: "Салыштыруу",
+    next: "Андан ары —",
+    own: "+ өз сайтыңыз жана Telegram-бот",
+    before: {
+      label: "Robohub-сыз",
+      title: ["Robohub-сыз", "бирдей милдеттер ар бир маркетплейсте кайталанат"],
+      lead: "Ар бир маркетплейс — өз кабинети, өз эрежелери, өз отчеттору жана мөөнөттөрү. Ишкер бир эле милдетти ар биринде кайрадан аткарат.",
+      cost: "Ар бир жаңы маркетплейс = +$300/ай",
+    },
+    after: {
+      label: "Robohub менен",
+      title: ["Robohub менен", "бардык маркетплейстерди бир кабинеттен башкарасыз"],
+      lead: "Uzum Market, Wildberries, Ozon жана Yandex Market үчүн бир терезе. Ар бир милдет бир жолу аткарылат — жана дароо бардык маркетплейстерге жөнөтүлөт.",
+      cost: "Каалаган жаңы маркетплейс = ошол эле кабинет",
+    },
+  },
+  kaa: {
+    eyebrow: "Salıstırıw",
+    next: "Al keyin —",
+    own: "+ óz saytıńız hám Telegram-bot",
+    before: {
+      label: "Robohub’sız",
+      title: ["Robohub’sız", "birdey wazıypalar hár bir marketpleyste qaytalanadı"],
+      lead: "Hár bir marketpleys — óz kabineti, óz qaǵıydaları, óz esabatları hám múddetleri. Isbilermen birdey wazıypanı hár birinde qaytadan orınlaydı.",
+      cost: "Hár jańa marketpleys = +$300/ay",
+    },
+    after: {
+      label: "Robohub penen",
+      title: ["Robohub penen", "barlıq marketpleyslerdi bir kabinetten basqarasız"],
+      lead: "Uzum Market, Wildberries, Ozon hám Yandex Market ushın bir ayna. Hár bir wazıypa bir ret orınlanadı — hám dárhal barlıq marketpleyslerge jiberiledi.",
+      cost: "Qálegen jańa marketpleys = sol kabinet",
+    },
+  },
+  tg: {
+    eyebrow: "Муқоиса",
+    next: "Ва баъд —",
+    own: "+ сайти худатон ва Telegram-бот",
+    before: {
+      label: "Бе Robohub",
+      title: ["Бе Robohub", "вазифаҳои якхела дар ҳар маркетплейс такрор мешаванд"],
+      lead: "Ҳар маркетплейс — кабинети худ, қоидаҳои худ, ҳисоботу мӯҳлатҳои худ. Соҳибкор як вазифаро дар ҳар яке аз нав иҷро мекунад.",
+      cost: "Ҳар маркетплейси нав = +$300/моҳ",
+    },
+    after: {
+      label: "Бо Robohub",
+      title: ["Бо Robohub", "ҳамаи маркетплейсҳоро аз як кабинет идора мекунед"],
+      lead: "Як равзана барои Uzum Market, Wildberries, Ozon ва Yandex Market. Ҳар вазифа як бор иҷро мешавад — ва фавран ба ҳамаи маркетплейсҳо меравад.",
+      cost: "Ҳар маркетплейси нав = ҳамон кабинет",
+    },
+  },
 });

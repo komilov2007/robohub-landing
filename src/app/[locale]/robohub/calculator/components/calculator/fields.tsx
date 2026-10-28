@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { useT } from "./i18n";
 import { CategoryField } from "./category-picker";
-import { formatMoney, formatPercentValue } from "./format";
+import { formatMoney, formatPercentValue, numberLocale } from "./format";
 import { COMPETITORS_STEP, COMPETITOR_LINK_INPUT_ID } from "./constants";
 import { getApiErrorMessage, postPublicCalculatorLink } from "./api";
 import { ChoiceTile, CIcon, FieldLabel, NumberField, Segmented, Spinner, Suggestion } from "./ui";
@@ -293,7 +293,7 @@ function Dimensions({ calculator }: { calculator: MarketplaceCalculatorState }) 
       ) : litres !== null ? (
         <p className="cc-note">
           {t("calculator_volume_hint", {
-            value: new Intl.NumberFormat(lang === "ru" ? "ru-RU" : "en-US", { maximumFractionDigits: 3 }).format(litres),
+            value: new Intl.NumberFormat(numberLocale(lang), { maximumFractionDigits: 3 }).format(litres),
           })}
         </p>
       ) : null}

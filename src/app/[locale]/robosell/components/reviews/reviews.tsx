@@ -12,10 +12,6 @@ export default function Reviews() {
     <section className="rs-rev" aria-labelledby="rev-title">
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span aria-hidden="true">“</span>
-            {REVIEWS.eyebrow}
-          </p>
           <h2 className="rs-title" id="rev-title" data-rv="">
             {REVIEWS.title}
           </h2>

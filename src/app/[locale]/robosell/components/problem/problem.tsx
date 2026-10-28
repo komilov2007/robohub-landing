@@ -13,10 +13,6 @@ export default function Problem() {
     <section className="rs-pb" id="problem" aria-labelledby="problem-title" data-pause="">
       <div className="rs-wrap">
         <header className="rs-pb__head">
-          <p className="rs-kicker" data-rv="">
-            <span>02</span>
-            {PROBLEM.eyebrow}
-          </p>
           <h2 className="rs-pb__title" id="problem-title" data-rv="">
             {head}{" "}
             <span className="rs-pb__lost">

@@ -25,12 +25,6 @@ export default async function Academy() {
       <div className="as-wrap">
         <div className="as-acad__box" data-rv>
           <div className="as-acad__copy">
-            <p className="as-acad__kicker">
-              <span className="as-acad__play-ico">
-                <Icon name="ai" />
-              </span>
-              {ACADEMY.kicker}
-            </p>
             <h2 className="as-acad__title" id="as-acad-title">
               {ACADEMY.title}
             </h2>

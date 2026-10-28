@@ -4,7 +4,8 @@ import ContactIcon, { type ContactIconName } from "@/components/contact-icon/con
 import { ACADEMY_PATH } from "@/lib/sites";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 import { localeHref, type Locale } from "@/i18n/config";
-import { LOGIN_HREF, type Content } from "../../calculator.content";
+import { type Content } from "../../calculator.content";
+import { sellerUrl } from "@/lib/sites";
 
 const CONTACTS: { icon: ContactIconName; label: string; href: string; external?: boolean }[] = [
   { icon: "phone", label: PHONE, href: PHONE_HREF },
@@ -41,7 +42,7 @@ export default function Footer({
     { label: footer.links.home, href: localeHref(locale, "/") },
     { label: footer.links.studio, href: localeHref(locale, "/ai-studio") },
     { label: footer.links.academy, href: localeHref(locale, ACADEMY_PATH) },
-    { label: footer.links.cabinet, href: LOGIN_HREF },
+    { label: footer.links.cabinet, href: sellerUrl(locale, "") },
   ];
   const [before, after = ""] = footer.rights.split("{{year}}");
 

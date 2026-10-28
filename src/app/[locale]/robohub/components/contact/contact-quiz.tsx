@@ -1,14 +1,14 @@
 import type { CSSProperties } from "react";
 import { TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/contacts";
 import type { messages } from "./contact.i18n";
+import { PHONE_COUNTRIES } from "./phone-countries";
 
 type T = (typeof messages)["uz"];
 
 // Aloqa formasi (quiz) — "Aloqa" bo'limida va header'dagi "Ariza qoldirish" modalida bir xil.
 // id — elementlar id'larining prefiksi (contact.script.js shu prefiks bilan topadi): "contact" — bo'lim, "cmodal" — modal.
 // reveal — skroll bilan chiqish animatsiyasi (data-sr) faqat bo'limda; modalda hammasi darhol ko'rinadi.
-// formOnly — modal uchun: pastidagi izoh ("pochta dasturida xat ochiladi") chiqmaydi, aloqa havolalari qoladi.
-export default function ContactQuiz({ t, id, reveal = false, formOnly = false }: { t: T; id: string; reveal?: boolean; formOnly?: boolean }) {
+export default function ContactQuiz({ t, id, reveal = false }: { t: T; id: string; reveal?: boolean }) {
   const q = t.quiz;
   const first = q.steps[0];
   const sr = (d: number) => (reveal ? { "data-sr": "", style: { "--d": `${d}ms` } as CSSProperties } : {});
@@ -30,6 +30,27 @@ export default function ContactQuiz({ t, id, reveal = false, formOnly = false }:
       <form className="contact__form" id={`${id}-form`} {...sr(200)}>
         {/* 1-qadamda tanlangan variantlar shu yerda chip bo'lib turadi (contact.script.js) */}
         <span className="contact__chips" id={`${id}-chips`} />
+        {/* oxirgi qadam (telefon): mamlakat kodi — inputdan alohida, o'chirib bo'lmaydi; bosilsa ro'yxat ochiladi (contact.script.js) */}
+        <div className="contact__cc" id={`${id}-cc`} hidden>
+          <button type="button" className="contact__cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-label={q.country}>
+            <img src={PHONE_COUNTRIES[0].flag} alt="" width={20} height={20} />
+            <span>+{PHONE_COUNTRIES[0].code}</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M3 4.5 6 7.5 9 4.5" />
+            </svg>
+          </button>
+          <ul className="contact__cc-menu" role="listbox" aria-label={q.country} hidden>
+            {PHONE_COUNTRIES.map((c) => (
+              <li key={c.id} role="none">
+                <button type="button" role="option" aria-selected="false" data-cc={c.id} data-code={c.code} data-mask={c.mask} data-flag={c.flag}>
+                  <img src={c.flag} alt="" width={20} height={20} loading="lazy" />
+                  <b>{c.id.toUpperCase()}</b>
+                  <span>+{c.code}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
         <input
           type={first.type}
           name={first.name}
@@ -59,6 +80,13 @@ export default function ContactQuiz({ t, id, reveal = false, formOnly = false }:
             <b>{t.done}</b>
             <small>{t.doneSub}</small>
           </span>
+          {/* formani boshidan boshlash — yangi so'rov yuborish uchun */}
+          <button type="button" className="contact__again" tabIndex={-1}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.6M20 4v4.6h-4.6M20 12a8 8 0 0 1-13.7 5.6L4 15.4M4 20v-4.6h4.6" />
+            </svg>
+            <span>{q.again}</span>
+          </button>
         </div>
       </form>
       {/* 1-qadam: tayyor variantlar (bir nechtasini tanlash mumkin) va "Boshqa" */}
@@ -81,12 +109,6 @@ export default function ContactQuiz({ t, id, reveal = false, formOnly = false }:
           {q.methods.email}
         </button>
       </div>
-      {!formOnly && (
-        <p className="contact__note" {...sr(240)}>
-          {t.note}
-        </p>
-      )}
-
       <p className="contact__ways" {...sr(280)}>
         <a href={TELEGRAM_URL} target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -100,12 +122,12 @@ export default function ContactQuiz({ t, id, reveal = false, formOnly = false }:
           </svg>
           +998 78 113 82 12
         </a>
-        <a href="mailto:hello@robohub.uz">
+        <a href="mailto:info@robohub.uz">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="14" rx="3" />
             <path d="M4 8l8 5 8-5" />
           </svg>
-          hello@robohub.uz
+          info@robohub.uz
         </a>
       </p>
     </>

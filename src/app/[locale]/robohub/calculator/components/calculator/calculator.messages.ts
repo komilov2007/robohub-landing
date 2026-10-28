@@ -2,7 +2,12 @@
 // shuning uchun kabinetdagi kalkulyator bilan bir xil o‘qiladi. Interpolyatsiya — i18next uslubida: {{name}};
 // ru ko‘plik shakllari — kalit_few / kalit_many (t() Intl.PluralRules bilan tanlaydi).
 // Faqat server komponentda import qilinadi (page.tsx): client’ga joriy tildagi lug‘at prop orqali boradi.
+// kk/ky/kaa/tg lug‘atlari alohida fayllarda (calculator.messages.<til>.ts).
 import { defineMessages } from "@/i18n/config";
+import { kk } from "./calculator.messages.kk";
+import { ky } from "./calculator.messages.ky";
+import { kaa } from "./calculator.messages.kaa";
+import { tg } from "./calculator.messages.tg";
 
 export type CalcDict = Record<string, string>;
 
@@ -597,7 +602,7 @@ export const CALC_MESSAGES = defineMessages<CalcDict>({
     calculator_competitors_ozon: "Ozon не отдаёт данные о конкурентах, поэтому сравнить не получится.",
     calculator_competitors_matched_name: "по «{{name}}»",
     calculator_competitors_matched_category: "Хиты категории",
-    calculator_competitors_matched_links: "{{count}} ссылок",
+    calculator_competitors_matched_links: "{{count}} ссылка",
     calculator_competitors_note_category: "По «{{name}}» ничего не нашлось — сравнили с самыми продаваемыми товарами категории.",
     calculator_competitors_none: "Ни по одной из добавленных ссылок цена не найдена. Добавьте другие ссылки и сравните снова.",
     calculator_competitors_verdict_cheaper_strong: "Дешевле {{percent}}% конкурентов",
@@ -682,6 +687,8 @@ export const CALC_MESSAGES = defineMessages<CalcDict>({
     calculator_competitors_reviews_many: "{{count}} отзывов",
     calculator_competitors_found_count_few: "найдено {{count}}",
     calculator_competitors_found_count_many: "найдено {{count}}",
+    calculator_competitors_matched_links_few: "{{count}} ссылки",
+    calculator_competitors_matched_links_many: "{{count}} ссылок",
   },
   en: {
     register: "Register",
@@ -940,9 +947,9 @@ export const CALC_MESSAGES = defineMessages<CalcDict>({
     calculator_competitors_matched_links: "{{count}} links",
     calculator_competitors_note_category: "Nothing was found for «{{name}}», so this is compared with the category's bestsellers.",
     calculator_competitors_none: "None of the links you added gave a price. Add other product links and compare again.",
-    calculator_competitors_verdict_cheaper_strong: "{{percent}}% cheaper than competitors",
+    calculator_competitors_verdict_cheaper_strong: "Cheaper than {{percent}}% of competitors",
     calculator_competitors_verdict_cheaper: "— your {{price}} is {{amount}} below the median.",
-    calculator_competitors_verdict_pricier_strong: "{{percent}}% pricier than competitors",
+    calculator_competitors_verdict_pricier_strong: "Pricier than {{percent}}% of competitors",
     calculator_competitors_verdict_pricier: "— your {{price}} is {{amount}} above the median.",
     calculator_competitors_you: "you",
     calculator_competitors_suggested: "Suggested price",
@@ -1018,5 +1025,11 @@ export const CALC_MESSAGES = defineMessages<CalcDict>({
     calculator_competitors_cta_text_links: "We'll compare your price with the products you linked.",
     calculator_competitors_note_unavailable: "No price was found for {{count}} of the links.",
     select_at_least_one: "Select at least one",
+    calculator_competitors_reviews_one: "{{count}} review",
+    calculator_competitors_matched_links_one: "{{count}} link",
   },
+  kk,
+  ky,
+  kaa,
+  tg,
 });

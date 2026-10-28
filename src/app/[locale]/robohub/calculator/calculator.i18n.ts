@@ -23,4 +23,32 @@ export const messages = defineMessages({
     keywords: "marketplace calculator, Uzum commission, Wildberries profit, Ozon fees, Yandex Market tariffs",
     appName: "RoboHub marketplace calculator",
   },
+  kk: {
+    metaTitle: "Маркетплейс калькуляторы: Uzum, Wildberries, Ozon пайдасы | RoboHub",
+    metaDescription:
+      "Uzum, Yandex Market, Wildberries және Ozon-дағы таза пайданы суммен есептеңіз: комиссия, жеткізу, салық және өзіндік құн. Тегін, тіркелусіз.",
+    keywords: "маркетплейс калькуляторы, Uzum комиссиясы, Wildberries пайдасы, Ozon есебі, Yandex Market тарифтері",
+    appName: "RoboHub маркетплейс калькуляторы",
+  },
+  ky: {
+    metaTitle: "Маркетплейс калькулятору: Uzum, Wildberries, Ozon пайдасы | RoboHub",
+    metaDescription:
+      "Uzum, Yandex Market, Wildberries жана Ozon'догу таза пайданы сум менен эсептеңиз: комиссия, жеткирүү, салык жана өздүк нарк. Акысыз, катталбастан.",
+    keywords: "маркетплейс калькулятору, Uzum комиссиясы, Wildberries пайдасы, Ozon эсеби, Yandex Market тарифтери",
+    appName: "RoboHub маркетплейс калькулятору",
+  },
+  kaa: {
+    metaTitle: "Marketpleys kalkulyatorı: Uzum, Wildberries, Ozon paydası | RoboHub",
+    metaDescription:
+      "Uzum, Yandex Market, Wildberries hám Ozon'daǵı taza paydanı swmda esaplań: komissiya, jetkerip beriw, salıq hám ózindik qun. Biypul, dizimnen ótpesten.",
+    keywords: "marketpleys kalkulyatorı, Uzum komissiyası, Wildberries paydası, Ozon esabı, Yandex Market tarifleri",
+    appName: "RoboHub marketpleys kalkulyatorı",
+  },
+  tg: {
+    metaTitle: "Калкулятори маркетплейс: фоида дар Uzum, Wildberries, Ozon | RoboHub",
+    metaDescription:
+      "Фоидаи софро дар Uzum, Yandex Market, Wildberries ва Ozon бо сӯм ҳисоб кунед: комиссия, расонидан, андоз ва арзиши аслӣ. Ройгон, бе бақайдгирӣ.",
+    keywords: "калкулятори маркетплейс, комиссияи Uzum, фоидаи Wildberries, ҳисоби Ozon, тарифҳои Yandex Market",
+    appName: "Калкулятори маркетплейси RoboHub",
+  },
 });

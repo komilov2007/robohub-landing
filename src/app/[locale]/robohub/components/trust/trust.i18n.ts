@@ -53,4 +53,68 @@ export const messages = defineMessages({
       { value: "One", label: "dashboard" },
     ],
   },
+  kk: {
+    label: "Бізге сенетін сатушылар",
+    title: "1 000-нан астам сатушы",
+    titleAccent: "қазірдің өзінде Robohub-пен жұмыс істейді",
+    lead: "Киім мен косметикадан электроника мен үй тауарларына дейін — түрлі саладағы сатушылар сауданы Robohub арқылы басқарады.",
+    stats: [
+      { value: "1 000", label: "қосылған сатушы" },
+      { value: "500 000", label: "жүйедегі тауар" },
+      { value: "900 000", label: "өңделген тапсырыс" },
+    ],
+    mps: "Маркетплейстер",
+    reach: [
+      { value: "4", label: "ел" },
+      { value: "Бір", label: "кабинет" },
+    ],
+  },
+  ky: {
+    label: "Бизге ишенген сатуучулар",
+    title: "1 000-ден ашык сатуучу",
+    titleAccent: "Robohub менен иштеп жатат",
+    lead: "Кийим-кече жана косметикадан электроника жана үй буюмдарына чейин — ар кандай тармактагы сатуучулар соодасын Robohub аркылуу башкарат.",
+    stats: [
+      { value: "1 000", label: "туташкан сатуучу" },
+      { value: "500 000", label: "системадагы товар" },
+      { value: "900 000", label: "иштетилген буйрутма" },
+    ],
+    mps: "Маркетплейстер",
+    reach: [
+      { value: "4", label: "өлкө" },
+      { value: "Бир", label: "кабинет" },
+    ],
+  },
+  kaa: {
+    label: "Bizge isengen satıwshılar",
+    title: "1 000-nan aslam satıwshı",
+    titleAccent: "álleqashan Robohub penen isleydi",
+    lead: "Kiyim-keshek hám kosmetikadan elektronika hám úy buyımlarına shekem — túrli tarawlardıń satıwshıları sawdasın Robohub arqalı basqaradı.",
+    stats: [
+      { value: "1 000", label: "baylanısqan satıwshı" },
+      { value: "500 000", label: "sistemadaǵı ónim" },
+      { value: "900 000", label: "qayta islengen buyırtpa" },
+    ],
+    mps: "Marketpleysler",
+    reach: [
+      { value: "4", label: "mámleket" },
+      { value: "Bir", label: "kabinet" },
+    ],
+  },
+  tg: {
+    label: "Фурӯшандагоне, ки ба мо эътимод доранд",
+    title: "Зиёда аз 1 000 фурӯшанда",
+    titleAccent: "аллакай бо Robohub кор мекунанд",
+    lead: "Аз либос ва косметика то электроника ва молҳои хонагӣ — фурӯшандагони соҳаҳои гуногун савдои худро тавассути Robohub идора мекунанд.",
+    stats: [
+      { value: "1 000", label: "фурӯшандаи пайвастшуда" },
+      { value: "500 000", label: "маҳсулот дар система" },
+      { value: "900 000", label: "фармоиши коркардшуда" },
+    ],
+    mps: "Маркетплейсҳо",
+    reach: [
+      { value: "4", label: "кишвар" },
+      { value: "Як", label: "кабинет" },
+    ],
+  },
 });

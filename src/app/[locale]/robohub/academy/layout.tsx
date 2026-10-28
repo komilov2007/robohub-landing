@@ -12,7 +12,7 @@ import "./motion.css";
 // Robohub Academy — Robohub saytining /academy sahifasi (robohub.uz/academy, robohub-landing.vercel.app/academy).
 // Kodi landing bilan aralashmaydi: hamma narsa shu papkada, uslublar .ac ildiziga bog'langan (landing uslublari — (landing) guruhida).
 // Ko'rinish Robohub landingiga mos: umumiy tokenlar, shriftlar (Space Grotesk + Inter — Robohub landingi, AI Studio va Kalkulyator bilan bir xil; academy.css .ac) va .btn — globals.css dan.
-// Uch tilda: /academy (uz), /ru/academy, /en/academy. Videolar o'zbekcha — hamma tilda bitta.
+// Yetti tilda: /academy (uz), /ru/academy, /en/academy, /kk, /ky, /kaa, /tg. Videolar o'zbekcha — hamma tilda bitta.
 export const messages = defineMessages({
   uz: {
     title: "Robohub Academy — marketpleys sotuvchilari uchun video darslar",
@@ -34,6 +34,34 @@ export const messages = defineMessages({
       "Learn Robohub in short lessons: analytics, orders, products, warehouse, marketing and integrations. Every topic has text, diagrams and video.",
     ogLocale: "en_US",
     skip: "Skip to main content",
+  },
+  kk: {
+    title: "Robohub Academy — маркетплейс сатушыларына арналған бейнесабақтар",
+    description:
+      "Robohub-ты қысқа сабақтармен меңгеріңіз: аналитика, тапсырыстар, тауарлар, қойма, маркетинг және интеграциялар. Әр тақырыпта мәтін, сызба және бейне бар.",
+    ogLocale: "kk_KZ",
+    skip: "Негізгі мазмұнға өту",
+  },
+  ky: {
+    title: "Robohub Academy — маркетплейс сатуучулары үчүн видеосабактар",
+    description:
+      "Robohub-ту кыска сабактар аркылуу өздөштүрүңүз: аналитика, буйрутмалар, товарлар, кампа, маркетинг жана интеграциялар. Ар бир темада текст, схема жана видео бар.",
+    ogLocale: "ky_KG",
+    skip: "Негизги мазмунга өтүү",
+  },
+  kaa: {
+    title: "Robohub Academy — marketpleys satıwshıları ushın video sabaqlar",
+    description:
+      "Robohub’tı qısqa sabaqlarda úyreniń: analitika, buyırtpalar, ónimler, sklad, marketing hám integraciyalar. Hár bir temada tekst, sxema hám video bar.",
+    ogLocale: "kaa_UZ",
+    skip: "Tiykarǵı mazmunǵa ótiw",
+  },
+  tg: {
+    title: "Robohub Academy — видеодарсҳо барои фурӯшандагони маркетплейсҳо",
+    description:
+      "Robohub-ро дар дарсҳои кӯтоҳ омӯзед: аналитика, фармоишҳо, маҳсулот, анбор, маркетинг ва интегратсияҳо. Дар ҳар мавзӯъ матн, нақша ва видео ҳаст.",
+    ogLocale: "tg_TJ",
+    skip: "Гузариш ба мундариҷаи асосӣ",
   },
 });
 

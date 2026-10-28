@@ -30,6 +30,7 @@ export const messages = defineMessages({
         { href: "#features", t: "Xabarlar va sharhlar", d: "Xaridorlar bilan muloqot va avtomatik javoblar." },
       ],
     },
+    soon: "Tez kunda", // "Tez kunda" belgisi (SOON_TOOL)
     tools: {
       title: "Vositalar va integratsiyalar",
       items: [
@@ -68,6 +69,7 @@ export const messages = defineMessages({
         { href: "#features", t: "Сообщения и отзывы", d: "Общение с покупателями и автоматические ответы." },
       ],
     },
+    soon: "Скоро", // "Tez kunda" belgisi (SOON_TOOL)
     tools: {
       title: "Инструменты и интеграции",
       items: [
@@ -106,6 +108,7 @@ export const messages = defineMessages({
         { href: "#features", t: "Messages and reviews", d: "Customer communication and automatic replies." },
       ],
     },
+    soon: "Soon", // "Tez kunda" belgisi (SOON_TOOL)
     tools: {
       title: "Tools and integrations",
       items: [
@@ -121,5 +124,161 @@ export const messages = defineMessages({
     start: "Get in touch",
     menuOpen: "Open menu",
     menuClose: "Close menu",
+  },
+  kk: {
+    home: "Robohub — басты бет",
+    navLabel: "Негізгі мәзір",
+    nav: [
+      { href: "#features", label: "Мүмкіндіктер", menu: "features" },
+      { href: "#how-it-works", label: "Қалай жұмыс істейді" },
+      { href: "#reviews", label: "Клиенттер" },
+      { href: "#pricing", label: "Тарифтер" },
+      { href: localeHref("kk", ACADEMY_PATH), label: "Academy" },
+    ],
+    features: {
+      title: "Robohub мүмкіндіктері",
+      items: [
+        { href: "#features", t: "Тауарлар мен карточкалар", d: "Бір рет жүктеңіз — бірнеше маркетплейсте сатыңыз." },
+        { href: "#features", t: "Қалдықтар мен қоймалар", d: "Алаңдар арасында қалдықтарды синхрондау." },
+        { href: "#features", t: "Тапсырыстарды басқару", d: "Тапсырыстарды өңдеу, жапсырмалар мен мәртебелер." },
+        { href: "#features", t: "Ішкі аналитика", d: "Сатылым, пайда және тауарлардың юнит-экономикасы." },
+        { href: "#features", t: "Сыртқы аналитика", d: "Маркетплейстердегі сұраныс, ассортимент және бәсекелестер." },
+        { href: "#features", t: "Жарнама және акциялар", d: "Жарнама ставкалары мен акцияларды басқару." },
+        { href: "#features", t: "Хабарламалар мен пікірлер", d: "Сатып алушылармен байланыс және автоматты жауаптар." },
+      ],
+    },
+    soon: "Жақында", // "Tez kunda" belgisi (SOON_TOOL)
+    tools: {
+      title: "Құралдар мен интеграциялар",
+      items: [
+        { href: page("kk", "/calculator"), t: "Маркетплейс калькуляторы", d: "Сатуды бастамас бұрын шығын мен пайданы есептеңіз." },
+        { href: page("kk", "/ai-studio"), t: "AI студия", d: "Тауар суреттері мен инфографикасын жасаңыз." },
+        { href: "#integrations", t: "Есеп жүйелерімен интеграциялар", d: "Қойма есебін маркетплейстермен байланыстырыңыз." },
+        { href: "#regions", t: "Маркетплейстер мен елдер", d: "Сауда үшін жаңа алаңдар мен нарықтарды таңдаңыз." },
+        { href: academy("kk", "#help"), t: "Сатушылар форумы", d: "Басқа сатушылармен тәжірибе алмасыңыз." },
+      ],
+    },
+    lang: "Тілді таңдау",
+    login: "Кіру",
+    start: "Өтінім қалдыру",
+    menuOpen: "Мәзірді ашу",
+    menuClose: "Мәзірді жабу",
+  },
+  ky: {
+    home: "Robohub — башкы бет",
+    navLabel: "Негизги меню",
+    nav: [
+      { href: "#features", label: "Мүмкүнчүлүктөр", menu: "features" },
+      { href: "#how-it-works", label: "Кантип иштейт" },
+      { href: "#reviews", label: "Кардарлар" },
+      { href: "#pricing", label: "Тарифтер" },
+      { href: localeHref("ky", ACADEMY_PATH), label: "Academy" },
+    ],
+    features: {
+      title: "Robohub мүмкүнчүлүктөрү",
+      items: [
+        { href: "#features", t: "Товарлар жана карточкалар", d: "Бир жолу жүктөңүз — бир нече маркетплейсте сатыңыз." },
+        { href: "#features", t: "Калдыктар жана кампалар", d: "Аянтчалар ортосунда калдыктарды синхрондоо." },
+        { href: "#features", t: "Буйрутмаларды башкаруу", d: "Буйрутмаларды иштетүү, этикеткалар жана статустар." },
+        { href: "#features", t: "Ички аналитика", d: "Сатуулар, пайда жана товарлардын юнит-экономикасы." },
+        { href: "#features", t: "Тышкы аналитика", d: "Маркетплейстердеги суроо-талап, ассортимент жана атаандаштар." },
+        { href: "#features", t: "Жарнама жана акциялар", d: "Жарнама ставкаларын жана акцияларды башкаруу." },
+        { href: "#features", t: "Билдирүүлөр жана сын-пикирлер", d: "Сатып алуучулар менен баарлашуу жана автоматтык жооптор." },
+      ],
+    },
+    soon: "Жакында", // "Tez kunda" belgisi (SOON_TOOL)
+    tools: {
+      title: "Куралдар жана интеграциялар",
+      items: [
+        { href: page("ky", "/calculator"), t: "Маркетплейс калькулятору", d: "Сатууну баштоодон мурун чыгым менен пайданы эсептеңиз." },
+        { href: page("ky", "/ai-studio"), t: "AI студия", d: "Товардын сүрөттөрүн жана инфографикасын түзүңүз." },
+        { href: "#integrations", t: "Эсеп системалары менен интеграциялар", d: "Кампа эсебин маркетплейстер менен байланыштырыңыз." },
+        { href: "#regions", t: "Маркетплейстер жана өлкөлөр", d: "Соода үчүн жаңы аянтчаларды жана рынокторду тандаңыз." },
+        { href: academy("ky", "#help"), t: "Сатуучулар форуму", d: "Башка сатуучулар менен тажрыйба алмашыңыз." },
+      ],
+    },
+    lang: "Тилди тандоо",
+    login: "Кирүү",
+    start: "Өтүнмө калтыруу",
+    menuOpen: "Менюну ачуу",
+    menuClose: "Менюну жабуу",
+  },
+  kaa: {
+    home: "Robohub — bas bet",
+    navLabel: "Tiykarǵı menyu",
+    nav: [
+      { href: "#features", label: "Múmkinshilikler", menu: "features" },
+      { href: "#how-it-works", label: "Qalay isleydi" },
+      { href: "#reviews", label: "Klientler" },
+      { href: "#pricing", label: "Tarifler" },
+      { href: localeHref("kaa", ACADEMY_PATH), label: "Academy" },
+    ],
+    features: {
+      title: "Robohub múmkinshilikleri",
+      items: [
+        { href: "#features", t: "Ónimler hám kartochkalar", d: "Bir ret júkleń — bir neshe marketpleyste satıń." },
+        { href: "#features", t: "Qaldıqlar hám skladlar", d: "Platformalar arasında qaldıqlardı sinxronlaw." },
+        { href: "#features", t: "Buyırtpalardı basqarıw", d: "Buyırtpalardı qayta islew, etiketkalar hám statuslar." },
+        { href: "#features", t: "Ishki analitika", d: "Satıw, payda hám ónimlerdiń unit-ekonomikası." },
+        { href: "#features", t: "Sırtqı analitika", d: "Marketpleyslerdegi talap, assortiment hám básekilesler." },
+        { href: "#features", t: "Reklama hám aksiyalar", d: "Reklama stavkaları hám aksiyalardı basqarıw." },
+        { href: "#features", t: "Xabarlar hám pikirler", d: "Satıp alıwshılar menen sóylesiw hám avtomat juwaplar." },
+      ],
+    },
+    soon: "Tez arada", // "Tez kunda" belgisi (SOON_TOOL)
+    tools: {
+      title: "Qurallar hám integraciyalar",
+      items: [
+        { href: page("kaa", "/calculator"), t: "Marketpleys kalkulyatorı", d: "Satıwdı baslawdan aldın qárejet hám paydanı esaplań." },
+        { href: page("kaa", "/ai-studio"), t: "AI studiya", d: "Ónim súwretleri hám infografikasın jaratıń." },
+        { href: "#integrations", t: "Esap sistemaları menen integraciyalar", d: "Sklad esabın marketpleysler menen baylanıstırıń." },
+        { href: "#regions", t: "Marketpleysler hám mámleketler", d: "Sawda ushın jańa platformalar hám bazarlardı tańlań." },
+        { href: academy("kaa", "#help"), t: "Satıwshılar forumı", d: "Basqa satıwshılar menen tájiriybe almasıń." },
+      ],
+    },
+    lang: "Til tańlaw",
+    login: "Kiriw",
+    start: "Arza qaldırıw",
+    menuOpen: "Menyunı ashıw",
+    menuClose: "Menyunı jabıw",
+  },
+  tg: {
+    home: "Robohub — саҳифаи асосӣ",
+    navLabel: "Менюи асосӣ",
+    nav: [
+      { href: "#features", label: "Имкониятҳо", menu: "features" },
+      { href: "#how-it-works", label: "Чӣ тавр кор мекунад" },
+      { href: "#reviews", label: "Мизоҷон" },
+      { href: "#pricing", label: "Тарифҳо" },
+      { href: localeHref("tg", ACADEMY_PATH), label: "Academy" },
+    ],
+    features: {
+      title: "Имкониятҳои Robohub",
+      items: [
+        { href: "#features", t: "Маҳсулот ва кортҳо", d: "Як маротиба бор кунед — дар якчанд маркетплейс фурӯшед." },
+        { href: "#features", t: "Боқимонда ва анборҳо", d: "Ҳамоҳангсозии боқимонда байни платформаҳо." },
+        { href: "#features", t: "Идоракунии фармоишҳо", d: "Коркарди фармоишҳо, тамғаҳо ва ҳолатҳо." },
+        { href: "#features", t: "Таҳлили дохилӣ", d: "Фурӯш, фоида ва юнит-иқтисоди маҳсулот." },
+        { href: "#features", t: "Таҳлили берунӣ", d: "Талабот, ассортимент ва рақибон дар маркетплейсҳо." },
+        { href: "#features", t: "Реклама ва аксияҳо", d: "Идоракунии ставкаҳои реклама ва аксияҳо." },
+        { href: "#features", t: "Паёмҳо ва шарҳҳо", d: "Муошират бо харидорон ва ҷавобҳои худкор." },
+      ],
+    },
+    soon: "Ба наздикӣ", // "Tez kunda" belgisi (SOON_TOOL)
+    tools: {
+      title: "Абзорҳо ва интегратсияҳо",
+      items: [
+        { href: page("tg", "/calculator"), t: "Ҳисобкунаки маркетплейс", d: "Пеш аз оғози фурӯш хароҷот ва фоидаро ҳисоб кунед." },
+        { href: page("tg", "/ai-studio"), t: "AI студия", d: "Тасвирҳо ва инфографикаи маҳсулот эҷод кунед." },
+        { href: "#integrations", t: "Интегратсия бо системаҳои баҳисобгирӣ", d: "Баҳисобгирии анборро бо маркетплейсҳо пайваст кунед." },
+        { href: "#regions", t: "Маркетплейсҳо ва кишварҳо", d: "Барои фурӯш платформаҳо ва бозорҳои нав интихоб кунед." },
+        { href: academy("tg", "#help"), t: "Форуми фурӯшандагон", d: "Бо дигар фурӯшандагон таҷриба мубодила кунед." },
+      ],
+    },
+    lang: "Интихоби забон",
+    login: "Ворид шудан",
+    start: "Дархост гузоштан",
+    menuOpen: "Кушодани меню",
+    menuClose: "Пӯшидани меню",
   },
 });

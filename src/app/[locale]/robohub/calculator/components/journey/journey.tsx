@@ -39,10 +39,6 @@ export default function Journey({ steps, demo, cta }: { steps: Content["STEPS"];
       <div className="as-wrap">
         <div className="cx-journey__head" data-io>
           <div className="cx-head">
-            <span className="cx-kicker cx-kicker--light">
-              <i />
-              {steps.eyebrow}
-            </span>
             <h2 id="cx-journey-title">{steps.title}</h2>
           </div>
           <p>{steps.text}</p>

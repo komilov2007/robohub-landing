@@ -3,9 +3,12 @@
 // t — joriy tildagi matn (contact.i18n.ts → quiz).
 //  1) marketpleys: tayyor variantlar (bir nechtasini tanlash mumkin) yoki "Boshqa" — nomini inputga yozadi
 //  2) ism: erkin matn
-//  3) aloqa: Telefon (+998 (XX) XXX-XX-XX formatida, 9 raqam) yoki Email — tanlov tugmalari bilan
+//  3) aloqa: Telefon yoki Email — tanlov tugmalari bilan. Telefon: kod (+998, +7 …) inputdan alohida tugmada —
+//     o'chirib bo'lmaydi, bosilsa mamlakatlar ro'yxati ochiladi; raqam shu mamlakat formatida yoziladi (phone-countries.ts).
+//     Standart mamlakat — sahifa tilidan (LANG_COUNTRY).
+//  Tasdiqdan keyin "Qayta yuborish" — forma boshidan boshlanadi.
 // Har qadam almashganda tepadagi "1/3" ko'rsatkich va input silliq almashadi (robohub.css → .is-swap).
-// Backend yo'q: oxirgi qadamdan keyin hello@robohub.uz manziliga tayyor xat (mailto) ochiladi.
+// Backend yo'q: oxirgi qadamdan keyin info@robohub.uz manziliga tayyor xat (mailto) ochiladi.
 // id — elementlar id'larining prefiksi (contact-quiz.tsx): "contact" — bo'lim, "cmodal" — header'dagi modal oyna.
 export function init(t, id) {
   id = id || "contact";
@@ -25,47 +28,89 @@ export function init(t, id) {
   var picked = [];          // 1-qadam: tanlangan variantlar
   var method = "phone";     // 3-qadam: phone | email
 
-  /* ---------- telefon formati: +998 (XX) XXX-XX-XX ---------- */
+  /* ---------- telefon: mamlakat kodi (alohida tugma) + shu mamlakat formatidagi raqam ---------- */
+  var cc = document.getElementById(id + "-cc");
+  var ccBtn = cc && cc.querySelector(".contact__cc-btn");
+  var ccMenu = cc && cc.querySelector(".contact__cc-menu");
+  var ccItems = cc ? [].slice.call(cc.querySelectorAll("button[data-cc]")) : [];
+  var LANG_COUNTRY = { uz: "uz", kaa: "uz", ru: "ru", kk: "kz", ky: "kg", tg: "tj", en: "uz" };
+  var country = null;       // tanlangan mamlakat tugmasi (data-code, data-mask, data-flag)
+  function mask() { return country ? country.dataset.mask : "(XX) XXX-XX-XX"; }
+  function maxLen() { return mask().replace(/[^X]/g, "").length; }
   function phoneDigits(v) {
     var d = v.replace(/\D/g, "");
-    if (d.indexOf("998") === 0) d = d.slice(3);
-    return d.slice(0, 9);
+    // to'liq raqam (kodi bilan) qo'yilsa — kod olib tashlanadi
+    var code = country ? country.dataset.code : "";
+    if (code && d.length > maxLen() && d.indexOf(code) === 0) d = d.slice(code.length);
+    return d.slice(0, maxLen());
   }
+  // raqamlar maska bo'yicha joylanadi; oxirgi raqamdan keyingi belgilar qo'yilmaydi (o'chirish oson bo'lsin)
   function formatPhone(d) {
-    var s = "+998";
-    if (d.length) s += " (" + d.slice(0, 2);
-    if (d.length >= 2) s += ")";
-    if (d.length > 2) s += " " + d.slice(2, 5);
-    if (d.length > 5) s += "-" + d.slice(5, 7);
-    if (d.length > 7) s += "-" + d.slice(7, 9);
-    return s;
+    var m = mask(), out = "", k = 0;
+    for (var i = 0; i < m.length && k < d.length; i++) out += m[i] === "X" ? d[k++] : m[i];
+    return out;
   }
+  function setCountry(b, focus) {
+    if (!b) return;
+    country = b;
+    ccItems.forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
+    if (ccBtn) {
+      ccBtn.querySelector("img").src = b.dataset.flag;
+      ccBtn.querySelector("span").textContent = "+" + b.dataset.code;
+    }
+    if (step === last && method === "phone") {
+      input.value = formatPhone(phoneDigits(input.value));
+      input.placeholder = mask().replace(/X/g, "0");
+    }
+    input.setCustomValidity("");
+    if (focus) input.focus();
+  }
+  function openCc(on) {
+    if (!ccMenu) return;
+    ccMenu.hidden = !on;
+    ccBtn.setAttribute("aria-expanded", String(on));
+    if (on && country) country.focus();
+  }
+  if (ccBtn) {
+    ccBtn.addEventListener("click", function () { openCc(ccMenu.hidden); });
+    ccMenu.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-cc]");
+      if (!b) return;
+      setCountry(b, true);
+      openCc(false);
+    });
+    ccMenu.addEventListener("keydown", function (e) {
+      var i = ccItems.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") { e.preventDefault(); ccItems[(i + 1) % ccItems.length].focus(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); ccItems[(i - 1 + ccItems.length) % ccItems.length].focus(); }
+      else if (e.key === "Escape") { e.preventDefault(); openCc(false); ccBtn.focus(); }
+    });
+    document.addEventListener("pointerdown", function (e) { if (!cc.contains(e.target)) openCc(false); });
+    var lang = (document.documentElement.lang || "uz").toLowerCase();
+    var want = LANG_COUNTRY[lang] || "uz";
+    setCountry(ccItems.filter(function (b) { return b.dataset.cc === want; })[0] || ccItems[0]);
+  }
+
   function onInput() {
     input.setCustomValidity("");
-    if (step === last && method === "phone") {
-      var d = phoneDigits(input.value);
-      input.value = d.length ? formatPhone(d) : "";
-    }
+    if (step === last && method === "phone") input.value = formatPhone(phoneDigits(input.value));
   }
   input.addEventListener("input", onInput);
-  input.addEventListener("focus", function () {
-    if (step === last && method === "phone" && !input.value) input.value = "+998 ";
-  });
-  input.addEventListener("blur", function () {
-    if (step === last && method === "phone" && !phoneDigits(input.value).length) input.value = "";
-  });
 
   /* ---------- qadamni ko'rsatish ---------- */
   function setMethod(m) {
     method = m;
     if (via) [].forEach.call(via.querySelectorAll("button"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.via === m)); });
     var phone = m === "phone";
+    // kod tugmasi faqat telefon tanlanganda; placeholder — mamlakat formati ("(00) 000-00-00")
+    if (cc) cc.hidden = !phone;
+    if (!phone) openCc(false);
     input.type = phone ? "tel" : "email";
     input.name = phone ? "phone" : "email";
-    input.autocomplete = phone ? "tel" : "email";
+    input.autocomplete = phone ? "tel-national" : "email";
     input.inputMode = phone ? "tel" : "email";
-    input.placeholder = phone ? t.steps[last].placeholder : t.emailPlaceholder;
-    input.setAttribute("aria-label", input.placeholder);
+    input.placeholder = phone ? (cc ? mask().replace(/X/g, "0") : t.steps[last].placeholder) : t.emailPlaceholder;
+    input.setAttribute("aria-label", phone ? t.steps[last].placeholder : t.emailPlaceholder);
     input.value = "";
     input.setCustomValidity("");
   }
@@ -82,6 +127,7 @@ export function init(t, id) {
     if (via) via.hidden = i !== last;
     if (i === last) setMethod(method);
     else {
+      if (cc) { cc.hidden = true; openCc(false); }
       input.type = s.type;
       input.name = s.name;
       input.autocomplete = s.autoComplete;
@@ -173,13 +219,18 @@ export function init(t, id) {
       answers[0] = a;
     } else if (step === last) {
       if (method === "phone") {
-        if (phoneDigits(input.value).length !== 9) { input.setCustomValidity(t.phoneError); input.reportValidity(); return; }
+        if (phoneDigits(input.value).length !== maxLen()) {
+          // xato matni + tanlangan mamlakat formati: "Raqamni toʻliq kiriting: +998 (XX) XXX-XX-XX"
+          input.setCustomValidity(t.phoneError + ": " + (country ? "+" + country.dataset.code + " " : "") + mask());
+          input.reportValidity();
+          return;
+        }
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) {
         input.setCustomValidity(t.emailError);
         input.reportValidity();
         return;
       }
-      answers[step] = input.value.trim();
+      answers[step] = (method === "phone" && country ? "+" + country.dataset.code + " " : "") + input.value.trim();
     } else {
       var v = input.value.trim();
       if (!v) { input.value = ""; input.reportValidity(); return; }
@@ -195,15 +246,34 @@ export function init(t, id) {
       if (i === last) return (method === "phone" ? s.label : t.emailLabel) + answers[i];
       return s.label + answers[i];
     }).join("\n");
-    location.href = "mailto:hello@robohub.uz?subject=" + encodeURIComponent(t.subject) + "&body=" + encodeURIComponent(body);
+    location.href = "mailto:info@robohub.uz?subject=" + encodeURIComponent(t.subject) + "&body=" + encodeURIComponent(body);
     // forma tasdiq holatiga o'tadi (animatsiya robohub.css da: .contact__form.is-done)
     input.blur();
     input.disabled = true;
     button.disabled = true;
     if (via) via.hidden = true;
+    if (cc) { cc.hidden = true; openCc(false); }
     if (steps) steps.dataset.step = "done";
     form.classList.add("is-done");
     done.setAttribute("aria-hidden", "false");
+    if (again) again.tabIndex = 0;
+  });
+
+  /* ---------- "Qayta yuborish": forma boshidan boshlanadi (mamlakat tanlovi saqlanadi) ---------- */
+  var again = form.querySelector(".contact__again");
+  if (again) again.addEventListener("click", function () {
+    step = 0;
+    answers = [];
+    picked.slice().forEach(function (v) { setPicked(v, false); });
+    method = "phone";
+    if (via) [].forEach.call(via.querySelectorAll("button"), function (b) { b.setAttribute("aria-pressed", String(b.dataset.via === "phone")); });
+    input.disabled = false;
+    button.disabled = false;
+    again.tabIndex = -1;
+    done.setAttribute("aria-hidden", "true");
+    form.classList.remove("is-done");
+    show(0);
+    input.focus();
   });
 
   show(0);

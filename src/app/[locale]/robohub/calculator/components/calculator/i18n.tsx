@@ -26,7 +26,7 @@ export function useT() {
     (key: string, vars?: Vars) => {
       let text: string | undefined;
       if (typeof vars?.count === "number") {
-        const form = new Intl.PluralRules(locale === "uz" ? "en" : locale).select(vars.count);
+        const form = new Intl.PluralRules(locale === "uz" || locale === "kaa" ? "en" : locale).select(vars.count);
         text = dict[`${key}_${form}`];
       }
       text ??= dict[key] ?? vars?.defaultValue ?? key;

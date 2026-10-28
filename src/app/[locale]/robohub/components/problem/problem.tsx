@@ -23,19 +23,6 @@ export default async function Problem() {
     <section className="pain" id="problem" data-theme="dark" data-state="before" aria-labelledby="problem-title">
       <div className="container pain__frame">
         <div className="pain__head" data-sr="">
-          <p className="pain__eyebrow">
-            <svg viewBox="0 0 33.8675 15.06" aria-hidden="true">
-              <use href="#rh-mark" />
-            </svg>
-            {t.eyebrow} ·{" "}
-            <span className="pain__swap">
-              {sides.map((side) => (
-                <span className={`pain__v--${side}`} key={side}>
-                  {t[side].label}
-                </span>
-              ))}
-            </span>
-          </p>
           {/* Sarlavhalarda (Unbounded) oʻ/gʻ uchun ‘ belgisi: ʻ bu shriftda harf ustiga minib qoladi */}
           <div className="pain__swap">
             {sides.map((side) => (

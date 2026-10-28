@@ -6,7 +6,7 @@ import LangSelect from "@/components/lang-select/lang-select";
 import { CABINET_LABEL, useRobohubAuthed } from "@/lib/robohub-session";
 import type { Locale } from "@/i18n/config";
 import type { Content } from "../../calculator.content";
-import { LOGIN_HREF } from "../../calculator.content";
+import { sellerUrl } from "@/lib/sites";   // kabinet — joriy tilda
 
 // Header — AI Studio header'i bilan bir xil (as-header klasslari): sticky, blur, faol bo'lim ostida sariq chiziq,
 // til tanlash (/calculator yo'lida qoladi), "Kirish" va "Bepul boshlash"; mobilda — pastga ochiladigan panel.
@@ -69,7 +69,7 @@ export default function Header({ nav, ui, locale }: { nav: Content["NAV"]; ui: C
         </nav>
         <div className="as-header__actions">
           <LangSelect locale={locale} label={ui.lang} path="/calculator" />
-          <a href={LOGIN_HREF} className="as-hbtn as-hbtn--accent">
+          <a href={sellerUrl(locale, "")} className="as-hbtn as-hbtn--accent">
             {authed ? CABINET_LABEL[locale] : ui.login}
           </a>
         </div>
@@ -98,7 +98,7 @@ export default function Header({ nav, ui, locale }: { nav: Content["NAV"]; ui: C
             <LangSelect locale={locale} label={ui.lang} path="/calculator" />
           </div>
           <div className="as-mmenu__actions">
-            <a href={LOGIN_HREF} className="as-hbtn as-hbtn--lg as-hbtn--primary">
+            <a href={sellerUrl(locale, "")} className="as-hbtn as-hbtn--lg as-hbtn--primary">
               {authed ? CABINET_LABEL[locale] : ui.login}
             </a>
           </div>

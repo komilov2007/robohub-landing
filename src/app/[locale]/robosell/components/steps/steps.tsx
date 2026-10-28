@@ -70,10 +70,6 @@ export default function Steps() {
     <section className="rs-steps" id="how-it-works" aria-labelledby="steps-title">
       <div className="rs-wrap">
         <header className="rs-head2">
-          <p className="rs-kicker" data-rv="">
-            <span>03</span>
-            {STEPS.eyebrow}
-          </p>
           <h2 className="rs-title" id="steps-title" data-rv="">
             {STEPS.title}
           </h2>
