@@ -2270,7 +2270,7 @@ body:has(.feat__skip.is-on) .totop{opacity:0;visibility:hidden;transform:transla
   .reels{--w:96px;--gx:14px;--gy:16px;aspect-ratio:3/4;transition:opacity 300ms var(--ease),transform 400ms var(--ease-soft),bottom 350ms var(--ease-soft),visibility 0s}
   .reels .reels__card{border:0;border-radius:16px;background:#fff;box-shadow:0 10px 24px -10px rgba(0,30,28,.55),0 0 0 1px rgba(0,54,52,.12)}
   .reels .reels__poster,.reels .reels__frame{inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:13px;border:0}
-  .reels .reels__bars,.reels .reels__cap,.reels .reels__play{display:none}
+  .reels .reels__bars,.reels .reels__cap{display:none}
   .reels .reels__hide{top:-7px;right:-7px;width:22px;height:22px;border-width:1.5px}
   .reels .reels__hide svg{width:11px;height:11px}
   body:has(.mcta.is-on) .reels[data-corner^="b"]{bottom:calc(var(--gy) + 64px + env(safe-area-inset-bottom))}
@@ -2318,10 +2318,10 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 .reels__play{
   position:absolute;left:50%;top:44%;z-index:2;display:grid;place-items:center;width:34px;height:34px;margin:-17px 0 0 -17px;
   border-radius:50%;background:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  opacity:0;transform:scale(.8);transition:opacity 250ms var(--ease),transform 300ms var(--ease-soft);
+  transition:background 250ms var(--ease),transform 300ms var(--ease-soft);   /* doim ko'rinadi: video avtomatik o'ynamaydi — bosish mumkinligi aniq bo'lsin */
 }
 .reels__play svg{width:16px;height:16px;fill:#fff;margin-left:2px}
-.reels__card:hover .reels__play,.reels__card:focus-visible .reels__play{opacity:1;transform:none}
+.reels__card:hover .reels__play,.reels__card:focus-visible .reels__play{background:rgba(255,255,255,.42);transform:scale(1.08)}
 
 .reels__cap{
   position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;flex-direction:column;gap:2px;
