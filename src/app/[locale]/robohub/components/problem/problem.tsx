@@ -13,7 +13,7 @@ const NEXT = [
 ];
 
 // 2. MUAMMO — head (sarlavha) → media (sxema videosi) → foot ("keyin esa").
-// Video 0–8 s "Robohubsiz", keyin "Robohub bilan" sxemasini ko'rsatadi; problem.script.js videoning vaqtiga qarab
+// Video avval "Robohubsiz" (kompyuterda 0–8 s, telefonda 0–3.7 s), keyin "Robohub bilan" sxemasini ko'rsatadi; problem.script.js videoning vaqtiga qarab
 // data-state ni almashtiradi va head/foot dagi ikki variantdan mosini ko'rsatadi. "Robohub bilan" qismida
 // bo'lim foni mint rangga o'tadi (video bilan bir vaqtda silliq almashadi), tepa o'ngdagi tugmalar videoni shu qismga o'tkazadi. Video bezak (aria-hidden) —
 // mazmuni matnda.
@@ -64,8 +64,8 @@ export default async function Problem() {
         </div>
 
         <div className="pain__media" data-sr="">
-          {/* Telefonda (≤600px) — portret video (1080×1350), kompyuterda — keng (1920×600). Ikkalasi 13 s, vaqt jadvali bir xil,
-              shuning uchun problem.script.js ikkalasida ham fon va matnni bir xil almashtiradi. Brauzer mosini o'zi tanlaydi. */}
+          {/* Telefonda (≤600px) — portret video (1080×1350), kompyuterda — keng (1920×600). Uzunligi va vaqt jadvali har xil (8.7 s / 13 s),
+              problem.script.js qaysi biri o'ynayotganiga qarab (currentSrc) mos jadvalni oladi. Brauzer mosini o'zi tanlaydi. */}
           {/* key: til almashganda <video> qayta yaratiladi — aks holda brauzer eski <source> ni o'ynashda davom etadi */}
           <video
             key={lang}
@@ -77,7 +77,7 @@ export default async function Problem() {
             aria-hidden="true"
           >
             <source
-              src={`/robohub-13s-mobile-${lang}.mp4`}
+              src={`/robohub-mobile-${lang}.mp4`}
               type="video/mp4"
               media="(max-width: 600px)"
             />

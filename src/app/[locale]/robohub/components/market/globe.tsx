@@ -26,7 +26,7 @@ type GlobeMp = { name: string; logo: string; wide: boolean };
 export type GlobeMps = Record<CountryId, { now: GlobeMp[]; soon: GlobeMp[] }>;
 
 const BASE = { lon: 68, lat: 40 };   // globus shu nuqtaga qarab turadi
-const HOLD = 4600;                    // har mamlakat shuncha vaqt yonib turadi (ms) — shoshmasdan
+const HOLD = 3000;                    // har mamlakat shuncha vaqt yonib turadi (ms)
 const RAD = Math.PI / 180;
 
 export default function Globe({ names, mps, soon }: { names: Record<CountryId, string>; mps?: GlobeMps; soon?: string }) {

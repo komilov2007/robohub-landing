@@ -152,6 +152,23 @@ return (function () {
 
   // Telefon (<820px): qotadigan skroll sahnasi o'rniga oddiy vertikal "zanjir" — har qadam: raqam, matn, karta;
   // qadamlar chap chiziq bilan bog'langan (robohub.css → .feat--chain). Qadam ekranga kirganda karta animatsiyasi yoqiladi.
+  // iOS Safari brauzerdan chiqilganda videolarni to'xtatadi — qaytganda faol va ekrandagi karta videosini qayta yoqamiz
+  function resumeVideos() {
+    if (document.hidden || reduce) return;
+    items.forEach(function (it) {
+      var v = it.act && it.card.querySelector("video");
+      if (!v) return;
+      var r = v.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < innerHeight) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    });
+  }
+  document.addEventListener("visibilitychange", resumeVideos);
+  addEventListener("pageshow", resumeVideos);
+  function offResume() {
+    document.removeEventListener("visibilitychange", resumeVideos);
+    removeEventListener("pageshow", resumeVideos);
+  }
+
   if (matchMedia("(max-width: 819px)").matches) return initChain();
 
   function initChain() {
@@ -194,6 +211,7 @@ return (function () {
     }
     return function cleanup() {
       cio.disconnect();
+      offResume();
       document.removeEventListener("feat:go", onChainGo);
       list.remove();
       sec.classList.remove("feat--chain");
@@ -415,6 +433,7 @@ return (function () {
 
   return function cleanup() {
     removeEventListener("scroll", kick);
+    offResume();
     ro.disconnect();
     cancelAnimationFrame(kickRaf);
     removeEventListener("wheel", onWheel);

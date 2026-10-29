@@ -22,15 +22,27 @@ export default function IntegVideo({ t }: { t: T }) {
       return () => video.removeEventListener("loadedmetadata", showFrame);
     }
 
+    let inView = false;
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) video.play().catch(() => {});
+        inView = entries[0].isIntersecting;
+        if (inView) video.play().catch(() => {});
         else video.pause();
       },
       { threshold: 0.3 },
     );
     io.observe(video);
-    return () => io.disconnect();
+    // iOS Safari brauzerdan chiqilganda videoni to'xtatadi — qaytganda ekranda bo'lsa, qayta yoqamiz
+    const resume = () => {
+      if (!document.hidden && inView) video.play().catch(() => {});
+    };
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("pageshow", resume);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", resume);
+      window.removeEventListener("pageshow", resume);
+    };
   }, []);
 
   return (
