@@ -67,6 +67,20 @@ export function proxy(request: NextRequest) {
     return redirectTo(request, localeHref(locale, "/academy"));
   }
 
+  // Brauzer tili bo'yicha birinchi kirish: tilsiz (o'zbekcha) manzil ochilsa va tanlov hali bo'lmasa —
+  // brauzer tilidagi sahifaga (bizdagi 7 tildan biri; boshqa til bo'lsa — inglizcha). Batafsil: pickLocale.
+  if (site === "robohub" && locale === defaultLocale && !request.cookies.has(LANG_COOKIE) && isPageVisit(request)) {
+    const want = pickLocale(request.headers.get("accept-language"));
+    if (want && want !== defaultLocale) {
+      const url = request.nextUrl.clone();
+      url.pathname = localeHref(want, rest || "/");
+      const res = NextResponse.redirect(url, 307); // vaqtinchalik: Google tilsiz manzilni o'zbekcha sahifa sifatida saqlaydi
+      res.headers.set("Cache-Control", "private, no-store");
+      res.headers.set("Vary", "Accept-Language, Cookie");
+      return res;
+    }
+  }
+
   // Har doim til va sayt prefiksi qo'shiladi: robohub domenida /robosell ochilsa
   // /uz/robohub/robosell → 404, ya'ni bir sayt ikkinchisini o'z domenida ko'rsatib qo'ymaydi.
   const url = request.nextUrl.clone();
@@ -74,7 +88,43 @@ export function proxy(request: NextRequest) {
   // Til — 404 sahifasi uchun (app/global-not-found.tsx): u layout'siz render bo'ladi va root parametrni ko'rmaydi
   const headers = new Headers(request.headers);
   headers.set(LOCALE_HEADER, locale);
-  return NextResponse.rewrite(url, { request: { headers } });
+  const res = NextResponse.rewrite(url, { request: { headers } });
+  // Ochilgan sahifa tili eslab qolinadi: keyin til menyusidan o'zbekcha (tilsiz manzil) tanlansa, qayta yo'naltirilmaydi
+  if (site === "robohub" && isPageVisit(request) && request.cookies.get(LANG_COOKIE)?.value !== locale) {
+    res.cookies.set(LANG_COOKIE, locale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+  }
+  return res;
+}
+
+// Foydalanuvchi tanlagan (yoki birinchi kirishda ochilgan) til — shu cookie bor bo'lsa, brauzer tiliga qarab yo'naltirilmaydi
+const LANG_COOKIE = "rh-lang";
+
+// Qidiruv va ulashish botlari, Lighthouse/PageSpeed — yo'naltirilmaydi: har doim so'ragan sahifasini oladi (SEO)
+const BOT = /bot|crawl|spider|slurp|lighthouse|pagespeed|google|yandex|bing|baidu|duckduck|facebookexternalhit|telegram|whatsapp|preview|headless/i;
+
+// Faqat brauzerda sahifani ochish (Next ichki so'rovlari — RSC, prefetch — va botlar emas)
+function isPageVisit(request: NextRequest): boolean {
+  const h = request.headers;
+  if (request.method !== "GET" || h.has("rsc") || h.has("next-router-prefetch") || h.get("purpose") === "prefetch") return false;
+  if (BOT.test(h.get("user-agent") ?? "")) return false;
+  return (h.get("sec-fetch-dest") ?? "document") === "document" && (h.get("accept") ?? "").includes("text/html");
+}
+
+// Accept-Language (Chrome sozlamalaridagi tillar, ustuvorlik tartibida) → saytdagi til:
+//   birinchi mos kelgan til (uz, ru, en, kk, ky, kaa, tg); hech biri mos kelmasa — inglizcha.
+//   Sarlavha umuman bo'lmasa — yo'naltirilmaydi (undefined).
+function pickLocale(header: string | null): Locale | undefined {
+  if (!header) return undefined;
+  const tags = header
+    .split(",")
+    .map((part) => {
+      const [tag, ...params] = part.trim().split(";");
+      const q = Number(params.find((p) => p.trim().startsWith("q="))?.split("=")[1] ?? 1);
+      return { lang: tag.trim().toLowerCase().split("-")[0], q: Number.isNaN(q) ? 0 : q };
+    })
+    .filter((t) => t.lang && t.lang !== "*" && t.q > 0)
+    .sort((a, b) => b.q - a.q);
+  return (tags.find((t) => hasLocale(t.lang))?.lang as Locale | undefined) ?? "en";
 }
 
 export const config = {
