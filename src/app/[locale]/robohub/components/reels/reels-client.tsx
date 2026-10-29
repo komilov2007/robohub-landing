@@ -1,5 +1,6 @@
 "use client";
 
+import { imgSize } from "@/lib/img-size";
 import {
   useEffect,
   useRef,
@@ -293,7 +294,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           aria-label={`${t.open}: ${t.title}`}
           title={t.drag}
         >
-          <img className="reels__poster" src={poster(reel.id, reel.wide)} alt="" draggable={false} />
+          <img className="reels__poster" src={poster(reel.id, reel.wide)} {...imgSize(poster(reel.id, reel.wide))} alt="" draggable={false} />
           {!still && full === null && (
             <iframe
               ref={previewRef}
@@ -354,11 +355,11 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
               </span>
             )}
             {/* orqa fon — joriy videoning xira muqovasi */}
-            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id, current.wide)} alt="" aria-hidden="true" />
+            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id, current.wide)} {...imgSize(poster(current.id, current.wide))} alt="" aria-hidden="true" />
 
             <div className="reels-full__wrap">
               <div className="reels-full__stage" key={current.id} data-dir={dir}>
-                <img className="reels-full__poster" src={poster(current.id, current.wide)} alt="" />
+                <img className="reels-full__poster" src={poster(current.id, current.wide)} {...imgSize(poster(current.id, current.wide))} alt="" />
                 <iframe
                   ref={frameRef}
                   className="reels-full__frame"
@@ -399,7 +400,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   {reels.map((r, i) => (
                     <li key={r.id}>
                       <button type="button" className={i === full ? "is-on" : undefined} aria-current={i === full || undefined} onClick={() => go(i)}>
-                        <img src={poster(r.id, r.wide)} alt="" />
+                        <img src={poster(r.id, r.wide)} {...imgSize(poster(r.id, r.wide))} alt="" />
                         <span>
                           <b>{r.name ?? t.client}</b>
                           {/* ikkinchi qator — video tili (sarlavhada "Robohub mijozlari" bor, takrorlanmaydi) */}

@@ -1,5 +1,6 @@
 "use client";
 
+import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
 import { OPEN_EVENT } from "../reels/reels-client";
 
@@ -33,7 +34,7 @@ export default function ReviewsVideos({ videos, t }: { videos: Video[]; t: T }) 
                   onClick={() => window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: i }))}
                   aria-label={`${t.watch}: ${v.name}`}
                 >
-                  <img src={poster(v.id, v.wide)} alt="" loading="lazy" draggable={false} />
+                  <img src={poster(v.id, v.wide)} {...imgSize(poster(v.id, v.wide))} alt="" loading="lazy" draggable={false} />
                   <span className="revs__play" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
                       <path d="M8 5.5v13l11-6.5z" />

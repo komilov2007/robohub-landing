@@ -2578,3 +2578,12 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
 @supports (content-visibility: auto) {
   main > section:not(.hero) { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 }
+
+/* Mobil tezlik: telefonda doimiy aylanadigan/pulslanadigan animatsiyalar to'xtaydi (ko'rinish — "harakatni kamaytirish"
+   rejimidagidek, dizayn o'zgarmaydi), birinchi ekran matni kirish animatsiyasisiz darhol yakuniy holatda chiqadi.
+   Sabab: Lighthouse mobil — Speed Index va asosiy oqim yuklamasi. */
+@media (max-width:767px){
+  .orbit,.orbit__ring,.orbit__up,.orbit__dot,.orbit__core::after,.hero__play-ico::after{animation:none}
+  .trust__track{animation:none}
+  .hero__title .w,.hero__rise,.hero__mps .mp-ico{animation:none}
+}
