@@ -106,7 +106,42 @@ export default async function Problem() {
           </p>
         </header>
 
-        <ol className="as-pcs">
+        {/* telefon (≤767px) — alohida ixcham "taqqoslash": har metrika bitta qatorda, eski → yangi */}
+        <ol className="as-pm as-only-m">
+          {PROBLEM.cards.map((c, i) => (
+            <li className="as-pm__row" key={c.id} data-rv style={{ "--d": `${i * 90}ms` } as CSSProperties}>
+              <div className="as-pm__top">
+                <span className="as-pm__ico">
+                  <Icon name={c.icon as IconName} />
+                </span>
+                <b>{c.metric}</b>
+                <span className="as-pm__n">0{i + 1}</span>
+              </div>
+              <div className="as-pm__vs">
+                <div className="as-pm__old">
+                  <small>{c.old.label}</small>
+                  <s>{c.old.value || c.problem.title}</s>
+                </div>
+                <span className="as-pm__arrow" aria-hidden="true">
+                  <Icon name="arrow" className="as-i--right" />
+                </span>
+                <div className="as-pm__new">
+                  <small>
+                    <Icon name="ai" />
+                    {c.now.label}
+                  </small>
+                  <b>{c.now.value || c.solution.title}</b>
+                </div>
+              </div>
+              <p className="as-pm__note">
+                <Icon name="check" />
+                {c.solution.text}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        <ol className="as-pcs as-only-d">
           {PROBLEM.cards.map((c, i) => (
             <li className={`as-pc as-pc--${c.id}`} key={c.id} data-rv style={{ "--d": `${i * 120}ms` } as CSSProperties}>
               <div className="as-pc__top">

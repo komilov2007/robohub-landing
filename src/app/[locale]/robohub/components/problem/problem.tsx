@@ -1,4 +1,4 @@
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
 
 import ProblemScript from "./problem-script";
 import { messages } from "./problem.i18n";
@@ -19,6 +19,8 @@ const NEXT = [
 // mazmuni matnda.
 export default async function Problem() {
   const t = await getMessages(messages);
+  // Videodagi yozuvlar tili: o'zbekcha sahifada — uz, qolgan barcha tillarda — en
+  const lang = (await getLocale()) === "uz" ? "uz" : "en";
   const sides = ["before", "after"] as const;
   return (
     <section
@@ -64,7 +66,9 @@ export default async function Problem() {
         <div className="pain__media" data-sr="">
           {/* Telefonda (≤600px) — portret video (1080×1350), kompyuterda — keng (1920×600). Ikkalasi 13 s, vaqt jadvali bir xil,
               shuning uchun problem.script.js ikkalasida ham fon va matnni bir xil almashtiradi. Brauzer mosini o'zi tanlaydi. */}
+          {/* key: til almashganda <video> qayta yaratiladi — aks holda brauzer eski <source> ni o'ynashda davom etadi */}
           <video
+            key={lang}
             autoPlay
             muted
             loop
@@ -73,11 +77,11 @@ export default async function Problem() {
             aria-hidden="true"
           >
             <source
-              src="/robohub-13s-mobile.mp4"
+              src={`/robohub-13s-mobile-${lang}.mp4`}
               type="video/mp4"
               media="(max-width: 600px)"
             />
-            <source src="/robohub-sxema.mp4" type="video/mp4" />
+            <source src={`/robohub-13s-${lang}.mp4`} type="video/mp4" />
           </video>
         </div>
 

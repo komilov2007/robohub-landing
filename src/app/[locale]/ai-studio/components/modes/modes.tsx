@@ -96,7 +96,51 @@ export default async function Modes() {
           </p>
         </header>
 
-        <ul className="as-mcs">
+        {/* telefon (≤767px) — alohida: avval katta "Eng ommabop" Infografika, ostida Foto va 5 to'plam ixcham qatorlar */}
+        <ul className="as-mm as-only-m">
+          {[...MODES.items].sort((a, b) => Number(b.featured) - Number(a.featured)).map((m, i) => (
+            <li
+              key={m.id}
+              className={"as-mm__card" + (m.featured ? " is-featured" : "")}
+              data-rv
+              style={{ "--d": `${i * 100}ms` } as CSSProperties}
+            >
+              <div className="as-mm__viz">
+                {m.id === "photo" && <PhotoViz styles={MODES.photoStyles} />}
+                {m.id === "infographic" && <InfoViz img={VARIANTS[0].img} features={PRODUCT.features} />}
+                {m.id === "pack" && <PackViz pack={MODES.pack} />}
+              </div>
+              <div className="as-mm__body">
+                {m.featured && (
+                  <span className="as-mm__tag">
+                    <Icon name="crown" />
+                    {MODES.popular}
+                  </span>
+                )}
+                <h3 className="as-mm__name">{m.name}</h3>
+                <p className="as-mm__text">{m.text}</p>
+                <div className="as-mm__foot">
+                  <span className="as-mm__price">
+                    <b>{m.tokens}</b> {plural(m.tokens, T.forms.token)}
+                    <i>{money(m.tokens * TOKEN_PRICE)} {T.currency}</i>
+                  </span>
+                  <a
+                    className={"as-btn as-btn--sm " + (m.featured ? "as-btn--mint" : "as-btn--ghost as-mm__go")}
+                    href={SIGNUP_HREF}
+                    aria-label={m.featured ? undefined : `${MODES.choose}: ${m.name}`}
+                  >
+                    {m.featured && MODES.choose}
+                    <span className="as-btn__ico" aria-hidden="true">
+                      <Icon name="arrow" className="as-i--right" />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="as-mcs as-only-d">
           {MODES.items.map((m, i) => (
             <li
               key={m.id}

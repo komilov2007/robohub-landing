@@ -431,7 +431,7 @@
   .pain__frame{gap:var(--sp-3)}
   .pain__media{width:100%}
 }
-/* Telefonda — portret video (robohub-13s-mobile.mp4, 1080×1350; problem.tsx da <source media>): ekran eniga to'liq.
+/* Telefonda — portret video (robohub-13s-mobile-uz/en.mp4; problem.tsx da <source media>): ekran eniga to'liq.
    Chetlardagi erish (mask) portret nisbatiga moslanadi — yon tomonlari ingichkaroq. */
 @media (max-width:600px){
   .pain__media{align-self:stretch;width:auto;margin-inline:calc(-1 * var(--sp-3))}
@@ -453,11 +453,13 @@
    har qator — alohida lenta, o'z tezligi (--dur) bilan oqadi, juft qatorlar teskari tomonga.
    Matn ustuni (sarlavha + kartalar) ortida devor UMUMAN ko'rinmaydi: chapdan ustun oxirigacha to'liq shaffof,
    undan keyin o'ngga qarab asta paydo bo'ladi; tepa va pastda erib ketadi (ikki qatlamli mask).
-   - Har qator ro'yxati uch marta chiziladi (trust.tsx, COPIES); lenta -1/3 ga surilganda ikkinchi nusxa
-     birinchisining o'rnida turadi, shuning uchun ulanish joyi ko'rinmaydi.
+   - Har qator ro'yxati --n marta chiziladi (trust.tsx, 2 yoki 3); lenta bir nusxaga (-100% / n) surilganda
+     keyingi nusxa birinchisining o'rnida turadi, shuning uchun ulanish joyi ko'rinmaydi.
    - Plitkalar orasidagi masofa flex gap bilan EMAS, har elementning margin-right'i bilan beriladi:
      gap ishlatilsa nusxalar aniq 1/3 ga teng bo'lmaydi va ulanishda sakrash chiqadi.
-   - Ma'lumot (LOGOS, WORDMARKS, ROWS) — trust/companies.ts; logotip fayllari public/companies/ da.
+   - Ma'lumot — trust/companies.ts (ROWS, taniqli brendlar qatori); logotiplar public/logos/ da — tayyor plitka
+     rasmlari (scripts/logos/build.mjs yig'adi: fon + markazdagi logo), shuning uchun rasm plitkani to'liq egallaydi.
+   - O'rtadagi qator (.trust__row--featured) — taniqli brendlar: karta 1.5 baravar baland, mint hoshiyali.
    Telefonda: devor sarlavha va kartalar orasida, ekran kengligida, to'rt qator.
    ============================================================ */
 .trust{
@@ -531,7 +533,8 @@
 .trust__track{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:trust-roll var(--dur,60s) linear infinite}
 .trust__row:nth-child(even) .trust__track{animation-direction:reverse}
 .trust__row:hover .trust__track{animation-play-state:paused}
-@keyframes trust-roll{to{transform:translateX(calc(-100% / 3))}}
+@keyframes trust-roll{to{transform:translateX(calc(-100% / var(--n,3)))}}
+.trust__track{align-items:center}
 .trust__item{flex:none;margin-right:var(--gap)}
 
 .trust__tile{
@@ -540,11 +543,13 @@
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 10px 22px -12px rgba(0,0,0,.6);
   -webkit-user-select:none;user-select:none;
 }
-.trust__tile img{display:block;width:100%;height:100%;padding:var(--logo-pad,14%);object-fit:contain;transform:scale(var(--logo-z,1))}
-.trust__tile--fill img{padding:0;object-fit:cover}
+.trust__tile img{display:block;width:100%;height:100%;object-fit:cover}
 .trust__tile--wide{width:calc(var(--tile) * 2 + var(--gap))}
-.trust__tile--wide img{padding:var(--logo-pad,12% 20%)}
-.trust__tile--wide.trust__tile--fill img{padding:0}
+/* taniqli brend: 1.5 baravar baland, eni rasm nisbatida (274×144), mint hoshiya va chuqurroq soya */
+.trust__tile--featured{
+  height:calc(var(--tile) * 1.5);width:calc(var(--tile) * 1.5 * 1.9);border-radius:calc(var(--tile) * .3);
+  box-shadow:0 0 0 2px rgba(184,255,176,.5),0 22px 40px -18px rgba(0,0,0,.75);
+}
 /* Devor ustidagi parda: logotiplar tiniq (blur yo'q), faqat biroz qoraytiriladi; kursor atrofida 500px (radius 250px)
    doira to'liq yorug' (teshik). --mx/--my — kursorning devor ichidagi o'rni (trust.script.js); kursor yo'q bo'lsa doira ekrandan tashqarida. */
 .trust__veil{
@@ -556,19 +561,14 @@
 }
 /* telefon/planshet (sensorli yoki tor ekran) — parda yo'q, logotiplar to'liq tiniq */
 @media (hover:none),(max-width:900px){.trust__veil{display:none}}
-/* matnli nom: plitka ichida ikki qatorgacha; rang (data-c) va shrift (data-f) navbat bilan */
+/* logosi hali yo'q taniqli brend — nomi matn bilan (companies.ts, FEATURED); uslub data-w bilan */
 .trust__tile--word{
-  padding:calc(var(--tile) * .07);text-align:center;overflow-wrap:anywhere;text-wrap:balance;
-  font-size:calc(var(--tile) * .155);font-weight:800;line-height:1.1;letter-spacing:-.02em;
+  padding:0 calc(var(--tile) * .2);text-align:center;white-space:nowrap;
+  background:#fff;color:#111;font-size:calc(var(--tile) * .34);font-weight:800;line-height:1;letter-spacing:-.03em;
 }
-.trust__tile[data-c="1"]{background:var(--mint);color:var(--ink)}
-.trust__tile[data-c="2"]{background:linear-gradient(150deg,#0C6A60,#00524F 60%);color:var(--mint)}
-.trust__tile[data-c="3"]{background:var(--yellow);color:var(--accent-ink)}
-.trust__tile[data-c="4"]{background:#F5F1E7;color:var(--ink)}
-.trust__tile[data-c="5"]{background:var(--cyan);color:var(--ink)}
-.trust__tile[data-f="1"]{font-size:calc(var(--tile) * .115);letter-spacing:.04em;text-transform:uppercase}
-.trust__tile[data-f="2"]{font-family:Georgia,"Times New Roman",serif;font-size:calc(var(--tile) * .15);font-style:italic;font-weight:700;letter-spacing:0}
-.trust__tile[data-f="3"]{font-family:var(--font-head);font-size:calc(var(--tile) * .13);font-weight:700}
+.trust__tile--word[data-w="serif"]{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:calc(var(--tile) * .3);letter-spacing:.14em}
+.trust__tile--word[data-w="dark"]{background:#0b0b0b;color:#fff;font-size:calc(var(--tile) * .22);letter-spacing:.16em;text-transform:uppercase}
+.trust__tile--word[data-w="wide"]{font-family:var(--font-head);font-size:calc(var(--tile) * .2);letter-spacing:.12em;text-transform:uppercase;white-space:normal;line-height:1.15}
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
@@ -583,7 +583,8 @@
             mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
   }
   .trust__wall::after{display:none}   /* telefonda devor matn ostida emas — soya kerak emas */
-  .trust__row:nth-child(n+5){display:none}
+  /* telefonda to'rt qator: 2–5 (o'rtadagi taniqli brendlar qatori — uchinchi bo'lib) */
+  .trust__row:nth-child(1),.trust__row:nth-child(n+6){display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .trust__track{animation:none}

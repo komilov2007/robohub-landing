@@ -12,7 +12,53 @@ export default function Faq() {
   const [open, setOpen] = useState(0);
   return (
     <section className="as-faq" id="faq" aria-labelledby="as-faq-title">
-      <div className="as-wrap as-faq__grid">
+      {/* telefon (≤767px) — alohida: markazdagi sarlavha, ixcham akkordeon, Telegram kartasi pastda */}
+      <div className="as-wrap as-fq as-only-m">
+        <header className="as-fq__head">
+          <h2 className="as-h2" data-rv style={{ "--d": "80ms" } as CSSProperties}>
+            {FAQ.title} <span className="as-h2__accent">{FAQ.accent}</span>
+          </h2>
+        </header>
+        <ul className="as-fq__list" data-rv style={{ "--d": "160ms" } as CSSProperties}>
+          {FAQ.items.map((it, i) => {
+            const on = open === i;
+            return (
+              <li key={it.q} className={"as-fq__item" + (on ? " is-open" : "")}>
+                <h3>
+                  <button
+                    type="button"
+                    className="as-fq__btn"
+                    aria-expanded={on}
+                    aria-controls={`as-qm-${i}`}
+                    id={`as-qmb-${i}`}
+                    onClick={() => setOpen(on ? -1 : i)}
+                  >
+                    {it.q}
+                    <span className="as-q__plus" aria-hidden="true" />
+                  </button>
+                </h3>
+                <div className="as-q__panel" id={`as-qm-${i}`} role="region" aria-labelledby={`as-qmb-${i}`}>
+                  <div>
+                    <p>{it.a}</p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <a className="as-fq__tg" href={TELEGRAM_URL} target="_blank" rel="noopener" data-rv>
+          <span className="as-fq__tg-ico">
+            <Icon name="send" />
+          </span>
+          <span className="as-fq__tg-txt">
+            <small>{FAQ.lead}</small>
+            <b>{FAQ.tg}</b>
+          </span>
+          <Icon name="arrow" className="as-i--right as-fq__tg-arr" />
+        </a>
+      </div>
+
+      <div className="as-wrap as-faq__grid as-only-d">
         <header className="as-faq__head">
           <h2 className="as-h2" id="as-faq-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {FAQ.title} <span className="as-h2__accent">{FAQ.accent}</span>

@@ -1,13 +1,14 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
-import { COMPANIES, ROWS, type Company } from "./companies";
+import { COMPANIES, FEATURED_AT, ROWS, rowUnits, type Company } from "./companies";
 import TrustScript from "./trust-script";
 import { messages } from "./trust.i18n";
 
-// Har qator lentasining bir aylanish vaqti (s): qatorlar har xil tezlikda, juftlari teskari tomonga oqadi.
-const SPEEDS = [64, 52, 76, 58, 70, 48];
-// Har qator necha nusxada chiziladi — robohub.css dagi trust-roll ham shu songa boʻlib suradi (-100% / 3).
-const COPIES = 3;
+// Lenta tezligi (px/s, oddiy plitka 86px hisobida): qatorlar har xil tezlikda, juftlari teskari tomonga oqadi.
+// Aylanish vaqti qator uzunligidan hisoblanadi — uzun va qisqa qatorlar bir xil sur'atda ko'rinadi.
+const SPEEDS = [26, 32, 22, 24, 29, 35, 23];
+// Bir nusxa keng ekrandan (≈ 3840px) uzun bo'lsa — 2 nusxa yetadi, aks holda 3 (lenta 1 nusxaga surilganda bo'sh joy chiqmasin)
+const copiesOf = (units: number) => (units * 86 >= 3840 ? 2 : 3);
 
 // Kartalar belgilari — stats tartibida: sotuvchi (doʻkon), mahsulot (quti), buyurtma (savat)
 const ICONS = [
@@ -47,53 +48,23 @@ const REACH_ICONS = [
   </svg>,
 ];
 
-// Ayrim logotiplar plitkada mayda yoki xunuk chiqadi (faylning o'zida bo'sh joy ko'p, yoki banner ko'rinishida) —
-// shular uchun alohida sozlama (fayl nomi bo'yicha): fill — rasm plitkani to'liq egallaydi (o'z foni bilan),
-// wide — ikki plitka kengligida, pad — ichki bo'sh joy (standart 14%, keng plitkada 12% 20%), zoom — kattalashtirish.
-const TUNE: Record<string, { fill?: boolean; wide?: boolean; pad?: string; zoom?: number }> = {
-  beltop: { fill: true, wide: true },
-  albino: { wide: true, pad: "16% 14%" },
-  "telefon-center-xiva": { wide: true, pad: "12% 14%" },
-  "doremi-baby": { wide: true, pad: "8% 22%" },
-  "li-ning": { pad: "8%" },
-  joma: { pad: "9%" },
-  "art-focus": { pad: "3%" },
-  "comfort-man": { pad: "6%" },
-  "kids-plate": { pad: "3%" },
-  cosmica: { fill: true, zoom: 1.4 },
-  mixmart: { fill: true, zoom: 1.3 },
-};
-const tuneOf = (logo: string) => TUNE[logo.slice(logo.lastIndexOf("/") + 1, logo.lastIndexOf("."))] ?? {};
+// Plitka rasmlari tayyor holda yig'ilgan (scripts/logos/build.mjs): fon + markazdagi logo, o'lchami bir xil —
+// shuning uchun rasm plitkani to'liq egallaydi. bg — rasm yuklanguncha plitka foni.
+const SIZE: Record<Company["shape"], [number, number]> = { square: [144, 144], wide: [315, 144], featured: [274, 144] };
 
-// Plitka: logotip yoki matnli nom. Kvadrat, oʻz fonli logotip (object-cover) plitkani toʻliq egallaydi,
-// qolganlari oq plitka ichida; juda keng logotip (DI sport, Beltop...) ikki plitka kengligida — kvadratda mayda boʻlib qoladi.
-// Nomning rangi (data-c) va shrifti (data-f) qator va oʻrniga qarab almashadi.
-const Tile = ({ c, k }: { c: Company; k: number }) => {
+const Tile = ({ c }: { c: Company }) => {
   if (!c.logo) {
+    // logosi hali yo'q taniqli brend — nomi bilan matnli karta
     return (
-      <span className="trust__tile trust__tile--word" data-c={k % 6} data-f={k % 4}>
+      <span className="trust__tile trust__tile--featured trust__tile--word" data-w={c.word}>
         {c.name}
       </span>
     );
   }
-  const tune = tuneOf(c.logo);
-  const fill = tune.fill ?? c.imgClass?.includes("object-cover");
-  const wide = tune.wide ?? Boolean(c.width && c.height && c.width / c.height >= 2.8);
+  const [w, h] = SIZE[c.shape];
   return (
-    <span
-      className={"trust__tile" + (fill ? " trust__tile--fill" : "") + (wide ? " trust__tile--wide" : "")}
-      style={{ "--logo-pad": tune.pad, "--logo-z": tune.zoom } as CSSProperties}
-    >
-      <img
-        src={c.logo}
-        alt=""
-        width={c.width}
-        height={c.height}
-        loading="lazy"
-        decoding="async"
-        fetchPriority="low"
-        draggable={false}
-      />
+    <span className={`trust__tile trust__tile--${c.shape}`} style={{ background: c.bg }}>
+      <img src={c.logo} alt="" width={w} height={h} loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
     </span>
   );
 };
@@ -120,20 +91,25 @@ export default async function Trust() {
         </p>
 
         {/* Logotiplar devori — bezak. Keng ekranda butun section kengligida, matn ostida (section boʻyicha absolute),
-            telefonda sarlavha ostida. Har qator COPIES marta chiziladi (lenta bir nusxaga surilganda ham keng ekran
-            toʻla qoladi); uslub raqami asl qatordagi indeksdan olinadi — ulanish joyi bilinmaydi. */}
+            telefonda sarlavha ostida. Oʻrtadagi qator — taniqli brendlar, katta kartalarda.
+            Har qator 2–3 nusxada chiziladi (--n): lenta bir nusxaga surilganda ulanish joyi bilinmaydi. */}
         <div className="trust__wall" aria-hidden="true">
-          {ROWS.map((row, r) => (
-            <div className="trust__row" key={r} style={{ "--dur": `${SPEEDS[r % SPEEDS.length]}s` } as CSSProperties}>
-              <ul className="trust__track">
-                {Array.from({ length: COPIES }, () => row).flat().map((c, n) => (
-                  <li className="trust__item" key={n}>
-                    <Tile c={c} k={(n % row.length) + r * 2} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {ROWS.map((row, r) => {
+            const units = rowUnits(row);
+            const n = copiesOf(units);
+            const style = { "--dur": `${Math.round((units * 86) / SPEEDS[r % SPEEDS.length])}s`, "--n": n } as CSSProperties;
+            return (
+              <div className={"trust__row" + (r === FEATURED_AT ? " trust__row--featured" : "")} key={r} style={style}>
+                <ul className="trust__track">
+                  {Array.from({ length: n }, () => row).flat().map((c, i) => (
+                    <li className="trust__item" key={i}>
+                      <Tile c={c} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
           {/* xiralik pardasi — kursor atrofida tiniq doira (robohub.css, trust.script.js) */}
           <div className="trust__veil" />
         </div>

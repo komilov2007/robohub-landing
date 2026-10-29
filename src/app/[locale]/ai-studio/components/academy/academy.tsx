@@ -23,7 +23,42 @@ export default async function Academy() {
   return (
     <section className="as-acad" aria-labelledby="as-acad-title" data-pause>
       <div className="as-wrap">
-        <div className="as-acad__box" data-rv>
+        {/* telefon (≤767px) — alohida: sarlavha, darslar vertikal ro'yxat (muqova + nom), tugma pastda to'liq kenglikda */}
+        <div className="as-am as-only-m" data-rv>
+          <h2 className="as-am__title">{ACADEMY.title}</h2>
+          <p className="as-am__lead">{ACADEMY.lead}</p>
+          <ul className="as-am__list">
+            {lessons.map((l, i) => (
+              <li key={l.n} style={{ "--k": i } as CSSProperties}>
+                <a href={l.href} target="_blank" rel="noopener" className="as-am__item">
+                  <span className="as-am__cover">
+                    <img src={l.img} alt="" loading="lazy" width={320} height={180} />
+                    <span className="as-am__play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l10.6-6.8a1 1 0 0 0 0-1.72L9.5 4.34A1 1 0 0 0 8 5.2z" />
+                      </svg>
+                    </span>
+                  </span>
+                  <span className="as-am__txt">
+                    <span className="as-am__meta">
+                      {fill(ACADEMY.lesson, { n: l.n })}
+                      <i>{ACADEMY.free}</i>
+                    </span>
+                    <span className="as-am__name">{l.title}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a className="as-btn as-btn--primary as-btn--lg as-am__cta" href={ACADEMY.url} target="_blank" rel="noopener">
+            {ACADEMY.cta}
+            <span className="as-btn__ico" aria-hidden="true">
+              <Icon name="arrow" className="as-i--right" />
+            </span>
+          </a>
+        </div>
+
+        <div className="as-acad__box as-only-d" data-rv>
           <div className="as-acad__copy">
             <h2 className="as-acad__title" id="as-acad-title">
               {ACADEMY.title}

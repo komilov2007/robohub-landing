@@ -155,7 +155,60 @@ export default function Steps() {
       style={{ "--cur": cur, "--n": steps.length, "--step": `${STEP_MS}ms` } as CSSProperties}
     >
       <span className="as-how__bg" aria-hidden="true" />
-      <div className="as-wrap as-how__grid">
+      {/* telefon (≤767px) — alohida "stories" ko'rinishi: tepada sarlavha, oyna (ustida qadamlar progressi),
+          ostida faol qadam izohi va 2×2 qadam tugmalari */}
+      <div className="as-wrap as-hm as-only-m">
+        <h2 className="as-h2" data-rv style={{ "--d": "80ms" } as CSSProperties}>
+          {STEPS_SECTION.title} <span className="as-h2__accent">{STEPS_SECTION.accent}</span>
+        </h2>
+        <p className="as-hm__lead" data-rv style={{ "--d": "160ms" } as CSSProperties}>
+          {STEPS_SECTION.lead}
+        </p>
+
+        <div className="as-hm__win" data-rv style={{ "--d": "220ms" } as CSSProperties}>
+          <div className="as-hm__segs" aria-hidden="true">
+            {steps.map((s, i) => (
+              <i key={s.id} className={(i === cur ? "is-active" : "") + (i < cur ? "is-done" : "")} />
+            ))}
+          </div>
+          <div className="as-hm__body">
+            <div className="as-play" key={cur} aria-label={step.title}>
+              {step.id === "upload" && <UploadMock />}
+              {step.id === "mode" && <ModeMock />}
+              {step.id === "prompt" && <PromptMock active />}
+              {step.id === "generate" && <GenerateMock />}
+            </div>
+          </div>
+          <div className="as-hm__cap" key={`m${cur}`}>
+            <span className="as-hm__num">0{cur + 1}</span>
+            <div>
+              <b>{step.title}</b>
+              <p>{step.text}</p>
+            </div>
+          </div>
+        </div>
+
+        <ol className="as-hm__tabs">
+          {steps.map((s, i) => (
+            <li key={s.id}>
+              <button
+                type="button"
+                className={"as-hm__tab" + (i === cur ? " is-active" : "") + (i < cur ? " is-done" : "")}
+                aria-current={i === cur ? "step" : undefined}
+                onClick={() => setCur(i)}
+              >
+                <span className="as-hm__tnum">
+                  <span>0{i + 1}</span>
+                  <Icon name="check" />
+                </span>
+                {s.title}
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="as-wrap as-how__grid as-only-d">
         <div className="as-how__side">
           <h2 className="as-h2" id="as-how-title" data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {STEPS_SECTION.title} <span className="as-h2__accent">{STEPS_SECTION.accent}</span>

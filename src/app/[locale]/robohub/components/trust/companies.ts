@@ -1,284 +1,71 @@
-// Ishonch boʻlimi ("Bizga ishongan sotuvchilar") uchun maʼlumot: logotiplar devori va ekran oʻquvchi roʻyxati.
+// Ishonch boʻlimi ("1 000 dan ortiq sotuvchi...") uchun maʼlumot: logotiplar devori va ekran oʻquvchi roʻyxati.
+// Logotip fayllari va LOGOS roʻyxati avtomatik yigʻiladi: node scripts/logos/build.mjs (manba — public/companies-new).
+import { LOGOS, type Logo } from "./logos.data";
 
-export type Company = {
-  name: string;
-  logo?: string;
-  width?: number;
-  height?: number;
-  imgClass?: string;
-};
+// Matnli karta uslubi — logosi hali yoʻq taniqli brendlar uchun (robohub.css, .trust__tile--word[data-w])
+export type WordStyle = "sans" | "serif" | "dark" | "wide";
+export type Company = { name: string; logo?: string; shape: Logo["shape"]; bg?: string; word?: WordStyle };
 
-/* Rasm logotipi bor kompaniyalar. name bo'sh bo'lsa logo alt="" bilan chiqadi va
-   ekran o'quvchilar ro'yxatiga kirmaydi. */
-export const LOGOS: Company[] = [
-  {"name":"DI sport","logo":"/companies/di-sport.webp","width":236,"height":72,"imgClass":"h-6 w-auto"},
-  {"name":"DreamFit","logo":"/companies/dreamfit.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Joma","logo":"/companies/joma.webp","width":160,"height":96,"imgClass":"h-8 w-auto"},
-  {"name":"Albino","logo":"/companies/albino.webp","width":209,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"Li-Ning","logo":"/companies/li-ning.webp","width":131,"height":96,"imgClass":"h-8 w-auto"},
-  {"name":"Beltop","logo":"/companies/beltop.webp","width":521,"height":84,"imgClass":"h-7 w-auto rounded-md"},
-  {"name":"Vicalina","logo":"/companies/vicalina.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Kid's Plate","logo":"/companies/kids-plate.webp","width":108,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Fayoza by FAYA","logo":"/companies/fayoza.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Bestway & Intex","logo":"/companies/bestway-intex.webp","width":163,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Telefon Center Xiva","logo":"/companies/telefon-center-xiva.webp","width":175,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"Photosell","logo":"/companies/photosell.webp","width":247,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"DOREMI BABY","logo":"/companies/doremi-baby.webp","width":154,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"ALTUS","logo":"/companies/altus.webp","width":427,"height":72,"imgClass":"h-6 w-auto"},
-  {"name":"ART FOCUS","logo":"/companies/art-focus.webp","width":112,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"GENAU","logo":"/companies/genau.webp","width":431,"height":72,"imgClass":"h-6 w-auto"},
-  {"name":"Comfort man","logo":"/companies/comfort-man.webp","width":130,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"At Home Medical","logo":"/companies/at-home-medical.webp","width":109,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Alfatherm plast","logo":"/companies/alfatherm-plast.webp","width":108,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"HiCH.UZ","logo":"/companies/hich.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"GLOWI","logo":"/companies/glowi.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"SUN RAYS GOLD","logo":"/companies/sun-rays-gold.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Bush water","logo":"/companies/bush.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Mixmart","logo":"/companies/mixmart.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Читалыч","logo":"/companies/chitalych.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Istiqbol Mega Market","logo":"/companies/istiqbol.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"ATI — Agro Texnologiya","logo":"/companies/ati-agro.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"Agross","logo":"/companies/agross.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"AllZiyo","logo":"/companies/allziyo.webp","width":96,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Cosmica uz","logo":"/companies/cosmica.webp","width":109,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Vetron PRO","logo":"/companies/vetron.webp","width":108,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"Karvon Texno","logo":"/companies/karvon-texno.webp","width":255,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"PAradiso house","logo":"/companies/paradiso.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"by Kavsar","logo":"/companies/by-kavsar.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"GoodWomen by SolihaM","logo":"/companies/goodwomen.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"ZukkoKids","logo":"/companies/zukkokids.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"LUX","logo":"/companies/lux.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
-  {"name":"","logo":"/companies/hexagon.webp","width":84,"height":84,"imgClass":"h-7 w-auto"},
-  {"name":"","logo":"/companies/leaf-mark.webp","width":97,"height":108,"imgClass":"h-9 w-auto"},
-  {"name":"","logo":"/companies/portrait-mark.webp","width":108,"height":108,"imgClass":"h-9 w-9 rounded-xl object-cover ring-1 ring-black/10"},
+/* Taniqli brendlar — katta kartada, devorning oʻrtasidagi alohida qatorda, shu tartibda.
+   Logosi yoʻqlari (public/companies-new da fayli yoʻq) hozircha brend nomi bilan matnli karta boʻlib chiqadi:
+   fayl qoʻshilgach: scripts/logos/config.json → featured ga fayl nomini, names ga shu yerdagi nomni yozib,
+   build.mjs ni ishga tushirish kifoya. */
+const FEATURED: (string | { name: string; word: WordStyle })[] = [
+  "Li-Ning",
+  "Just 2010",
+  { name: "Selfie", word: "sans" },
+  "DI sport",
+  "Kukmara",
+  "Texnomart",
+  "Time Teller",
+  "General Sport",
+  { name: "General Fitness", word: "wide" },
+  "O.M.S.",
+  "Vicalina",
+  "Genau",
+  { name: "The Blvck Forge", word: "dark" },
+  "Piknic UZ",
+  { name: "SOKOLOV", word: "serif" },
 ];
 
-/* Logotipi yo'q, faqat matn bilan chiqadigan nomlar */
-export const WORDMARKS: string[] = [
-  "ModaLine12",
-  "Sadaf Stayl",
-  "POLARIS95",
-  "Ravshan books",
-  "Printzone",
-  "Santexnik aka",
-  "Abiturient",
-  "Kutubxona",
-  "Uzum aksiya",
-  "Uzum optika",
-  "The World of Beauty",
-  "Diamond Optika",
-  "Diamond Linza",
-  "Smile Toys",
-  "OPTILOOK",
-  "Polarsun",
-  "CaseOptik",
-  "TechNova no1",
-  "Zytech",
-  "Sakhifa",
-  "Niyat MR",
-  "PARFUMERIYA",
-  "TREND PARFUM",
-  "Asr mebellari",
-  "Ayollar kiyimlari",
-  "AZL BAks",
-  "Nouthome",
-  "Royal Wood",
-  "MarketBekN12345$$",
-  "AMAZON TEZKOR",
-  "UZUMTEZKORN1",
-  "UZBEKISTONTEZKORN1",
-  "InternationalMagazinN1",
-  "Eski",
-  "Shoe Market",
-  "Marjona Brand",
-  "Kelajak-OOmax",
-  "Kelajak qurilish",
-  "Kelajak kiyim kechak",
-  "Kitchen Best",
-  "Phonea4",
-  "Snaptech.uz",
-  "ADIL company",
-  "Penda Baby",
-  "Muslima Sovgalar",
-  "Muslima Stylebox",
-  "ANTA AXI",
-  "GENERAL MASSAGE",
-  "Mixfit",
-  "STAR FIT",
-  "YOGA FITNESS",
-  "Active Kids",
-  "SOCCERMAX.UZ",
-  "Speedy Kids",
-  "OF ROAD",
-  "AquaFit",
-  "Ping Pong Pro",
-  "Comfy Spot",
-  "GFS",
-  "Все для футбола",
-  "Goldwish by Uzgold",
-  "Million market",
-  "Gerbofarm CHP",
-  "XUPING-CARTIER Jewelry Shop",
-  "Premium watchs",
-  "ORISTAR.UZ",
-  "DIOR shoes",
-  "Family Store 01",
-  "TOMI",
-  "Shop-Market-uz",
-  "Shop Kids uz",
-  "Miss Shopping",
-  "Shaxi SHop",
-  "Shop Pijamki",
-  "Mega Meat",
-  "OYDIN ELECTRIC",
-  "TESS UZBEKISTAN",
-  "NILSON UZBEKISTON",
-  "Arzon electro",
-  "WatchGo",
-  "Munis Savdo",
-  "Matraschi",
-  "MadinaArtshop",
-  "Universal MadinaArtshop",
-  "Mnpc.Uz",
-  "Jomiy bazar",
-  "ESHOPP",
-  "POLAT",
-  "PARFUMERIYASHOP",
-  "TechBarber",
-  "SHAMPUNSHOP",
-  "Atirluxe",
-  "AtirDunyosi",
-  "ScentBox",
-  "QulayBazar",
-  "BeautyFragrance",
-  "ToplineShop",
-  "UmidaShoping",
-  "Bola boshidan",
-  "Homiko",
-  "PEAK WAY",
-  "Poroshok.uz",
-  "Neyra Shop",
-  "Success Group",
-  "Success Sport",
-  "Successs Hause",
-  "ZENTRIX Auto & Tech",
-  "Kytab",
-  "NUR Matras",
-  "BLUMMY",
-  "KrossFit",
-  "AYVA Supermarket",
-  "ZIYOBOX",
-  "Qulay Optim market",
-  "Bootfor",
-  "Uniconf Tashkent",
-  "Ulugbek Textile",
-  "22",
-  "Chinapro",
-  "Krasovka",
-  "AXK shop",
-  "Istiqlol Fayz Farm XK",
-  "Classic mobile",
-  "Чай мунис",
-  "Anfa Pharmaceuticals",
-  "Natural oil",
-  "I love dxn",
-  "Интернет-магазин Крейт",
-  "Лесной бальзам & Tiswell",
-  "Balajon market",
-  "Xitoy kiyimlari",
-  "oloandpepe",
-  "ALTUS LITE",
-  "best ad",
-  "Brigada",
-  "Stelkalar makoni",
-  "UzArmy tactical",
-  "Velnizer",
-  "Velziner Texnika",
-  "Asnur shoes",
-  "Chaynik.uz",
-  "Tenthause.uz",
-  "Uycha",
-  "Osman Uzbekistan",
-  "Goodway",
-  "Baby Line",
-  "Velo Max",
-  "Aviona",
-  "Lamira Bloom",
-  "Tехника для дома",
-  "Umar Kids",
-  "steel house little creator",
-  "Ilm maskani",
-  "Kitobbchi",
-  "Marifat Store",
-  "Universal mahsulotlar olami",
-  "Bellacoss Beauty",
-  "Dilteks",
-  "printhouse.navoiy",
-  "Zaynab W",
-  "New Casess",
-  "Садовод Like",
-  "Sadzar",
-  "Yumsa",
-  "Picnic Uz",
-  "FAshion Stayle1",
-  "Alziyo2",
-  "Planbaby",
-  "M-ziyo Shop",
-  "M-Ziyo Book",
-  "Romatools",
-  "YashinKids",
-  "Boombaby",
-  "Gekshoop",
-  "Damaar",
-  "Chodir",
-  "High group",
-  "Bio Med",
-  "Igrushka.uz",
-  "LATIIF UY",
-  "Elegant home",
-  "Gt gold tools",
-  "Univer size",
-  "NanoXurmo",
-  "MegaTrio",
-  "BUD",
-  "Ishonchli savdo \"BAQQOL\"",
-  "Enjoy Toys",
-  "Munir nashriyoti",
-  "Eclipse",
-  "Space Parts",
-  "PowerTool",
-  "Zero Beauty",
-  "Elektrik Uz",
-  "Your bags",
-  "Grace Tech",
-  "legend erkakalar dukoni",
-  "MB shop",
-];
+// logo nomi bo'yicha topiladi (config.json → names); topilmasa — matnli karta
+const byName = new Map(LOGOS.filter((l) => l.shape === "featured").map((l) => [l.name, l]));
+export const FEATURED_ROW: Company[] = FEATURED.map((f) => {
+  const { name, word } = typeof f === "string" ? { name: f, word: "sans" as const } : f;
+  return byName.get(name) ?? { name, shape: "featured", word };
+});
 
-/* Logolar matnli nomlar orasiga teng oraliqda sochiladi */
-export const interleave = (logos: Company[], words: string[]): Company[] => {
-  const spacing = (words.length + logos.length) / Math.max(logos.length, 1);
-  const out: Company[] = [];
-  let next = 0;
-  for (const name of words) {
-    if (next < logos.length && out.length >= Math.round(next * spacing)) out.push(logos[next++]);
-    out.push({ name });
-  }
-  while (next < logos.length) out.push(logos[next++]);
-  return out;
+/* Oddiy logolar — aralashtiriladi (bir xil turdagilar yonma-yon toʻplanib qolmasin; tartib har safar bir xil),
+   keyin 6 qatorga boʻlinadi: har safar eng qisqa qatorga — qatorlar uzunligi deyarli teng boʻladi. */
+const seeded = (seed: number) => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
+const rand = seeded(2026);
+const regular = LOGOS.filter((l) => l.shape !== "featured")
+  .map((l) => ({ l, k: rand() }))
+  .sort((a, b) => a.k - b.k)
+  .map(({ l }) => l);
 
-export const COMPANIES = interleave(LOGOS, WORDMARKS);
+// Plitka eni oraliq bilan birga, oddiy plitka (72 + 14 px) birligida — robohub.css dagi o'lchamlarga mos:
+// keng plitka = 2 plitka + oraliq → 2; katta karta = 1.5 × 1.9 plitka (205 px) + oraliq → 2.55
+export const UNITS: Record<Logo["shape"], number> = { square: 1, wide: 2, featured: 2.55 };
 
-/* Logotiplar devori: har qator — alohida lenta. Har logotip devorda bir marta (qatorlarga navbat bilan bo'linadi),
-   orasiga 13 tadan qisqa nom — faqat kvadrat plitkaga sig'adiganlari (14 belgigacha, so'zi 8 gacha).
-   Qator uch nusxada chiziladi (trust.tsx, COPIES): ikki nusxasi keng ekrandan uzunroq bo'lishi kerak —
-   aks holda lenta aylanganda bo'sh joy ko'rinadi. */
 export const WALL_ROWS = 6;
-const SHORT = WORDMARKS.filter((w) => w.length <= 14 && w.split(" ").every((p) => p.length <= 8));
-export const ROWS: Company[][] = Array.from({ length: WALL_ROWS }, (_, r) =>
-  interleave(
-    LOGOS.filter((_, j) => j % WALL_ROWS === r),
-    SHORT.filter((_, i) => i % WALL_ROWS === r).slice(0, 13),
-  ),
-);
+const rows: Company[][] = Array.from({ length: WALL_ROWS }, () => []);
+const len = new Array<number>(WALL_ROWS).fill(0);
+for (const l of regular) {
+  const r = len.indexOf(Math.min(...len));
+  rows[r].push(l);
+  len[r] += UNITS[l.shape];
+}
+
+/* Devor qatorlari: oʻrtada (4-qator) — taniqli brendlar */
+export const FEATURED_AT = 3;
+export const ROWS: Company[][] = [...rows.slice(0, FEATURED_AT), FEATURED_ROW, ...rows.slice(FEATURED_AT)];
+export const rowUnits = (row: Company[]) => row.reduce((s, c) => s + UNITS[c.shape], 0);
+
+/* Ekran oʻquvchilar uchun roʻyxat: avval taniqli brendlar */
+export const COMPANIES: Company[] = [...FEATURED_ROW, ...regular];
