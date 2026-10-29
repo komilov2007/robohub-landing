@@ -28,6 +28,6 @@ const SIZES: Record<string, readonly [number, number]> = {
 };
 
 export function imgSize(src: string): { width?: number; height?: number } {
-  const s = SIZES[src] ?? (src.includes("i.ytimg.com/") ? (src.endsWith("/oar2.jpg") ? [1080, 1920] : [480, 360]) : undefined);
+  const s = SIZES[src] ?? (src.startsWith("/reels/") ? [288, 512] : undefined) ?? (src.includes("i.ytimg.com/") ? (src.endsWith("/oar2.jpg") ? [1080, 1920] : [480, 360]) : undefined);
   return s ? { width: s[0], height: s[1] } : {};
 }

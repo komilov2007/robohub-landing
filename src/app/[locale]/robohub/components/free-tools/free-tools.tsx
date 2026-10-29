@@ -317,7 +317,7 @@ export default async function FreeTools() {
                           <img src="/ai/old-iphone.jpg" alt="" width="360" height="480" loading="lazy" />{" "}
                           <span className="cmp__tag cmp__tag--l">{t.ai.yourPhoto}</span>{" "}
                           <div className="cmp__after">
-                            <img id="cmp-result" src="/ai/iphone1.jpg" alt={t.ai.resultAlt} width="360" height="480" loading="lazy" />{" "}
+                            <img id="cmp-result" src="/ai/iphone1.webp" alt={t.ai.resultAlt} width="360" height="480" loading="lazy" />{" "}
                             <span className="cmp__tag cmp__tag--r">{" "}
                               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z" />
@@ -350,16 +350,16 @@ export default async function FreeTools() {
                   </div>{" "}
                   <p className="ai__label">{t.ai.chooseStyle}</p>{" "}
                   <div className="ai__styles" role="group" aria-label={t.ai.chooseStyle}>
-                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/iphone1.jpg">
-                      <img src="/ai/iphone1.jpg" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/iphone1.webp">
+                      <img src="/ai/iphone1.webp" alt="" width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[0]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone3.png">
-                      <img src="/ai/iphone3.png" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone3.webp">
+                      <img src="/ai/iphone3.webp" alt="" width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[1]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone4.png">
-                      <img src="/ai/iphone4.png" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone4.webp">
+                      <img src="/ai/iphone4.webp" alt="" width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[2]}</span>
                     </button>{" "}
                     <button className="ai__style" type="button" aria-pressed="false" data-img={phoneInfographic}>

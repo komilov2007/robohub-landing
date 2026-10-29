@@ -1,3 +1,4 @@
+import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
 import PricingScript from "./pricing-script";
@@ -150,7 +151,7 @@ export default async function Pricing() {
                       className={m.wide ? "is-wide" : undefined}
                     >
                       {m.wide ? (
-                        <img src={m.logo} alt={m.name} height="14" />
+                        <img src={m.logo} alt={m.name} {...imgSize(m.logo ?? "")} />
                       ) : (
                         m.logo && (
                           <img src={m.logo} alt="" width="16" height="16" />
