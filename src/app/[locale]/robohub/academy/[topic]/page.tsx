@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/robohub/
     title: topic.name,
     description: topic.hero.subtitle,
     alternates: { canonical: url, languages: languageAlternates(topicPath(topic.slug)) },
-    openGraph: { siteName: "Robohub Academy", locale: OG_LOCALE[locale], title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle, url, images },
-    twitter: { card: "summary_large_image", title: `${topic.name} — Robohub Academy`, description: topic.hero.subtitle, images },
+    openGraph: { siteName: "Robohub Academy", locale: OG_LOCALE[locale], title: `${topic.name} | Robohub Academy`, description: topic.hero.subtitle, url, images },
+    twitter: { card: "summary_large_image", title: `${topic.name} | Robohub Academy`, description: topic.hero.subtitle, images },
   };
 }
 

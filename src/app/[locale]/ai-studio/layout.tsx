@@ -12,10 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({
     origin: ROBOHUB_ORIGIN,
     locale,
-    path: "/ai-studio",
+    path: "/aistudio",
     title: t.metaTitle,
     description: t.metaDescription,
-    siteName: "RoboHub AI Studio",
+    siteName: "Robohub AI Studio",
     image: "/og/ai-studio-{locale}.jpg",
   });
 }

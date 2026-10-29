@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getLocale } from "@/i18n/server";
 import { getLessons, getTopics, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
 import { ACADEMY_BASE, PHONE, PHONE_TEL, robohubHome } from "./lib/links";
-import { jsonLd, pageMetadata, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { BRAND, jsonLd, ogImageUrl, pageMetadata, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN, ROBOHUB_WEBSITE_REF } from "@/lib/seo";
 import { localeHref } from "@/i18n/config";
 import { messages as metaMessages } from "./layout";
 import { messages } from "./home.i18n";
@@ -52,24 +52,39 @@ export default async function AcademyHome() {
     { value: TOTAL_TOPICS, label: t.stats.topics(TOTAL_TOPICS) },
     { value: totalMinutes, label: t.stats.minutes(totalMinutes) },
   ];
-  // Qidiruv tizimlari uchun: Academy — mavzular to'plami (har mavzu o'z sahifasi bilan), nashriyotchi — Robohub
+  // Qidiruv tizimlari uchun: Academy — mavzular to'plami; har mavzu — Course (o'z sahifasi, nomi va tavsifi sahifadagi matn),
+  // tashkilot — Robohub (@id). Narx/davomiylik kontentda yo'q — offers/hasCourseInstance qo'shilmagan.
+  const url = ROBOHUB_ORIGIN + localeHref(locale, ACADEMY_BASE);
   const schema = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: metaMessages[locale].title,
-    description: metaMessages[locale].description,
-    url: ROBOHUB_ORIGIN + localeHref(locale, ACADEMY_BASE),
-    inLanguage: locale,
-    publisher: ROBOHUB_ORG,
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: topics.map((x, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: x.name,
-        url: ROBOHUB_ORIGIN + localeHref(locale, `${ACADEMY_BASE}/${x.slug}`),
-      })),
-    },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${url}#webpage`,
+        name: metaMessages[locale].title,
+        description: metaMessages[locale].description,
+        url,
+        inLanguage: locale,
+        isPartOf: ROBOHUB_WEBSITE_REF,
+        publisher: ROBOHUB_ORG_REF,
+        primaryImageOfPage: ogImageUrl("academy", locale),
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: topics.map((x, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Course",
+              name: x.name,
+              description: x.hero.subtitle,
+              url: ROBOHUB_ORIGIN + localeHref(locale, `${ACADEMY_BASE}/${x.slug}`),
+              inLanguage: locale,
+              provider: { ...ROBOHUB_ORG_REF, "@type": "Organization", name: BRAND, url: ROBOHUB_ORIGIN },
+            },
+          })),
+        },
+      },
+    ],
   };
   return (
     <>

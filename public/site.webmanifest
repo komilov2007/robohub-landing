@@ -1,0 +1,15 @@
+{
+  "name": "Robohub",
+  "short_name": "Robohub",
+  "description": "Uzum, Wildberries, Ozon va Yandex Market do‘konlarini bitta kabinetdan boshqarish",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#00524F",
+  "theme_color": "#00524F",
+  "lang": "uz",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

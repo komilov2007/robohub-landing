@@ -93,7 +93,7 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
                 tabIndex={open ? 0 : -1}
                 onClick={active ? (e) => { e.preventDefault(); close(); } : undefined}
               >
-                <img className="lang-select__flag" src={meta.flag} alt="" width={22} height={22} />
+                <img className="lang-select__flag" src={meta.flag} alt="" width={22} height={22} fetchPriority="low" />
                 <span className="lang-select__label">{meta.label}</span>
                 <svg className="lang-select__check" viewBox="0 0 16 16" aria-hidden="true">
                   <path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

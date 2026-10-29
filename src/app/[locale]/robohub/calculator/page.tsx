@@ -16,7 +16,7 @@ import Motion from "./components/motion/motion";
 import { buildContent } from "./calculator.content";
 import { messages } from "./calculator.i18n";
 import { localeHref } from "@/i18n/config";
-import { jsonLd as ldScript, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { jsonLd as ldScript, BRAND, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN } from "@/lib/seo";
 import ProductPeek from "@/components/product-peek/product-peek";
 
 // Marketpleys kalkulyatori landingi — robohub.uz/calculator (/ru, /en ham). Konsepsiya: "sotuvdan qancha foyda qoladi?".
@@ -39,7 +39,7 @@ export default async function Page() {
       url: ROBOHUB_ORIGIN + localeHref(locale, "/calculator"),
       description: t.metaDescription,
       inLanguage: locale,
-      provider: ROBOHUB_ORG,
+      provider: { ...ROBOHUB_ORG_REF, "@type": "Organization", name: BRAND, url: ROBOHUB_ORIGIN },
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       offers: { "@type": "Offer", price: "0", priceCurrency: "UZS" },

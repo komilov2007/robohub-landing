@@ -30,7 +30,7 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const { site, locale } = await context();
   if (site === "robosell") return { title: robosellMessages[locale].title };
-  return { title: `${robohubMessages[locale].title} — ${site === "ai-studio" ? "RoboHub AI Studio" : "Robohub"}` };
+  return { title: `${robohubMessages[locale].title} — ${site === "ai-studio" ? "Robohub AI Studio" : "Robohub"}` };
 }
 
 export default async function GlobalNotFound() {

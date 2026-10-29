@@ -8,6 +8,8 @@ export const unbounded = Unbounded({
   weight: ["500", "700"],
   display: "swap",
   variable: "--ff-unbounded",
+  // 4 landing (Robohub, Academy, AI Studio, Kalkulyator) bu shriftni ishlatmaydi — oldindan yuklanmasin
+  preload: false,
 });
 
 export const manrope = Manrope({
@@ -15,6 +17,7 @@ export const manrope = Manrope({
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--ff-manrope",
+  preload: false,
 });
 
 // Inter va Space Grotesk — butun loyihada bittadan instansiya: Robohub bosh sahifasi (robohub/fonts.ts),

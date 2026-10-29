@@ -370,7 +370,7 @@ export default async function FreeTools() {
                 </div>
               </div>
               {/* tugma oyna ostida; vosita yangi oynada ochiladi (nisbiy — shu domendagi sahifa, joriy tilda) */}
-              <a className="tool__go" href={localeHref(locale, "/ai-studio")} target="_blank" rel="noopener">
+              <a className="tool__go" href={localeHref(locale, "/aistudio")} target="_blank" rel="noopener">
                 {`${t.ai.go} `}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>

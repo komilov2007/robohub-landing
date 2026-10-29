@@ -62,7 +62,7 @@ export default async function FinalCta() {
                   <a href={localeHref(locale, "/calculator")} {...newTab("/calculator")}>{t.calculator}</a>
                 </li>{" "}
                 <li>
-                  <a href={localeHref(locale, "/ai-studio")} {...newTab("/ai-studio")}>{t.infographics}</a>
+                  <a href={localeHref(locale, "/aistudio")} {...newTab("/aistudio")}>{t.infographics}</a>
                 </li>
               </ul>
             </nav>{" "}

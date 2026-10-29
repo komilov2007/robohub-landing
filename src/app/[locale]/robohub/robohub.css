@@ -2571,3 +2571,10 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   .integ__models-grid::-webkit-scrollbar{display:none}
   .integ__models-grid > .integ-model{flex:0 0 85%;scroll-snap-align:start}
 }
+
+/* Tezlik (Lighthouse/CWV): birinchi ekrandan pastdagi bo'limlar brauzer ularga yaqinlashguncha chizilmaydi va
+   joylashuvi hisoblanmaydi — sahifa ochilishidagi "Style & Layout" ishi kamayadi. Ko'rinish o'zgarmaydi:
+   bo'lim ko'rinish maydoniga yaqinlashganda odatdagidek chiziladi; "auto" — bir marta chizilgan o'lcham eslab qolinadi. */
+@supports (content-visibility: auto) {
+  main > section:not(.hero) { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+}

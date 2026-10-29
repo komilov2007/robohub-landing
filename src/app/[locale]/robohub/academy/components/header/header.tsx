@@ -8,6 +8,7 @@ import TopicsMenu from "./topics-menu";
 import RobohubMenu from "./robohub-menu";
 import Icon from "../svg-icon/svg-icon";
 import LangSelect from "@/components/lang-select/lang-select";
+import { stripLocale } from "@/i18n/config";
 import { RobohubMenuMobile } from "@/components/robohub-menu/robohub-menu";
 import { getTopics, lessonsByTopic } from "../../lib/academy";
 import { robohubHome, YOUTUBE_CHANNEL, ACADEMY_BASE, academyHref, topicHref } from "../../lib/links";
@@ -35,10 +36,10 @@ export default function Header() {
   const dropRef = useRef<HTMLLIElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Academy — /academy ostida (ru/en da /ru/academy …): "/academy" — bosh sahifa, "/academy/order" — mavzu.
+  // Academy — /academy ostida (boshqa tillarda /academy/ru …): "/academy" — bosh sahifa, "/academy/order" — mavzu.
   // path — tilsiz yo'l: til tanlash menyusi boshqa tilda ham shu sahifani ochadi.
-  const at = pathname.indexOf(ACADEMY_BASE);
-  const path = at >= 0 ? pathname.slice(at) : ACADEMY_BASE;
+  const bare = stripLocale(pathname);
+  const path = bare.startsWith(ACADEMY_BASE) ? bare : ACADEMY_BASE;
   const sub = path.slice(ACADEMY_BASE.length);
   const slug = sub.split("/")[1] ?? "";
   const isHome = sub === "" || sub === "/";

@@ -38,10 +38,26 @@ export const intlLocale: Record<Locale, string> = {
 // Kirill yozuvidagi tillar (ru, kk, ky, tg) — ba'zi joylarda (masalan, kalkulyator AI qidiruvi) shunga qarab tanlanadi
 export const isCyrillicLocale = (locale: Locale) => locale === "ru" || locale === "kk" || locale === "ky" || locale === "tg";
 
-// Berilgan tildagi manzil: localeHref("ru", "/") → "/ru", localeHref("uz", "/") → "/".
+// Robohub domenidagi bo'lim-landinglar: til kodi bo'lim nomidan KEYIN keladi (robohub.uz/academy/ru/order).
+// Bosh sahifa va boshqa sahifalarda til — boshida (robohub.uz/ru, /ru/application/…).
+export const SECTIONS = ["academy", "aistudio", "calculator"] as const;
+
+// Berilgan tildagi manzil (path — tilsiz yo'l):
+//   localeHref("ru", "/") → "/ru", localeHref("uz", "/") → "/",
+//   localeHref("ru", "/academy/order") → "/academy/ru/order", localeHref("uz", "/academy") → "/academy".
 export function localeHref(locale: Locale, path = "/"): string {
-  const rest = path === "/" ? "" : path;
-  return locale === defaultLocale ? path : `/${locale}${rest}`;
+  if (locale === defaultLocale) return path;
+  const [, first = "", ...rest] = path.split("/");
+  if ((SECTIONS as readonly string[]).includes(first)) return `/${first}/${locale}${rest.length ? `/${rest.join("/")}` : ""}`;
+  return `/${locale}${path === "/" ? "" : path}`;
+}
+
+// Brauzer manzilidan tilsiz yo'l: "/academy/ru/order" → "/academy/order", "/ru" → "/", "/academy" → "/academy".
+export function stripLocale(pathname: string): string {
+  const parts = pathname.split("/").filter(Boolean);
+  if (hasLocale(parts[0])) parts.shift();
+  else if ((SECTIONS as readonly string[]).includes(parts[0]) && hasLocale(parts[1])) parts.splice(1, 1);
+  return `/${parts.join("/")}`;
 }
 
 // Komponent tarjimalari: uz — namuna, qolgan tillar aynan shu tuzilishda bo'lishi shart
