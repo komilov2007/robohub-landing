@@ -8,39 +8,39 @@ import "../robohub.css";
 
 export const messages = defineMessages({
   uz: {
-    title: "Robohub — Uzum, Wildberries, Ozon va Yandex Market bitta kabinetda",
+    title: "Uzum, Wildberries, Ozon bitta kabinetda boshqarish | Robohub",
     description:
       "Uzum Market, Wildberries, Ozon va Yandex Market doʻkonlaringizni bitta kabinetdan boshqaring: buyurtmalar, kartochkalar, narxlar va analitika.",
   },
   ru: {
-    title: "Robohub — Uzum, Wildberries, Ozon и Яндекс Маркет в одном кабинете",
+    title: "Все маркетплейсы в одном кабинете: Uzum, WB, Ozon | Robohub",
     description:
-      "Управляйте магазинами на Uzum Market, Wildberries, Ozon и Yandex Market из одного кабинета: заказы, карточки товаров, цены и аналитика.",
+      "Управляйте магазинами на Uzum Market, Wildberries, Ozon и Yandex Market из одного кабинета: заказы, карточки товаров, цены, остатки и аналитика.",
   },
   en: {
-    title: "Robohub — Uzum, Wildberries, Ozon and Yandex Market in one dashboard",
+    title: "Manage Uzum, Wildberries and Ozon in one dashboard | Robohub",
     description:
-      "Run your Uzum Market, Wildberries, Ozon and Yandex Market stores from one dashboard: orders, product cards, prices and analytics.",
+      "Run your Uzum Market, Wildberries, Ozon and Yandex Market stores from one dashboard: orders, product cards, prices, stock and analytics in one place.",
   },
   kk: {
-    title: "Robohub — Uzum, Wildberries, Ozon және Yandex Market бір кабинетте",
+    title: "Uzum, Wildberries, Ozon бір кабинетте басқару | Robohub",
     description:
       "Uzum Market, Wildberries, Ozon және Yandex Market дүкендеріңізді бір кабинеттен басқарыңыз: тапсырыстар, тауар карточкалары, бағалар және аналитика.",
   },
   ky: {
-    title: "Robohub — Uzum, Wildberries, Ozon жана Yandex Market бир кабинетте",
+    title: "Uzum, Wildberries, Ozon бир кабинеттен башкаруу | Robohub",
     description:
       "Uzum Market, Wildberries, Ozon жана Yandex Market дүкөндөрүңүздү бир кабинеттен башкарыңыз: буйрутмалар, товар карточкалары, баалар жана аналитика.",
   },
   kaa: {
-    title: "Robohub — Uzum, Wildberries, Ozon hám Yandex Market bir kabinette",
+    title: "Uzum, Wildberries, Ozon bir kabinetten basqarıw | Robohub",
     description:
       "Uzum Market, Wildberries, Ozon hám Yandex Market dúkanlarıńızdı bir kabinetten basqarıń: buyırtpalar, ónim kartochkaları, bahalar hám analitika.",
   },
   tg: {
-    title: "Robohub — Uzum, Wildberries, Ozon ва Yandex Market дар як кабинет",
+    title: "Uzum, Wildberries, Ozon аз як кабинет идора кунед | Robohub",
     description:
-      "Мағозаҳои худро дар Uzum Market, Wildberries, Ozon ва Yandex Market аз як кабинет идора кунед: фармоишҳо, кортҳои мол, нархҳо ва таҳлил.",
+      "Мағозаҳои худро дар Uzum Market, Wildberries, Ozon ва Yandex Market аз як кабинет идора кунед: фармоишҳо, кортҳои мол, нархҳо, бақияи мол ва таҳлил.",
   },
 });
 

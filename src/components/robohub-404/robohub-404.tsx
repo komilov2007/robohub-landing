@@ -42,7 +42,7 @@ export default function Robohub404({ site, locale }: { site: Exclude<Site, "robo
   const links = [
     { key: "robohub", href: robohub("/"), icon: <RobohubMark />, ...t.links.robohub },
     { key: "academy", href: robohub("/academy"), icon: <Icon paths={ICONS.academy} />, ...t.links.academy },
-    { key: "ai-studio", href: site === "ai-studio" ? home : robohub("/ai-studio"), icon: <Icon paths={ICONS.aiStudio} />, ...t.links.aiStudio },
+    { key: "ai-studio", href: site === "ai-studio" ? home : robohub("/aistudio"), icon: <Icon paths={ICONS.aiStudio} />, ...t.links.aiStudio },
     { key: "calculator", href: robohub("/calculator"), icon: <Icon paths={ICONS.calculator} />, ...t.links.calculator },
   ];
 

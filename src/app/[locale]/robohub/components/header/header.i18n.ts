@@ -35,7 +35,7 @@ export const messages = defineMessages({
       title: "Vositalar va integratsiyalar",
       items: [
         { href: page("uz", "/calculator"), t: "Marketpleys kalkulyatori", d: "Savdoni boshlashdan oldin xarajat va foydani hisoblang." },
-        { href: page("uz", "/ai-studio"), t: "AI studiya", d: "Mahsulot rasmlari va infografikasini yarating." },
+        { href: page("uz", "/aistudio"), t: "AI studiya", d: "Mahsulot rasmlari va infografikasini yarating." },
         { href: "#integrations", t: "Hisob tizimlari bilan integratsiyalar", d: "Ombor hisobini marketpleyslar bilan bog‘lang." },
         { href: "#regions", t: "Marketpleyslar va mamlakatlar", d: "Savdo uchun yangi platformalar va bozorlarni tanlang." },
         { href: academy("uz", "#help"), t: "Sotuvchilar forumi", d: "Boshqa sotuvchilar bilan tajriba almashing." },
@@ -74,7 +74,7 @@ export const messages = defineMessages({
       title: "Инструменты и интеграции",
       items: [
         { href: page("ru", "/calculator"), t: "Калькулятор маркетплейсов", d: "Рассчитайте расходы и прибыль до начала продаж." },
-        { href: page("ru", "/ai-studio"), t: "AI-студия", d: "Создавайте изображения и инфографику товаров." },
+        { href: page("ru", "/aistudio"), t: "AI-студия", d: "Создавайте изображения и инфографику товаров." },
         { href: "#integrations", t: "Интеграции с системами учёта", d: "Свяжите складской учёт с маркетплейсами." },
         { href: "#regions", t: "Маркетплейсы и страны", d: "Выбирайте новые площадки и рынки для продаж." },
         { href: academy("ru", "#help"), t: "Форум продавцов", d: "Делитесь опытом с другими продавцами." },
@@ -113,7 +113,7 @@ export const messages = defineMessages({
       title: "Tools and integrations",
       items: [
         { href: page("en", "/calculator"), t: "Marketplace calculator", d: "Work out costs and profit before you start selling." },
-        { href: page("en", "/ai-studio"), t: "AI studio", d: "Create product images and infographics." },
+        { href: page("en", "/aistudio"), t: "AI studio", d: "Create product images and infographics." },
         { href: "#integrations", t: "Accounting integrations", d: "Connect your inventory system to marketplaces." },
         { href: "#regions", t: "Marketplaces and countries", d: "Pick new platforms and markets to sell on." },
         { href: academy("en", "#help"), t: "Seller forum", d: "Share experience with other sellers." },
@@ -152,7 +152,7 @@ export const messages = defineMessages({
       title: "Құралдар мен интеграциялар",
       items: [
         { href: page("kk", "/calculator"), t: "Маркетплейс калькуляторы", d: "Сатуды бастамас бұрын шығын мен пайданы есептеңіз." },
-        { href: page("kk", "/ai-studio"), t: "AI студия", d: "Тауар суреттері мен инфографикасын жасаңыз." },
+        { href: page("kk", "/aistudio"), t: "AI студия", d: "Тауар суреттері мен инфографикасын жасаңыз." },
         { href: "#integrations", t: "Есеп жүйелерімен интеграциялар", d: "Қойма есебін маркетплейстермен байланыстырыңыз." },
         { href: "#regions", t: "Маркетплейстер мен елдер", d: "Сауда үшін жаңа алаңдар мен нарықтарды таңдаңыз." },
         { href: academy("kk", "#help"), t: "Сатушылар форумы", d: "Басқа сатушылармен тәжірибе алмасыңыз." },
@@ -191,7 +191,7 @@ export const messages = defineMessages({
       title: "Куралдар жана интеграциялар",
       items: [
         { href: page("ky", "/calculator"), t: "Маркетплейс калькулятору", d: "Сатууну баштоодон мурун чыгым менен пайданы эсептеңиз." },
-        { href: page("ky", "/ai-studio"), t: "AI студия", d: "Товардын сүрөттөрүн жана инфографикасын түзүңүз." },
+        { href: page("ky", "/aistudio"), t: "AI студия", d: "Товардын сүрөттөрүн жана инфографикасын түзүңүз." },
         { href: "#integrations", t: "Эсеп системалары менен интеграциялар", d: "Кампа эсебин маркетплейстер менен байланыштырыңыз." },
         { href: "#regions", t: "Маркетплейстер жана өлкөлөр", d: "Соода үчүн жаңы аянтчаларды жана рынокторду тандаңыз." },
         { href: academy("ky", "#help"), t: "Сатуучулар форуму", d: "Башка сатуучулар менен тажрыйба алмашыңыз." },
@@ -230,7 +230,7 @@ export const messages = defineMessages({
       title: "Qurallar hám integraciyalar",
       items: [
         { href: page("kaa", "/calculator"), t: "Marketpleys kalkulyatorı", d: "Satıwdı baslawdan aldın qárejet hám paydanı esaplań." },
-        { href: page("kaa", "/ai-studio"), t: "AI studiya", d: "Ónim súwretleri hám infografikasın jaratıń." },
+        { href: page("kaa", "/aistudio"), t: "AI studiya", d: "Ónim súwretleri hám infografikasın jaratıń." },
         { href: "#integrations", t: "Esap sistemaları menen integraciyalar", d: "Sklad esabın marketpleysler menen baylanıstırıń." },
         { href: "#regions", t: "Marketpleysler hám mámleketler", d: "Sawda ushın jańa platformalar hám bazarlardı tańlań." },
         { href: academy("kaa", "#help"), t: "Satıwshılar forumı", d: "Basqa satıwshılar menen tájiriybe almasıń." },
@@ -269,7 +269,7 @@ export const messages = defineMessages({
       title: "Абзорҳо ва интегратсияҳо",
       items: [
         { href: page("tg", "/calculator"), t: "Ҳисобкунаки маркетплейс", d: "Пеш аз оғози фурӯш хароҷот ва фоидаро ҳисоб кунед." },
-        { href: page("tg", "/ai-studio"), t: "AI студия", d: "Тасвирҳо ва инфографикаи маҳсулот эҷод кунед." },
+        { href: page("tg", "/aistudio"), t: "AI студия", d: "Тасвирҳо ва инфографикаи маҳсулот эҷод кунед." },
         { href: "#integrations", t: "Интегратсия бо системаҳои баҳисобгирӣ", d: "Баҳисобгирии анборро бо маркетплейсҳо пайваст кунед." },
         { href: "#regions", t: "Маркетплейсҳо ва кишварҳо", d: "Барои фурӯш платформаҳо ва бозорҳои нав интихоб кунед." },
         { href: academy("tg", "#help"), t: "Форуми фурӯшандагон", d: "Бо дигар фурӯшандагон таҷриба мубодила кунед." },

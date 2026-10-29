@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
 import { defaultLocale, localeHref, locales, type Locale } from "@/i18n/config";
-import { EMAIL, INSTAGRAM_URL, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+import { EMAIL, INSTAGRAM_URL, OFFICE_ADDRESS, OFFICE_MAP_URL, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
 // SEO — har landing uchun bir xil to'liq teglar: canonical, hreflang (+ x-default), Open Graph va Twitter kartasi, ulashish rasmi.
 // Manzillar doim asosiy domen bilan (metadataBase): sahifa vercel.app'da ochilsa ham Google asl manzilni ko'radi.
 export const ROBOHUB_ORIGIN = "https://robohub.uz";
 // Robosell o'z domeni ulanganda shu yerda almashtiriladi
 export const ROBOSELL_ORIGIN = "https://robosell-landing.vercel.app";
+// Brend yozilishi — title, OG, schema'da bir xil
+export const BRAND = "Robohub";
 
-export const OG_LOCALE: Record<Locale, string> = {
+// og:locale. Qoraqalpoq (kaa) uchun standart locale yo'q — teg qo'yilmaydi.
+export const OG_LOCALE: Record<Locale, string | undefined> = {
   uz: "uz_UZ",
   ru: "ru_RU",
   en: "en_US",
   kk: "kk_KZ",
   ky: "ky_KG",
-  kaa: "kaa_UZ",
+  kaa: undefined,
   tg: "tg_TJ",
 };
+
+// VAQTINCHALIK: kk, ky, tg, kaa uchun alohida ulashish rasmi hali yo'q (public/og/*-{til}.jpg) —
+// kirill tillari ruscha, qoraqalpoqcha o'zbekcha rasmni oladi. TODO: har til uchun 1200×630 rasm (seo-report/README.md).
+const OG_IMAGE_LOCALE: Record<Locale, Locale> = { uz: "uz", ru: "ru", en: "en", kk: "ru", ky: "ru", tg: "ru", kaa: "uz" };
 
 type PageSeo = {
   origin: string;
@@ -37,7 +44,7 @@ export function pageMetadata({ origin, locale, path, title, description, siteNam
   const languages: Record<string, string> = {};
   for (const l of translated) languages[l] = localeHref(l, path);
   languages["x-default"] = localeHref(defaultLocale, path);
-  const images = [{ url: image.replace("{locale}", own), width: 1200, height: 630, alt: title }];
+  const images = [{ url: image.replace("{locale}", OG_IMAGE_LOCALE[own]), width: 1200, height: 630, alt: title }];
   return {
     metadataBase: new URL(origin),
     title,
@@ -50,7 +57,10 @@ export function pageMetadata({ origin, locale, path, title, description, siteNam
       title,
       description,
       locale: OG_LOCALE[own],
-      alternateLocale: translated.filter((l) => l !== own).map((l) => OG_LOCALE[l]),
+      alternateLocale: translated
+        .filter((l) => l !== own)
+        .map((l) => OG_LOCALE[l])
+        .filter((x): x is string => !!x),
       images,
     },
     twitter: { card: "summary_large_image", title, description, images },
@@ -60,14 +70,33 @@ export function pageMetadata({ origin, locale, path, title, description, siteNam
 // <script type="application/ld+json"> uchun xavfsiz matn ("<" — JSON ichida HTML teg yopilib qolmasin)
 export const jsonLd = (data: unknown) => ({ __html: JSON.stringify(data).replace(/</g, "\\u003c") });
 
-// Robohub kompaniyasi — Organization (bosh sahifa) va boshqa sxemalarda "publisher"/"provider" sifatida
+// Ofis koordinatasi — Yandex xarita havolasidagi nuqta (contacts.ts: OFFICE_MAP_URL, "pt=uzunlik,kenglik")
+const [lng, lat] = new URL(OFFICE_MAP_URL).searchParams.get("pt")!.split(",").map(Number);
+
+// Robohub kompaniyasi — to'liq Organization faqat bosh sahifada; boshqa sahifalar unga @id orqali havola qiladi (ROBOHUB_ORG_REF)
 export const ROBOHUB_ORG = {
   "@type": "Organization",
   "@id": `${ROBOHUB_ORIGIN}/#organization`,
-  name: "Robohub",
+  name: BRAND,
   url: ROBOHUB_ORIGIN,
-  logo: `${ROBOHUB_ORIGIN}/logo/robohub.png`,
+  logo: { "@type": "ImageObject", url: `${ROBOHUB_ORIGIN}/logo/robohub.png`, width: 512, height: 512 },
   email: EMAIL,
   telephone: PHONE_HREF.replace("tel:", ""),
-  sameAs: [INSTAGRAM_URL.robohub, YOUTUBE_URL, TELEGRAM_URL],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: OFFICE_ADDRESS.en.replace(/, Tashkent$/, ""),
+    addressLocality: "Tashkent",
+    addressCountry: "UZ",
+  },
+  location: { "@type": "Place", geo: { "@type": "GeoCoordinates", latitude: lat, longitude: lng } },
+  contactPoint: [
+    { "@type": "ContactPoint", contactType: "customer support", telephone: PHONE_HREF.replace("tel:", ""), email: EMAIL, url: TELEGRAM_URL },
+  ],
+  // Rasmiy profillar. TODO: LinkedIn, Facebook, Telegram kanal bo'lsa — shu yerga (seo-report/README.md)
+  sameAs: [INSTAGRAM_URL.robohub, YOUTUBE_URL],
 } as const;
+export const ROBOHUB_ORG_REF = { "@id": ROBOHUB_ORG["@id"] } as const;
+export const ROBOHUB_WEBSITE_REF = { "@id": `${ROBOHUB_ORIGIN}/#website` } as const;
+
+// Landingning ulashish rasmi (to'liq manzil) — JSON-LD uchun: ogImageUrl("academy", "kk") → https://robohub.uz/og/academy-ru.jpg
+export const ogImageUrl = (name: string, locale: Locale) => `${ROBOHUB_ORIGIN}/og/${name}-${OG_IMAGE_LOCALE[locale]}.jpg`;

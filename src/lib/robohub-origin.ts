@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import { locales } from "@/i18n/config";
+import { locales, SECTIONS } from "@/i18n/config";
 
 // Robohub landingi qaysi domenda — sahifa ochilgan domenga qarab (brauzerda). Statik sahifada so'rov sarlavhalari yo'q,
 // shuning uchun HTML'da asosiy domen (robohub.uz) turadi, brauzer esa joriy muhitga moslaydi:
@@ -25,9 +25,10 @@ export function useRobohubOrigin(): string {
   return useSyncExternalStore(noop, () => robohubOrigin(window.location), () => ROBOHUB_PROD);
 }
 
-// Landing sahifalari: /, /ru, /academy/…, /kk/calculator, /ai-studio … (tilli yoki tilsiz). Boshqa robohub.uz manzillari
+// Landing sahifalari: /, /ru, /academy/…, /calculator/kk, /aistudio/ru … (tilli yoki tilsiz). Boshqa robohub.uz manzillari
 // (ai-infografika, register, policy — sotuvchi platformasi) tegilmaydi.
-const LANDING_PATH = new RegExp(`^(/(${locales.join("|")}))?(/(academy|calculator|ai-studio)(/.*)?)?/?$`);
+const LANG = `(/(${locales.join("|")}))?`;
+const LANDING_PATH = new RegExp(`^(${LANG}/?|/(${SECTIONS.join("|")})${LANG}(/.*)?/?)$`);
 
 /** Server komponentlardagi robohub.uz havolalarini (footer, Academy kartalari …) joriy muhit domeniga almashtiradi */
 export function useFixRobohubLinks() {

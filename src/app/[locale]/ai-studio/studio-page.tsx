@@ -20,25 +20,25 @@ import { getC } from "./content.server";
 import { PRICE_PER_IMAGE } from "./ai-studio.content";
 import { messages } from "./ai-studio.i18n";
 import { localeHref } from "@/i18n/config";
-import { jsonLd, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { jsonLd, BRAND, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN } from "@/lib/seo";
 
 // RoboHub AI Studio landingi. Konsepsiya — "oddiy fotodan sotadigan kartochkaga":
 // hero'da oldin/keyin studiyasi, keyin ishonch (marketplace + raqamlar), muammo → yechim,
 // natijalar galereyasi, 4 qadam, generatsiya rejimlari, token hisoblagichi, Academy, FAQ, yakuniy CTA va footer.
 // Uslublar: ai-studio.css (hamma narsa .as ichida), matnlar (uz/ru/en): ai-studio.content.ts.
 // Joriy tildagi kontent client komponentlarga ContentProvider orqali, server komponentlarga getC() orqali yetadi.
-// path — sahifaning tilsiz yo'li: o'z domenida "/" (page.tsx), Robohub domenida "/ai-studio" (robohub/ai-studio/page.tsx)
+// path — sahifaning tilsiz yo'li: o'z domenida "/" (page.tsx), Robohub domenida "/aistudio" (robohub/aistudio/page.tsx)
 export default async function StudioPage({ path = "/" }: { path?: string }) {
   const c = await getC(path);
   const t = messages[c.locale];
   // Qidiruv tizimlari uchun: veb-ilova (1 rasm narxi bilan) va FAQ. Manzil — canonical (robohub.uz/ai-studio), layout.tsx bilan bir xil
-  const url = ROBOHUB_ORIGIN + localeHref(c.locale, "/ai-studio");
+  const url = ROBOHUB_ORIGIN + localeHref(c.locale, "/aistudio");
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "WebApplication",
-        name: "RoboHub AI Studio",
+        name: "Robohub AI Studio",
         url,
         description: t.metaDescription,
         applicationCategory: "DesignApplication",
@@ -50,7 +50,7 @@ export default async function StudioPage({ path = "/" }: { path?: string }) {
           priceCurrency: "UZS",
           priceSpecification: { "@type": "UnitPriceSpecification", price: PRICE_PER_IMAGE, priceCurrency: "UZS", referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitText: "image" } },
         },
-        provider: ROBOHUB_ORG,
+        provider: { ...ROBOHUB_ORG_REF, "@type": "Organization", name: BRAND, url: ROBOHUB_ORIGIN },
       },
       {
         "@type": "FAQPage",

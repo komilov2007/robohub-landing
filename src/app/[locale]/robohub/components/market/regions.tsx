@@ -1,3 +1,4 @@
+import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
 import type { CountryId } from "./globe";
 import { MP, ROWS, type MpId } from "./regions-data";
@@ -25,7 +26,7 @@ function Chip({ id, t, soon }: { id: MpId; t: RegionsText; soon?: boolean }) {
       className={`reg__mp${soon ? " reg__mp--soon" : ""}${mp.wide ? " reg__mp--wide" : ""}`}
     >
       {mp.wide ? (
-        <img src={mp.logo} alt={name} height={18} loading="lazy" />
+        <img src={mp.logo} alt={name} {...imgSize(mp.logo ?? "")} loading="lazy" />
       ) : mp.logo ? (
         <img src={mp.logo} alt="" width={20} height={20} loading="lazy" />
       ) : (

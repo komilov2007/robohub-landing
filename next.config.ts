@@ -15,6 +15,30 @@ const nextConfig: NextConfig = {
   // Kalkulyatorning ochiq API'si (api.robohub.uz) CORS bo'yicha faqat robohub.uz domenlari va localhost'ga ruxsat beradi.
   // Boshqa domenda (robohub-landing.vercel.app va h.k.) brauzer so'rovlari shu yo'l orqali o'z serverimizdan o'tadi.
   // robohub.uz'da kalkulyator API'ga to'g'ridan-to'g'ri murojaat qiladi (components/calculator/api.ts).
+  // "X-Powered-By: Next.js" sarlavhasi berilmaydi
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        // Xavfsizlik sarlavhalari — hamma sahifa va fayllarga
+        source: "/:path*",
+        headers: [
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
+        ],
+      },
+      {
+        // Robohub'ning vercel.app manzillari (robohub-landing.vercel.app, preview'lar) ochilaveradi, lekin qidiruvga tushmaydi.
+        // Robosell (robosell-landing.vercel.app) — hozircha uning yagona manzili, shuning uchun istisno.
+        // robots.txt'da Disallow qilinmaydi — aks holda Google bu sarlavhani ko'rmay qoladi.
+        source: "/:path*",
+        has: [{ type: "host", value: "^(?!robosell)[^.]+\\.vercel\\.app$" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
   async rewrites() {
     // Next yo'l oxiridagi "/" ni olib tashlaydi, backend (Django) esa uni talab qiladi — shu yerda qaytariladi
     return [{ source: "/api/robohub/:path*", destination: "https://api.robohub.uz/api/:path*/" }];

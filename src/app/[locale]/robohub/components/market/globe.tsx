@@ -1,5 +1,6 @@
 "use client";
 
+import { imgSize } from "@/lib/img-size";
 import { useEffect, useRef, useState } from "react";
 import { idle } from "@/lib/idle";
 // Chegaralar (~70 KB) alohida chunk: brauzer bo'sh qolganda import() bilan yuklanadi — birinchi ekran JS iga kirmaydi
@@ -374,14 +375,14 @@ export default function Globe({ names, mps, soon }: { names: Record<CountryId, s
               <span className="globe__card">
                 <span className="globe__mps">
                   {mps[c.id].now.map((m) => (
-                    <img key={m.name} src={m.logo} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                    <img key={m.name} src={m.logo} {...imgSize(m.logo)} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
                   ))}
                 </span>
                 {mps[c.id].soon.length > 0 && (
                   <span className="globe__soon">
                     <em>{soon}</em>
                     {mps[c.id].soon.map((m) => (
-                      <img key={m.name} src={m.logo} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                      <img key={m.name} src={m.logo} {...imgSize(m.logo)} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
                     ))}
                   </span>
                 )}

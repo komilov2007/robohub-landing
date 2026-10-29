@@ -1,4 +1,4 @@
-import type { Locale } from "@/i18n/config";
+import { localeHref, type Locale } from "@/i18n/config";
 import { getLocale } from "@/i18n/server";
 import { getLesson, type Lesson, type Topic } from "../../../lib/academy";
 import { isoDuration, yt } from "../../../lib/youtube";
@@ -48,6 +48,7 @@ function videoLd(topic: Topic, l: Lesson, locale: Locale) {
 //   FAQPage        — "Savollar" bo'limi (faqat mavzu sahifasida — dars sahifalarida takrorlanmasin).
 function JsonLd({ topic, lesson, locale }: { topic: Topic; lesson?: Lesson; locale: Locale }) {
   const crumbs = [
+    { name: "Robohub", item: `${SITE}${locale === "uz" ? "" : localeHref(locale, "/")}` },
     { name: "Robohub Academy", item: `${SITE}${academyHref(locale)}` },
     { name: topic.name, item: `${SITE}${topicHref(locale, topic.slug)}` },
     ...(lesson

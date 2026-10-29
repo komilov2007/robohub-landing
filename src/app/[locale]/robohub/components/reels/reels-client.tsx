@@ -1,5 +1,6 @@
 "use client";
 
+import { imgSize } from "@/lib/img-size";
 import {
   useEffect,
   useRef,
@@ -55,6 +56,8 @@ const previewSrc = (id: string) =>
 const fullSrc = (id: string) => `${base(id)}&autoplay=1&controls=1&enablejsapi=1`;
 // Shorts'ning vertikal muqovasi; oddiy (gorizontal) videoda — odatiy muqova
 const poster = (id: string, wide?: boolean) => `https://i.ytimg.com/vi/${id}/${wide ? "hqdefault" : "oar2"}.jpg`;
+// Burchakdagi kichik kartochka uchun — o'z serverimizdagi kichraytirilgan nusxa (public/reels, 288×512 WebP; asli 1080×1920 ~130 KB)
+const smallPoster = (id: string, wide?: boolean) => (wide ? poster(id, wide) : `/reels/${id}.webp`);
 
 // video tili: bayroq + yozuv ("Oʻzbek tilida")
 const LangTag = ({ lang, label }: { lang: Lang; label: string }) => (
@@ -72,7 +75,9 @@ const Icon = ({ d }: { d: string }) => (
 
 export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
   const [ready, setReady] = useState(false);
-  const [still, setStill] = useState(false); // reduced motion — video o'rniga muqova
+  // Burchakda video avtomatik o'ynamaydi — faqat muqova turadi (YouTube pleyeri ~1.6 MB: sahifa tezligi uchun).
+  // Video bosilganda to'liq ekranda ochiladi va o'ynaydi.
+  const still = true;
   const [corner, setCorner] = useState<Corner>("br");
   const [index, setIndex] = useState(0);
   const [full, setFull] = useState<number | null>(null);
@@ -101,7 +106,6 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
         if (saved && CORNERS.includes(saved)) setCorner(saved);
         if (sessionStorage.getItem(HIDE_KEY)) setHidden(true);
       } catch {}
-      setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
       setReady(true);
     });
     const onVis = () => setHiddenTab(document.hidden);
@@ -293,7 +297,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           aria-label={`${t.open}: ${t.title}`}
           title={t.drag}
         >
-          <img className="reels__poster" src={poster(reel.id, reel.wide)} alt="" draggable={false} />
+          <img className="reels__poster" src={smallPoster(reel.id, reel.wide)} {...imgSize(smallPoster(reel.id, reel.wide))} alt="" draggable={false} />
           {!still && full === null && (
             <iframe
               ref={previewRef}
@@ -354,11 +358,11 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
               </span>
             )}
             {/* orqa fon — joriy videoning xira muqovasi */}
-            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id, current.wide)} alt="" aria-hidden="true" />
+            <img key={`bg-${current.id}`} className="reels-full__bg" src={poster(current.id, current.wide)} {...imgSize(poster(current.id, current.wide))} alt="" aria-hidden="true" />
 
             <div className="reels-full__wrap">
               <div className="reels-full__stage" key={current.id} data-dir={dir}>
-                <img className="reels-full__poster" src={poster(current.id, current.wide)} alt="" />
+                <img className="reels-full__poster" src={poster(current.id, current.wide)} {...imgSize(poster(current.id, current.wide))} alt="" />
                 <iframe
                   ref={frameRef}
                   className="reels-full__frame"
@@ -399,7 +403,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   {reels.map((r, i) => (
                     <li key={r.id}>
                       <button type="button" className={i === full ? "is-on" : undefined} aria-current={i === full || undefined} onClick={() => go(i)}>
-                        <img src={poster(r.id, r.wide)} alt="" />
+                        <img src={poster(r.id, r.wide)} {...imgSize(poster(r.id, r.wide))} alt="" />
                         <span>
                           <b>{r.name ?? t.client}</b>
                           {/* ikkinchi qator — video tili (sarlavhada "Robohub mijozlari" bor, takrorlanmaydi) */}

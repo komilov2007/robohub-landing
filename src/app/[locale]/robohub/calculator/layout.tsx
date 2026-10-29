@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
       path: "/calculator",
       title: t.metaTitle,
       description: t.metaDescription,
-      siteName: "RoboHub",
+      siteName: "Robohub",
       image: "/og/calculator-{locale}.jpg",
     }),
     keywords: t.keywords,

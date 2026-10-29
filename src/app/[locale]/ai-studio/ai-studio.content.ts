@@ -1441,7 +1441,7 @@ export function plural(n: number, forms: readonly string[]) {
 }
 
 // Komponentlar ishlatadigan tayyor kontent (faqat oddiy ma'lumot — server'dan client'ga uzatsa bo'ladi)
-// path — sahifaning tilsiz yo'li: o'z domenida "/", Robohub domenida "/ai-studio" (til tanlash shu yo'lga olib boradi)
+// path — sahifaning tilsiz yo'li: o'z domenida "/", Robohub domenida "/aistudio" (til tanlash shu yo'lga olib boradi)
 export function buildContent(locale: Locale, path = "/") {
   // {img} — 1 rasm narxi, {tok} — 1 token narxi; boshqa {…} belgilariga tegilmaydi
   const t = JSON.parse(

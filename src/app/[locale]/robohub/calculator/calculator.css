@@ -39,7 +39,8 @@
   position:absolute;top:-40%;left:-30%;width:40%;height:180%;transform:rotate(18deg);
   background:linear-gradient(90deg,transparent,rgba(184,255,176,.08),transparent);animation:cc-beam 9s ease-in-out infinite;
 }
-@keyframes cc-beam{0%{left:-40%}60%,100%{left:120%}}
+/* left o'rniga transform — harakat aynan bir xil (left -40% → 120%; asl joyi -30%, kengligi 40%: -10%/40% = -25%, +150%/40% = 375%), CLS hisoblanmaydi */
+@keyframes cc-beam{0%{transform:translateX(-25%) rotate(18deg)}60%,100%{transform:translateX(375%) rotate(18deg)}}
 [data-off] .cc-hero3__orb,[data-off] .cc-hero3__beam{animation-play-state:paused}
 
 .cc-hero3__inner{display:flex;flex-direction:column;align-items:center;text-align:center}

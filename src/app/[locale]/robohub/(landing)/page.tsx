@@ -19,30 +19,65 @@ import Reels from "../components/reels/reels";
 import MobileCta from "../components/mobile-cta/mobile-cta";
 import { messages as faqMessages } from "../components/faq/faq.i18n";
 import { getLocale } from "@/i18n/server";
-import { localeHref } from "@/i18n/config";
-import { jsonLd, ROBOHUB_ORG, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { localeHref, locales } from "@/i18n/config";
+import { BRAND, jsonLd, ogImageUrl, ROBOHUB_ORG, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN, ROBOHUB_WEBSITE_REF } from "@/lib/seo";
+import { messages as pricingMessages } from "../components/pricing/pricing.i18n";
 import { messages } from "./layout";
 
 export default async function Page() {
   const locale = await getLocale();
   const t = messages[locale];
-  // Qidiruv tizimlari uchun: kompaniya (logo, aloqa, ijtimoiy tarmoqlar), sayt va FAQ — sahifadagi matnlarning o'zi
+  // Qidiruv tizimlari uchun: kompaniya (logo, manzil, aloqa, ijtimoiy tarmoqlar), sayt, sahifa, platforma (tarif narxi —
+  // narxlar bo'limidagi qiymat) va FAQ — sahifadagi matnlarning o'zi
+  const url = ROBOHUB_ORIGIN + (locale === "uz" ? "" : localeHref(locale, "/"));
+  const price = Number(pricingMessages[locale].price.replace(/\D/g, ""));
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       ROBOHUB_ORG,
       {
         "@type": "WebSite",
-        "@id": `${ROBOHUB_ORIGIN}/#website`,
+        "@id": ROBOHUB_WEBSITE_REF["@id"],
         url: ROBOHUB_ORIGIN,
-        name: "Robohub",
+        name: BRAND,
+        inLanguage: [...locales],
+        publisher: ROBOHUB_ORG_REF,
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: t.title,
         description: t.description,
         inLanguage: locale,
-        publisher: { "@id": ROBOHUB_ORG["@id"] },
+        isPartOf: ROBOHUB_WEBSITE_REF,
+        about: ROBOHUB_ORG_REF,
+        primaryImageOfPage: ogImageUrl("robohub", locale),
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: BRAND,
+        url,
+        description: t.description,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        inLanguage: locale,
+        publisher: ROBOHUB_ORG_REF,
+        offers: {
+          "@type": "Offer",
+          price: String(price),
+          priceCurrency: "UZS",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price,
+            priceCurrency: "UZS",
+            referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "MON" },
+          },
+        },
       },
       {
         "@type": "FAQPage",
-        url: ROBOHUB_ORIGIN + localeHref(locale, "/"),
+        url,
         mainEntity: faqMessages[locale].items.map((f) => ({
           "@type": "Question",
           name: f.q,

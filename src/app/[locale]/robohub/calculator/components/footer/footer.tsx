@@ -41,7 +41,7 @@ export default function Footer({
 }) {
   const robohub = [
     { label: footer.links.home, href: localeHref(locale, "/") },
-    { label: footer.links.studio, href: localeHref(locale, "/ai-studio") },
+    { label: footer.links.studio, href: localeHref(locale, "/aistudio") },
     { label: footer.links.academy, href: localeHref(locale, ACADEMY_PATH) },
     { label: footer.links.cabinet, href: sellerUrl(locale, "") },
   ];
