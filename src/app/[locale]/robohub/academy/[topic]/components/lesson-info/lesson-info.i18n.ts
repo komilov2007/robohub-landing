@@ -11,6 +11,9 @@ export const messages = defineMessages({
     why: "Nega kerak?",
     inVideo: "Videoda",
     tip: "Maslahat.",
+    date: "Sana",
+
+    author: "Muallif: Robohub jamoasi", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   ru: {
     kicker: (lesson: string) => `Практическое видео · ${lesson}`,
@@ -22,6 +25,9 @@ export const messages = defineMessages({
     why: "Зачем это нужно?",
     inVideo: "В видео",
     tip: "Совет.",
+    date: "Дата",
+
+    author: "Автор: команда Robohub", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   en: {
     kicker: (lesson: string) => `Hands-on video · ${lesson}`,
@@ -33,6 +39,9 @@ export const messages = defineMessages({
     why: "Why does it matter?",
     inVideo: "In the video",
     tip: "Tip.",
+    date: "Date",
+
+    author: "By the Robohub team", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   kk: {
     kicker: (lesson: string) => `Практикалық бейне · ${lesson}`,
@@ -44,6 +53,9 @@ export const messages = defineMessages({
     why: "Не үшін керек?",
     inVideo: "Бейнеде",
     tip: "Кеңес.",
+    date: "Күні",
+
+    author: "Авторы: Robohub командасы", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   ky: {
     kicker: (lesson: string) => `Практикалык видео · ${lesson}`,
@@ -55,6 +67,9 @@ export const messages = defineMessages({
     why: "Эмне үчүн керек?",
     inVideo: "Видеодо",
     tip: "Кеңеш.",
+    date: "Күнү",
+
+    author: "Автору: Robohub командасы", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   kaa: {
     kicker: (lesson: string) => `Ámeliy video · ${lesson}`,
@@ -66,6 +81,9 @@ export const messages = defineMessages({
     why: "Ne ushın kerek?",
     inVideo: "Videoda",
     tip: "Másláhát.",
+    date: "Sáne",
+
+    author: "Avtor: Robohub komandası", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
   tg: {
     kicker: (lesson: string) => `Видеои амалӣ · ${lesson}`,
@@ -77,5 +95,8 @@ export const messages = defineMessages({
     why: "Барои чӣ лозим аст?",
     inVideo: "Дар видео",
     tip: "Маслиҳат.",
+    date: "Сана",
+
+    author: "Муаллиф: дастаи Robohub", // muallif (JSON-LD TechArticle.author bilan bir xil)
   },
 });

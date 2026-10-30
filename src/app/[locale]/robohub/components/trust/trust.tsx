@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { getMessages } from "@/i18n/server";
-import { COMPANIES, FEATURED_AT, ROWS, rowUnits, type Company } from "./companies";
+import { COMPANIES, ROWS, rowUnits, type Company } from "./companies";
 import TrustScript from "./trust-script";
 import { messages } from "./trust.i18n";
 
@@ -56,7 +56,7 @@ const Tile = ({ c }: { c: Company }) => {
   if (!c.logo) {
     // logosi hali yo'q taniqli brend — nomi bilan matnli karta
     return (
-      <span className="trust__tile trust__tile--featured trust__tile--word" data-w={c.word}>
+      <span className="trust__tile trust__tile--wide trust__tile--word" data-w={c.word}>
         {c.name}
       </span>
     );
@@ -91,7 +91,7 @@ export default async function Trust() {
         </p>
 
         {/* Logotiplar devori — bezak. Keng ekranda butun section kengligida, matn ostida (section boʻyicha absolute),
-            telefonda sarlavha ostida. Oʻrtadagi qator — taniqli brendlar, katta kartalarda.
+            telefonda sarlavha ostida.
             Har qator 2–3 nusxada aylanadi (--n): lenta bir nusxaga surilganda ulanish joyi bilinmaydi.
             Serverda faqat bitta nusxa chiziladi — qolganlarini trust.script.js devor ekranga kirganda qo'shadi
             (sahifa ochilishida ~1300 ta ortiqcha element HTML, RSC va birinchi layout'ga tushmaydi). */}
@@ -101,7 +101,7 @@ export default async function Trust() {
             const n = copiesOf(units);
             const style = { "--dur": `${Math.round((units * 86) / SPEEDS[r % SPEEDS.length])}s`, "--n": n } as CSSProperties;
             return (
-              <div className={"trust__row" + (r === FEATURED_AT ? " trust__row--featured" : "")} key={r} style={style}>
+              <div className="trust__row" key={r} style={style}>
                 <ul className="trust__track">
                   {row.map((c, i) => (
                     <li className="trust__item" key={i}>
@@ -138,7 +138,7 @@ export default async function Trust() {
             <span className="trust__reach-k">{t.mps}</span>
             <span className="trust__reach-logos" aria-label={MARKETPLACES.map((m) => m.name).join(", ")} role="img">
               {MARKETPLACES.map((m) => (
-                <img key={m.name} src={m.logo} alt="" title={m.name} width="22" height="22" />
+                <img loading="lazy" decoding="async" key={m.name} src={m.logo} alt="" title={m.name} width="22" height="22" />
               ))}
             </span>
           </li>

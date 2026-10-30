@@ -23,7 +23,8 @@ export default function Faq({ items }: { items: { q: string; a: string }[] }) {
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? -1 : i)}
               >
-                <span className="acx-faq__n">{String(i + 1).padStart(2, "0")}</span>
+                {/* raqam CSS'dan (data-n): H3 matni faqat savol bo'lsin ("01Когда…" emas) — TZ 2.4 */}
+                <span className="acx-faq__n" data-n={String(i + 1).padStart(2, "0")} aria-hidden="true" />
                 <span>{f.q}</span>
                 <span className="acx-faq__x" aria-hidden="true" />
               </button>

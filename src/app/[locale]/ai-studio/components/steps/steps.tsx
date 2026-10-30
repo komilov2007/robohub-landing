@@ -158,9 +158,9 @@ export default function Steps() {
       {/* telefon (≤767px) — alohida "stories" ko'rinishi: tepada sarlavha, oyna (ustida qadamlar progressi),
           ostida faol qadam izohi va 2×2 qadam tugmalari */}
       <div className="as-wrap as-hm as-only-m">
-        <h2 className="as-h2" data-rv style={{ "--d": "80ms" } as CSSProperties}>
+        <p className="as-h2" role="heading" aria-level={2} data-rv style={{ "--d": "80ms" } as CSSProperties}>
           {STEPS_SECTION.title} <span className="as-h2__accent">{STEPS_SECTION.accent}</span>
-        </h2>
+        </p>
         <p className="as-hm__lead" data-rv style={{ "--d": "160ms" } as CSSProperties}>
           {STEPS_SECTION.lead}
         </p>

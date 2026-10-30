@@ -8,6 +8,8 @@ import type { Metadata } from "next";
 // (Settings → Environment Variables). TODO: kodlarni olish — seo-report/README.md, "Deploy'dan keyin".
 const GOOGLE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION;
 const YANDEX_VERIFICATION = process.env.YANDEX_VERIFICATION;
+// Bing Webmaster Tools (msvalidate.01) — ChatGPT Search va Copilot Bing indeksidan foydalanadi (TZ "SEO, GEO", 1-bo'lim)
+const BING_VERIFICATION = process.env.BING_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   // vercel.app manzillari baribir X-Robots-Tag: noindex oladi (next.config.ts) — HTTP sarlavha meta tegdan ustun turadi
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
   verification: {
     ...(GOOGLE_VERIFICATION && { google: GOOGLE_VERIFICATION }),
     ...(YANDEX_VERIFICATION && { yandex: YANDEX_VERIFICATION }),
+    ...(BING_VERIFICATION && { other: { "msvalidate.01": BING_VERIFICATION } }),
   },
 };
 

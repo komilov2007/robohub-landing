@@ -48,15 +48,15 @@ export default async function FinalCta() {
               </svg>{" "}
               <p className="foot__about">{t.about}</p>{" "}
               <p className="foot__mps" aria-hidden="true">
-                <img src="/marketplaces/uzum.svg" alt="" width="30" height="30" />
-                <img src="/marketplaces/yandex.svg" alt="" width="30" height="30" />
-                <img src="/marketplaces/wildberries.svg" alt="" width="30" height="30" />
-                <img src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/uzum.svg" alt="" width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/yandex.svg" alt="" width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/wildberries.svg" alt="" width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
               </p>{" "}
               <FooterTrust />
             </div>{" "}
             <nav aria-label={t.tools}>
-              <h3>{t.tools}</h3>{" "}
+              <p className="ft-title">{t.tools}</p>{" "}
               <ul>
                 <li>
                   <a href={localeHref(locale, "/calculator")} {...newTab("/calculator")}>{t.calculator}</a>
@@ -67,7 +67,7 @@ export default async function FinalCta() {
               </ul>
             </nav>{" "}
             <nav aria-label={t.pageLabel}>
-              <h3>{t.pageTitle}</h3>{" "}
+              <p className="ft-title">{t.pageTitle}</p>{" "}
               <ul>
                 {t.page.map((item) => (
                   <li key={item.href}>
@@ -77,7 +77,7 @@ export default async function FinalCta() {
               </ul>
             </nav>{" "}
             <div>
-              <h3>{t.contact}</h3>{" "}
+              <p className="ft-title">{t.contact}</p>{" "}
               <ul className="foot__contacts">
                 {CONTACTS.map((c) => (
                   <li key={c.icon}>

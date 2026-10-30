@@ -45,6 +45,8 @@
 
 .cc-hero3__inner{display:flex;flex-direction:column;align-items:center;text-align:center}
 .cc-hero3__title{max-width:900px;margin-top:18px;font-size:clamp(34px,5vw,64px);font-weight:700;line-height:1.03;letter-spacing:-.045em;text-wrap:balance;color:var(--white)}
+.cc-hero3__kicker{display:block;margin:0 auto 14px;max-width:44ch;font-size:clamp(15px,1.4vw,18px);font-weight:600;line-height:1.35;letter-spacing:-.01em;color:rgba(255,255,255,.72);text-wrap:balance} /* H1 boshidagi kalit ibora (hero.tsx) */
+.cc-hero3__sep{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 .cc-hero3 .as-mark{color:var(--primary-dk)}
 .cc-hero3__lead{max-width:640px;margin-top:20px;font-size:17px;line-height:1.6;color:rgba(255,255,255,.74)}
 /* marketpleyslar — faqat ko'rsatish uchun (bosilmaydi): shisha plitkalar, kirishda navbat bilan chiqadi */

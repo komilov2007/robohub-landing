@@ -56,7 +56,7 @@ export default function Race({
               >
                 <span className="cx-lane__trail" aria-hidden="true" />
                 <span className="cx-lane__car">
-                  <img src={MARKETPLACE_META[mp].icon} alt="" width={40} height={40} />
+                  <img loading="lazy" decoding="async" src={MARKETPLACE_META[mp].icon} alt="" width={40} height={40} />
                   <span className="cx-lane__rank">{i + 1}</span>
                 </span>
                 <span className={SAMPLE[i] > 60 ? "cx-lane__name cx-lane__name--in" : "cx-lane__name"}>

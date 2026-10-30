@@ -1,0 +1,54 @@
+import { siteFromHost } from "@/lib/site-host";
+import { ogImageUrl, ROBOHUB_ORIGIN } from "@/lib/seo";
+import { localeHref, locales, type Locale } from "@/i18n/config";
+import { aiImage, type AiProduct } from "@/lib/ai-images";
+import { getLessons, getTopics } from "../[locale]/robohub/academy/lib/academy";
+import { lessonPath, topicPath } from "../[locale]/robohub/academy/lib/links";
+import { yt } from "../[locale]/robohub/academy/lib/youtube";
+
+// /sitemap-images.xml — Google Rasmlar uchun: har sahifadagi asosiy rasmlar (ulashish rasmi, guvohnomalar,
+// AI Studio namunalari, Academy dars muqovalari). robots.txt'da e'lon qilingan (faqat Robohub domenida; boshqasida — 404).
+// Manzillar doim rasmiy domen bilan (sitemap.ts kabi). Yangi dars qo'shilsa — avtomatik tushadi (academy.ts).
+const CERTS = ["/certificates/cyber-park.webp", "/certificates/it-park.webp", "/certificates/robohub-guvohnoma.webp"];
+const AI_PRODUCTS: AiProduct[] = ["phone", "thermos", "bag", "earbuds", "glasses", "keyboard"];
+
+const abs = (src: string) => (src.startsWith("http") ? src : ROBOHUB_ORIGIN + src);
+const pageUrl = (locale: Locale, path: string) => ROBOHUB_ORIGIN + (path === "/" && locale === "uz" ? "" : localeHref(locale, path));
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+function build(): string {
+  const entries: { loc: string; images: string[] }[] = [];
+  for (const l of locales) {
+    entries.push({ loc: pageUrl(l, "/"), images: [ogImageUrl("robohub", l), `${ROBOHUB_ORIGIN}/logo/robohub.png`, ...CERTS.map(abs)] });
+    entries.push({ loc: pageUrl(l, "/aistudio"), images: [ogImageUrl("ai-studio", l), ...AI_PRODUCTS.map((p) => abs(aiImage(p, l)))] });
+    entries.push({ loc: pageUrl(l, "/calculator"), images: [ogImageUrl("calculator", l)] });
+    entries.push({ loc: pageUrl(l, "/academy"), images: [ogImageUrl("academy", l)] });
+    const lessons = getLessons(l);
+    for (const t of getTopics(l)) {
+      const main = lessons.find((x) => x.n === t.mainLesson);
+      if (main) entries.push({ loc: pageUrl(l, topicPath(t.slug)), images: [yt.thumb(main.youtubeId)] });
+    }
+    for (const x of lessons) {
+      const path = lessonPath(x.topic, x.n);
+      if (path !== topicPath(x.topic)) entries.push({ loc: pageUrl(l, path), images: [yt.thumb(x.youtubeId)] });
+    }
+  }
+  const body = entries
+    .map(
+      (e) =>
+        `<url><loc>${esc(e.loc)}</loc>${e.images.map((i) => `<image:image><image:loc>${esc(i)}</image:loc></image:image>`).join("")}</url>`,
+    )
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${body}
+</urlset>
+`;
+}
+
+export async function GET() {
+  const { headers } = await import("next/headers");
+  const h = await headers();
+  if (siteFromHost(h.get("x-forwarded-host") ?? h.get("host") ?? "") !== "robohub") return new Response("Not found", { status: 404 });
+  return new Response(build(), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+}

@@ -9,6 +9,7 @@ export const messages = defineMessages({
     main: "asosiy",
     nextTopic: "Keyingi mavzu",
     loading: "Yuklanmoqda",
+    crumbs: "Sahifa yo‘li", // breadcrumb <nav> aria-label
   },
   ru: {
     mainBadge: (n: number) => `Основной урок · ${n}`,
@@ -17,6 +18,7 @@ export const messages = defineMessages({
     main: "основной",
     nextTopic: "Следующая тема",
     loading: "Загрузка",
+    crumbs: "Навигационная цепочка", // breadcrumb <nav> aria-label
   },
   en: {
     mainBadge: (n: number) => `Main lesson · ${n}`,
@@ -25,6 +27,7 @@ export const messages = defineMessages({
     main: "main",
     nextTopic: "Next topic",
     loading: "Loading",
+    crumbs: "Breadcrumb", // breadcrumb <nav> aria-label
   },
   kk: {
     mainBadge: (n: number) => `Негізгі сабақ · ${n}`,
@@ -33,6 +36,7 @@ export const messages = defineMessages({
     main: "негізгі",
     nextTopic: "Келесі тақырып",
     loading: "Жүктелуде",
+    crumbs: "Навигация жолы", // breadcrumb <nav> aria-label
   },
   ky: {
     mainBadge: (n: number) => `Негизги сабак · ${n}`,
@@ -41,6 +45,7 @@ export const messages = defineMessages({
     main: "негизги",
     nextTopic: "Кийинки тема",
     loading: "Жүктөлүүдө",
+    crumbs: "Навигация жолу", // breadcrumb <nav> aria-label
   },
   kaa: {
     mainBadge: (n: number) => `Tiykarǵı sabaq · ${n}`,
@@ -49,6 +54,7 @@ export const messages = defineMessages({
     main: "tiykarǵı",
     nextTopic: "Keyingi tema",
     loading: "Júklenbekte",
+    crumbs: "Bet jolı", // breadcrumb <nav> aria-label
   },
   tg: {
     mainBadge: (n: number) => `Дарси асосӣ · ${n}`,
@@ -57,5 +63,6 @@ export const messages = defineMessages({
     main: "асосӣ",
     nextTopic: "Мавзӯи навбатӣ",
     loading: "Боргирӣ",
+    crumbs: "Масири саҳифа", // breadcrumb <nav> aria-label
   },
 });

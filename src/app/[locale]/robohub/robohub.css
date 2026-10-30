@@ -463,9 +463,8 @@
      keyingi nusxa birinchisining o'rnida turadi, shuning uchun ulanish joyi ko'rinmaydi.
    - Plitkalar orasidagi masofa flex gap bilan EMAS, har elementning margin-right'i bilan beriladi:
      gap ishlatilsa nusxalar aniq 1/3 ga teng bo'lmaydi va ulanishda sakrash chiqadi.
-   - Ma'lumot — trust/companies.ts (ROWS, taniqli brendlar qatori); logotiplar public/logos/ da — tayyor plitka
+   - Ma'lumot — trust/companies.ts (ROWS); logotiplar public/logos/ da — tayyor plitka
      rasmlari (scripts/logos/build.mjs yig'adi: fon + markazdagi logo), shuning uchun rasm plitkani to'liq egallaydi.
-   - O'rtadagi qator (.trust__row--featured) — taniqli brendlar: karta 1.5 baravar baland, mint hoshiyali.
    Telefonda: devor sarlavha va kartalar orasida, ekran kengligida, to'rt qator.
    ============================================================ */
 .trust{
@@ -553,11 +552,6 @@
 }
 .trust__tile img{display:block;width:100%;height:100%;object-fit:cover}
 .trust__tile--wide{width:calc(var(--tile) * 2 + var(--gap))}
-/* taniqli brend: 1.5 baravar baland, eni rasm nisbatida (274×144), mint hoshiya va chuqurroq soya */
-.trust__tile--featured{
-  height:calc(var(--tile) * 1.5);width:calc(var(--tile) * 1.5 * 1.9);border-radius:calc(var(--tile) * .3);
-  box-shadow:0 0 0 2px rgba(184,255,176,.5),0 22px 40px -18px rgba(0,0,0,.75);
-}
 /* Devor ustidagi parda: logotiplar tiniq (blur yo'q), faqat biroz qoraytiriladi; kursor atrofida 500px (radius 250px)
    doira to'liq yorug' (teshik). --mx/--my — kursorning devor ichidagi o'rni (trust.script.js); kursor yo'q bo'lsa doira ekrandan tashqarida. */
 .trust__veil{
@@ -569,7 +563,7 @@
 }
 /* telefon/planshet (sensorli yoki tor ekran) — parda yo'q, logotiplar to'liq tiniq */
 @media (hover:none),(max-width:900px){.trust__veil{display:none}}
-/* logosi hali yo'q taniqli brend — nomi matn bilan (companies.ts, FEATURED); uslub data-w bilan */
+/* logosi hali yo'q taniqli brend — nomi matn bilan (companies.ts, WORDS); uslub data-w bilan */
 .trust__tile--word{
   padding:0 calc(var(--tile) * .2);text-align:center;white-space:nowrap;
   background:#fff;color:#111;font-size:calc(var(--tile) * .34);font-weight:800;line-height:1;letter-spacing:-.03em;
@@ -591,7 +585,7 @@
             mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
   }
   .trust__wall::after{display:none}   /* telefonda devor matn ostida emas — soya kerak emas */
-  /* telefonda to'rt qator: 2–5 (o'rtadagi taniqli brendlar qatori — uchinchi bo'lib) */
+  /* telefonda to'rt qator: 2–5 */
   .trust__row:nth-child(1),.trust__row:nth-child(n+6){display:none}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1956,6 +1950,8 @@
 .faq-item h3{font:inherit;letter-spacing:0;line-height:inherit}
 .faq-item__q{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;padding:17px 16px;border-radius:20px;font:inherit;font-size:16.5px;font-weight:700;line-height:1.35;text-align:left;cursor:pointer;transition:background 300ms var(--ease),color 300ms var(--ease)}
 .faq-item__n{font-family:var(--font-head);font-size:12px;color:var(--brand);opacity:.6;transition:opacity 300ms var(--ease)}
+/* raqam CSS orqali (data-n): sarlavha matniga ("01Savol…") qo'shilmaydi */
+.faq-item__n::before{content:attr(data-n)}
 .faq-item__x{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#F4F7F5;border:1px solid var(--line);color:var(--brand);transition:transform 400ms var(--ease-soft),background 300ms var(--ease),border-color 300ms var(--ease),color 300ms var(--ease)}
 .faq-item__x svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .faq-item:not(.is-open) .faq-item__q:hover{background:#F4F7F5}
@@ -1972,7 +1968,7 @@
 .faq__answer{position:relative;z-index:1;animation:faq-in 450ms var(--ease-soft)}
 @keyframes faq-in{from{opacity:0;transform:translateY(10px)}}
 .faq__answer .faq__num{margin-top:0;font-family:var(--font-head);font-size:clamp(40px,4.4vw,60px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--mint)}
-.faq__answer h3{margin-top:18px;font-family:var(--font-body);font-size:clamp(19px,1.8vw,23px);font-weight:700;line-height:1.3;letter-spacing:-.01em}
+.faq__answer h3,.faq__answer .faq__q{margin-top:18px;font-family:var(--font-body);font-size:clamp(19px,1.8vw,23px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:inherit}
 .faq__answer p{margin-top:12px;font-size:16.5px;line-height:1.6;color:#E2F3EF}
 .faq__answer b{font-weight:700;color:#fff}
 .faq__help{position:relative;z-index:1;display:flex;align-items:center;gap:12px;align-self:flex-start;margin-top:auto;padding:10px 20px 10px 10px;border-radius:24px;background:rgba(241,255,240,.1);border:1px solid var(--line);transition:background 300ms var(--ease),border-color 300ms var(--ease)}
@@ -2223,12 +2219,12 @@
 .foot{padding-top:var(--sp-4)}   /* footer ixcham: oraliqlar qisqartirilgan */
 .foot__grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,.8fr)) minmax(0,1.1fr);gap:var(--sp-4)}
 .foot__logo{display:block;width:132px;height:32px;margin-bottom:14px;color:#fff}
-.foot__about{max-width:30ch;font-size:14.5px;color:var(--text-dim)}
+.foot__about{max-width:40ch;line-height:1.55;font-size:14.5px;color:var(--text-dim)}
 .foot__mps{display:flex;gap:8px;margin-top:var(--sp-2)}
 .foot__mps img{width:30px;height:30px;border-radius:9px;transition:transform var(--t-mid) var(--ease-soft)}
 .foot__mps img:hover{transform:translateY(-4px)}
 /* mukofotlar va guvohnomalar — umumiy komponent: src/components/footer-trust */
-.foot h3{margin-bottom:10px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--text-dim)}
+.foot h3,.foot .ft-title{margin-bottom:10px;font-family:var(--font-body);font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.4;color:var(--text-dim)}
 .foot ul{display:grid;gap:0;font-size:15px;font-weight:500}
 .foot ul a{position:relative;display:inline-block;padding-block:4px;transition:color var(--t-fast) var(--ease)}
 .foot ul a::after{content:"";position:absolute;left:0;right:0;bottom:3px;height:1.5px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--t-mid) var(--ease)}
@@ -2651,3 +2647,6 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   .integ__models-t{font-size:17px}
   .mkt__map h3{font-size:18px}
 }
+
+/* Modal sarlavhasi <p role="heading"> (contact-modal.tsx) — h2 bilan bir xil ko'rinish */
+.contact__title[role="heading"]{font-family:var(--font-head);font-weight:700;margin:0}

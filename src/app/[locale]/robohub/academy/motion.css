@@ -119,6 +119,9 @@
 .acx-end .acx-h2{color:#fff}
 .acx-end__text > p:not(.acx-kicker){margin-top:16px;max-width:46ch;font-size:17.5px;color:#C9E6E1}
 .acx-end__btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.acx-end__tool{margin-top:18px;font-size:15px;font-weight:600} /* bepul vosita havolasi (cta.tsx) */
+.acx-end__tool a{color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;opacity:.9;display:inline-block;padding:8px 0}
+.acx-end__tool a:hover{opacity:1}
 .acx-btn{
   position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:58px;padding:0 28px;border-radius:var(--r-pill);
   font-size:16px;font-weight:700;transform:translate(var(--tx,0),var(--ty,0));

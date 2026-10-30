@@ -8,6 +8,9 @@ export const messages = defineMessages({
     text: "Darsdagi har bir qadamni o‘z kabinetingizda takrorlang.",
     start: "Hoziroq boshlash",
     next: (name: string) => `Keyingi: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Bepul: marketpleys foyda kalkulyatori",
+    toolStudio: "Bepul: AI bilan mahsulot kartochkasi (AI Studio)",
   },
   ru: {
     kicker: "Попробуйте на практике",
@@ -15,6 +18,9 @@ export const messages = defineMessages({
     text: "Повторите каждый шаг из урока в своём кабинете.",
     start: "Начать сейчас",
     next: (name: string) => `Далее: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Бесплатно: калькулятор прибыли на маркетплейсах",
+    toolStudio: "Бесплатно: карточка товара с AI (AI Studio)",
   },
   en: {
     kicker: "Try it in practice",
@@ -22,6 +28,9 @@ export const messages = defineMessages({
     text: "Repeat every step from the lesson in your own account.",
     start: "Get started",
     next: (name: string) => `Next: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Free: marketplace profit calculator",
+    toolStudio: "Free: AI product cards (AI Studio)",
   },
   kk: {
     kicker: "Іс жүзінде сынап көріңіз",
@@ -29,6 +38,9 @@ export const messages = defineMessages({
     text: "Сабақтағы әр қадамды өз кабинетіңізде қайталаңыз.",
     start: "Қазір бастау",
     next: (name: string) => `Келесі: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Тегін: маркетплейс пайда калькуляторы",
+    toolStudio: "Тегін: AI арқылы тауар карточкасы (AI Studio)",
   },
   ky: {
     kicker: "Иш жүзүндө сынап көрүңүз",
@@ -36,6 +48,9 @@ export const messages = defineMessages({
     text: "Сабактагы ар бир кадамды өз кабинетиңизде кайталаңыз.",
     start: "Азыр баштоо",
     next: (name: string) => `Кийинки: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Акысыз: маркетплейс киреше калькулятору",
+    toolStudio: "Акысыз: AI менен товар карточкасы (AI Studio)",
   },
   kaa: {
     kicker: "Ámelde sınap kóriń",
@@ -43,6 +58,9 @@ export const messages = defineMessages({
     text: "Sabaqtaǵı hár bir qádemdi óz kabinetińizde tákirarlań.",
     start: "Házir baslaw",
     next: (name: string) => `Keyingi: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Biypul: marketpleys payda kalkulyatorı",
+    toolStudio: "Biypul: AI menen tovar kartochkası (AI Studio)",
   },
   tg: {
     kicker: "Дар амал санҷед",
@@ -50,5 +68,8 @@ export const messages = defineMessages({
     text: "Ҳар як қадами дарсро дар кабинети худ такрор кунед.",
     start: "Ҳозир оғоз кунед",
     next: (name: string) => `Навбатӣ: ${name}`,
+    // darsga mos bepul vosita (cta.tsx): analitika — kalkulyator, mahsulotlar — AI Studio (TZ 8.9)
+    toolCalc: "Ройгон: ҳисобкунаки фоида дар маркетплейс",
+    toolStudio: "Ройгон: корти мол бо AI (AI Studio)",
   },
 });

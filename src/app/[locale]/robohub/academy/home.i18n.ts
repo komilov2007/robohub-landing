@@ -9,8 +9,10 @@ const same = (word: string): Stat => () => word;
 export const messages = defineMessages({
   uz: {
     // sarlavha uch bo'lakda chiqadi (har biri o'z kechikishi bilan), o'rtadagisi — gradient
-    title: ["Robohub’ni", "qisqa darslarda", "o‘rganing"],
-    lead: "Har bir dars — bitta vazifa va bir necha daqiqa. Savolingizni yozing yoki boshlang‘ich yo‘ldan boring.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Marketpleys sotuvchisi", "akademiyasi:", "Uzum, Wildberries, Ozon"],
+    lead: "Robohub va marketpleyslarda sotish bo‘yicha qisqa video darslar. Har bir dars — bitta vazifa va bir necha daqiqa. Savolingizni yozing yoki boshlang‘ich yo‘ldan boring.",
     // statistika: son odometrda alohida, bu — uning ostidagi so'z (ruschada son bilan kelishadi)
     stats: { lessons: same("video dars"), topics: same("mavzu"), minutes: same("daqiqa jami") },
     topicsKicker: "Mavzular",
@@ -23,8 +25,10 @@ export const messages = defineMessages({
     start: "Hoziroq boshlash",
   },
   ru: {
-    title: ["Изучите", "Robohub", "в коротких уроках"],
-    lead: "Каждый урок — одна задача и несколько минут. Задайте вопрос или пройдите путь для начинающих.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Академия", "продавца маркетплейсов:", "Uzum, Wildberries, Ozon"],
+    lead: "Короткие видеоуроки по Robohub и продажам на маркетплейсах. Каждый урок — одна задача и несколько минут. Задайте вопрос или пройдите путь для начинающих.",
     stats: {
       lessons: (n: number) => ruWord(n, "видеоурок", "видеоурока", "видеоуроков"),
       topics: (n: number) => ruWord(n, "тема", "темы", "тем"),
@@ -40,8 +44,10 @@ export const messages = defineMessages({
     start: "Начать сейчас",
   },
   en: {
-    title: ["Learn", "Robohub", "in short lessons"],
-    lead: "Every lesson is one task and a few minutes. Type your question or follow the getting-started path.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Marketplace seller", "academy:", "Uzum, Wildberries, Ozon"],
+    lead: "Short video lessons on Robohub and selling on marketplaces. Every lesson is one task and a few minutes. Type your question or follow the getting-started path.",
     stats: {
       lessons: (n: number) => (n === 1 ? "video lesson" : "video lessons"),
       topics: (n: number) => (n === 1 ? "topic" : "topics"),
@@ -57,8 +63,10 @@ export const messages = defineMessages({
     start: "Get started",
   },
   kk: {
-    title: ["Robohub-ты", "қысқа сабақтармен", "меңгеріңіз"],
-    lead: "Әр сабақ — бір міндет және бірнеше минут. Сұрағыңызды жазыңыз немесе бастаушыларға арналған жолдан өтіңіз.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Маркетплейс сатушысының", "академиясы:", "Uzum, Wildberries, Ozon"],
+    lead: "Robohub және маркетплейстерде сату бойынша қысқа видеосабақтар. Әр сабақ — бір міндет және бірнеше минут. Сұрағыңызды жазыңыз немесе бастаушыларға арналған жолдан өтіңіз.",
     stats: { lessons: same("бейнесабақ"), topics: same("тақырып"), minutes: same("минут барлығы") },
     topicsKicker: "Тақырыптар",
     topicsTitle: "Нені",
@@ -70,8 +78,10 @@ export const messages = defineMessages({
     start: "Қазір бастау",
   },
   ky: {
-    title: ["Robohub-ту", "кыска сабактар менен", "өздөштүрүңүз"],
-    lead: "Ар бир сабак — бир милдет жана бир нече мүнөт. Сурооңузду жазыңыз же баштоочулар үчүн жолду басып өтүңүз.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Маркетплейс сатуучусунун", "академиясы:", "Uzum, Wildberries, Ozon"],
+    lead: "Robohub жана маркетплейстерде сатуу боюнча кыска видеосабактар. Ар бир сабак — бир милдет жана бир нече мүнөт. Сурооңузду жазыңыз же баштоочулар үчүн жолду басып өтүңүз.",
     stats: { lessons: same("видеосабак"), topics: same("тема"), minutes: same("мүнөт жалпы") },
     topicsKicker: "Темалар",
     topicsTitle: "Эмнени",
@@ -83,8 +93,10 @@ export const messages = defineMessages({
     start: "Азыр баштоо",
   },
   kaa: {
-    title: ["Robohub’tı", "qısqa sabaqlarda", "úyreniń"],
-    lead: "Hár bir sabaq — bir wazıypa hám bir neshe minut. Sorawıńızdı jazıń yamasa baslawshılar ushın jol menen júriń.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Marketpleys satıwshısınıń", "akademiyası:", "Uzum, Wildberries, Ozon"],
+    lead: "Robohub hám marketpleyslerde satıw boyınsha qısqa video sabaqlar. Hár bir sabaq — bir wazıypa hám bir neshe minut. Sorawıńızdı jazıń yamasa baslawshılar ushın jol menen júriń.",
     stats: { lessons: same("video sabaq"), topics: same("tema"), minutes: same("minut jámi") },
     topicsKicker: "Temalar",
     topicsTitle: "Neni",
@@ -96,8 +108,10 @@ export const messages = defineMessages({
     start: "Házir baslaw",
   },
   tg: {
-    title: ["Robohub-ро", "дар дарсҳои кӯтоҳ", "омӯзед"],
-    lead: "Ҳар дарс — як вазифа ва чанд дақиқа. Саволатонро нависед ё аз роҳи ибтидоӣ гузаред.",
+    // H1 — kalit ibora: marketpleys sotuvchilari uchun akademiya (TZ 9.1.6); "Robohub" — lead matnida
+
+    title: ["Академияи", "фурӯшандаи маркетплейс:", "Uzum, Wildberries, Ozon"],
+    lead: "Дарсҳои кӯтоҳи видеоӣ оид ба Robohub ва фурӯш дар маркетплейсҳо. Ҳар дарс — як вазифа ва чанд дақиқа. Саволатонро нависед ё аз роҳи ибтидоӣ гузаред.",
     stats: { lessons: same("видеодарс"), topics: same("мавзӯъ"), minutes: same("дақиқа дар маҷмӯъ") },
     topicsKicker: "Мавзӯъҳо",
     topicsTitle: "Чиро",

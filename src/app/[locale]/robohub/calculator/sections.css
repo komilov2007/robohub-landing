@@ -345,7 +345,7 @@
 .ac-footer__about > p{margin-top:16px;max-width:34ch;color:var(--text-dim);font-size:15px}
 .ac-footer__mps{display:flex;gap:8px}
 .ac-footer__mps img{width:30px;height:30px;border-radius:8px}
-.cc .ac-footer h3{font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
+.cc .ac-footer h3,.cc .ac-footer .ft-title{font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;line-height:1.05}
 .ac-footer ul{display:grid;gap:4px}
 .ac-footer__cols{grid-template-columns:1fr 1fr;column-gap:16px}
 .ac-footer li a{display:inline-block;padding:5px 0;font-size:15px;font-weight:500;color:#fff;opacity:.88;transition:opacity 200ms,color 200ms}
@@ -380,3 +380,18 @@
 
 /* to'q bo'limlarda fokus halqasi mint */
 .cx-formula :focus-visible,.cx-finale :focus-visible{outline:2.5px solid var(--mint);outline-offset:3px;border-radius:12px}
+
+/* ============================================================
+   AKADEMIYA HAVOLALARI — FAQ davomi (oq fon), hisob qatorlari bo'yicha darslar (components/academy-links)
+   ============================================================ */
+.cx-learn{padding:0 0 100px;background:var(--white)}
+.cx-learn__head h2{font-size:clamp(24px,2.6vw,34px);font-weight:700;line-height:1.1;letter-spacing:-.035em}
+.cx-learn__head p{margin-top:10px;font-size:16px;color:var(--dim)}
+.cx-learn__list{display:grid;grid-template-columns:1fr;gap:12px;margin:24px 0 0;padding:0;list-style:none}
+@media (min-width:768px){ .cx-learn__list{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.cx-learn__list a{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:16px 20px;border-radius:18px;
+  background:var(--gray);border:1px solid var(--line);color:var(--black);font-size:16px;font-weight:600;line-height:1.35;text-decoration:none;
+  transition:border-color 200ms,transform 200ms}
+.cx-learn__list a:hover{border-color:var(--primary);transform:translateY(-2px)}
+.cx-learn__list i{flex:none;font-style:normal;color:var(--primary)}
+.cx-learn__all{display:inline-flex;gap:6px;margin-top:18px;padding:10px 0;font-size:15px;font-weight:600;color:var(--primary);text-decoration:underline;text-underline-offset:4px}

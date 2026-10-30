@@ -72,7 +72,7 @@ export default function Robohub404({ site, locale }: { site: Exclude<Site, "robo
             <span className="nf__orbit">
               {MARKETPLACES.map((m, i) => (
                 <span key={m} className="nf__sat" style={{ "--a": `${i * 90 + 45}deg` } as CSSProperties}>
-                  <img src={`/marketplaces/${m}.svg`} alt="" width={28} height={28} />
+                  <img loading="lazy" decoding="async" src={`/marketplaces/${m}.svg`} alt="" width={28} height={28} />
                 </span>
               ))}
             </span>

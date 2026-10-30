@@ -134,7 +134,7 @@ export default async function Pricing() {
               <div className="plan__in" data-theme="dark">
                 <p className="plan__mps" aria-hidden="true">
                   {MPS.map((m) => (
-                    <img
+                    <img loading="lazy" decoding="async"
                       key={m}
                       src={`/marketplaces/${m}.svg`}
                       alt=""
@@ -151,10 +151,10 @@ export default async function Pricing() {
                       className={m.wide ? "is-wide" : undefined}
                     >
                       {m.wide ? (
-                        <img src={m.logo} alt={m.name} {...imgSize(m.logo ?? "")} />
+                        <img loading="lazy" decoding="async" src={m.logo} alt={m.name} {...imgSize(m.logo ?? "")} />
                       ) : (
                         m.logo && (
-                          <img src={m.logo} alt="" width="16" height="16" />
+                          <img loading="lazy" decoding="async" src={m.logo} alt="" width="16" height="16" />
                         )
                       )}
                       {!m.wide && m.name}

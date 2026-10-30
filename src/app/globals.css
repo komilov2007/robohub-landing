@@ -178,3 +178,9 @@ ul,ol{margin:0;padding:0;list-style:none}
   body .foot__bar,body .as-footer__bar,body .ac-footer__bar{flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
   body .foot__bar span{justify-content:center}
 }
+
+/* Telefonda matn kiritish maydonlari kamida 16px: aks holda iPhone Safari fokusda sahifani kattalashtiradi va
+   vyorstka "suriladi" (TZ "SEO, GEO", 5.1). "body" + :not() — saytlarning o'z CSS'idagi kichik shriftdan ustun. */
+@media (max-width:767px){
+  body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),body select,body textarea{font-size:16px}
+}

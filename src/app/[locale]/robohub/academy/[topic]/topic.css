@@ -8,6 +8,14 @@
 .acx-hero--topic{padding:clamp(36px,4.5vw,64px) 0 clamp(64px,7vw,104px)}
 .acx-title--topic{margin:0 0 clamp(24px,3vw,36px);max-width:22ch;font-size:clamp(28px,3.4vw,50px)}
 .acx-title--topic .acx-word--grad{white-space:normal}
+/* Breadcrumb (stage.tsx) — sarlavha ustida, kichik va xira; uzun dars nomi bir qatorda qisqaradi */
+.acx-crumbs{position:relative;margin:0 0 14px;font-size:13.5px;font-weight:500;color:var(--text-dim)}
+.acx-crumbs ol{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0;padding:0;list-style:none}
+.acx-crumbs li{display:flex;align-items:center;gap:8px;min-width:0}
+.acx-crumbs li+li::before{content:"›";opacity:.6}
+.acx-crumbs a{color:inherit;text-decoration:none;padding:6px 0}
+.acx-crumbs a:hover{color:var(--mint, #fff);text-decoration:underline;text-underline-offset:3px}
+.acx-crumbs [aria-current]{max-width:42ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.85}
 /* hero kengroq konteyner — video katta bo'lsin */
 .acx-hero--topic .container{max-width:1440px}
 .acx-watch{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,360px);gap:20px;align-items:stretch}
@@ -89,6 +97,7 @@
 .acx-faq button{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;width:100%;padding:20px 20px;font-size:16.5px;font-weight:700;line-height:1.35;text-align:left}
 .acx-faq__n{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--ac-soft);font-family:var(--font-head);font-size:12px;color:var(--brand);transition:background 300ms,color 300ms}
 .acx-faq__item.is-open .acx-faq__n{background:var(--brand);color:#fff}
+.acx-faq__n::before{content:attr(data-n)}
 .acx-faq__x{position:relative;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-strong);transition:transform 450ms cubic-bezier(.3,1.5,.5,1),background 300ms,border-color 300ms}
 .acx-faq__x::before,.acx-faq__x::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;border-radius:2px;background:var(--text)}
 .acx-faq__x::after{transform:rotate(90deg)}
@@ -177,6 +186,7 @@
 .acx-about__meta .is-done{background:var(--brand);color:#fff}
 /* ru/en: "Video o'zbek tilida" eslatmasi */
 .acx-about__meta .is-lang{border:1px solid var(--line-strong);color:var(--text-dim)}
+.acx-about__meta .is-author{padding:0;border-radius:0;font-size:inherit;font-weight:inherit} /* muallif — sana kabi oddiy matn, yorliq emas */
 
 /* 2. nazariy qism — maqola: chapda kichik sarlavha, o'ngda matn, qatorlar orasida ingichka chiziq */
 .acx-read{max-width:880px;animation:acx-in 600ms var(--ease-soft) 80ms backwards}

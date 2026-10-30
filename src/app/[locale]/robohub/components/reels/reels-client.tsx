@@ -62,7 +62,7 @@ const smallPoster = (id: string, wide?: boolean) => (wide ? poster(id, wide) : `
 // video tili: bayroq + yozuv ("Oʻzbek tilida")
 const LangTag = ({ lang, label }: { lang: Lang; label: string }) => (
   <em className="reels-lang">
-    <img src={`/flags/${lang}.svg`} alt="" width="14" height="14" />
+    <img loading="lazy" decoding="async" src={`/flags/${lang}.svg`} alt="" width="14" height="14" />
     {label}
   </em>
 );
@@ -181,14 +181,17 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
   useEffect(() => {
     // faqat telefonda (CSS'dagi max-width:599px bilan bir xil); desktopda kartochka joyida turadi
     if (!showCorner || !window.matchMedia("(max-width:599px)").matches) return;
+    // Birinchi ekranda (hero) ko'rinmaydi — sarlavha va matnni yopmasin; yarim ekrandan pastga tushilgach chiqadi (TZ 5.2)
+    const early = () => window.scrollY < window.innerHeight * 0.5;
     let timer = 0;
     const onScroll = () => {
       const wrap = wrapRef.current;
       if (!wrap || drag.current) return;
       wrap.classList.add("is-away");
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => wrap.classList.remove("is-away"), 600);
+      timer = window.setTimeout(() => { if (!early()) wrap.classList.remove("is-away"); }, 600);
     };
+    if (early()) wrapRef.current?.classList.add("is-away");
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -318,7 +321,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           aria-label={`${t.title} ${reel.name ?? t.client} — ${t.open}`} // ko'rinadigan yozuv nom boshida (WCAG 2.5.3)
           title={t.drag}
         >
-          <img className="reels__poster" src={smallPoster(reel.id, reel.wide)} {...imgSize(smallPoster(reel.id, reel.wide))} alt="" draggable={false} />
+          <img loading="lazy" decoding="async" className="reels__poster" src={smallPoster(reel.id, reel.wide)} {...imgSize(smallPoster(reel.id, reel.wide))} alt="" draggable={false} />
           {!still && full === null && (
             <iframe
               ref={previewRef}
@@ -424,7 +427,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
                   {reels.map((r, i) => (
                     <li key={r.id}>
                       <button type="button" className={i === full ? "is-on" : undefined} aria-current={i === full || undefined} onClick={() => go(i)}>
-                        <img src={poster(r.id, r.wide)} {...imgSize(poster(r.id, r.wide))} alt="" />
+                        <img loading="lazy" decoding="async" src={poster(r.id, r.wide)} {...imgSize(poster(r.id, r.wide))} alt="" />
                         <span>
                           <b>{r.name ?? t.client}</b>
                           {/* ikkinchi qator — video tili (sarlavhada "Robohub mijozlari" bor, takrorlanmaydi) */}

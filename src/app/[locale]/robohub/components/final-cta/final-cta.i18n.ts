@@ -8,7 +8,9 @@ export const messages = defineMessages({
     titleAccent: "Bitta kabinet.",
     lead: "Buyurtma, qoldiq va foydani bir joydan boshqarishni bugun boshlang.",
     start: "Hoziroq boshlash ",
-    about: "Marketpleys sotuvchilari uchun yagona kabinet.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — marketpleys sotuvchilari uchun o‘zbek SaaS-platformasi: Uzum Market, Wildberries, Ozon va Yandex Market do‘konlari bitta kabinetda. Tarif — oyiga 500 000 so‘mdan.",
     pageLabel: "Sahifa boʻlimlari",
     pageTitle: "Sahifa",
     page: [
@@ -33,7 +35,9 @@ export const messages = defineMessages({
     titleAccent: "Один кабинет.",
     lead: "Начните управлять заказами, остатками и прибылью из одного места уже сегодня.",
     start: "Начать сейчас ",
-    about: "Единый кабинет для продавцов на маркетплейсах.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — узбекская SaaS-платформа для продавцов маркетплейсов: магазины на Uzum Market, Wildberries, Ozon и Yandex Market в одном кабинете. Тариф — от 500 000 сум в месяц.",
     pageLabel: "Разделы страницы",
     pageTitle: "Страница",
     page: [
@@ -58,7 +62,9 @@ export const messages = defineMessages({
     titleAccent: "One dashboard.",
     lead: "Start managing orders, stock and profit from one place today.",
     start: "Get started ",
-    about: "One dashboard for marketplace sellers.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub is an Uzbek SaaS platform for marketplace sellers: Uzum Market, Wildberries, Ozon and Yandex Market stores in one dashboard. From 500,000 UZS per month.",
     pageLabel: "Page sections",
     pageTitle: "Page",
     page: [
@@ -83,7 +89,9 @@ export const messages = defineMessages({
     titleAccent: "Бір кабинет.",
     lead: "Тапсырыстарды, қалдықтар мен пайданы бір жерден басқаруды бүгін бастаңыз.",
     start: "Қазір бастау ",
-    about: "Маркетплейс сатушыларына арналған бірыңғай кабинет.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — маркетплейс сатушыларына арналған өзбек SaaS-платформасы: Uzum Market, Wildberries, Ozon және Yandex Market дүкендері бір кабинетте. Тариф — айына 500 000 сўмнан.",
     pageLabel: "Бет бөлімдері",
     pageTitle: "Бет",
     page: [
@@ -108,7 +116,9 @@ export const messages = defineMessages({
     titleAccent: "Бир кабинет.",
     lead: "Буйрутмаларды, калдыктарды жана кирешени бир жерден башкарууну бүгүн эле баштаңыз.",
     start: "Азыр баштоо ",
-    about: "Маркетплейс сатуучулары үчүн бирдиктүү кабинет.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — маркетплейс сатуучулары үчүн өзбек SaaS-платформасы: Uzum Market, Wildberries, Ozon жана Yandex Market дүкөндөрү бир кабинетте. Тариф — айына 500 000 сумдан.",
     pageLabel: "Барактын бөлүмдөрү",
     pageTitle: "Барак",
     page: [
@@ -133,7 +143,9 @@ export const messages = defineMessages({
     titleAccent: "Bir kabinet.",
     lead: "Buyırtpa, qaldıq hám paydanı bir jerden basqarıwdı búginnen baslań.",
     start: "Házir baslaw ",
-    about: "Marketpleys satıwshıları ushın bir kabinet.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — marketpleys satıwshıları ushın ózbek SaaS-platforması: Uzum Market, Wildberries, Ozon hám Yandex Market dúkánları bir kabinette. Tarif — ayına 500 000 swmnan.",
     pageLabel: "Bet bólimleri",
     pageTitle: "Bet",
     page: [
@@ -158,7 +170,9 @@ export const messages = defineMessages({
     titleAccent: "Як кабинет.",
     lead: "Идораи фармоишҳо, бақияҳо ва фоидаро аз як ҷо имрӯз оғоз кунед.",
     start: "Ҳозир оғоз кунед ",
-    about: "Кабинети ягона барои фурӯшандагони маркетплейсҳо.",
+    // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
+
+    about: "Robohub — платформаи SaaS-и ӯзбекӣ барои фурӯшандагони маркетплейсҳо: мағозаҳо дар Uzum Market, Wildberries, Ozon ва Yandex Market дар як кабинет. Тариф — аз 500 000 сӯм дар як моҳ.",
     pageLabel: "Бахшҳои саҳифа",
     pageTitle: "Саҳифа",
     page: [

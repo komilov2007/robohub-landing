@@ -17,10 +17,11 @@ export default async function ContactModal() {
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
           </button>
-          <h2 className="contact__title" id="cmodal-title">
+          {/* <p>, h2 emas: sahifadagi aloqa bo'limida xuddi shu H2 bor — DOM'da ikkita bir xil H2 bo'lmasin (SEO) */}
+          <p className="contact__title" id="cmodal-title" role="heading" aria-level={2}>
             {t.title}
             <span className="accent">{t.titleAccent}</span>
-          </h2>
+          </p>
           <p className="contact__lead">{t.lead}</p>
           <ContactQuiz t={t} id="cmodal" />
         </div>

@@ -22,9 +22,9 @@ export default async function FinalCta() {
               <Icon name="ai" />
             </span>
           </div>
-          <h2 className="as-fm-card__title">
+          <p className="as-fm-card__title" role="heading" aria-level={2}>
             {FINAL_CTA.title} <span>{FINAL_CTA.accent}</span>
-          </h2>
+          </p>
           <p className="as-fm-card__lead">{FINAL_CTA.lead}</p>
           <a className="as-btn as-btn--mint as-btn--lg as-fm-card__cta" href={SIGNUP_HREF}>
             {FINAL_CTA.cta}

@@ -74,7 +74,7 @@ export function CalculatorCompare({ calculator }: { calculator: MarketplaceCalcu
         return (
           <div key={row.marketplace} className={"cc-compare__row" + (i === 0 && profit !== null && !loss ? " is-best" : "")}>
             <div className="cc-compare__mp">
-              <img src={meta.icon} alt="" width={28} height={28} />
+              <img loading="lazy" decoding="async" src={meta.icon} alt="" width={28} height={28} />
               <div>
                 <b>{meta.label}</b>
                 <span className="cc-note">{row.category.path[row.category.path.length - 1]?.name}</span>

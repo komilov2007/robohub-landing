@@ -168,12 +168,14 @@ export function init() {
   sync();
   if (!video.paused) start();
 
+  // "Trafikni tejash" (Save-Data) yoqilgan bo'lsa — video yuklanmaydi (preload="none"), sxema mazmuni matnda bor
+  var saveData = !!(navigator.connection && navigator.connection.saveData);
   var inView = !("IntersectionObserver" in window);
   var io =
     "IntersectionObserver" in window
       ? new IntersectionObserver(function (es) {
           inView = es[es.length - 1].isIntersecting;
-          if (inView) video.play().catch(function () {});
+          if (inView && !saveData) video.play().catch(function () {});
           else video.pause();
         })
       : null;
@@ -182,7 +184,7 @@ export function init() {
   // iOS Safari brauzerdan chiqilganda videoni to'xtatadi va qaytganda o'zi davom ettirmaydi (sxema qotib qoladi).
   // Sahifa yana ko'ringanda (yoki bfcache'dan qaytganda) — bo'lim ekranda bo'lsa, videoni qayta yoqamiz.
   function resume() {
-    if (document.hidden || !inView) return;
+    if (document.hidden || !inView || saveData) return;
     video.play().then(restart, function () {});
     restart();
   }

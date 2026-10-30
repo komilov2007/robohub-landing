@@ -64,7 +64,7 @@ export default function Footer({
             <FooterTrust />
           </div>
           <nav aria-label={footer.calc}>
-            <h3>{footer.calc}</h3>
+            <p className="ft-title">{footer.calc}</p>
             <ul className="ac-footer__cols">
               {nav.map((n) => (
                 <li key={n.href}>
@@ -74,7 +74,7 @@ export default function Footer({
             </ul>
           </nav>
           <nav aria-label={footer.robohub}>
-            <h3>{footer.robohub}</h3>
+            <p className="ft-title">{footer.robohub}</p>
             <ul>
               {robohub.map((l) => (
                 <li key={l.label}>
@@ -86,7 +86,7 @@ export default function Footer({
             </ul>
           </nav>
           <div>
-            <h3>{footer.contacts}</h3>
+            <p className="ft-title">{footer.contacts}</p>
             <ul className="ac-footer__contacts">
               {CONTACTS.map((c) => (
                 <li key={c.icon}>

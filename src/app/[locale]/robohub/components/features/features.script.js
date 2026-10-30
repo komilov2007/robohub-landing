@@ -60,8 +60,8 @@ return (function () {
     card.className = "feat-card"; card.dataset.c = t.c; card.setAttribute("aria-hidden", "true");
     card.style.setProperty("--card", CARD_BG[t.c]);
     var L = msg.tools[i], s = L.v;   // shu vositaning joriy tildagi matnlari
-    // 1-yo'nalish (bir marta yuklab, hamma marketpleysda sotish) — kartochka o'rnida animatsion video
-    if (i === 0) card.innerHTML = '<video class="fd__video" src="/section-one-hub.mp4" muted loop playsinline preload="auto" aria-hidden="true"></video>';
+    // 1-yo'nalish (bir marta yuklab, hamma marketpleysda sotish) — kartochka o'rnida animatsion video (preload="none": karta faollashganda play() yuklaydi)
+    if (i === 0) card.innerHTML = '<video class="fd__video" src="/section-one-hub.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>';
     else card.innerHTML = '<div class="fd"><div class="fd__h"><span>' + CATS[i] + "</span><em>" + L.m + '</em></div><div class="fd__b' + (t.r ? " fd__b--row" : "") + '">' + t.v(s) + (MORE[i].x ? MORE[i].x(s) : "") + '</div><div class="fd__f">' + L.f + "</div></div>";
     var text = document.createElement("article");
     text.className = "feat-text";

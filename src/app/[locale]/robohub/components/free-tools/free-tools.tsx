@@ -57,19 +57,19 @@ export default async function FreeTools() {
                 </div>{" "}
                 <p className="calc__mps" aria-hidden="true">
                   <span className="is-on">
-                    <img className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="16" height="16" />
                     Uzum Market
                   </span>{" "}
                   <span>
-                    <img className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="16" height="16" />
                     Yandex Market
                   </span>{" "}
                   <span>
-                    <img className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="16" height="16" />
                     Wildberries
                   </span>{" "}
                   <span>
-                    <img className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="16" height="16" />
                     Ozon
                   </span>
                 </p>{" "}

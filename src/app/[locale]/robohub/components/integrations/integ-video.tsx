@@ -17,6 +17,7 @@ export default function IntegVideo({ t }: { t: T }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       // harakatsiz rejim: mazmuni ko'rinadigan kadrda to'xtab turadi
       const showFrame = () => { video.currentTime = 2; };
+      video.preload = "metadata"; // preload="none" bo'lsa kadr hech qachon yuklanmaydi
       if (video.readyState >= 1) showFrame();
       else video.addEventListener("loadedmetadata", showFrame, { once: true });
       return () => video.removeEventListener("loadedmetadata", showFrame);
@@ -55,7 +56,8 @@ export default function IntegVideo({ t }: { t: T }) {
       muted
       loop
       playsInline
-      preload="metadata"
+      // sahifa ochilganda yuklanmaydi — ekranga kirganda play() yuklaydi (TZ 6.3)
+      preload="none"
       aria-label={t.label}
     />
   );

@@ -90,7 +90,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
               onPointerEnter={(e) => e.pointerType === "mouse" && show(i)}
               onFocus={() => show(i)}
             >
-              <img src={`/marketplaces/${m.logo}.svg`} alt="" width={24} height={24} />
+              <img loading="lazy" decoding="async" src={`/marketplaces/${m.logo}.svg`} alt="" width={24} height={24} />
             </Link>
           ))}
         </span>
@@ -108,14 +108,14 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
           {/* butun kartochka — bitta havola (klaviatura uchun logoning o'zi havola, shuning uchun tabIndex=-1) */}
           <Link href={href(lesson.n)} className="acx-mppop__card" key={active} tabIndex={-1} aria-hidden="true">
             <span className="acx-mppop__meta">
-              <img src={`/marketplaces/${mp.logo}.svg`} alt="" width={18} height={18} />
+              <img loading="lazy" decoding="async" src={`/marketplaces/${mp.logo}.svg`} alt="" width={18} height={18} />
               {mp.name}
               <span>
                 {c.lessonN(lesson.n)} · {fmt(lesson.durationSec)}
               </span>
             </span>
             <span className="acx-mppop__thumb">
-              <img src={yt.thumbHq(lesson.youtubeId)} width={480} height={360} alt="" decoding="async" />
+              <img loading="lazy" src={yt.thumbHq(lesson.youtubeId)} width={480} height={360} alt="" decoding="async" />
               <span className="acx-mppop__play">
                 <PlayGlyph size={18} />
               </span>

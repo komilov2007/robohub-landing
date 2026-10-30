@@ -7,7 +7,7 @@ export const messages = defineMessages({
     title: ["Marketpleyslardagi", "savdoni"],
     accent: ["yagona", "kabinetdan"],
     end: ["boshqaring"],
-    lead: "Mahsulotlarni marketpleyslarda joylashtiring, buyurtmalarni boshqaring, qoldiqlarni sinxronlang va foydangizni Robohub’da kuzating.",
+    lead: "Mahsulotlarni Uzum Market, Wildberries, Ozon va Yandex Market’da joylashtiring, buyurtmalarni boshqaring, qoldiqlarni sinxronlang va foydangizni Robohub’da kuzating.",
     facts: { mps: "Marketpleyslar", integrations: "Hisob tizimlari", ai: "AI yordamchi" },
     start: "Hoziroq boshlash",
     video: {
@@ -21,7 +21,7 @@ export const messages = defineMessages({
     title: ["Управляйте", "продажами", "на маркетплейсах", "из"],
     accent: ["одного", "кабинета"],
     end: [],
-    lead: "Размещайте товары на маркетплейсах, управляйте заказами, синхронизируйте остатки и отслеживайте прибыль через Robohub.",
+    lead: "Размещайте товары на Uzum Market, Wildberries, Ozon и Yandex Market, управляйте заказами, синхронизируйте остатки и отслеживайте прибыль через Robohub.",
     facts: { mps: "Маркетплейсы", integrations: "Учётные системы", ai: "AI-помощник" },
     start: "Начать сейчас",
     video: {
@@ -35,7 +35,7 @@ export const messages = defineMessages({
     title: ["Manage", "your", "marketplace", "sales", "from"],
     accent: ["one", "dashboard"],
     end: [],
-    lead: "List products on marketplaces, manage orders, sync stock and track your profit with Robohub.",
+    lead: "List products on Uzum Market, Wildberries, Ozon and Yandex Market, manage orders, sync stock and track your profit with Robohub.",
     facts: { mps: "Marketplaces", integrations: "Accounting systems", ai: "AI assistant" },
     start: "Get started",
     video: {
@@ -49,7 +49,7 @@ export const messages = defineMessages({
     title: ["Маркетплейстердегі", "сауданы"],
     accent: ["бір", "кабинеттен"],
     end: ["басқарыңыз"],
-    lead: "Тауарларды маркетплейстерге орналастырыңыз, тапсырыстарды басқарыңыз, қалдықтарды синхрондаңыз және пайдаңызды Robohub-та бақылаңыз.",
+    lead: "Тауарларды Uzum Market, Wildberries, Ozon және Yandex Market-ке орналастырыңыз, тапсырыстарды басқарыңыз, қалдықтарды синхрондаңыз және пайдаңызды Robohub-та бақылаңыз.",
     facts: { mps: "Маркетплейстер", integrations: "Есепке алу жүйелері", ai: "AI көмекші" },
     start: "Қазір бастау",
     video: {
@@ -63,7 +63,7 @@ export const messages = defineMessages({
     title: ["Маркетплейстердеги", "сатууну"],
     accent: ["бир", "кабинеттен"],
     end: ["башкарыңыз"],
-    lead: "Товарларды маркетплейстерге жайгаштырыңыз, буйрутмаларды башкарыңыз, калдыктарды синхрондоңуз жана кирешеңизди Robohub-та көзөмөлдөңүз.",
+    lead: "Товарларды Uzum Market, Wildberries, Ozon жана Yandex Market-ке жайгаштырыңыз, буйрутмаларды башкарыңыз, калдыктарды синхрондоңуз жана кирешеңизди Robohub-та көзөмөлдөңүз.",
     facts: { mps: "Маркетплейстер", integrations: "Эсеп системалары", ai: "AI жардамчы" },
     start: "Азыр баштоо",
     video: {
@@ -77,7 +77,7 @@ export const messages = defineMessages({
     title: ["Marketpleyslerdegi", "sawdanı"],
     accent: ["bir", "kabinetten"],
     end: ["basqarıń"],
-    lead: "Ónimlerdi marketpleyslerge jaylastırıń, buyırtpalardı basqarıń, qaldıqlardı sinxronlań hám paydańızdı Robohub-ta baqlap barıń.",
+    lead: "Ónimlerdi Uzum Market, Wildberries, Ozon hám Yandex Market-ke jaylastırıń, buyırtpalardı basqarıń, qaldıqlardı sinxronlań hám paydańızdı Robohub-ta baqlap barıń.",
     facts: { mps: "Marketpleysler", integrations: "Esap sistemaları", ai: "AI járdemshi" },
     start: "Házir baslaw",
     video: {
@@ -91,7 +91,7 @@ export const messages = defineMessages({
     title: ["Савдоро", "дар маркетплейсҳо"],
     accent: ["аз", "як", "кабинет"],
     end: ["идора", "кунед"],
-    lead: "Молҳоро дар маркетплейсҳо ҷойгир кунед, фармоишҳоро идора намоед, бақияҳоро ҳамоҳанг созед ва фоидаи худро дар Robohub пайгирӣ кунед.",
+    lead: "Молҳоро дар Uzum Market, Wildberries, Ozon ва Yandex Market ҷойгир кунед, фармоишҳоро идора намоед, бақияҳоро ҳамоҳанг созед ва фоидаи худро дар Robohub пайгирӣ кунед.",
     facts: { mps: "Маркетплейсҳо", integrations: "Системаҳои баҳисобгирӣ", ai: "Ёрдамчии AI" },
     start: "Ҳозир оғоз кунед",
     video: {

@@ -130,7 +130,7 @@ function CategorySuggestions({ calculator }: { calculator: MarketplaceCalculator
   if (!suggestLoading && !suggestions.length) return null;
   return (
     <div className="cc-ai">
-      <img src="/calculator/icons/ai.svg" alt="" width={16} height={16} />
+      <img loading="lazy" decoding="async" src="/calculator/icons/ai.svg" alt="" width={16} height={16} />
       <span className="cc-note">{t(suggestLoading ? "ai_category_suggesting" : "ai_category_suggestion")}</span>
       {!suggestLoading &&
         suggestions.map((s) => (

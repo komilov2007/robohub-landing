@@ -9,6 +9,9 @@ export const ROBOHUB_ORIGIN = "https://robohub.uz";
 export const ROBOSELL_ORIGIN = "https://robosell-landing.vercel.app";
 // Brend yozilishi — title, OG, schema'da bir xil
 export const BRAND = "Robohub";
+// Robohub'ning bitta ta'rifi (inglizcha) — Organization schema va /llms.txt da bir xil
+export const ROBOHUB_DESCRIPTION_EN =
+  "Robohub is an Uzbek SaaS platform for marketplace sellers: manage Uzum Market, Wildberries, Ozon and Yandex Market stores — orders, product cards, prices, stock and analytics — from one dashboard.";
 
 // og:locale. Qoraqalpoq (kaa) uchun standart locale yo'q — teg qo'yilmaydi.
 export const OG_LOCALE: Record<Locale, string | undefined> = {
@@ -78,6 +81,10 @@ export const ROBOHUB_ORG = {
   "@type": "Organization",
   "@id": `${ROBOHUB_ORIGIN}/#organization`,
   name: BRAND,
+  // Yuridik nomi — davlat ro'yxatidan o'tganlik guvohnomasidagi kabi (footer, public/certificates)
+  legalName: "“Robohub” MChJ",
+  // Bitta tavsif — llms.txt va sahifalardagi matn bilan bir xil (AI yordamchilar bir xil ta'rifni takrorlashi uchun)
+  description: ROBOHUB_DESCRIPTION_EN,
   url: ROBOHUB_ORIGIN,
   logo: { "@type": "ImageObject", url: `${ROBOHUB_ORIGIN}/logo/robohub.png`, width: 512, height: 512 },
   email: EMAIL,
@@ -92,7 +99,11 @@ export const ROBOHUB_ORG = {
   contactPoint: [
     { "@type": "ContactPoint", contactType: "customer support", telephone: PHONE_HREF.replace("tel:", ""), email: EMAIL, url: TELEGRAM_URL },
   ],
-  // Rasmiy profillar. TODO: LinkedIn, Facebook, Telegram kanal bo'lsa — shu yerga (seo-report/README.md)
+  // Ishlaydigan mamlakatlar — marketpleyslar bo'limidagi ro'yxat (components/market/regions-data.ts)
+  areaServed: ["UZ", "KZ", "KG", "RU", "TJ"].map((c) => ({ "@type": "Country", name: c })),
+  award: "President Tech Award",
+  // Rasmiy profillar. TODO: LinkedIn, Facebook, Telegram kanal, IT Park katalogi, Yandex Biznes va Google Business Profile
+  // sahifalari ochilgach — shu yerga (TZ "SEO, GEO", 2.10). @robohubsupport — qo'llab-quvvatlash chati, profil emas.
   sameAs: [INSTAGRAM_URL.robohub, YOUTUBE_URL],
 } as const;
 export const ROBOHUB_ORG_REF = { "@id": ROBOHUB_ORG["@id"] } as const;

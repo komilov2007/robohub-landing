@@ -110,9 +110,9 @@ export default async function FooterTrust() {
   const t = messages[await getLocale()];
   return (
     <section className="ftrust" aria-labelledby="ftrust-title">
-      <h3 className="ftrust__title" id="ftrust-title">
+      <p className="ftrust__title" id="ftrust-title">
         {t.title}
-      </h3>
+      </p>
       <ul className="ftrust__logos">
         {LOGOS.map((l, i) => (
           <li key={l.src}>
@@ -120,7 +120,7 @@ export default async function FooterTrust() {
         ))}
       </ul>
 
-      <h3 className="ftrust__title ftrust__title--sub">{t.certsTitle}</h3>
+      <p className="ftrust__title ftrust__title--sub">{t.certsTitle}</p>
       <ul className="ftrust__certs">
         {CERTS.map((c, i) => (
           <li key={c.src}>

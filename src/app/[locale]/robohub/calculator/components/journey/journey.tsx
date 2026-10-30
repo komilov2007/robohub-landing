@@ -10,7 +10,7 @@ export default function Journey({ steps, demo, cta }: { steps: Content["STEPS"];
         <span className="cx-type">{demo.typed}</span>
       </span>
       <span className="cx-mini__chip">
-        <img src="/calculator/icons/ai.svg" alt="" width={12} height={12} />
+        <img loading="lazy" decoding="async" src="/calculator/icons/ai.svg" alt="" width={12} height={12} />
         {demo.category}
       </span>
     </div>,

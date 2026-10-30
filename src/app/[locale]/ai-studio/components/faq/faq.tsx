@@ -15,16 +15,16 @@ export default function Faq() {
       {/* telefon (≤767px) — alohida: markazdagi sarlavha, ixcham akkordeon, Telegram kartasi pastda */}
       <div className="as-wrap as-fq as-only-m">
         <header className="as-fq__head">
-          <h2 className="as-h2" data-rv style={{ "--d": "80ms" } as CSSProperties}>
+          <p className="as-h2" role="heading" aria-level={2} data-rv style={{ "--d": "80ms" } as CSSProperties}>
             {FAQ.title} <span className="as-h2__accent">{FAQ.accent}</span>
-          </h2>
+          </p>
         </header>
         <ul className="as-fq__list" data-rv style={{ "--d": "160ms" } as CSSProperties}>
           {FAQ.items.map((it, i) => {
             const on = open === i;
             return (
               <li key={it.q} className={"as-fq__item" + (on ? " is-open" : "")}>
-                <h3>
+                <div role="heading" aria-level={3}>
                   <button
                     type="button"
                     className="as-fq__btn"
@@ -36,7 +36,7 @@ export default function Faq() {
                     {it.q}
                     <span className="as-q__plus" aria-hidden="true" />
                   </button>
-                </h3>
+                </div>
                 <div className="as-q__panel" id={`as-qm-${i}`} role="region" aria-labelledby={`as-qmb-${i}`}>
                   <div>
                     <p>{it.a}</p>

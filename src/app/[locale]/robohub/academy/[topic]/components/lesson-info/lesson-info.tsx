@@ -16,7 +16,9 @@ import Icon, { ICONS } from "../../../components/svg-icon/svg-icon";
 //   2) o'rtada — "Nazariy qism": maqola — xulosa, "Bu nima?", "Nega kerak?" (lib/lesson-notes.ts), videoda ko'rsatiladiganlar, maslahat;
 // Pleylistda tanlangan darsga qarab almashadi. Ma'lumot — lib/academy.ts (summary, points).
 // SEO: har darsning o'z sahifasi bor (/academy/{mavzu}/{dars}) — server shu dars matnini HTML'da beradi (player-context → initialLesson).
-export default function LessonInfo({ topic }: { topic: Topic }) {
+// lessonPage — dars sahifasi: dars nomi H1 (mavzu sahifasida H1 — mavzu sarlavhasi, bu yerda H2; stage.tsx)
+export default function LessonInfo({ topic, lessonPage = false }: { topic: Topic; lessonPage?: boolean }) {
+  const Title = lessonPage ? "h1" : "h2";
   const locale = useAcademyLocale();
   const t = messages[locale];
   const c = common[locale];
@@ -39,12 +41,19 @@ export default function LessonInfo({ topic }: { topic: Topic }) {
         <div key={lesson.n} className="acx-about__lesson">
           {/* 1. Sarlavha — oddiy, tugmasiz */}
           <header className="acx-about__head">
-            <h2 id="ac-about-title" className="acx-about__title">
+            <Title id="ac-about-title" className="acx-about__title">
               {lesson.title}
-            </h2>
+            </Title>
             <p className="acx-about__meta">
               {topic.name} · {t.position(idx + 1, lessons.length)} ·{" "}
               {fmt(lesson.durationSec)}
+              {/* sana (YouTube'ga yuklangan) — ko'rinadigan matn va JSON-LD dateModified bilan bir xil (topic-view.tsx) */}
+              {lesson.uploadDate && (
+                <time className="is-date" dateTime={lesson.uploadDate.slice(0, 10)}>
+                  {t.date}: {lesson.uploadDate.slice(0, 10).split("-").reverse().join(".")}
+                </time>
+              )}
+              <span className="is-author">{t.author}</span>
               {/* videolar o'zbekcha — ru/en da eslatma */}
               {c.videoLang && <span className="is-lang">{c.videoLang}</span>}
               {lesson.n === mainLesson && (

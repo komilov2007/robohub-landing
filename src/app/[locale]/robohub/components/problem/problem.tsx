@@ -66,14 +66,14 @@ export default async function Problem() {
         <div className="pain__media" data-sr="">
           {/* Telefonda (≤600px) — portret video (1080×1350), kompyuterda — keng (1920×600). Uzunligi va vaqt jadvali har xil (8.7 s / 13 s),
               problem.script.js qaysi biri o'ynayotganiga qarab (currentSrc) mos jadvalni oladi. Brauzer mosini o'zi tanlaydi. */}
-          {/* key: til almashganda <video> qayta yaratiladi — aks holda brauzer eski <source> ni o'ynashda davom etadi */}
+          {/* key: til almashganda <video> qayta yaratiladi — aks holda brauzer eski <source> ni o'ynashda davom etadi.
+              autoPlay yo'q, preload="none": video sahifa ochilganda emas, bo'lim ekranga kirganda yuklanadi (problem.script.js) */}
           <video
             key={lang}
-            autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             aria-hidden="true"
           >
             <source
@@ -90,20 +90,20 @@ export default async function Problem() {
           <ul>
             {NEXT.map((n) => (
               <li key={n.name}>
-                <img src={n.logo} alt="" width="22" height="22" />
+                <img loading="lazy" decoding="async" src={n.logo} alt="" width="22" height="22" />
                 {n.name}
               </li>
             ))}
           </ul>
           <span className="pain__next-own">
             <span className="pain__next-ico" aria-hidden="true">
-              <img
+              <img loading="lazy" decoding="async"
                 src="/robosell/icons/website.svg"
                 alt=""
                 width="22"
                 height="22"
               />
-              <img
+              <img loading="lazy" decoding="async"
                 src="/robosell/icons/telegram.svg"
                 alt=""
                 width="22"

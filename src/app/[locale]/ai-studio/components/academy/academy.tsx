@@ -25,7 +25,7 @@ export default async function Academy() {
       <div className="as-wrap">
         {/* telefon (≤767px) — alohida: sarlavha, darslar vertikal ro'yxat (muqova + nom), tugma pastda to'liq kenglikda */}
         <div className="as-am as-only-m" data-rv>
-          <h2 className="as-am__title">{ACADEMY.title}</h2>
+          <p className="as-am__title" role="heading" aria-level={2}>{ACADEMY.title}</p>
           <p className="as-am__lead">{ACADEMY.lead}</p>
           <ul className="as-am__list">
             {lessons.map((l, i) => (

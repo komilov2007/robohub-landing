@@ -45,7 +45,7 @@ export default function ReviewsVideos({ videos, t }: { videos: Video[]; t: T }) 
                   <span className="revs__cap">
                     <b>{v.name}</b>
                     <small>
-                      <img src={`/flags/${v.flag}.svg`} alt="" width="14" height="14" />
+                      <img loading="lazy" decoding="async" src={`/flags/${v.flag}.svg`} alt="" width="14" height="14" />
                       {v.lang}
                     </small>
                   </span>

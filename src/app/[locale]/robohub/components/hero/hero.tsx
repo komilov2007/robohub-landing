@@ -14,6 +14,16 @@ const MARKETPLACES = [
   "/robosell/icons/zoomrad.svg",
   "/marketplaces/yandex.svg",
 ];
+// Logotip nomi — alt uchun (rasm qidiruvi logotipni nomi bilan bog‘lashi uchun; orbita aria-hidden, ekran o‘quvchi o‘qimaydi)
+const MP_NAME: Record<string, string> = {
+  "/marketplaces/uzum.svg": "Uzum Market",
+  "/robosell/icons/alif.svg": "alif shop",
+  "/marketplaces/wildberries.svg": "Wildberries",
+  "/robosell/icons/click-outline.svg": "Click",
+  "/marketplaces/ozon.svg": "Ozon",
+  "/robosell/icons/zoomrad.svg": "Zoomrad",
+  "/marketplaces/yandex.svg": "Yandex Market",
+};
 
 // Tashqi halqa: ombor va hisob tizimlari (integratsiyalar) — kichikroq va xiraroq plitkalar, faqat logotip.
 const SYSTEMS: { name: string; logo: string }[] = [
@@ -66,10 +76,10 @@ export default async function Hero() {
             <ul className="hero__facts hero__rise">
               <li>
                 <span className="hero__mps" aria-hidden="true">
-                  <img className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="22" height="22" style={{ "--d": "760ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="22" height="22" style={{ "--d": "820ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="22" height="22" style={{ "--d": "880ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="22" height="22" style={{ "--d": "940ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "760ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "820ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "880ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "940ms" } as CSSProperties} />
                 </span>
                 {t.facts.mps}
               </li>
@@ -97,7 +107,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={m} style={{ "--a": `${-90 + i * (360 / MARKETPLACES.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className={`orbit__tile orbit__tile--mp${m.startsWith("/marketplaces/") ? " orbit__tile--shadow" : ""}`}>
-                        <img src={m} alt="" {...imgSize(m)} />
+                        <img src={m} alt={MP_NAME[m] ?? ""} {...imgSize(m)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>
@@ -108,7 +118,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={s.name} style={{ "--a": `${-70 + i * (360 / SYSTEMS.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className="orbit__tile">
-                        <img src={s.logo} alt="" title={s.name} {...imgSize(s.logo)} />
+                        <img src={s.logo} alt={s.name} title={s.name} {...imgSize(s.logo)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>

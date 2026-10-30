@@ -222,8 +222,8 @@ const uz = {
     cta: "Shunaqasini yaratish",
     before: "Oldin",
     after: "Keyin",
-    photoAlt: "{name} — oddiy foto",
-    resultAlt: "{name} — AI Studio natijasi",
+    photoAlt: "{name} — telefonda olingan oddiy foto (AI Studio’gacha)",
+    resultAlt: "{name} — marketpleys uchun kartochka, Robohub AI Studio’da yaratilgan",
     items: {
       thermos: "Termos krujka",
       bag: "Krossbodi sumka",
@@ -414,8 +414,8 @@ const ru: Dict = {
     cta: "Создать такое же",
     before: "До",
     after: "После",
-    photoAlt: "{name} — обычное фото",
-    resultAlt: "{name} — результат AI Studio",
+    photoAlt: "{name} — исходное фото с телефона (до AI Studio)",
+    resultAlt: "{name} — карточка товара для маркетплейса, создана в Robohub AI Studio",
     items: {
       thermos: "Термокружка",
       bag: "Сумка кросс-боди",
@@ -603,8 +603,8 @@ const en: Dict = {
     cta: "Create one like this",
     before: "Before",
     after: "After",
-    photoAlt: "{name} — plain photo",
-    resultAlt: "{name} — AI Studio result",
+    photoAlt: "{name} — original phone photo (before AI Studio)",
+    resultAlt: "{name} — marketplace product card made in Robohub AI Studio",
     items: {
       thermos: "Travel mug",
       bag: "Crossbody bag",
@@ -793,7 +793,7 @@ const kk: Dict = {
     before: "Дейін",
     after: "Кейін",
     photoAlt: "{name} — қарапайым фото",
-    resultAlt: "{name} — AI Studio нәтижесі",
+    resultAlt: "{name} — маркетплейсқа арналған тауар карточкасы, Robohub AI Studio-да жасалған",
     items: {
       thermos: "Термокружка",
       bag: "Кросс-боди сөмке",
@@ -982,7 +982,7 @@ const ky: Dict = {
     before: "Чейин",
     after: "Кийин",
     photoAlt: "{name} — жөнөкөй сүрөт",
-    resultAlt: "{name} — AI Studio жыйынтыгы",
+    resultAlt: "{name} — маркетплейс үчүн товар карточкасы, Robohub AI Studio’до түзүлгөн",
     items: {
       thermos: "Термокружка",
       bag: "Кросс-боди сумка",
@@ -1171,7 +1171,7 @@ const kaa: Dict = {
     before: "Aldın",
     after: "Keyin",
     photoAlt: "{name} — ápiwayı súwret",
-    resultAlt: "{name} — AI Studio nátiyjesi",
+    resultAlt: "{name} — marketpleys ushın tovar kartochkası, Robohub AI Studio’da jaratılǵan",
     items: {
       thermos: "Termos krujka",
       bag: "Krossbodi sumka",
@@ -1360,7 +1360,7 @@ const tg: Dict = {
     before: "Пеш",
     after: "Баъд",
     photoAlt: "{name} — акси оддӣ",
-    resultAlt: "{name} — натиҷаи AI Studio",
+    resultAlt: "{name} — корти мол барои маркетплейс, дар Robohub AI Studio сохта шудааст",
     items: {
       thermos: "Кружкаи термосӣ",
       bag: "Сумкаи кросс-боди",

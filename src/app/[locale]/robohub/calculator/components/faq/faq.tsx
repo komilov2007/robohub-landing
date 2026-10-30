@@ -54,7 +54,7 @@ export default function Faq({ faq, chat }: { faq: Content["FAQ"]; chat: Content[
         <div className="cx-chat" data-io>
           <div className="cx-chat__top">
             <span className="cx-chat__avatar" aria-hidden="true">
-              <img src="/calculator/icons/pc-calculator.svg" alt="" width={20} height={20} />
+              <img loading="lazy" decoding="async" src="/calculator/icons/pc-calculator.svg" alt="" width={20} height={20} />
             </span>
             <div>
               <b>{chat.bot}</b>

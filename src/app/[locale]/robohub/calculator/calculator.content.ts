@@ -42,6 +42,10 @@ const TEXT = defineMessages({
     },
     nav: ["Nega kerak", "Kalkulyator", "Qanday ishlaydi", "Savollar"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Uzum, Wildberries, Ozon va Yandex Market uchun foyda kalkulyatori",
+
       titleBefore: "Sotuvdan sizga",
       titleMark: "qancha foyda",
       titleAfter: "qoladi?",
@@ -118,6 +122,10 @@ const TEXT = defineMessages({
     },
     nav: ["Зачем", "Калькулятор", "Как работает", "Вопросы"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Калькулятор прибыли для Uzum, Wildberries, Ozon и Яндекс Маркета",
+
       titleBefore: "Сколько",
       titleMark: "прибыли остаётся",
       titleAfter: "с продажи?",
@@ -194,6 +202,10 @@ const TEXT = defineMessages({
     },
     nav: ["Why", "Calculator", "How it works", "FAQ"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Profit calculator for Uzum, Wildberries, Ozon and Yandex Market",
+
       titleBefore: "How much",
       titleMark: "profit is left",
       titleAfter: "after a sale?",
@@ -270,6 +282,10 @@ const TEXT = defineMessages({
     },
     nav: ["Не үшін керек", "Калькулятор", "Қалай жұмыс істейді", "Сұрақтар"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Uzum, Wildberries, Ozon және Yandex Market үшін пайда калькуляторы",
+
       titleBefore: "Сатылымнан сізге",
       titleMark: "қанша пайда",
       titleAfter: "қалады?",
@@ -346,6 +362,10 @@ const TEXT = defineMessages({
     },
     nav: ["Эмне үчүн керек", "Калькулятор", "Кантип иштейт", "Суроолор"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Uzum, Wildberries, Ozon жана Yandex Market үчүн киреше калькулятору",
+
       titleBefore: "Сатуудан сизге",
       titleMark: "канча киреше",
       titleAfter: "калат?",
@@ -422,6 +442,10 @@ const TEXT = defineMessages({
     },
     nav: ["Ne ushın kerek", "Kalkulyator", "Qalay isleydi", "Sorawlar"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Uzum, Wildberries, Ozon hám Yandex Market ushın payda kalkulyatorı",
+
       titleBefore: "Satıwdan sizge",
       titleMark: "qansha payda",
       titleAfter: "qaladı?",
@@ -498,6 +522,10 @@ const TEXT = defineMessages({
     },
     nav: ["Барои чӣ", "Калкулятор", "Чӣ тавр кор мекунад", "Саволҳо"],
     hero: {
+      // H1 boshi — kalit ibora (qidiruv uchun), savol ustida kichik qator bo'lib ko'rinadi (TZ 8.1)
+
+      kicker: "Ҳисобкунаки фоида барои Uzum, Wildberries, Ozon ва Yandex Market",
+
       titleBefore: "Аз фурӯш ба шумо",
       titleMark: "чӣ қадар фоида",
       titleAfter: "мемонад?",

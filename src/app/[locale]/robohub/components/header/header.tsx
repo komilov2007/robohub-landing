@@ -1,5 +1,6 @@
 import LangSelect from "@/components/lang-select/lang-select";
 import { getLocale } from "@/i18n/server";
+import { localeHref } from "@/i18n/config";
 import HeaderScript from "./header-script";
 import { messages } from "./header.i18n";
 import { newTab, sellerUrl } from "@/lib/sites";
@@ -43,7 +44,7 @@ export default async function Header() {
       </svg>
       <header className="header" id="header" data-theme="light">
         <div className="container header__inner">
-          <a className="logo" href="#" aria-label={t.home}>
+          <a className="logo" href={localeHref(locale, "/")} aria-label={t.home}>
             <svg viewBox="0 0 127 31" role="img" aria-hidden="true">
               <use href="#rh-logo" />
             </svg>

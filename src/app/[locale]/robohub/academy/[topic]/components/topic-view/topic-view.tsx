@@ -16,14 +16,30 @@ import MobileNextBar from "../mobile-next-bar/mobile-next-bar";
 // Farqi — qaysi dars ochiq turishi (lesson) va JSON-LD.
 export const SITE = "https://robohub.uz";
 
-// Darsning qisqa tavsifi (meta description, VideoObject): xulosa + "Bu nima?"; ~160 belgigacha
+// Darsning qisqa tavsifi (meta description, VideoObject): xulosa + "Bu nima?" — butun gaplar bilan, ~160 belgigacha.
+// Gap o'rtasida kesilmaydi ("…" bilan tugaydigan tavsif — TZ 9.1.2): sig'gan gaplar olinadi; tavsif juda qisqa
+// qolsa (< 110), keyingi gap biroz oshib ketsa ham (max + 40 gacha) qo'shiladi.
 export function lessonDescription(l: Lesson, locale: Locale, max = 160): string {
-  const text = [l.summary, getLessonNote(l.n, locale)?.concept]
+  const sentences = [l.summary, getLessonNote(l.n, locale)?.concept]
     .filter(Boolean)
-    .join(" ");
-  return text.length <= max
-    ? text
-    : `${text.slice(0, text.lastIndexOf(" ", max - 1))}…`;
+    .join(" ")
+    .split(/(?<=[.!?…])\s+/)
+    .filter(Boolean);
+  let out = "";
+  for (const s of sentences) {
+    const next = out ? `${out} ${s}` : s;
+    if (next.length <= max || !out || (out.length < 110 && next.length <= max + 40)) out = next;
+    else {
+      // tavsif hali qisqa, keyingi gap esa uzun — uni gap bo'lagi chegarasida (":", ";", ",", " —") nuqta bilan yopamiz
+      const room = max - out.length - 1;
+      // kuchli chegara afzal: ":" / ";" → " —" → ","
+      const cut = [":", ";", " —", ","].map((p) => s.lastIndexOf(p, room)).find((i) => i > 40) ?? -1;
+      if (out.length < 110 && cut > 40) out = `${out} ${s.slice(0, cut).trimEnd()}.`;
+      break;
+    }
+    if (out.length > max) break;
+  }
+  return out;
 }
 
 function videoLd(topic: Topic, l: Lesson, locale: Locale) {
@@ -61,7 +77,39 @@ function JsonLd({ topic, lesson, locale }: { topic: Topic; lesson?: Lesson; loca
       : []),
   ];
   const main = lesson ?? getLesson(topic.mainLesson, locale);
+  // Sahifa sanasi — ochiq turgan dars videosining sanasi (sahifada ham shu sana ko'rinadi: lesson-info.tsx)
+  const date = main?.uploadDate;
+  const url = `${SITE}${lesson ? lessonHref(locale, topic.slug, lesson.n) : topicHref(locale, topic.slug)}`;
   const data = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: lesson?.title ?? topic.name,
+      inLanguage: locale,
+      isPartOf: { "@id": `${SITE}/#website` },
+      publisher: { "@id": `${SITE}/#organization` },
+      ...(date && { datePublished: date, dateModified: date }),
+    },
+    // Maqola sifatida: muallif — Robohub jamoasi (sahifada ham ko'rinadi: lesson-info.tsx), sanalar (TZ 9.1.5)
+    ...(main
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "@id": `${url}#article`,
+            headline: main.title,
+            description: lessonDescription(main, locale),
+            image: [yt.thumb(main.youtubeId)],
+            inLanguage: locale,
+            mainEntityOfPage: { "@id": `${url}#webpage` },
+            author: { "@type": "Organization", "@id": `${SITE}/#organization`, name: "Robohub", url: SITE },
+            publisher: { "@id": `${SITE}/#organization` },
+            ...(date && { datePublished: date, dateModified: date }),
+          },
+        ]
+      : []),
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -115,8 +163,8 @@ export default async function TopicView({
     >
       <JsonLd topic={topic} lesson={lesson} locale={locale} />
       {/* Hero = sarlavha, pleyer va mavzu darslari (YouTube kabi); pastda — tanlangan dars haqida matn, savollar va CTA */}
-      <Stage topic={topic} />
-      <LessonInfo topic={topic} />
+      <Stage topic={topic} lesson={lesson} />
+      <LessonInfo topic={topic} lessonPage={!!lesson} />
       <TopicsRail topic={topic} />
       <Questions topic={topic} />
       <Cta topic={topic} />

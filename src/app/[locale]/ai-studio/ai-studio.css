@@ -32,7 +32,10 @@
   font-size:16px;
   line-height:1.5;
 }
-.as h1,.as h2,.as h3{font-family:var(--ff-head);color:inherit;letter-spacing:-.025em}
+.as h1,.as h2,.as h3,:where(.as) p[role="heading"]{font-family:var(--ff-head);color:inherit;letter-spacing:-.025em}
+/* Telefon nusxasidagi sarlavhalar (.as-only-m) — <p role="heading">: kompyuter nusxasi bilan DOM'da ikkita bir xil H2 bo'lmasin (SEO).
+   :where — specifiklik global h2 qoidasidan past, klass qoidalari ustun turadi */
+:where(p[role="heading"]){font-weight:700;line-height:1.05}
 .as :focus-visible{outline:2.5px solid var(--primary);outline-offset:3px;border-radius:10px}
 .as-prob__cta :focus-visible{outline-color:var(--mint)}
 .as-lock,.as-lock body{overflow:hidden}
@@ -217,7 +220,7 @@
 .as-footer__about > p{margin-top:16px;max-width:34ch;color:var(--hf-dim);font-size:15px}
 .as-footer__mps{display:flex;gap:8px}
 .as-footer__mps img{width:30px;height:30px;border-radius:8px}
-.as-footer h3{font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hf-dim);margin-bottom:14px}
+.as-footer h3,.as-footer .ft-title{font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hf-dim);margin-bottom:14px;line-height:1.05}
 .as-footer ul{display:grid;gap:4px}
 .as-footer li a{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:500;color:#fff;opacity:.88;transition:opacity 200ms,color 200ms}
 .as-footer li a:hover{opacity:1;color:var(--hf-y)}

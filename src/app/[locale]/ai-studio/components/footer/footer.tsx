@@ -47,7 +47,7 @@ export default async function Footer() {
 
           {FOOTER.cols.map((c) => (
             <nav key={c.title} aria-label={c.title}>
-              <h3>{c.title}</h3>
+              <p className="ft-title">{c.title}</p>
               <ul>
                 {c.links.map((l) => (
                   <li key={l.label}>
@@ -61,7 +61,7 @@ export default async function Footer() {
           ))}
 
           <div>
-            <h3>{FOOTER.contacts}</h3>
+            <p className="ft-title">{FOOTER.contacts}</p>
             <ul className="as-footer__contacts">
               {CONTACTS.map((c) => (
                 <li key={c.icon}>

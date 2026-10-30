@@ -20,6 +20,12 @@ export default function Hero({ hero }: { hero: Content["HERO"] }) {
       </div>
       <div className="as-wrap cc-hero3__inner">
         <h1 className="cc-hero3__title" id="cc-hero-title">
+          {/* kalit ibora — H1 matnining boshi (qidiruv "kalkulyator" so'zini H1'da ko'radi), ko'rinishi kichik qator */}
+          <span className="cc-hero3__kicker as-in" style={{ "--d": "0ms" } as CSSProperties}>
+            {hero.kicker}
+          </span>
+          {/* ko'rinmaydigan ajratuvchi: H1 matni "…Яндекс Маркета. Сколько прибыли…" bo'lib o'qilsin */}
+          <span className="cc-hero3__sep">. </span>
           {before.map((w, i) => (
             <Fragment key={i}>
               <span className="as-word">

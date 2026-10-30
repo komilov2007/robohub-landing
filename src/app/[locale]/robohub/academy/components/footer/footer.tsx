@@ -48,7 +48,7 @@ export default async function Footer() {
             <FooterTrust />
           </div>
           <nav aria-label={t.topics}>
-            <h3>{t.topics}</h3>
+            <p className="ft-title">{t.topics}</p>
             <ul className="ac-footer__cols">
               {getTopics(locale).map((x) => (
                 <li key={x.slug}>
@@ -58,7 +58,7 @@ export default async function Footer() {
             </ul>
           </nav>
           <nav aria-label="Robohub">
-            <h3>Robohub</h3>
+            <p className="ft-title">Robohub</p>
             <ul>
               <li>
                 <a href={robohubHome(locale)}>{t.home}</a>
@@ -72,7 +72,7 @@ export default async function Footer() {
             </ul>
           </nav>
           <div>
-            <h3>{t.contacts}</h3>
+            <p className="ft-title">{t.contacts}</p>
             <ul className="ac-footer__contacts">
               {CONTACTS.map((c) => (
                 <li key={c.icon}>

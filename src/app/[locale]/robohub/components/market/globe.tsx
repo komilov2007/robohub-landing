@@ -375,14 +375,14 @@ export default function Globe({ names, mps, soon }: { names: Record<CountryId, s
               <span className="globe__card">
                 <span className="globe__mps">
                   {mps[c.id].now.map((m) => (
-                    <img key={m.name} src={m.logo} {...imgSize(m.logo)} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                    <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={m.name} title={m.name} className={m.wide ? "is-wide" : undefined} />
                   ))}
                 </span>
                 {mps[c.id].soon.length > 0 && (
                   <span className="globe__soon">
                     <em>{soon}</em>
                     {mps[c.id].soon.map((m) => (
-                      <img key={m.name} src={m.logo} {...imgSize(m.logo)} alt="" title={m.name} className={m.wide ? "is-wide" : undefined} />
+                      <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={m.name} title={m.name} className={m.wide ? "is-wide" : undefined} />
                     ))}
                   </span>
                 )}
@@ -395,7 +395,7 @@ export default function Globe({ names, mps, soon }: { names: Record<CountryId, s
         {COUNTRIES.map((c, i) => (
           <li key={c.id}>
             <button type="button" className={i === active ? "is-on" : undefined} aria-pressed={i === active} onClick={(e) => pick(i, e.timeStamp)}>
-              <img src={`/flags/${c.id}.svg`} alt="" width="16" height="16" />
+              <img loading="lazy" decoding="async" src={`/flags/${c.id}.svg`} alt="" width="16" height="16" />
               {names[c.id]}
             </button>
           </li>

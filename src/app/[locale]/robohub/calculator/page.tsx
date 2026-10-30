@@ -18,6 +18,7 @@ import { messages } from "./calculator.i18n";
 import { localeHref } from "@/i18n/config";
 import { jsonLd as ldScript, BRAND, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN } from "@/lib/seo";
 import ProductPeek from "@/components/product-peek/product-peek";
+import AcademyLinks from "./components/academy-links/academy-links";
 
 // Marketpleys kalkulyatori landingi — robohub.uz/calculator (/ru, /en ham). Konsepsiya: "sotuvdan qancha foyda qoladi?".
 // Tartib: hero (pul oqimi) → muammo (komissiya — hammasi emas) → KALKULYATOR (markazda) →
@@ -43,6 +44,9 @@ export default async function Page() {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       offers: { "@type": "Offer", price: "0", priceCurrency: "UZS" },
+      // bepul va ro'yxatdan o'tishsiz; imkoniyatlar — "Imkoniyatlar" bo'limidagi tugmalar (TZ 8.8)
+      isAccessibleForFree: true,
+      featureList: c.FEATURES.items.map((it) => it.title).filter(Boolean),
     },
     {
       "@context": "https://schema.org",
@@ -68,6 +72,7 @@ export default async function Page() {
         <Race compare={c.COMPARE} race={c.S.race} who={c.WHO} />
         <Journey steps={c.STEPS} demo={c.S.journey} cta={c.HERO.cta} />
         <Faq faq={c.FAQ} chat={c.S.chat} />
+        <AcademyLinks locale={locale} />
         <Finale final={c.FINAL} home={localeHref(locale, "/")} />
       </main>
       <Footer footer={c.FOOTER} nav={c.NAV} tag={c.T.ui.tag} home={c.T.ui.home} locale={locale} />

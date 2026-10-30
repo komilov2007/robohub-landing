@@ -32,7 +32,7 @@ export default function FaqClient({ t }: { t: T }) {
                 <article className={"faq-item" + (isOpen ? " is-open" : "")} key={f.q}>
                   <h3>
                     <button className="faq-item__q" type="button" aria-expanded={isOpen} aria-controls={"faq-a-" + i} onClick={() => setOpen(i)}>
-                      <span className="faq-item__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="faq-item__n" data-n={String(i + 1).padStart(2, "0")} aria-hidden="true" />
                       {f.q}
                       <span className="faq-item__x" aria-hidden="true">
                         <svg viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export default function FaqClient({ t }: { t: T }) {
             {/* key — savol almashganda javob qaytadan paydo boʻlish animatsiyasi bilan chiqadi; panel ekran oʻquvchilar uchun takror */}
             <div className="faq__answer" key={open} aria-hidden="true">
               <p className="faq__num">{String(open + 1).padStart(2, "0")}</p>
-              <h3>{FAQ[open].q}</h3>
+              <p className="faq__q">{FAQ[open].q}</p>
               <p><Answer parts={FAQ[open].a} /></p>
             </div>
             <a className="faq__help" href="tel:+998781138212">
