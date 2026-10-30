@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, hasLocale, localeHref, LOCALE_HEADER, SECTIONS, type Locale } from "@/i18n/config";
+import { defaultLocale, hasLocale, isKzHost, isUzHost, localeHref, LOCALE_HEADER, ROBOHUB_KZ, ROBOHUB_UZ, SECTIONS, type Locale } from "@/i18n/config";
 import { siteFromHost } from "@/lib/site-host";
 
 // Bitta loyiha — bir necha sayt, yetti til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
@@ -60,6 +60,16 @@ export function proxy(request: NextRequest) {
     // bo'limda til ikkinchi: /academy/ru/order → til ru, yo'l /academy/order
     locale = parts[2];
     rest = `/${[first, ...parts.slice(3)].join("/")}`;
+  }
+
+  // Qozoqcha — robohub.kz, qolgan tillar — robohub.uz (i18n/config.ts: localeOrigin). Faqat rasmiy domenlarda.
+  //   robohub.kz (tilsiz) → robohub.kz/kk;  robohub.kz/ru → robohub.uz/ru;  robohub.uz/kk → robohub.kz/kk
+  if (site === "robohub" && isKzHost(host) && locale !== "kk") {
+    if (locale === defaultLocale) return redirectTo(request, localeHref("kk", rest || "/"));
+    return NextResponse.redirect(new URL(pathname + request.nextUrl.search, ROBOHUB_UZ), 308);
+  }
+  if (site === "robohub" && isUzHost(host) && locale === "kk") {
+    return NextResponse.redirect(new URL(pathname + request.nextUrl.search, ROBOHUB_KZ), 308);
   }
 
   // Eski Academy domeni (robohub-academy…, robohub-academy-two…): bosh sahifa — yangi Academy

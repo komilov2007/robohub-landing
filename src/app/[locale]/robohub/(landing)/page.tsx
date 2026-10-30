@@ -19,7 +19,7 @@ import Reels from "../components/reels/reels";
 import MobileCta from "../components/mobile-cta/mobile-cta";
 import { messages as faqMessages } from "../components/faq/faq.i18n";
 import { getLocale } from "@/i18n/server";
-import { localeHref, locales } from "@/i18n/config";
+import { locales, localeUrl } from "@/i18n/config";
 import { BRAND, jsonLd, ogImageUrl, ROBOHUB_ORG, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN, ROBOHUB_WEBSITE_REF } from "@/lib/seo";
 import { messages as pricingMessages } from "../components/pricing/pricing.i18n";
 import { messages } from "./layout";
@@ -29,7 +29,7 @@ export default async function Page() {
   const t = messages[locale];
   // Qidiruv tizimlari uchun: kompaniya (logo, manzil, aloqa, ijtimoiy tarmoqlar), sayt, sahifa, platforma (tarif narxi —
   // narxlar bo'limidagi qiymat) va FAQ — sahifadagi matnlarning o'zi
-  const url = ROBOHUB_ORIGIN + (locale === "uz" ? "" : localeHref(locale, "/"));
+  const url = localeUrl(locale, "/");
   const price = Number(pricingMessages[locale].price.replace(/\D/g, ""));
   const schema = {
     "@context": "https://schema.org",

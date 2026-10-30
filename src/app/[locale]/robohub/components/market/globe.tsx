@@ -375,14 +375,14 @@ export default function Globe({ names, mps, soon }: { names: Record<CountryId, s
               <span className="globe__card">
                 <span className="globe__mps">
                   {mps[c.id].now.map((m) => (
-                    <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={m.name} title={m.name} className={m.wide ? "is-wide" : undefined} />
+                    <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} className={m.wide ? "is-wide" : undefined} />
                   ))}
                 </span>
                 {mps[c.id].soon.length > 0 && (
                   <span className="globe__soon">
                     <em>{soon}</em>
                     {mps[c.id].soon.map((m) => (
-                      <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={m.name} title={m.name} className={m.wide ? "is-wide" : undefined} />
+                      <img loading="lazy" decoding="async" key={m.name} src={m.logo} {...imgSize(m.logo)} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} className={m.wide ? "is-wide" : undefined} />
                     ))}
                   </span>
                 )}

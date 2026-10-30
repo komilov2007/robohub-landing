@@ -10,7 +10,7 @@ export const messages = defineMessages({
     start: "Hoziroq boshlash ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — marketpleys sotuvchilari uchun o‘zbek SaaS-platformasi: Uzum Market, Wildberries, Ozon va Yandex Market do‘konlari bitta kabinetda. Tarif — oyiga 500 000 so‘mdan.",
+    about: "Robohub — marketpleyslar, e’lon platformalari, superilovalar va shaxsiy onlayn-do‘konlardagi savdoni boshqarish uchun yagona elektron tijorat infratuzilmasi.",
     pageLabel: "Sahifa boʻlimlari",
     pageTitle: "Sahifa",
     page: [
@@ -37,7 +37,7 @@ export const messages = defineMessages({
     start: "Начать сейчас ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — узбекская SaaS-платформа для продавцов маркетплейсов: магазины на Uzum Market, Wildberries, Ozon и Yandex Market в одном кабинете. Тариф — от 500 000 сум в месяц.",
+    about: "Robohub — единая инфраструктура электронной коммерции для управления продажами на маркетплейсах, классифайдах, в суперприложениях и собственных онлайн-магазинах.",
     pageLabel: "Разделы страницы",
     pageTitle: "Страница",
     page: [
@@ -64,7 +64,7 @@ export const messages = defineMessages({
     start: "Get started ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub is an Uzbek SaaS platform for marketplace sellers: Uzum Market, Wildberries, Ozon and Yandex Market stores in one dashboard. From 500,000 UZS per month.",
+    about: "Robohub is a unified e-commerce infrastructure for managing sales on marketplaces, classifieds, super apps and your own online stores.",
     pageLabel: "Page sections",
     pageTitle: "Page",
     page: [
@@ -91,7 +91,7 @@ export const messages = defineMessages({
     start: "Қазір бастау ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — маркетплейс сатушыларына арналған өзбек SaaS-платформасы: Uzum Market, Wildberries, Ozon және Yandex Market дүкендері бір кабинетте. Тариф — айына 500 000 сўмнан.",
+    about: "Robohub — маркетплейстерде, хабарландыру платформаларында, суперқосымшаларда және жеке онлайн-дүкендерде сатуды басқаруға арналған бірыңғай электрондық коммерция инфрақұрылымы.",
     pageLabel: "Бет бөлімдері",
     pageTitle: "Бет",
     page: [
@@ -118,7 +118,7 @@ export const messages = defineMessages({
     start: "Азыр баштоо ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — маркетплейс сатуучулары үчүн өзбек SaaS-платформасы: Uzum Market, Wildberries, Ozon жана Yandex Market дүкөндөрү бир кабинетте. Тариф — айына 500 000 сумдан.",
+    about: "Robohub — маркетплейстерде, жарнама платформаларында, суперколдонмолордо жана жеке онлайн-дүкөндөрдө сатууну башкаруу үчүн бирдиктүү электрондук соода инфраструктурасы.",
     pageLabel: "Барактын бөлүмдөрү",
     pageTitle: "Барак",
     page: [
@@ -145,7 +145,7 @@ export const messages = defineMessages({
     start: "Házir baslaw ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — marketpleys satıwshıları ushın ózbek SaaS-platforması: Uzum Market, Wildberries, Ozon hám Yandex Market dúkánları bir kabinette. Tarif — ayına 500 000 swmnan.",
+    about: "Robohub — marketpleyslerde, daǵaza platformalarında, superqosımshalarda hám jeke onlayn-dúkánlarda satıwdı basqarıw ushın birden-bir elektron sawda infrastrukturası.",
     pageLabel: "Bet bólimleri",
     pageTitle: "Bet",
     page: [
@@ -172,7 +172,7 @@ export const messages = defineMessages({
     start: "Ҳозир оғоз кунед ",
     // ta'rif — "brend pasporti" (seo.ts ROBOHUB_DESCRIPTION_EN, llms.txt) bilan bir xil; AI yordamchilar shu gapni iqtibos qiladi (TZ 3.3)
 
-    about: "Robohub — платформаи SaaS-и ӯзбекӣ барои фурӯшандагони маркетплейсҳо: мағозаҳо дар Uzum Market, Wildberries, Ozon ва Yandex Market дар як кабинет. Тариф — аз 500 000 сӯм дар як моҳ.",
+    about: "Robohub — инфрасохтори ягонаи тиҷорати электронӣ барои идоракунии фурӯш дар маркетплейсҳо, платформаҳои эълонҳо, супербарномаҳо ва мағозаҳои онлайнии худ.",
     pageLabel: "Бахшҳои саҳифа",
     pageTitle: "Саҳифа",
     page: [

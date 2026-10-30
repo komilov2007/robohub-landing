@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { requestOrigin, siteFromHost } from "@/lib/site-host";
 import { ROBOHUB_ORIGIN, ROBOSELL_ORIGIN } from "@/lib/seo";
-import { locales, localeHref } from "@/i18n/config";
+import { isKzHost, localeOrigin, locales, localeUrl, ROBOHUB_KZ } from "@/i18n/config";
 import { LESSON_ROUTES, TOPIC_ROUTES } from "./[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/lib/links";
 
@@ -10,7 +10,9 @@ import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/
 // sitemap'da birorta vercel.app manzil bo'lmaydi (vercel.app — X-Robots-Tag: noindex, next.config.ts).
 // Har URL'da 7 til + x-default (xhtml:link). Yangi dars yoki mavzu qo'shilsa — avtomatik shu yerga tushadi (academy.ts).
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const site = siteFromHost(new URL(await requestOrigin()).host);
+  const host = new URL(await requestOrigin()).host;
+  const site = siteFromHost(host);
+  const official = isKzHost(host) ? ROBOHUB_KZ : ROBOHUB_ORIGIN;
 
   // AI Studio o'z domenida — canonical robohub.uz/aistudio (u Robohub sitemap'ida), bu yerda beriladigan sahifa yo'q
   if (site === "ai-studio") return [];
@@ -22,9 +24,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Bosh sahifa "https://robohub.uz" (oxirida "/" siz) — canonical bilan aynan bir xil.
   const page = (path: string, entry: Omit<MetadataRoute.Sitemap[number], "url" | "alternates">): MetadataRoute.Sitemap => {
     const languages: Record<string, string> = {};
-    for (const l of locales) languages[l] = ROBOHUB_ORIGIN + (path === "/" && l === "uz" ? "" : localeHref(l, path));
+    for (const l of locales) languages[l] = localeUrl(l, path);
     languages["x-default"] = languages.uz;
-    return locales.map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));
+    // Har domenning sitemap'ida — faqat o'z sahifalari (robohub.kz — qozoqcha, robohub.uz — qolganlari); hreflang esa hammasiga
+    return locales.filter((l) => localeOrigin(l) === official).map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));
   };
   return [
     ...page("/", { changeFrequency: "weekly", priority: 1 }),

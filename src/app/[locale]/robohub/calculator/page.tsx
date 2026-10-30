@@ -15,7 +15,7 @@ import Footer from "./components/footer/footer";
 import Motion from "./components/motion/motion";
 import { buildContent } from "./calculator.content";
 import { messages } from "./calculator.i18n";
-import { localeHref } from "@/i18n/config";
+import { localeHref, localeUrl } from "@/i18n/config";
 import { jsonLd as ldScript, BRAND, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN } from "@/lib/seo";
 import ProductPeek from "@/components/product-peek/product-peek";
 import AcademyLinks from "./components/academy-links/academy-links";
@@ -37,7 +37,7 @@ export default async function Page() {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       name: t.appName,
-      url: ROBOHUB_ORIGIN + localeHref(locale, "/calculator"),
+      url: localeUrl(locale, "/calculator"),
       description: t.metaDescription,
       inLanguage: locale,
       provider: { ...ROBOHUB_ORG_REF, "@type": "Organization", name: BRAND, url: ROBOHUB_ORIGIN },

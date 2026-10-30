@@ -1,8 +1,7 @@
 import type { CSSProperties } from "react";
 import ContactIcon from "@/components/contact-icon/contact-icon";
-import { localeHref, type Locale } from "@/i18n/config";
+import { localeHref, localeOrigin, type Locale } from "@/i18n/config";
 import { PHONE, PHONE_HREF, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/contacts";
-import { ROBOHUB_ORIGIN } from "@/lib/seo";
 import type { Site } from "@/lib/site-host";
 import BackLink from "./back-link";
 import { RobohubLogo, RobohubMark } from "./logo";
@@ -37,7 +36,7 @@ export default function Robohub404({ site, locale }: { site: Exclude<Site, "robo
   const t = messages[locale];
   // Joriy saytning bosh sahifasi va Robohub bo'limlari manzili (AI Studio domenida — robohub.uz orqali)
   const home = localeHref(locale, "/");
-  const robohub = (path: string) => (site === "robohub" ? "" : ROBOHUB_ORIGIN) + localeHref(locale, path);
+  const robohub = (path: string) => (site === "robohub" ? "" : localeOrigin(locale)) + localeHref(locale, path);
 
   const links = [
     { key: "robohub", href: robohub("/"), icon: <RobohubMark />, ...t.links.robohub },

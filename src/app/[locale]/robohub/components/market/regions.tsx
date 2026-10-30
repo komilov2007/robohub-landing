@@ -26,9 +26,9 @@ function Chip({ id, t, soon }: { id: MpId; t: RegionsText; soon?: boolean }) {
       className={`reg__mp${soon ? " reg__mp--soon" : ""}${mp.wide ? " reg__mp--wide" : ""}`}
     >
       {mp.wide ? (
-        <img src={mp.logo} alt={name} {...imgSize(mp.logo ?? "")} loading="lazy" />
+        <img src={mp.logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} {...imgSize(mp.logo ?? "")} loading="lazy" />
       ) : mp.logo ? (
-        <img src={mp.logo} alt="" width={20} height={20} loading="lazy" />
+        <img src={mp.logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} width={20} height={20} loading="lazy" />
       ) : (
         <b className="reg__mono" aria-hidden="true">
           {name[0]}

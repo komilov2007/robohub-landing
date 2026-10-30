@@ -2,7 +2,7 @@ import { defineMessages } from "@/i18n/config";
 
 export const messages = defineMessages({
   uz: {
-    about: "Uzum, Wildberries, Yandex Market va Ozon sotuvchilari uchun Robohub bo‘yicha qisqa video darslar.",
+    about: "Robohub — marketpleyslar, e’lon platformalari, superilovalar va shaxsiy onlayn-do‘konlardagi savdoni boshqarish uchun yagona elektron tijorat infratuzilmasi.",
     topics: "Mavzular",
     home: "Bosh sahifa",
     pricing: "Tariflar",
@@ -11,7 +11,7 @@ export const messages = defineMessages({
     rights: "Barcha huquqlar himoyalangan.",
   },
   ru: {
-    about: "Короткие видеоуроки по Robohub для продавцов Uzum, Wildberries, Yandex Market и Ozon.",
+    about: "Robohub — единая инфраструктура электронной коммерции для управления продажами на маркетплейсах, классифайдах, в суперприложениях и собственных онлайн-магазинах.",
     topics: "Темы",
     home: "Главная",
     pricing: "Тарифы",
@@ -20,7 +20,7 @@ export const messages = defineMessages({
     rights: "Все права защищены.",
   },
   en: {
-    about: "Short Robohub video lessons for sellers on Uzum, Wildberries, Yandex Market and Ozon.",
+    about: "Robohub is a unified e-commerce infrastructure for managing sales on marketplaces, classifieds, super apps and your own online stores.",
     topics: "Topics",
     home: "Home",
     pricing: "Pricing",
@@ -29,7 +29,7 @@ export const messages = defineMessages({
     rights: "All rights reserved.",
   },
   kk: {
-    about: "Uzum, Wildberries, Yandex Market және Ozon сатушыларына арналған Robohub бойынша қысқа бейнесабақтар.",
+    about: "Robohub — маркетплейстерде, хабарландыру платформаларында, суперқосымшаларда және жеке онлайн-дүкендерде сатуды басқаруға арналған бірыңғай электрондық коммерция инфрақұрылымы.",
     topics: "Тақырыптар",
     home: "Басты бет",
     pricing: "Тарифтер",
@@ -38,7 +38,7 @@ export const messages = defineMessages({
     rights: "Барлық құқықтар қорғалған.",
   },
   ky: {
-    about: "Uzum, Wildberries, Yandex Market жана Ozon сатуучулары үчүн Robohub боюнча кыска видеосабактар.",
+    about: "Robohub — маркетплейстерде, жарнама платформаларында, суперколдонмолордо жана жеке онлайн-дүкөндөрдө сатууну башкаруу үчүн бирдиктүү электрондук соода инфраструктурасы.",
     topics: "Темалар",
     home: "Башкы бет",
     pricing: "Тарифтер",
@@ -47,7 +47,7 @@ export const messages = defineMessages({
     rights: "Бардык укуктар корголгон.",
   },
   kaa: {
-    about: "Uzum, Wildberries, Yandex Market hám Ozon satıwshıları ushın Robohub boyınsha qısqa video sabaqlar.",
+    about: "Robohub — marketpleyslerde, daǵaza platformalarında, superqosımshalarda hám jeke onlayn-dúkánlarda satıwdı basqarıw ushın birden-bir elektron sawda infrastrukturası.",
     topics: "Temalar",
     home: "Bas bet",
     pricing: "Tarifler",
@@ -56,7 +56,7 @@ export const messages = defineMessages({
     rights: "Barlıq huqıqlar qorǵalǵan.",
   },
   tg: {
-    about: "Дарсҳои кӯтоҳи видеоӣ оид ба Robohub барои фурӯшандагони Uzum, Wildberries, Yandex Market ва Ozon.",
+    about: "Robohub — инфрасохтори ягонаи тиҷорати электронӣ барои идоракунии фурӯш дар маркетплейсҳо, платформаҳои эълонҳо, супербарномаҳо ва мағозаҳои онлайнии худ.",
     topics: "Мавзӯъҳо",
     home: "Саҳифаи асосӣ",
     pricing: "Тарифҳо",
