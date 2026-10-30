@@ -27,7 +27,9 @@ export default function ContactQuiz({ t, id, reveal = false }: { t: T; id: strin
           ))}
         </span>
       </p>
-      <form className="contact__form" id={`${id}-form`} {...sr(200)}>
+      {/* noValidate: brauzerning o'z xabari ("Fill out this field") qurilma tilida chiqadi —
+          tekshiruvni contact.script.js qiladi va xatoni sahifa tilida ko'rsatadi */}
+      <form className="contact__form" id={`${id}-form`} noValidate {...sr(200)}>
         {/* 1-qadamda tanlangan variantlar shu yerda chip bo'lib turadi (contact.script.js) */}
         <span className="contact__chips" id={`${id}-chips`} />
         {/* oxirgi qadam (telefon): mamlakat kodi — inputdan alohida, o'chirib bo'lmaydi; bosilsa ro'yxat ochiladi (contact.script.js) */}

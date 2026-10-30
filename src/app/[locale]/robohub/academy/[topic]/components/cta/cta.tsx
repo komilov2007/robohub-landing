@@ -32,7 +32,7 @@ export default async function Cta({ topic }: { topic: Topic }) {
                 {t.start} <span aria-hidden="true">→</span>
               </a>
               <Link href={topicHref(locale, next.slug)} className="acx-btn acx-btn--ghost" data-magnet>
-                {t.next(next.name)}
+                <span className="acx-btn__label">{t.next(next.name)}</span> <span className="acx-btn__arrow" aria-hidden="true">→</span>
               </Link>
             </div>
           </div>

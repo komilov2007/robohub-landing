@@ -2,11 +2,21 @@
 
 import { useState, type CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
-import { PRICE_PER_IMAGE, TOKENS_PER_IMAGE, money, plural } from "../../ai-studio.content";
+import {
+  PRICE_PER_IMAGE,
+  PRICE_PER_IMAGE_SUB,
+  SUB_SAVING,
+  TOKENS_PER_IMAGE,
+  TOKEN_PRICE,
+  TOKEN_PRICE_SUB,
+  money,
+  plural,
+} from "../../ai-studio.content";
 import { useC } from "../../content-context";
 
-// 07 — Token hisoblagichi: tarif kartochkalarisiz, alohida bo'lim.
-// Rasm sonini tanlang → token (1 rasm = 3 token) va narx (1 rasm = 1 500 so'm) jonli hisoblanadi.
+// 07 — Token hisoblagichi + token paketlari.
+// Rasm sonini tanlang → token (1 rasm = 3 token) va narx jonli hisoblanadi: obunasiz va Robohub obunasi bilan.
+// Paketlar: rasm soni — sovg'a tokenlar bilan birga (150 + 10 = 160 token = 53 rasm).
 export default function Pricing() {
   const { PRICING, T } = useC();
   const F = T.forms;
@@ -14,6 +24,7 @@ export default function Pricing() {
   const [images, setImages] = useState(PRICING.calc.initial);
   const tokens = images * TOKENS_PER_IMAGE;
   const sum = images * PRICE_PER_IMAGE;
+  const sumSub = images * PRICE_PER_IMAGE_SUB;
   const fill = ((images - PRICING.calc.min) / (PRICING.calc.max - PRICING.calc.min)) * 100;
 
   return (
@@ -64,7 +75,47 @@ export default function Pricing() {
               <b key={`s${sum}`}>{money(sum)}</b> {cur}
             </span>
           </output>
+          <p className="as-calc__sub" aria-live="polite">
+            {PRICING.sub}: <b key={`ss${sumSub}`}>{money(sumSub)}</b> {cur}
+            <span className="as-save">−{SUB_SAVING}%</span>
+          </p>
         </div>
+
+        <h3 className="as-packs__title" data-rv style={{ "--d": "260ms" } as CSSProperties}>
+          {PRICING.packs}
+        </h3>
+        <ul className="as-packs">
+          {PRICING.packList.map((p, i) => {
+            const total = p.tokens + p.bonus;
+            const imgs = Math.floor(total / TOKENS_PER_IMAGE);
+            return (
+              <li
+                key={p.tokens}
+                className={`as-pack${p.bonus ? " has-bonus" : ""}`}
+                data-rv
+                style={{ "--d": `${300 + i * 60}ms` } as CSSProperties}
+              >
+                <span className="as-pack__tok">
+                  <b>{p.tokens}</b> {plural(p.tokens, F.token)}
+                </span>
+                {p.bonus > 0 && (
+                  <span className="as-pack__gift">
+                    <Icon name="ai" />+{p.bonus} {plural(p.bonus, F.token)} {PRICING.gift}
+                  </span>
+                )}
+                <span className="as-pack__img">
+                  {imgs} {plural(imgs, F.image)}
+                </span>
+                <span className="as-pack__price">
+                  <b>{money(p.tokens * TOKEN_PRICE)}</b> {cur}
+                </span>
+                <span className="as-pack__sub">
+                  {PRICING.sub}: {money(p.tokens * TOKEN_PRICE_SUB)} {cur}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

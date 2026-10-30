@@ -127,6 +127,8 @@
 .acx-btn--light{background:#fff;color:var(--ink);box-shadow:0 18px 40px -16px rgba(0,0,0,.55)}
 .acx-btn--light::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(184,255,176,.7) 50%,transparent 70%);transform:translateX(-110%);animation:acx-sweep 3.8s ease-in-out 1s infinite}
 .acx-btn--light:hover{background:var(--mint);box-shadow:0 22px 46px -14px rgba(184,255,176,.55)}
+.acx-btn__label{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+@media (max-width:359px){.acx-btn--ghost .acx-btn__arrow{display:none}}
 .acx-btn--ghost{border:1px solid rgba(241,255,240,.32);color:#fff}
 .acx-btn--ghost:hover{background:rgba(241,255,240,.12);border-color:rgba(241,255,240,.6)}
 /* o'ng tomondagi animatsiya — umumiy komponent (src/components/hub-orbit), Robohub yakuniy kartasidagi bilan bir xil */
@@ -194,9 +196,9 @@
   .acx-ticker{margin-top:-34px;padding:44px 0 24px}
   .acx-ticker__band{padding:14px 0}
   .acx-head{text-align:left;margin-bottom:32px}
-  .acx-end{border-radius:30px}
+  .acx-end{border-radius:30px;padding:32px 22px}
   .acx-end__btns{flex-direction:column}
-  .acx-btn{width:100%}
+  .acx-btn{width:100%;padding:0 18px;font-size:15px;gap:8px}
 }
 
 /* harakat cheklangan — hamma narsa joyida */

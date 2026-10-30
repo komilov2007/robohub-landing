@@ -1194,6 +1194,27 @@
 .as-calc__cell--sum{padding:6px 14px;border-radius:14px;background:var(--primary);color:rgba(255,255,255,.75)}
 .as-calc__cell--sum b{color:var(--white)}
 [data-off] .as-calc__ico .as-i{animation-play-state:paused}
+/* Obuna bilan narx — hisoblagich ostida, butun qator */
+.as-calc__sub{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0;font-size:14px;color:var(--dim)}
+.as-calc__sub b{display:inline-block;font-family:var(--ff-head);font-size:18px;font-weight:600;color:var(--primary);animation:as-num .35s var(--spring)}
+.as-save{padding:2px 9px;border-radius:99px;background:var(--mint);color:var(--primary-dk);font-size:12px;font-weight:700}
+/* Token paketlari: sovg'a tokenlar — mint nishon */
+.as-packs__title{max-width:1000px;margin:36px auto 14px;font-size:20px;font-weight:600}
+.as-packs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:1000px;margin:0 auto;padding:0;list-style:none}
+.as-pack{display:flex;flex-direction:column;gap:6px;padding:18px 16px;border-radius:20px;background:var(--gray);border:1px solid var(--line)}
+.as-pack.has-bonus{background:var(--white);border-color:rgba(0,82,79,.25)}
+.as-pack__tok{font-size:14px;color:var(--dim)}
+.as-pack__tok b{font-family:var(--ff-head);font-size:28px;font-weight:600;letter-spacing:-.03em;color:var(--black)}
+.as-pack__gift{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;padding:3px 10px;border-radius:99px;background:var(--mint);color:var(--primary-dk);font-size:12px;font-weight:700}
+.as-pack__gift .as-i{width:12px;height:12px}
+.as-pack__img{font-size:14px;font-weight:600}
+.as-pack__price{margin-top:auto;padding-top:6px;font-size:14px;color:var(--dim)}
+.as-pack__price b{font-family:var(--ff-head);font-size:20px;font-weight:600;color:var(--primary)}
+.as-pack__sub{font-size:12px;color:var(--dim)}
+@media (min-width:900px){
+  .as-packs{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .as-packs__title{margin-top:44px}
+}
 @media (min-width:900px){
   .as-price{padding:120px 0 128px}
   .as-calc{grid-template-columns:auto minmax(0,1fr) auto;gap:28px;margin-top:52px;padding:24px 28px}

@@ -63,12 +63,41 @@ export default function VideoPlayer({
     cbRef.current = onPlayingChange;
   });
 
+  // iframe faqat faollashganda bir marta yaratiladi. Keyin dars almashsa, iframe qayta yaratilmaydi — ichidagi video
+  // YouTube API (loadVideoById) bilan almashtiriladi. Sababi: iOS Safari yangi iframe'da ovozli autoplay'ni bloklaydi,
+  // foydalanuvchi allaqachon ijro qilgan iframe'da esa keyingi video o'zi o'ynab ketadi.
+  const [src, setSrc] = useState<{ vid: string; start: number } | null>(null);
+  if (active && !src) setSrc({ vid, start });
+  if (!active && src) setSrc(null);
+  const live = src !== null;
+  const readyRef = useRef(false); // iframe'dan holat xabari keldi — API buyruqlarni qabul qiladi
+  const loadedRef = useRef(""); // iframe'da hozir turgan video
+
+  useEffect(() => {
+    loadedRef.current = src ? `${src.vid}-${src.start}` : "";
+  }, [src]);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!src || !frame) return;
+    const key = `${vid}-${start}`;
+    if (key === loadedRef.current) return;
+    loadedRef.current = key;
+    if (readyRef.current)
+      frame.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "loadVideoById", args: [{ videoId: vid, startSeconds: start }] }),
+        "*",
+      );
+    else setSrc({ vid, start }); // iframe hali yuklanmagan — manzili almashtiriladi
+  }, [src, vid, start]);
+
   // YouTube embed (enablejsapi=1) holatini kuzatish: iframe'ga "listening" yuboriladi, u esa playerState'ni
   // xabar qilib turadi: 1 — ijroda, 3 — yuklanmoqda (ijro davom etadi), 2 — pauza, 0 — tugadi.
   useEffect(() => {
     const frame = frameRef.current;
-    if (!active || !frame) return;
-    const hello = () => frame.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: vid, channel: "widget" }), "*");
+    if (!live || !frame) return;
+    readyRef.current = false;
+    const hello = () => frame.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "ac-player", channel: "widget" }), "*");
     frame.addEventListener("load", hello);
     const timer = setInterval(hello, 1000); // birinchi xabar kelguncha qayta yuboriladi
     let last: boolean | null = null;
@@ -84,6 +113,7 @@ export default function VideoPlayer({
         data.event === "onStateChange" ? data.info : data.event === "infoDelivery" ? (data.info as { playerState?: number } | null)?.playerState : undefined;
       if (typeof state !== "number") return;
       clearInterval(timer);
+      readyRef.current = true;
       const playing = state === 1 || state === 3 ? true : state === 2 || state === 0 ? false : last;
       if (playing !== null && playing !== last) {
         last = playing;
@@ -98,17 +128,17 @@ export default function VideoPlayer({
       frame.removeEventListener("load", hello);
       clearInterval(timer);
       window.removeEventListener("message", onMessage);
+      readyRef.current = false;
       if (last) cbRef.current?.(false);
     };
-  }, [active, vid, start]);
+  }, [live]);
 
   return (
     <div className="ac-video" id={id}>
-      {active ? (
+      {active && src ? (
         <iframe
           ref={frameRef}
-          key={`${vid}-${start}`}
-          src={yt.embed(vid, start)}
+          src={yt.embed(src.vid, src.start)}
           title={`${title} — Robohub Academy`}
           width={1280}
           height={720}

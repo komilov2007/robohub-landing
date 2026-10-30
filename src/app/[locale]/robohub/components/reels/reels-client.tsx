@@ -174,8 +174,29 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
     return () => window.removeEventListener(OPEN_EVENT, onOpen);
   }, [count]);
 
-  if (count === 0 || (!ready && full === null)) return null;
   const showCorner = ready && !hidden; // × bilan yopilgan bo'lsa — faqat to'liq ekran pleyer (sahifadan ochilganda)
+
+  // Telefonda sahifa aylantirilayotganda kartochka chetga suriladi (kontentni yopmasin), to'xtagach — qaytib chiqadi.
+  // Har scroll'da qayta render bo'lmasligi uchun klass to'g'ridan-to'g'ri elementga qo'yiladi.
+  useEffect(() => {
+    // faqat telefonda (CSS'dagi max-width:599px bilan bir xil); desktopda kartochka joyida turadi
+    if (!showCorner || !window.matchMedia("(max-width:599px)").matches) return;
+    let timer = 0;
+    const onScroll = () => {
+      const wrap = wrapRef.current;
+      if (!wrap || drag.current) return;
+      wrap.classList.add("is-away");
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => wrap.classList.remove("is-away"), 600);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timer);
+    };
+  }, [showCorner]);
+
+  if (count === 0 || (!ready && full === null)) return null;
 
   const reel = reels[index];
   const open = () => {

@@ -23,6 +23,7 @@ export const messages = defineMessages({
       remove: "Olib tashlash",
       otherPlaceholder: "Marketpleys nomini yozing",
       pickError: "Variantni tanlang yoki nomini yozing",
+      nameError: "Ismingizni yozing", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Raqamni toʻliq kiriting", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Qayta yuborish", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Mamlakat kodi", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -53,6 +54,7 @@ export const messages = defineMessages({
       remove: "Убрать",
       otherPlaceholder: "Напишите название площадки",
       pickError: "Выберите вариант или напишите название",
+      nameError: "Напишите ваше имя", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Введите номер полностью", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Отправить ещё раз", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Код страны", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -83,6 +85,7 @@ export const messages = defineMessages({
       remove: "Remove",
       otherPlaceholder: "Type the marketplace name",
       pickError: "Pick an option or type a name",
+      nameError: "Enter your name", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Enter the full number", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Send again", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Country code", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -113,6 +116,7 @@ export const messages = defineMessages({
       remove: "Алып тастау",
       otherPlaceholder: "Маркетплейс атауын жазыңыз",
       pickError: "Нұсқаны таңдаңыз немесе атауын жазыңыз",
+      nameError: "Атыңызды жазыңыз", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Нөмірді толық енгізіңіз", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Қайта жіберу", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Ел коды", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -143,6 +147,7 @@ export const messages = defineMessages({
       remove: "Алып салуу",
       otherPlaceholder: "Маркетплейстин аталышын жазыңыз",
       pickError: "Вариантты тандаңыз же аталышын жазыңыз",
+      nameError: "Атыңызды жазыңыз", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Номерди толук киргизиңиз", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Кайра жөнөтүү", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Өлкө коду", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -173,6 +178,7 @@ export const messages = defineMessages({
       remove: "Alıp taslaw",
       otherPlaceholder: "Marketpleys atın jazıń",
       pickError: "Variantı tańlań yamasa atın jazıń",
+      nameError: "Atıńızdı jazıń", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Nomerdi tolıq kiritiń", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Qayta jiberiw", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Mámleket kodı", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)
@@ -203,6 +209,7 @@ export const messages = defineMessages({
       remove: "Нест кардан",
       otherPlaceholder: "Номи маркетплейсро нависед",
       pickError: "Вариантро интихоб кунед ё номашро нависед",
+      nameError: "Номи худро нависед", // 2-qadam (ism) bo'sh qolsa
       phoneError: "Рақамро пурра ворид кунед", // oxiriga tanlangan mamlakat formati qo'shiladi: ": +998 (XX) XXX-XX-XX" (contact.script.js)
       again: "Аз нав фиристодан", // tasdiqdan keyin formani qayta boshlash tugmasi
       country: "Рамзи кишвар", // telefon kodi tanlash tugmasi (ekran o'quvchilar uchun)

@@ -13,6 +13,58 @@ type Props = {
 // Til tanlash: bayroq + qisqa kod tugmasi, bosilganda uchta til ro'yxati ochiladi.
 // Har til — oddiy havola (/, /ru, /en; path berilsa — /academy, /ru/academy …), shuning uchun JS ishlamasa ham ishlaydi.
 // Klaviatura: ↑/↓ — tanlash, Home/End — chetlar, Esc — yopish (fokus tugmaga qaytadi).
+// Til almashganda sahifa qayta yuklanadi — foydalanuvchi turgan joy eslab qolinib, yangi tilda o'sha joyga qaytariladi.
+// Matn uzunligi tillarda har xil, shuning uchun piksel emas, "qaysi bo'lim va uning qaysi qismi" saqlanadi.
+const SCROLL_KEY = "lang-scroll";
+type Saved = { path: string; i: number; frac: number; y: number; atBottom: boolean };
+const blocks = () => Array.from(document.querySelectorAll<HTMLElement>("main section, footer"));
+const docTop = (el: HTMLElement) => el.getBoundingClientRect().top + window.scrollY;
+
+function saveScroll(href: string) {
+  const y = window.scrollY;
+  const anchor = y + window.innerHeight / 3; // ekranning yuqori uchdan biri — ko'z turgan joy
+  const list = blocks();
+  let i = -1;
+  list.forEach((el, k) => { if (docTop(el) <= anchor) i = k; });
+  const el = list[i];
+  const saved: Saved = {
+    path: new URL(href, location.href).pathname,
+    i,
+    frac: el ? (anchor - docTop(el)) / Math.max(1, el.offsetHeight) : 0,
+    y,
+    atBottom: y + window.innerHeight >= document.documentElement.scrollHeight - 4,
+  };
+  try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify(saved)); } catch {}
+}
+
+function restoreScroll() {
+  let s: Saved;
+  try {
+    const raw = sessionStorage.getItem(SCROLL_KEY);
+    if (!raw) return;
+    sessionStorage.removeItem(SCROLL_KEY); // sahifada bir nechta LangSelect bo'lsa — faqat biri tiklaydi
+    s = JSON.parse(raw);
+  } catch { return; }
+  if (s.path !== location.pathname || location.hash) return;
+  const go = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const el = blocks()[s.i];
+    let top = s.y;
+    if (s.atBottom) top = max;
+    else if (el) top = docTop(el) + s.frac * el.offsetHeight - window.innerHeight / 3;
+    window.scrollTo({ top: Math.max(0, Math.min(max, top)), behavior: "instant" });
+  };
+  go();
+  // shrift/rasmlar yuklanib balandlik o'zgarsa — foydalanuvchi o'zi aylantirmagan bo'lsa yana to'g'rilanadi
+  if (document.readyState !== "complete") {
+    let moved = false;
+    const stop = () => { moved = true; };
+    window.addEventListener("wheel", stop, { once: true, passive: true });
+    window.addEventListener("touchstart", stop, { once: true, passive: true });
+    window.addEventListener("load", () => { if (!moved) go(); }, { once: true });
+  }
+}
+
 export default function LangSelect({ locale, label, path = "/" }: Props) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -20,6 +72,8 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const menuId = useId();
   const current = localeMeta[locale];
+
+  useEffect(restoreScroll, []);
 
   useEffect(() => {
     if (!open) return;
@@ -91,7 +145,7 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
                 hrefLang={l}
                 lang={l}
                 tabIndex={open ? 0 : -1}
-                onClick={active ? (e) => { e.preventDefault(); close(); } : undefined}
+                onClick={active ? (e) => { e.preventDefault(); close(); } : (e) => { if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) saveScroll(e.currentTarget.href); }}
               >
                 <img className="lang-select__flag" src={meta.flag} alt="" width={22} height={22} fetchPriority="low" />
                 <span className="lang-select__label">{meta.label}</span>

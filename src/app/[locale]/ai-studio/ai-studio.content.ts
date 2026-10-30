@@ -25,9 +25,23 @@ export const EXAMPLES_HREF = "#examples";
 // oddiy krem fotosi — "Muammo" va "Qadamlar" bo'limlaridagi kichik vizuallar uchun (hero'da — iPhone, DATA.studio)
 export const BEFORE_IMG = "/ai/base_cosmetics.webp";
 export const TOKENS_PER_IMAGE = 3;
-// Narx — bitta manba: 1 rasm narxi (so'm); 1 token narxi undan hisoblanadi. Matnlardagi {img} va {tok} shu bilan to'ldiriladi.
-export const PRICE_PER_IMAGE = 1500;
-export const TOKEN_PRICE = PRICE_PER_IMAGE / TOKENS_PER_IMAGE;
+// Narx — bitta manba (backend: GET /api/billing/ai-tokens/). 1 token narxi Robohub obunasiga bog'liq:
+//   faol (to'langan) obuna bo'lsa — TOKEN_PRICE_SUB, aks holda (trial, muzlatilgan, obunasiz) — TOKEN_PRICE.
+// Landing ochiq sahifa (foydalanuvchi kirmagan), shuning uchun bu yerda ikkala narx ko'rsatiladi.
+// Matnlardagi {tok} {img} {tokSub} {imgSub} {save} shu bilan to'ldiriladi (buildContent).
+export const TOKEN_PRICE = 1000;
+export const TOKEN_PRICE_SUB = 650;
+export const PRICE_PER_IMAGE = TOKEN_PRICE * TOKENS_PER_IMAGE;
+export const PRICE_PER_IMAGE_SUB = TOKEN_PRICE_SUB * TOKENS_PER_IMAGE;
+/** Obuna bilan tejash, % (35) — narxlardan hisoblanadi */
+export const SUB_SAVING = Math.round((1 - TOKEN_PRICE_SUB / TOKEN_PRICE) * 100);
+/** Token paketlari: tokens — to'lanadigani, bonus — sovg'a (faqat shu 4 paketda) */
+export const TOKEN_PACKS = [
+  { tokens: 30, bonus: 0 },
+  { tokens: 60, bonus: 3 },
+  { tokens: 150, bonus: 10 },
+  { tokens: 300, bonus: 30 },
+] as const;
 /** So'm summasi: "1 500" (guruhlash — bo'linmas bo'sh joy, uch tilda bir xil) */
 export const money = (n: number) => Math.round(n).toLocaleString("ru-RU").replace(/\s/g, "\u00A0");
 
@@ -259,8 +273,11 @@ const uz = {
     eyebrow: "Hisoblagich",
     title: "Faqat ishlatganingizga",
     accent: "to‘lang",
-    lead: "1 token = {tok} so‘m · 1 rasm = 3 token = {img} so‘m. Obuna majburiy emas — rasm sonini tanlang, token va narx darhol hisoblanadi.",
+    lead: "1 token = {tok} so‘m, Robohub obunasi bilan — {tokSub} so‘m ({save}% arzon). 1 rasm = 3 token. Katta paketlarga — sovg‘a tokenlar.",
     calc: "Qancha rasm kerak?",
+    sub: "Robohub obunasi bilan",
+    packs: "Token paketlari",
+    gift: "sovg‘a",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -448,8 +465,11 @@ const ru: Dict = {
     eyebrow: "Калькулятор",
     title: "Платите только",
     accent: "за использование",
-    lead: "1 токен = {tok} сум · 1 изображение = 3 токена = {img} сум. Подписка не обязательна — выберите количество, токены и цена посчитаются сразу.",
+    lead: "1 токен = {tok} сум, с подпиской Robohub — {tokSub} сум (на {save}% дешевле). 1 изображение = 3 токена. К большим пакетам — токены в подарок.",
     calc: "Сколько изображений нужно?",
+    sub: "С подпиской Robohub",
+    packs: "Пакеты токенов",
+    gift: "в подарок",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -634,8 +654,11 @@ const en: Dict = {
     eyebrow: "Calculator",
     title: "Pay only for",
     accent: "what you use",
-    lead: "1 token = {tok} UZS · 1 image = 3 tokens = {img} UZS. No subscription — pick the number of images and see the tokens and price instantly.",
+    lead: "1 token = {tok} UZS, or {tokSub} UZS with a Robohub subscription ({save}% less). 1 image = 3 tokens. Bigger packs come with bonus tokens.",
     calc: "How many images do you need?",
+    sub: "With a Robohub subscription",
+    packs: "Token packs",
+    gift: "free",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -820,8 +843,11 @@ const kk: Dict = {
     eyebrow: "Калькулятор",
     title: "Тек пайдаланғаныңыз үшін",
     accent: "төлеңіз",
-    lead: "1 токен = {tok} сум · 1 сурет = 3 токен = {img} сум. Жазылым міндетті емес — сурет санын таңдаңыз, токендер мен баға бірден есептеледі.",
+    lead: "1 токен = {tok} сум, Robohub жазылымымен — {tokSub} сум ({save}% арзан). 1 сурет = 3 токен. Үлкен пакеттерге — сыйлық токендер.",
     calc: "Қанша сурет керек?",
+    sub: "Robohub жазылымымен",
+    packs: "Токен пакеттері",
+    gift: "сыйлық",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -1006,8 +1032,11 @@ const ky: Dict = {
     eyebrow: "Калькулятор",
     title: "Колдонгонуңуз үчүн гана",
     accent: "төлөңүз",
-    lead: "1 токен = {tok} сум · 1 сүрөт = 3 токен = {img} сум. Жазылуу милдеттүү эмес — сүрөттүн санын тандаңыз, токендер жана баа дароо эсептелет.",
+    lead: "1 токен = {tok} сум, Robohub жазылуусу менен — {tokSub} сум ({save}% арзан). 1 сүрөт = 3 токен. Чоң пакеттерге — белек токендер.",
     calc: "Канча сүрөт керек?",
+    sub: "Robohub жазылуусу менен",
+    packs: "Токен пакеттери",
+    gift: "белек",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -1192,8 +1221,11 @@ const kaa: Dict = {
     eyebrow: "Esaplaǵısh",
     title: "Tek paydalanǵanıńız ushın",
     accent: "tóleń",
-    lead: "1 token = {tok} swm · 1 súwret = 3 token = {img} swm. Jazılıw mindetli emes — súwret sanın tańlań, token hám baha birden esaplanadı.",
+    lead: "1 token = {tok} swm, Robohub jazılıwı menen — {tokSub} swm ({save}% arzan). 1 súwret = 3 token. Úlken paketlerge — sawǵa tokenler.",
     calc: "Neshe súwret kerek?",
+    sub: "Robohub jazılıwı menen",
+    packs: "Token paketleri",
+    gift: "sawǵa",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -1378,8 +1410,11 @@ const tg: Dict = {
     eyebrow: "Ҳисобкунак",
     title: "Танҳо барои истифода",
     accent: "пардохт кунед",
-    lead: "1 токен = {tok} сӯм · 1 тасвир = 3 токен = {img} сӯм. Обуна ҳатмӣ нест — шумораи тасвирҳоро интихоб кунед, токенҳо ва нарх фавран ҳисоб мешаванд.",
+    lead: "1 токен = {tok} сӯм, бо обунаи Robohub — {tokSub} сӯм ({save}% арзонтар). 1 тасвир = 3 токен. Ба бастаҳои калон — токенҳои тӯҳфа.",
     calc: "Чанд тасвир лозим аст?",
+    sub: "Бо обунаи Robohub",
+    packs: "Бастаҳои токен",
+    gift: "тӯҳфа",
   },
   academy: {
     kicker: "Robohub Academy",
@@ -1443,9 +1478,14 @@ export function plural(n: number, forms: readonly string[]) {
 // Komponentlar ishlatadigan tayyor kontent (faqat oddiy ma'lumot — server'dan client'ga uzatsa bo'ladi)
 // path — sahifaning tilsiz yo'li: o'z domenida "/", Robohub domenida "/aistudio" (til tanlash shu yo'lga olib boradi)
 export function buildContent(locale: Locale, path = "/") {
-  // {img} — 1 rasm narxi, {tok} — 1 token narxi; boshqa {…} belgilariga tegilmaydi
+  // {img}/{tok} — 1 rasm/token narxi (obunasiz), {imgSub}/{tokSub} — obuna bilan, {save} — tejash %; boshqa {…} belgilariga tegilmaydi
   const t = JSON.parse(
-    JSON.stringify(TEXT[locale]).replaceAll("{img}", money(PRICE_PER_IMAGE)).replaceAll("{tok}", money(TOKEN_PRICE)),
+    JSON.stringify(TEXT[locale])
+      .replaceAll("{img}", money(PRICE_PER_IMAGE))
+      .replaceAll("{tok}", money(TOKEN_PRICE))
+      .replaceAll("{imgSub}", money(PRICE_PER_IMAGE_SUB))
+      .replaceAll("{tokSub}", money(TOKEN_PRICE_SUB))
+      .replaceAll("{save}", String(SUB_SAVING)),
   ) as (typeof TEXT)[Locale];
   return {
     locale,
@@ -1494,7 +1534,7 @@ export function buildContent(locale: Locale, path = "/") {
       pack: DATA.pack,
       photoStyles: DATA.photoStyles.map((img, i) => ({ img, name: t.modes.styles[i] })),
       items: DATA.modes.map((m, i) => ({ ...m, ...t.modes.items[i] })) },
-    PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc } },
+    PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc }, packList: TOKEN_PACKS },
     ACADEMY: {
       ...t.academy,
       url: `https://robohub.uz${localeHref(locale, "/academy")}`,

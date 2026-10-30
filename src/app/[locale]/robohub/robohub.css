@@ -1917,6 +1917,13 @@
 @media (max-width:420px){
   .plan__sums{grid-template-columns:1fr}
 }
+/* telefon: oq karta deyarli chetgacha — ichidagi matnga (ayniqsa ru'dagi uzun yozuvlarga) joy ko'proq */
+@media (max-width:480px){
+  .price .container{padding:0 10px}
+  .price__title{padding:0 8px}
+  .plan__main{padding:18px 12px 16px}
+  .plan__sums span{font-size:13.5px;line-height:1.35}
+}
 
 /* ============================================================
    8. FAQ — chapda savollar ro'yxati, o'ngda tanlangan savolning javobi.
@@ -2008,6 +2015,25 @@
 .contact__form > button:hover{background:var(--mint)}
 .contact__form > button:hover svg{transform:translateX(3px)}
 .contact__form > button:active{transform:scale(.94)}
+/* forma ko'ringanda va har savol almashganda (contact.script.js → runArrow) */
+/* butun tugma (oq doira + strelka) inputning boshidan (--run) o'z joyiga uchib keladi,
+   yetganda biroz o'tib ketib qaytadi va atrofidan yashil halqa tarqaladi */
+.contact__form > button{position:relative;z-index:1}
+.contact__form > button::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;opacity:0}
+.contact__form > button.is-run{animation:contact-btn-run 1000ms cubic-bezier(.65,0,.25,1) both}
+.contact__form > button.is-run::after{animation:contact-btn-ring 1000ms ease-out both}
+@keyframes contact-btn-run{
+  0%{transform:translateX(var(--run,0)) scale(.7);opacity:0}
+  14%{transform:translateX(calc(var(--run,0) * .9)) scale(1);opacity:1}
+  78%{transform:translateX(5px) scale(1)}
+  90%{transform:translateX(-2px)}
+  100%{transform:none;opacity:1}
+}
+@keyframes contact-btn-ring{
+  0%,76%{opacity:0;box-shadow:0 0 0 0 rgba(184,255,176,.85)}
+  78%{opacity:1}
+  100%{opacity:0;box-shadow:0 0 0 14px rgba(184,255,176,0)}
+}
 /* qadam ko'rsatkichi: "Qadam 1/3" + uchta chiziq (joriy va o'tganlari to'ladi) */
 .contact__steps{display:flex;align-items:center;gap:12px;margin-top:var(--sp-3);font-size:13px;font-weight:600;color:var(--text-dim)}
 .contact__steps b{color:var(--brand)}
@@ -2064,7 +2090,15 @@
   animation:contact-close 1100ms var(--ease-soft) both;
 }
 .contact__form.is-done input,.contact__form.is-done > button,.contact__form.is-done .contact__chips,.contact__form.is-done .contact__cc{opacity:0;transform:scale(.85);pointer-events:none;transition:opacity 200ms var(--ease),transform 300ms var(--ease)}
-.contact__done{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding:6px;color:#fff;text-align:left;visibility:hidden}
+/* tugma tasdiq qatlami ostida qoladi va o'z animatsiyasi bilan ketadi (uchib kelish animatsiyasini ham bekor qiladi) */
+.contact__form.is-done > button{z-index:0;animation:contact-btn-out 320ms var(--ease) both}
+.contact__form.is-done > button::after{animation:none}
+@keyframes contact-btn-out{
+  0%{opacity:1;transform:none}
+  35%{opacity:1;transform:scale(1.08)}
+  100%{opacity:0;transform:scale(.4) rotate(-90deg)}
+}
+.contact__done{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:flex-start;padding:6px;color:#fff;text-align:left;visibility:hidden}
 .is-done .contact__done{visibility:visible}
 .contact__done-ico{position:relative;width:48px;height:48px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--mint);color:var(--brand)}
 .contact__done-ico > svg{width:30px;height:auto}
@@ -2085,7 +2119,7 @@
 @keyframes contact-ping{from{box-shadow:0 0 0 0 rgba(184,255,176,.65)}}
 @keyframes contact-check{from{stroke-dashoffset:24}}
 @media (prefers-reduced-motion:reduce){
-  .contact__form.is-done,.is-done .contact__done-ico,.is-done .contact__done-ico::after,
+  .contact__form.is-done,.contact__form.is-done > button,.is-done .contact__done-ico,.is-done .contact__done-ico::after,
   .is-done .contact__done-text,.is-done .contact__done-ico i,.is-done .contact__done-ico i svg{animation:none}
 }
 
@@ -2279,6 +2313,13 @@ body:has(.feat__skip.is-on) .totop{opacity:0;visibility:hidden;transform:transla
   body:has(.mcta.is-on) .reels[data-corner^="b"]{bottom:calc(var(--gy) + 64px + env(safe-area-inset-bottom))}
 }
 @keyframes reels-in{from{opacity:0;transform:translateY(24px) scale(.9)}}
+/* faqat telefonda: scroll paytida — o'z tomoniga (chap/o'ng) chetga suriladi va xiralashadi; to'xtaganda qaytadi */
+@media (max-width:599px){
+  .reels.is-away{opacity:0;pointer-events:none}
+  .reels.is-away[data-corner$="r"]{transform:translateX(calc(100% + var(--gx))) scale(.92)}
+  .reels.is-away[data-corner$="l"]{transform:translateX(calc(-100% - var(--gx))) scale(.92)}
+}
+@media (max-width:599px) and (prefers-reduced-motion:reduce){ .reels.is-away{transform:none} }
 body:has(.feat__skip.is-on) .reels[data-corner="br"]{opacity:0;visibility:hidden;transform:translateY(12px) scale(.94);transition-delay:0s,0s,300ms}
 /* "tepaga" — kartochkaning chap tomonida, pastki chiziq bo'yicha */
 body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px) + 108px + 12px)}
@@ -2583,3 +2624,19 @@ body:has(.reels.is-on[data-corner="br"]) .totop{right:calc(clamp(16px,2.6vw,40px
   main > section:not(.hero):not(.end) { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 }
 
+
+/* Telefon: bo'lim sarlavhalari va ostidagi matn ixchamroq — sarlavha ekranning katta qismini egallamasin.
+   Barcha bo'limlar uchun bitta o'lcham: sarlavha 20px, lead 14.5px. */
+@media (max-width:600px){
+  .hero__title{font-size:24px;line-height:1.18}
+  .pain__title,.trust__title,.feat__title,.tools__title,.how__title,.integ__title,.mkt__title,
+  .revs__title,.price__title,.faq__title,.contact__title,.end__title{font-size:20px;line-height:1.2;letter-spacing:-.025em}
+  .how__title,.price__title,.faq__title{margin-bottom:var(--sp-3)}
+  .integ__title,.mkt__title,.revs__title{margin-bottom:10px}
+  .hero__lead,.pain__lead,.trust__lead,.feat__lead,.tools__lead,.integ__lead,.mkt__lead,
+  .revs__lead,.contact__lead,.end__lead{font-size:14.5px;line-height:1.5}
+  .trust__lead{margin-top:var(--sp-2)}
+  .integ__lead,.revs__lead{margin-bottom:var(--sp-3)}
+  .integ__models-t{font-size:17px}
+  .mkt__map h3{font-size:18px}
+}

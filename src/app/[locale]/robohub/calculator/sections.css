@@ -121,7 +121,8 @@
 .cx-chipkey.is-on{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.4);border-color:var(--mint);color:var(--mint);background:rgba(184,255,176,.08)}
 @media (max-width:599px){
   .cx-keys{gap:10px 8px}
-  .cx-key{width:calc(50% - 26px);height:100px}
+  .cx-key{width:calc(50% - 26px);height:100px;padding:12px 12px 14px}
+  .cx-key__label{font-size:15px;overflow-wrap:anywhere;hyphens:auto}
   .cx-op{width:26px;height:26px;font-size:16px}
 }
 @media (min-width:1024px){ .cx-formula{padding:132px 0 140px} }
@@ -147,18 +148,24 @@
 .cx-track__replay{height:34px;padding:0 12px;border-radius:10px;font-size:13px;font-weight:600;color:var(--primary);background:var(--white);border:1px solid var(--line-2);transition:border-color .2s}
 .cx-track__replay:hover{border-color:var(--primary)}
 .cx-track__marks{display:flex;justify-content:space-between;margin:16px 0 8px;font-family:var(--ff-head);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.cx-lanes{display:flex;flex-direction:column;gap:10px}
+.cx-lanes{display:flex;flex-direction:column;gap:10px;margin-right:22px}
 .cx-lane{position:relative;height:64px;border-radius:16px;background:var(--white);border:1px solid var(--line)}
 .cx-lane::before{content:"";position:absolute;left:16px;right:16px;top:50%;height:2px;background:repeating-linear-gradient(90deg,var(--line-2) 0 10px,transparent 10px 20px)}
 .cx-lane__trail{position:absolute;left:0;top:8px;bottom:8px;width:0;border-radius:0 12px 12px 0;background:linear-gradient(90deg,rgba(184,255,176,0),rgba(184,255,176,.85))}
-.cx-lane:first-child .cx-lane__trail{background:linear-gradient(90deg,rgba(0,82,79,0),rgba(0,82,79,.55))}
+.cx-lane:first-child .cx-lane__trail{background:linear-gradient(90deg,rgba(0,82,79,.08),rgba(0,82,79,.85))}
 .cx-lane__car{position:absolute;top:50%;left:6px;display:grid;place-items:center;width:50px;height:50px;border-radius:14px;background:var(--white);box-shadow:0 10px 20px -8px rgba(17,22,37,.35);transform:translateY(-50%)}
 .cx-lane__car img{width:40px;height:40px;border-radius:10px}
 .cx-lane__rank{position:absolute;top:-8px;right:-8px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--mint);font-family:var(--ff-head);font-size:12px;font-weight:700;opacity:0;transform:scale(.4)}
-.cx-lane__name{position:absolute;left:72px;top:50%;transform:translateY(-50%);font-family:var(--ff-head);font-size:13px;font-weight:600;color:var(--dim)}
+/* nom to'xtagan logotip yonida, poyga tugagach chiqadi */
+.cx-lane__name{position:absolute;left:calc(var(--to) + 4px);top:50%;transform:translateY(-50%);white-space:nowrap;font-family:var(--ff-head);font-size:13px;font-weight:600;color:var(--black);opacity:0}
+/* oldingi ikki o'rinda nom logotipdan chapda (iz ichida) — o'ngda joy yetmaydi */
+.cx-lane__name--in{left:auto;right:calc(100% - var(--to) + 62px);color:var(--primary-dk)}
+.cx-lane:first-child .cx-lane__name--in{color:var(--white)}
 .cx-track[data-in] .cx-lane__car{animation:cx-drive var(--dur) cubic-bezier(.3,.05,.2,1) calc(.3s + var(--k) * .12s) forwards}
 .cx-track[data-in] .cx-lane__trail{animation:cx-trail var(--dur) cubic-bezier(.3,.05,.2,1) calc(.3s + var(--k) * .12s) forwards}
 .cx-track[data-in] .cx-lane__rank{animation:as-pop .5s var(--spring) calc(.3s + var(--dur) + var(--k) * .12s) forwards}
+.cx-track[data-in] .cx-lane__name{animation:cx-name-in .4s var(--ease) calc(.2s + var(--dur) + var(--k) * .12s) forwards}
+@keyframes cx-name-in{to{opacity:1}}
 @keyframes cx-drive{
   0%{left:6px}
   70%{transform:translateY(-50%) rotate(-4deg)}
@@ -189,6 +196,19 @@
 .cx-ticket::before{top:-9px}
 .cx-ticket::after{bottom:-9px}
 @media (min-width:768px){ .cx-tickets{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:767px){
+  .cx-race,.cx-faq{padding:72px 0 80px}
+  .cx-race__grid{gap:32px}
+  .cx-track{padding:16px 14px 18px;border-radius:22px}
+  .cx-track__finish{right:14px;top:86px;bottom:18px}
+  .cx-who__title{margin-top:64px}
+  /* telefonda kartalar qiyshaymaydi — to'liq kenglikda egri ko'rinadi */
+  .js .cc .cx-ticket[data-io]{transform:translate3d(0,40px,0)}
+  .js .cc .cx-ticket[data-io][data-in]{transform:none}
+  .cx-ticket{min-height:0}
+  .cx-ticket p{padding:38px 18px 18px;font-size:17px}
+  .cx-chat{height:min(540px,74svh)}
+}
 @media (min-width:1100px){
   .cx-race{padding:132px 0 140px}
   .cx-race__grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:72px}
@@ -354,6 +374,7 @@
   .cx-lane__car{left:calc(var(--to) - 56px)}
   .cx-lane__trail{width:calc(var(--to) - 30px)}
   .cx-lane__rank{opacity:1;transform:none}
+  .cx-lane__name{opacity:1}
   .cx-type{max-width:100%}
 }
 

@@ -59,7 +59,9 @@ export default function Race({
                   <img src={MARKETPLACE_META[mp].icon} alt="" width={40} height={40} />
                   <span className="cx-lane__rank">{i + 1}</span>
                 </span>
-                <span className="cx-lane__name">{MARKETPLACE_META[mp].label}</span>
+                <span className={SAMPLE[i] > 60 ? "cx-lane__name cx-lane__name--in" : "cx-lane__name"}>
+                  {MARKETPLACE_META[mp].label}
+                </span>
               </li>
             ))}
           </ol>

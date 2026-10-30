@@ -114,6 +114,16 @@ export function init(t, id) {
     input.value = "";
     input.setCustomValidity("");
   }
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // tugma animatsiyasini (qayta) boshlash: butun tugma inputning boshidan o'z joyiga uchib keladi
+  function runArrow() {
+    if (reduce) return;
+    button.classList.remove("is-run");   // avval eski animatsiya olib tashlanadi — joy to'g'ri o'lchansin
+    var f = form.getBoundingClientRect(), b = button.getBoundingClientRect();
+    button.style.setProperty("--run", -Math.max(0, b.left - f.left - 6) + "px");
+    void button.offsetWidth;
+    button.classList.add("is-run");
+  }
   function show(i) {
     var s = t.steps[i];
     form.dataset.step = String(i);
@@ -233,11 +243,12 @@ export function init(t, id) {
       answers[step] = (method === "phone" && country ? "+" + country.dataset.code + " " : "") + input.value.trim();
     } else {
       var v = input.value.trim();
-      if (!v) { input.value = ""; input.reportValidity(); return; }
+      if (!v) { input.value = ""; input.setCustomValidity(t.nameError); input.reportValidity(); return; }
       answers[step] = v;
     }
     if (step < last) {
       show(++step);
+      runArrow();
       input.focus();
       return;
     }
@@ -249,6 +260,7 @@ export function init(t, id) {
     location.href = "mailto:info@robohub.uz?subject=" + encodeURIComponent(t.subject) + "&body=" + encodeURIComponent(body);
     // forma tasdiq holatiga o'tadi (animatsiya robohub.css da: .contact__form.is-done)
     input.blur();
+    button.classList.remove("is-run");   // uchib kelish animatsiyasi to'xtaydi — tugma tasdiq animatsiyasi bilan yo'qoladi
     input.disabled = true;
     button.disabled = true;
     if (via) via.hidden = true;
@@ -273,9 +285,25 @@ export function init(t, id) {
     done.setAttribute("aria-hidden", "true");
     form.classList.remove("is-done");
     show(0);
+    runArrow();
     input.focus();
   });
 
   show(0);
   form.classList.remove("is-swap");   // birinchi ko'rinishda animatsiya kerak emas
+
+  /* ---------- tugmadagi strelka: inputning boshidan tugmagacha "uchib" keladi, tugma sakraydi ----------
+     forma ekranda birinchi ko'ringanda va har savol almashganda (runArrow) */
+  if (!reduce && "IntersectionObserver" in window) {
+    var arrowIo = new IntersectionObserver(function (es) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      arrowIo.disconnect();
+      // skroll bilan chiqish animatsiyasi (data-sr) tugashini kutamiz, keyin masofani o'lchaymiz
+      setTimeout(runArrow, 700);
+    }, { threshold: 0.8 });
+    arrowIo.observe(form);
+  }
+  button.addEventListener("animationend", function (e) {
+    if (e.target === button && e.animationName === "contact-btn-run") button.classList.remove("is-run");
+  });
 }
