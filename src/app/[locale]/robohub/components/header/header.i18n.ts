@@ -1,11 +1,12 @@
-import { defineMessages, localeHref, type Locale } from "@/i18n/config";
+import { defineMessages, localeUrl, siteHref, type Locale } from "@/i18n/config";
 import { ACADEMY_PATH } from "@/lib/sites";
 
 // nav — asosiy menyu. menu: "features" — band ustiga sichqoncha kelganda tepadan katta panel tushadi
 //   (imkoniyatlar + vositalar). href — bandning o'z havolasi (bosilganda / JS ishlamasa shu yerga o'tadi).
 // features / tools — panel ichidagi bandlar: t — nom, d — qisqa izoh. Ikonkalar header.tsx da (shu tartibda).
-const academy = (l: Locale, hash: string) => `${localeHref(l, ACADEMY_PATH)}${hash}`;
-const page = (l: Locale, path: string) => localeHref(l, path);
+// Academy va AI Studio — o'z subdomenida (to'liq manzil), qolganlari — shu saytda
+const academy = (l: Locale, hash: string) => `${localeUrl(l, ACADEMY_PATH)}${hash}`;
+const page = (l: Locale, path: string) => siteHref(l, path);
 
 export const messages = defineMessages({
   uz: {
@@ -16,7 +17,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Qanday ishlaydi" },
       { href: "#reviews", label: "Mijozlar" },
       { href: "#pricing", label: "Tariflar" },
-      { href: ACADEMY_PATH, label: "Academy" },
+      { href: localeUrl("uz", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub imkoniyatlari",
@@ -55,7 +56,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Как это работает" },
       { href: "#reviews", label: "Клиенты" },
       { href: "#pricing", label: "Тарифы" },
-      { href: localeHref("ru", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("ru", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Возможности Robohub",
@@ -94,7 +95,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "How it works" },
       { href: "#reviews", label: "Customers" },
       { href: "#pricing", label: "Pricing" },
-      { href: localeHref("en", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("en", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub features",
@@ -133,7 +134,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Қалай жұмыс істейді" },
       { href: "#reviews", label: "Клиенттер" },
       { href: "#pricing", label: "Тарифтер" },
-      { href: localeHref("kk", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("kk", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub мүмкіндіктері",
@@ -172,7 +173,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Кантип иштейт" },
       { href: "#reviews", label: "Кардарлар" },
       { href: "#pricing", label: "Тарифтер" },
-      { href: localeHref("ky", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("ky", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub мүмкүнчүлүктөрү",
@@ -211,7 +212,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Qalay isleydi" },
       { href: "#reviews", label: "Klientler" },
       { href: "#pricing", label: "Tarifler" },
-      { href: localeHref("kaa", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("kaa", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Robohub múmkinshilikleri",
@@ -250,7 +251,7 @@ export const messages = defineMessages({
       { href: "#how-it-works", label: "Чӣ тавр кор мекунад" },
       { href: "#reviews", label: "Мизоҷон" },
       { href: "#pricing", label: "Тарифҳо" },
-      { href: localeHref("tg", ACADEMY_PATH), label: "Academy" },
+      { href: localeUrl("tg", ACADEMY_PATH), label: "Academy" },
     ],
     features: {
       title: "Имкониятҳои Robohub",

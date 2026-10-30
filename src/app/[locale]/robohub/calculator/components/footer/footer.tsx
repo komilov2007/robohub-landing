@@ -4,7 +4,7 @@ import ContactIcon, { type ContactIconName } from "@/components/contact-icon/con
 import OfficeAddress from "@/components/office-address/office-address";
 import { ACADEMY_PATH } from "@/lib/sites";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
-import { localeHref, type Locale } from "@/i18n/config";
+import { localeHref, localeUrl, type Locale } from "@/i18n/config";
 import { type Content } from "../../calculator.content";
 import { sellerUrl } from "@/lib/sites";
 
@@ -41,8 +41,8 @@ export default function Footer({
 }) {
   const robohub = [
     { label: footer.links.home, href: localeHref(locale, "/") },
-    { label: footer.links.studio, href: localeHref(locale, "/aistudio") },
-    { label: footer.links.academy, href: localeHref(locale, ACADEMY_PATH) },
+    { label: footer.links.studio, href: localeUrl(locale, "/aistudio") },
+    { label: footer.links.academy, href: localeUrl(locale, ACADEMY_PATH) },
     { label: footer.links.cabinet, href: sellerUrl(locale, "") },
   ];
   const [before, after = ""] = footer.rights.split("{{year}}");

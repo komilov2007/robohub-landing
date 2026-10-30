@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
-import { localeHref } from "@/i18n/config";
+import { localeUrl } from "@/i18n/config";
 import { ACADEMY_PATH, newTab, sellerUrl } from "@/lib/sites";
 import HowItWorksScript from "./how-it-works-script";
 import { messages } from "./how-it-works.i18n";
@@ -179,7 +179,7 @@ export default async function HowItWorks() {
               <span className="arrow" aria-hidden="true">→</span>
             </a>{" "}
             {/* Academy — joriy tilda (/academy, /ru/academy, /en/academy), yangi oynada */}
-            <a className="btn btn--lg btn--outline" href={localeHref(locale, ACADEMY_PATH)} {...newTab(ACADEMY_PATH)}>{t.guide}</a>
+            <a className="btn btn--lg btn--outline" href={localeUrl(locale, ACADEMY_PATH)} {...newTab(ACADEMY_PATH)}>{t.guide}</a>
           </div>
         </div>
       </section>

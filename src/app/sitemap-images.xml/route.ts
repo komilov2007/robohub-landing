@@ -1,6 +1,6 @@
-import { siteFromHost } from "@/lib/site-host";
+import { officialOrigin, siteFromHost } from "@/lib/site-host";
 import { ogImageUrl, ROBOHUB_ORIGIN } from "@/lib/seo";
-import { isKzHost, locales, localeUrl, type Locale } from "@/i18n/config";
+import { locales, localeUrl, type Locale } from "@/i18n/config";
 import { aiImage, type AiProduct } from "@/lib/ai-images";
 import { getLessons, getTopics } from "../[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath } from "../[locale]/robohub/academy/lib/links";
@@ -16,10 +16,10 @@ const abs = (src: string) => (src.startsWith("http") ? src : ROBOHUB_ORIGIN + sr
 const pageUrl = (locale: Locale, path: string) => localeUrl(locale, path);
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// kz — robohub.kz sitemap'i (faqat qozoqcha sahifalar), aks holda robohub.uz (qozoqchadan tashqari hammasi)
-function build(kz: boolean): string {
+// Faqat shu domendagi sahifalar (official — robohub.kz, academy.robohub.uz …); rasmlar istalgan domenda bo'lishi mumkin
+function build(official: string): string {
   const entries: { loc: string; images: string[] }[] = [];
-  for (const l of locales.filter((x) => (x === "kk") === kz)) {
+  for (const l of locales) {
     entries.push({ loc: pageUrl(l, "/"), images: [ogImageUrl("robohub", l), `${ROBOHUB_ORIGIN}/logo/robohub.png`, ...CERTS.map(abs)] });
     entries.push({ loc: pageUrl(l, "/aistudio"), images: [ogImageUrl("ai-studio", l), ...AI_PRODUCTS.map((p) => abs(aiImage(p, l)))] });
     entries.push({ loc: pageUrl(l, "/calculator"), images: [ogImageUrl("calculator", l)] });
@@ -35,6 +35,7 @@ function build(kz: boolean): string {
     }
   }
   const body = entries
+    .filter((e) => new URL(e.loc).origin === official)
     .map(
       (e) =>
         `<url><loc>${esc(e.loc)}</loc>${e.images.map((i) => `<image:image><image:loc>${esc(i)}</image:loc></image:image>`).join("")}</url>`,
@@ -51,6 +52,6 @@ export async function GET() {
   const { headers } = await import("next/headers");
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
-  if (siteFromHost(host) !== "robohub") return new Response("Not found", { status: 404 });
-  return new Response(build(isKzHost(host)), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+  if (siteFromHost(host) === "robosell") return new Response("Not found", { status: 404 });
+  return new Response(build(officialOrigin(host) ?? ROBOHUB_ORIGIN), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
 }

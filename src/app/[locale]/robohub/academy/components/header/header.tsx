@@ -39,7 +39,8 @@ export default function Header() {
   // Academy — /academy ostida (boshqa tillarda /academy/ru …): "/academy" — bosh sahifa, "/academy/order" — mavzu.
   // path — tilsiz yo'l: til tanlash menyusi boshqa tilda ham shu sahifani ochadi.
   const bare = stripLocale(pathname);
-  const path = bare.startsWith(ACADEMY_BASE) ? bare : ACADEMY_BASE;
+  // academy.robohub.uz/ru/order → "/order" → mantiqiy "/academy/order"
+  const path = bare.startsWith(ACADEMY_BASE) ? bare : ACADEMY_BASE + (bare === "/" ? "" : bare);
   const sub = path.slice(ACADEMY_BASE.length);
   const slug = sub.split("/")[1] ?? "";
   const isHome = sub === "" || sub === "/";

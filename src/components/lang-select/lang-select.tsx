@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
-import { isKzHost, isUzHost, localeHref, localeMeta, localeOrigin, locales, type Locale } from "@/i18n/config";
+import { hostHref, hostZone, localeMeta, locales, parseProdHost, splitZone, type Locale } from "@/i18n/config";
 
-// Rasmiy domenlarda boshqa domendagi til (robohub.kz'da o'zbekcha, robohub.uz'da qozoqcha) — to'liq manzil bilan
-// (i18n/config.ts: localeOrigin). vercel.app va localhost'da — oddiy yo'l.
+// Til almashganda domen o'zgarmaydi: robohub.uz'da qozoqcha — robohub.uz/kk, robohub.kz'da o'zbekcha — robohub.kz/uz
+// (.kz/.kg da tilsiz manzil — mamlakat tili, shuning uchun o'zbekcha prefiks bilan; i18n/config.ts: hostHref).
+// Subdomenda (academy., aistudio., lokalda academy.localhost, ai-studio.localhost) — subdomen ichidagi yo'l.
+// path — mantiqiy yo'l ("/academy/order"); AI Studio o'z domenida "/" beradi — u "/aistudio" deb olinadi.
 const noop = () => () => {};
 const useHost = () => useSyncExternalStore(noop, () => window.location.hostname, () => "");
 function langHref(host: string, l: Locale, path: string) {
-  const href = localeHref(l, path);
-  if (!isUzHost(host) && !isKzHost(host)) return href;
-  const origin = localeOrigin(l);
-  return origin === `https://${host.replace(/^www\./, "")}` ? href : origin + href;
+  const zone = hostZone(host);
+  const logical = zone !== "main" && !path.startsWith(`/${zone}`) ? `/${zone}${path === "/" ? "" : path}` : path;
+  return hostHref(parseProdHost(host)?.tld ?? "uz", l, zone === "main" ? path : splitZone(logical).path);
 }
 import "./lang-select.css";
 

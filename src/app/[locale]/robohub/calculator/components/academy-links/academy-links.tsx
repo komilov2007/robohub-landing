@@ -1,6 +1,6 @@
 import { defineMessages, type Locale } from "@/i18n/config";
 import { getLesson } from "../../../academy/lib/academy";
-import { academyHref, lessonHref } from "../../../academy/lib/links";
+import { academyUrl, lessonUrl } from "../../../academy/lib/links";
 
 // "Robohub Academy'da batafsil" — kalkulyatordagi qatorlar (tannarx, xarajatlar, komissiya, foyda) bo'yicha darslarga havola.
 // Kalkulyator ↔ Akademiya o'zaro bog'lanadi (TZ 8.9): darslardan bu yerga — academy/[topic]/components/cta.
@@ -31,14 +31,14 @@ export default function AcademyLinks({ locale }: { locale: Locale }) {
         <ul className="cx-learn__list">
           {lessons.map((l) => (
             <li key={l.n}>
-              <a href={lessonHref(locale, l.topic, l.n)}>
+              <a href={lessonUrl(locale, l.topic, l.n)}>
                 <span>{l.title}</span>
                 <i aria-hidden="true">→</i>
               </a>
             </li>
           ))}
         </ul>
-        <a className="cx-learn__all" href={academyHref(locale)}>
+        <a className="cx-learn__all" href={academyUrl(locale)}>
           {t.all} <span aria-hidden="true">→</span>
         </a>
       </div>

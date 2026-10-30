@@ -3,8 +3,7 @@ import Icon from "../icon/svg-icon";
 import { fill } from "../../ai-studio.content";
 import { getC } from "../../content.server";
 import { getLesson } from "../../../robohub/academy/lib/academy";
-import { localeOrigin } from "@/i18n/config";
-import { lessonHref } from "../../../robohub/academy/lib/links";
+import { lessonUrl } from "../../../robohub/academy/lib/links";
 import { yt } from "../../../robohub/academy/lib/youtube";
 
 // Robohub Academy: mijoz uchun ixcham blok. Chapda savol + tugma, o'ngda 3 ta haqiqiy dars kartasi
@@ -17,7 +16,7 @@ export default async function Academy() {
   const lessons = ACADEMY.lessons.flatMap((n) => {
     const lesson = getLesson(n, locale);
     return lesson
-      ? [{ n, title: lesson.title, img: yt.thumbMq(lesson.youtubeId), href: `${localeOrigin(locale)}${lessonHref(locale, lesson.topic, n)}` }]
+      ? [{ n, title: lesson.title, img: yt.thumbMq(lesson.youtubeId), href: lessonUrl(locale, lesson.topic, n) }]
       : [];
   });
 

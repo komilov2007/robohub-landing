@@ -1,5 +1,5 @@
 import { getLocale, getMessages } from "@/i18n/server";
-import { localeHref } from "@/i18n/config";
+import { localeHref, localeUrl } from "@/i18n/config";
 import { newTab, POLICY_URL, sellerUrl } from "@/lib/sites";
 import { messages } from "./final-cta.i18n";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
@@ -62,7 +62,7 @@ export default async function FinalCta() {
                   <a href={localeHref(locale, "/calculator")} {...newTab("/calculator")}>{t.calculator}</a>
                 </li>{" "}
                 <li>
-                  <a href={localeHref(locale, "/aistudio")} {...newTab("/aistudio")}>{t.infographics}</a>
+                  <a href={localeUrl(locale, "/aistudio")} {...newTab("/aistudio")}>{t.infographics}</a>
                 </li>
               </ul>
             </nav>{" "}

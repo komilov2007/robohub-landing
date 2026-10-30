@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { requestOrigin, siteFromHost } from "@/lib/site-host";
+import { officialOrigin, requestOrigin, siteFromHost } from "@/lib/site-host";
 import { ROBOHUB_ORIGIN, ROBOSELL_ORIGIN } from "@/lib/seo";
-import { isKzHost, localeOrigin, locales, localeUrl, ROBOHUB_KZ } from "@/i18n/config";
+import { locales, localeUrl } from "@/i18n/config";
 import { LESSON_ROUTES, TOPIC_ROUTES } from "./[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/lib/links";
 
@@ -12,10 +12,11 @@ import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = new URL(await requestOrigin()).host;
   const site = siteFromHost(host);
-  const official = isKzHost(host) ? ROBOHUB_KZ : ROBOHUB_ORIGIN;
+  // Shu domenning rasmiy manzili (robohub.kz, academy.robohub.uz …); vercel.app va lokalda — robohub.uz
+  const official = officialOrigin(host) ?? ROBOHUB_ORIGIN;
 
-  // AI Studio o'z domenida — canonical robohub.uz/aistudio (u Robohub sitemap'ida), bu yerda beriladigan sahifa yo'q
-  if (site === "ai-studio") return [];
+  // AI Studio rasmiy bo'lmagan domenda (ai-studio….vercel.app) — sitemap yo'q (canonical — aistudio.robohub.uz)
+  if (site === "ai-studio" && !officialOrigin(host)) return [];
   // Robosell: matn hozircha faqat o'zbekcha — /ru va /en o'zbekcha sahifaga canonical (robosell/layout.tsx)
   if (site === "robosell") return [{ url: ROBOSELL_ORIGIN, changeFrequency: "weekly", priority: 1 }];
 
@@ -26,8 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const languages: Record<string, string> = {};
     for (const l of locales) languages[l] = localeUrl(l, path);
     languages["x-default"] = languages.uz;
-    // Har domenning sitemap'ida — faqat o'z sahifalari (robohub.kz — qozoqcha, robohub.uz — qolganlari); hreflang esa hammasiga
-    return locales.filter((l) => localeOrigin(l) === official).map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));
+    // Har domenning sitemap'ida — faqat o'z sahifalari (robohub.kz — qozoqcha, academy.robohub.uz — Academy …); hreflang esa hammasiga
+    return locales.filter((l) => new URL(languages[l]).origin === official).map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));
   };
   return [
     ...page("/", { changeFrequency: "weekly", priority: 1 }),

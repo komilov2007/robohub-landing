@@ -3,6 +3,7 @@ import { locales } from "@/i18n/config";
 import { getLocale } from "@/i18n/server";
 import { manrope, unbounded } from "../fonts";
 import "../globals.css";
+import DomainLinks from "@/components/domain-links/domain-links";
 
 // Ikkala sayt uchun umumiy qobiq. Manzil proxy'da quriladi (src/proxy.ts):
 //   til — yo'lning boshidan (/ru, /en; prefikssiz — uz), sayt — domendan.
@@ -30,7 +31,10 @@ export default async function RootLayout({ children }: LayoutProps<"/[locale]">)
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <DomainLinks />
+      </body>
     </html>
   );
 }

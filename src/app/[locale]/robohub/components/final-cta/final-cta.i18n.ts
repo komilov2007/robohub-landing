@@ -1,4 +1,4 @@
-import { defineMessages, localeHref } from "@/i18n/config";
+import { defineMessages, localeUrl } from "@/i18n/config";
 import { ACADEMY_PATH } from "@/lib/sites";
 
 export const messages = defineMessages({
@@ -21,7 +21,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Tariflar" },
       { href: "#faq", label: "Savollar" },
       { href: "#contact", label: "Aloqa" },
-      { href: ACADEMY_PATH, label: "Video darslar (Academy)" },
+      { href: localeUrl("uz", ACADEMY_PATH), label: "Video darslar (Academy)" },
     ],
     tools: "Bepul vositalar",
     calculator: "Marketpleys kalkulyatori",
@@ -48,7 +48,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифы" },
       { href: "#faq", label: "Вопросы" },
       { href: "#contact", label: "Контакты" },
-      { href: localeHref("ru", ACADEMY_PATH), label: "Видеоуроки (Academy)" },
+      { href: localeUrl("ru", ACADEMY_PATH), label: "Видеоуроки (Academy)" },
     ],
     tools: "Бесплатные инструменты",
     calculator: "Калькулятор маркетплейсов",
@@ -75,7 +75,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Pricing" },
       { href: "#faq", label: "FAQ" },
       { href: "#contact", label: "Contact" },
-      { href: localeHref("en", ACADEMY_PATH), label: "Video lessons (Academy)" },
+      { href: localeUrl("en", ACADEMY_PATH), label: "Video lessons (Academy)" },
     ],
     tools: "Free tools",
     calculator: "Marketplace calculator",
@@ -102,7 +102,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифтер" },
       { href: "#faq", label: "Сұрақтар" },
       { href: "#contact", label: "Байланыс" },
-      { href: localeHref("kk", ACADEMY_PATH), label: "Бейнесабақтар (Academy)" },
+      { href: localeUrl("kk", ACADEMY_PATH), label: "Бейнесабақтар (Academy)" },
     ],
     tools: "Тегін құралдар",
     calculator: "Маркетплейс калькуляторы",
@@ -129,7 +129,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифтер" },
       { href: "#faq", label: "Суроолор" },
       { href: "#contact", label: "Байланыш" },
-      { href: localeHref("ky", ACADEMY_PATH), label: "Видеосабактар (Academy)" },
+      { href: localeUrl("ky", ACADEMY_PATH), label: "Видеосабактар (Academy)" },
     ],
     tools: "Акысыз куралдар",
     calculator: "Маркетплейс калькулятору",
@@ -156,7 +156,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Tarifler" },
       { href: "#faq", label: "Sorawlar" },
       { href: "#contact", label: "Baylanıs" },
-      { href: localeHref("kaa", ACADEMY_PATH), label: "Video sabaqlar (Academy)" },
+      { href: localeUrl("kaa", ACADEMY_PATH), label: "Video sabaqlar (Academy)" },
     ],
     tools: "Biypul qurallar",
     calculator: "Marketpleys kalkulyatorı",
@@ -183,7 +183,7 @@ export const messages = defineMessages({
       { href: "#pricing", label: "Тарифҳо" },
       { href: "#faq", label: "Саволҳо" },
       { href: "#contact", label: "Тамос" },
-      { href: localeHref("tg", ACADEMY_PATH), label: "Дарсҳои видеоӣ (Academy)" },
+      { href: localeUrl("tg", ACADEMY_PATH), label: "Дарсҳои видеоӣ (Academy)" },
     ],
     tools: "Абзорҳои ройгон",
     calculator: "Калкулятори маркетплейс",

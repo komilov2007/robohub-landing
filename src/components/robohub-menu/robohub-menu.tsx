@@ -15,7 +15,8 @@ export default function RobohubMenu({ locale, linkClass }: { locale: Locale; lin
   const t = messages[locale] ?? messages.uz;
   const origin = useRobohubOrigin();
   const home = localeHref(locale, "/");
-  const to = (href: string) => (href.startsWith("#") ? `${origin}${home}${href}` : `${origin}${href}`);
+  // to'liq manzillar (Academy, AI Studio — o'z subdomenida) o'zgarmaydi
+  const to = (href: string) => (href.startsWith("http") ? href : href.startsWith("#") ? `${origin}${home}${href}` : `${origin}${href}`);
   const label = t.nav.find((n) => "menu" in n && n.menu === "features")?.label ?? t.features.title;
   return (
     <li className="rhm">
@@ -84,7 +85,8 @@ export function RobohubMenuMobile({ locale }: { locale: Locale }) {
   const t = messages[locale] ?? messages.uz;
   const origin = useRobohubOrigin();
   const home = localeHref(locale, "/");
-  const to = (href: string) => (href.startsWith("#") ? `${origin}${home}${href}` : `${origin}${href}`);
+  // to'liq manzillar (Academy, AI Studio — o'z subdomenida) o'zgarmaydi
+  const to = (href: string) => (href.startsWith("http") ? href : href.startsWith("#") ? `${origin}${home}${href}` : `${origin}${href}`);
   const label = t.nav.find((n) => "menu" in n && n.menu === "features")?.label ?? t.features.title;
   return (
     <details className="rhm-m">

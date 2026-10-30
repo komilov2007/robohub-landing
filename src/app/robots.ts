@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
-import { requestOrigin, siteFromHost } from "@/lib/site-host";
+import { officialOrigin, requestOrigin, siteFromHost } from "@/lib/site-host";
 import { ROBOHUB_ORIGIN, ROBOSELL_ORIGIN } from "@/lib/seo";
-import { isKzHost, ROBOHUB_KZ } from "@/i18n/config";
 
 // /robots.txt — hamma sahifa ochiq, /api/ (ichki so'rovlar) yopiq.
 // *.vercel.app'da ham Disallow YO'Q: preview manzillar X-Robots-Tag: noindex beradi (next.config.ts) — Google uni ko'rishi
@@ -37,8 +36,8 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const origin = await requestOrigin();
   const host = new URL(origin).host;
   const site = siteFromHost(host);
-  // robohub.kz — qozoqcha sahifalar o'z sitemap'i bilan (sitemap.ts)
-  const official = site === "robosell" ? ROBOSELL_ORIGIN : isKzHost(host) ? ROBOHUB_KZ : ROBOHUB_ORIGIN;
+  // Har rasmiy domen (robohub.kz, academy.robohub.uz, aistudio.robohub.kg …) — o'z sitemap'i bilan (sitemap.ts)
+  const official = site === "robosell" ? ROBOSELL_ORIGIN : (officialOrigin(host) ?? ROBOHUB_ORIGIN);
   const rule = { allow: "/", disallow: "/api/" };
   return {
     rules: [
@@ -49,7 +48,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     sitemap:
       origin !== official
         ? undefined
-        : site === "robohub"
+        : site !== "robosell"
           ? [`${official}/sitemap.xml`, `${official}/sitemap-images.xml`]
           : `${official}/sitemap.xml`,
   };

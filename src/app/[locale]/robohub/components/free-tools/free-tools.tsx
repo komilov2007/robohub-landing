@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
-import { localeHref } from "@/i18n/config";
+import { localeHref, localeUrl } from "@/i18n/config";
 import { aiImage } from "@/lib/ai-images";
 import FreeToolsScript from "./free-tools-script";
 import { messages } from "./free-tools.i18n";
@@ -370,7 +370,7 @@ export default async function FreeTools() {
                 </div>
               </div>
               {/* tugma oyna ostida; vosita yangi oynada ochiladi (nisbiy — shu domendagi sahifa, joriy tilda) */}
-              <a className="tool__go" href={localeHref(locale, "/aistudio")} target="_blank" rel="noopener">
+              <a className="tool__go" href={localeUrl(locale, "/aistudio")} target="_blank" rel="noopener">
                 {`${t.ai.go} `}
                 <span className="arrow" aria-hidden="true">→</span>
               </a>

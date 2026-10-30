@@ -1,4 +1,4 @@
-import { localeHref, type Locale } from "@/i18n/config";
+import { localeUrl, type Locale } from "@/i18n/config";
 import { ROBOHUB_DESCRIPTION_EN, ROBOHUB_ORIGIN } from "@/lib/seo";
 import { EMAIL, INSTAGRAM_URL, OFFICE_ADDRESS, PHONE, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 import { messages as faqMessages, type Part } from "@/app/[locale]/robohub/components/faq/faq.i18n";
@@ -8,7 +8,7 @@ import { messages as marketMessages } from "@/app/[locale]/robohub/components/ma
 import { MP, ROWS } from "@/app/[locale]/robohub/components/market/regions-data";
 import { CRM, STOCK } from "@/app/[locale]/robohub/components/integrations/integrations.data";
 import { getLessons, getTopics } from "@/app/[locale]/robohub/academy/lib/academy";
-import { lessonHref, topicHref } from "@/app/[locale]/robohub/academy/lib/links";
+import { lessonUrl, topicPath } from "@/app/[locale]/robohub/academy/lib/links";
 
 // /llms.txt, /ru/llms.txt, /uz/llms.txt va /llms-full.txt — AI yordamchilar (ChatGPT, Claude, Gemini, Perplexity …) uchun
 // sayt haqida ma'lumot (llmstxt.org formati: Markdown, bitta H1, qisqa tavsif, bo'limlar va havolalar). TZ "SEO, GEO", 3.2.
@@ -21,7 +21,7 @@ export const LLMS_UPDATED = "2026-10-30";
 export type LlmsLang = Extract<Locale, "en" | "ru" | "uz">;
 export const LLMS_LANGS: LlmsLang[] = ["en", "ru", "uz"];
 
-const url = (locale: Locale, path: string) => ROBOHUB_ORIGIN + (path === "/" && locale === "uz" ? "" : localeHref(locale, path));
+const url = (locale: Locale, path: string) => localeUrl(locale, path);
 const plain = (parts: Part[]) => parts.map((p) => (typeof p === "string" ? p : p.b)).join("");
 const stat = (locale: Locale, i: number) => trustMessages[locale].stats[i];
 const marketsNow = [...new Set(ROWS.flatMap((r) => r.now))].map((id) => MP[id].name);
@@ -174,8 +174,8 @@ export function llmsFull(): string {
   const academy = getTopics(en).map((t) => {
     const list = lessons
       .filter((l) => l.topic === t.slug)
-      .map((l) => `  - [Lesson ${l.n}. ${l.title}](${ROBOHUB_ORIGIN}${lessonHref(en, t.slug, l.n)})`);
-    return `- [${t.name}](${ROBOHUB_ORIGIN}${topicHref(en, t.slug)}): ${t.short}\n${list.join("\n")}`;
+      .map((l) => `  - [Lesson ${l.n}. ${l.title}](${lessonUrl(en, t.slug, l.n)})`);
+    return `- [${t.name}](${url(en, topicPath(t.slug))}): ${t.short}\n${list.join("\n")}`;
   });
   return `# Robohub — full facts
 

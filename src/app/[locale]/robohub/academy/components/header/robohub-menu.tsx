@@ -1,6 +1,6 @@
 "use client";
 
-import type { Locale } from "@/i18n/config";
+import { localeOrigin, type Locale } from "@/i18n/config";
 import { messages } from "../../../components/header/header.i18n";
 import { AI_TOOL, FEAT_ICONS, FEAT_STEP, SOON_TOOL, TOOL_ICONS, featHash } from "../../../components/header/menu-icons";
 import { robohubHome } from "../../lib/links";
@@ -11,7 +11,8 @@ import { robohubHome } from "../../lib/links";
 export default function RobohubMenu({ locale }: { locale: Locale }) {
   const t = messages[locale] ?? messages.uz;
   const home = robohubHome(locale);
-  const to = (href: string) => (href.startsWith("#") ? `${home === "/" ? "/" : home}${href}` : href);
+  // Academy o'z subdomenida — bosh saytdagi sahifalar (kalkulyator …) to'liq manzil bilan
+  const to = (href: string) => (href.startsWith("#") ? `${home}${href}` : href.startsWith("/") ? `${localeOrigin(locale)}${href}` : href);
   const label = t.nav.find((n) => n.menu === "features")?.label ?? t.features.title;
   return (
     <li className="ac-nav__rh">
