@@ -1,4 +1,4 @@
-import { localeOrigin, localeUrl, type Locale } from "@/i18n/config";
+import { localeHref, type Locale } from "@/i18n/config";
 import { getLocale } from "@/i18n/server";
 import { getLesson, type Lesson, type Topic } from "../../../lib/academy";
 import { isoDuration, yt } from "../../../lib/youtube";
@@ -14,7 +14,6 @@ import MobileNextBar from "../mobile-next-bar/mobile-next-bar";
 
 // Mavzu sahifasi (/academy/{mavzu}) va dars sahifasi (/academy/{mavzu}/{dars}) uchun umumiy ko'rinish.
 // Farqi — qaysi dars ochiq turishi (lesson) va JSON-LD.
-// Organization va WebSite — robohub.uz; sahifa manzillari — o'z tili domenida (qozoqcha — robohub.kz)
 export const SITE = "https://robohub.uz";
 
 // Darsning qisqa tavsifi (meta description, VideoObject): xulosa + "Bu nima?" — butun gaplar bilan, ~160 belgigacha.
@@ -53,7 +52,7 @@ function videoLd(topic: Topic, l: Lesson, locale: Locale) {
     ...(l.uploadDate && { uploadDate: l.uploadDate }),
     embedUrl: `https://www.youtube-nocookie.com/embed/${l.youtubeId}`,
     contentUrl: yt.watch(l.youtubeId),
-    url: `${localeOrigin(locale)}${lessonHref(locale, topic.slug, l.n)}`,
+    url: `${SITE}${lessonHref(locale, topic.slug, l.n)}`,
     duration: isoDuration(l.durationSec),
     inLanguage: "uz", // video o'zbekcha (sahifa matni joriy tilda)
   };
@@ -65,14 +64,14 @@ function videoLd(topic: Topic, l: Lesson, locale: Locale) {
 //   FAQPage        — "Savollar" bo'limi (faqat mavzu sahifasida — dars sahifalarida takrorlanmasin).
 function JsonLd({ topic, lesson, locale }: { topic: Topic; lesson?: Lesson; locale: Locale }) {
   const crumbs = [
-    { name: "Robohub", item: localeUrl(locale, "/") },
-    { name: "Robohub Academy", item: `${localeOrigin(locale)}${academyHref(locale)}` },
-    { name: topic.name, item: `${localeOrigin(locale)}${topicHref(locale, topic.slug)}` },
+    { name: "Robohub", item: `${SITE}${locale === "uz" ? "" : localeHref(locale, "/")}` },
+    { name: "Robohub Academy", item: `${SITE}${academyHref(locale)}` },
+    { name: topic.name, item: `${SITE}${topicHref(locale, topic.slug)}` },
     ...(lesson
       ? [
           {
             name: lesson.title,
-            item: `${localeOrigin(locale)}${lessonHref(locale, topic.slug, lesson.n)}`,
+            item: `${SITE}${lessonHref(locale, topic.slug, lesson.n)}`,
           },
         ]
       : []),
@@ -80,7 +79,7 @@ function JsonLd({ topic, lesson, locale }: { topic: Topic; lesson?: Lesson; loca
   const main = lesson ?? getLesson(topic.mainLesson, locale);
   // Sahifa sanasi — ochiq turgan dars videosining sanasi (sahifada ham shu sana ko'rinadi: lesson-info.tsx)
   const date = main?.uploadDate;
-  const url = `${localeOrigin(locale)}${lesson ? lessonHref(locale, topic.slug, lesson.n) : topicHref(locale, topic.slug)}`;
+  const url = `${SITE}${lesson ? lessonHref(locale, topic.slug, lesson.n) : topicHref(locale, topic.slug)}`;
   const data = [
     {
       "@context": "https://schema.org",

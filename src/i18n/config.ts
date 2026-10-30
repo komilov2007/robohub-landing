@@ -52,18 +52,6 @@ export function localeHref(locale: Locale, path = "/"): string {
   return `/${locale}${path === "/" ? "" : path}`;
 }
 
-// Rasmiy domenlar: qozoqcha — robohub.kz (robohub.kz/kk, robohub.kz/academy/kk/…), qolgan tillar — robohub.uz.
-// Domenlar orasidagi yo'naltirish — src/proxy.ts; canonical, hreflang va sitemap — localeUrl.
-export const ROBOHUB_UZ = "https://robohub.uz";
-export const ROBOHUB_KZ = "https://robohub.kz";
-export const localeOrigin = (locale: Locale) => (locale === "kk" ? ROBOHUB_KZ : ROBOHUB_UZ);
-// To'liq rasmiy manzil: localeUrl("kk", "/academy") → "https://robohub.kz/academy/kk", localeUrl("uz", "/") → "https://robohub.uz"
-export const localeUrl = (locale: Locale, path = "/") =>
-  localeOrigin(locale) + (path === "/" && locale === defaultLocale ? "" : localeHref(locale, path));
-// Ishlab turgan rasmiy domenlar (www bilan ham) — vercel.app va localhost bundan mustasno
-export const isUzHost = (host: string) => /^(www\.)?robohub\.uz$/i.test(host);
-export const isKzHost = (host: string) => /^(www\.)?robohub\.kz$/i.test(host);
-
 // Brauzer manzilidan tilsiz yo'l: "/academy/ru/order" → "/academy/order", "/ru" → "/", "/academy" → "/academy".
 export function stripLocale(pathname: string): string {
   const parts = pathname.split("/").filter(Boolean);

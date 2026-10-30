@@ -58,8 +58,6 @@
     "s.webp": {"skip":"56px — juda xira"},
     "w.webp": {"skip":"56px — juda xira"},
     "Just 2010.png": {"mode":"solid","bg":"#ffffff"},
-    "Li-Ning.png": {"mode":"solid","ink":"light","bg":"#d7000f"},
-    "Texnomart.png": {"mode":"solid","bg":"#ffd500"},
     "Universalshop921 - Universal shoppp.png": {"mode":"solid","bg":"#000000","trim":18},
     "O.M.S - posudaOMS.png": {"mode":"solid","bg":"#ffffff","trim":10}
   }

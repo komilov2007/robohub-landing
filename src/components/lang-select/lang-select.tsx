@@ -1,18 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
-import { isKzHost, isUzHost, localeHref, localeMeta, localeOrigin, locales, type Locale } from "@/i18n/config";
-
-// Rasmiy domenlarda boshqa domendagi til (robohub.kz'da o'zbekcha, robohub.uz'da qozoqcha) — to'liq manzil bilan
-// (i18n/config.ts: localeOrigin). vercel.app va localhost'da — oddiy yo'l.
-const noop = () => () => {};
-const useHost = () => useSyncExternalStore(noop, () => window.location.hostname, () => "");
-function langHref(host: string, l: Locale, path: string) {
-  const href = localeHref(l, path);
-  if (!isUzHost(host) && !isKzHost(host)) return href;
-  const origin = localeOrigin(l);
-  return origin === `https://${host.replace(/^www\./, "")}` ? href : origin + href;
-}
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { localeHref, localeMeta, locales, type Locale } from "@/i18n/config";
 import "./lang-select.css";
 
 type Props = {
@@ -83,7 +72,6 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const menuId = useId();
   const current = localeMeta[locale];
-  const host = useHost();
 
   useEffect(restoreScroll, []);
 
@@ -154,7 +142,7 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
                 className="lang-select__item"
                 role="menuitemradio"
                 aria-checked={active}
-                href={langHref(host, l, path)}
+                href={localeHref(l, path)}
                 hrefLang={l}
                 lang={l}
                 tabIndex={open ? 0 : -1}

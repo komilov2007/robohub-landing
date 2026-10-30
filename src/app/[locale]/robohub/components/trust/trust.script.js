@@ -33,31 +33,7 @@ function copies() {
       }
       track.appendChild(frag);
     });
-    start();
     wall.classList.add("is-full");
-  }
-  // Qator boshi (asosiy brendlar, companies.ts → TOP) birinchi ko'rinsin: animatsiya shunday fazadan boshlanadiki,
-  // qator boshi matn ustunining o'ng chetida turadi (telefonda — devorning chap chetiga yaqin).
-  function start() {
-    var w = wall.getBoundingClientRect();
-    var x = w.width * 0.1;
-    if (getComputedStyle(wall).position === "absolute") {
-      var right = 0;
-      document.querySelectorAll("#trust .trust__head, #trust .trust__stats").forEach(function (el) {
-        right = Math.max(right, el.getBoundingClientRect().right);
-      });
-      x = right - w.left + 48;
-    }
-    wall.querySelectorAll(".trust__row").forEach(function (row, i) {
-      var track = row.querySelector(".trust__track");
-      var n = Number(getComputedStyle(row).getPropertyValue("--n")) || 1;
-      var dur = parseFloat(getComputedStyle(row).getPropertyValue("--dur")) || 60;
-      var W = track.scrollWidth / n;
-      if (!W) return;
-      var p = (x % W) / W;
-      // juft qatorlar (2, 4, 6) teskari yo'nalishda aylanadi
-      track.style.animationDelay = -(i % 2 ? p : 1 - p) * dur + "s";
-    });
   }
   var io = new IntersectionObserver(function (entries) {
     if (!entries[0].isIntersecting) return;
@@ -68,7 +44,6 @@ function copies() {
   return function () {
     io.disconnect();
     wall.classList.remove("is-full");
-    wall.querySelectorAll(".trust__track").forEach(function (t) { t.style.animationDelay = ""; });
     added.forEach(function (c) { c.remove(); });
     added = [];
   };

@@ -1,4 +1,4 @@
-import { defineMessages, localeHref, localeUrl, type Locale } from "@/i18n/config";
+import { defineMessages, localeHref, type Locale } from "@/i18n/config";
 import { aiImage, type AiProduct } from "@/lib/ai-images";
 
 const AI_PRODUCTS = new Set<string>(["thermos", "bag", "earbuds", "glasses", "keyboard"]);
@@ -310,7 +310,7 @@ const uz = {
     cta: "Bepul tokenni olish",
   },
   footer: {
-    about: "Robohub — marketpleyslar, e’lon platformalari, superilovalar va shaxsiy onlayn-do‘konlardagi savdoni boshqarish uchun yagona elektron tijorat infratuzilmasi.",
+    about: "Marketplace sotuvchilari uchun AI yordamchi: rasm, infografika va kartochka bir joyda.",
     product: "Mahsulot",
     company: "Kompaniya",
     examples: "Namunalar",
@@ -501,7 +501,7 @@ const ru: Dict = {
     cta: "Получить бесплатные токены",
   },
   footer: {
-    about: "Robohub — единая инфраструктура электронной коммерции для управления продажами на маркетплейсах, классифайдах, в суперприложениях и собственных онлайн-магазинах.",
+    about: "AI-помощник для продавцов маркетплейсов: фото, инфографика и карточка в одном месте.",
     product: "Продукт",
     company: "Компания",
     examples: "Примеры",
@@ -690,7 +690,7 @@ const en: Dict = {
     cta: "Get free tokens",
   },
   footer: {
-    about: "Robohub is a unified e-commerce infrastructure for managing sales on marketplaces, classifieds, super apps and your own online stores.",
+    about: "An AI assistant for marketplace sellers: photos, infographics and product cards in one place.",
     product: "Product",
     company: "Company",
     examples: "Examples",
@@ -879,7 +879,7 @@ const kk: Dict = {
     cta: "Тегін токен алу",
   },
   footer: {
-    about: "Robohub — маркетплейстерде, хабарландыру платформаларында, суперқосымшаларда және жеке онлайн-дүкендерде сатуды басқаруға арналған бірыңғай электрондық коммерция инфрақұрылымы.",
+    about: "Маркетплейс сатушыларына арналған AI көмекші: фото, инфографика және карточка бір жерде.",
     product: "Өнім",
     company: "Компания",
     examples: "Мысалдар",
@@ -1068,7 +1068,7 @@ const ky: Dict = {
     cta: "Акысыз токен алуу",
   },
   footer: {
-    about: "Robohub — маркетплейстерде, жарнама платформаларында, суперколдонмолордо жана жеке онлайн-дүкөндөрдө сатууну башкаруу үчүн бирдиктүү электрондук соода инфраструктурасы.",
+    about: "Маркетплейс сатуучулары үчүн AI жардамчы: сүрөт, инфографика жана карточка бир жерде.",
     product: "Продукт",
     company: "Компания",
     examples: "Мисалдар",
@@ -1257,7 +1257,7 @@ const kaa: Dict = {
     cta: "Biypul token alıw",
   },
   footer: {
-    about: "Robohub — marketpleyslerde, daǵaza platformalarında, superqosımshalarda hám jeke onlayn-dúkánlarda satıwdı basqarıw ushın birden-bir elektron sawda infrastrukturası.",
+    about: "Marketpleys satıwshıları ushın AI járdemshi: súwret, infografika hám kartochka bir jerde.",
     product: "Ónim",
     company: "Kompaniya",
     examples: "Úlgiler",
@@ -1446,7 +1446,7 @@ const tg: Dict = {
     cta: "Гирифтани токенҳои ройгон",
   },
   footer: {
-    about: "Robohub — инфрасохтори ягонаи тиҷорати электронӣ барои идоракунии фурӯш дар маркетплейсҳо, платформаҳои эълонҳо, супербарномаҳо ва мағозаҳои онлайнии худ.",
+    about: "Ёрдамчии AI барои фурӯшандагони маркетплейсҳо: акс, инфографика ва карточка дар як ҷо.",
     product: "Маҳсулот",
     company: "Ширкат",
     examples: "Намунаҳо",
@@ -1537,7 +1537,7 @@ export function buildContent(locale: Locale, path = "/") {
     PRICING: { ...t.pricing, calc: { ...DATA.calc, label: t.pricing.calc }, packList: TOKEN_PACKS },
     ACADEMY: {
       ...t.academy,
-      url: localeUrl(locale, "/academy"),
+      url: `https://robohub.uz${localeHref(locale, "/academy")}`,
       // dars raqamlari — nomi, muqovasi va havolasi components/academy da (server) Academy ma'lumotidan olinadi
       lessons: DATA.lessons,
     },
@@ -1551,13 +1551,13 @@ export function buildContent(locale: Locale, path = "/") {
           links: [
             { label: "AI Studio", href: "#top" },
             { label: t.footer.examples, href: "#examples" },
-            { label: "Robohub", href: localeUrl(locale, "/") },
+            { label: "Robohub", href: `https://robohub.uz${localeHref(locale, "/")}` },
           ],
         },
         {
           title: t.footer.company,
           links: [
-            { label: "Robohub Academy", href: localeUrl(locale, "/academy") },
+            { label: "Robohub Academy", href: `https://robohub.uz${localeHref(locale, "/academy")}` },
             // robosell.uz domeni ulanganda almashtiriladi
             { label: "Robosell", href: `https://robosell-landing.vercel.app${localeHref(locale, "/")}` },
             { label: "FAQ", href: "#faq" },

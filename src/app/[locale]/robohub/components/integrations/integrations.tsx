@@ -8,7 +8,7 @@ import { CRM, STOCK, type System } from "./integrations.data";
 const Chip = ({ name, logo, plate }: System) => (
   <li className="integ-chip">
     {logo ? (
-      <img src={logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
+      <img src={logo} alt="" width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
     ) : (
       <i aria-hidden="true">{name[0]}</i>
     )}

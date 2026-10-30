@@ -19,7 +19,7 @@ import { ContentProvider } from "./content-context";
 import { getC } from "./content.server";
 import { PRICE_PER_IMAGE } from "./ai-studio.content";
 import { messages } from "./ai-studio.i18n";
-import { localeUrl } from "@/i18n/config";
+import { localeHref } from "@/i18n/config";
 import { jsonLd, BRAND, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN } from "@/lib/seo";
 
 // RoboHub AI Studio landingi. Konsepsiya — "oddiy fotodan sotadigan kartochkaga":
@@ -32,7 +32,7 @@ export default async function StudioPage({ path = "/" }: { path?: string }) {
   const c = await getC(path);
   const t = messages[c.locale];
   // Qidiruv tizimlari uchun: veb-ilova (1 rasm narxi bilan) va FAQ. Manzil — canonical (robohub.uz/ai-studio), layout.tsx bilan bir xil
-  const url = localeUrl(c.locale, "/aistudio");
+  const url = ROBOHUB_ORIGIN + localeHref(c.locale, "/aistudio");
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
