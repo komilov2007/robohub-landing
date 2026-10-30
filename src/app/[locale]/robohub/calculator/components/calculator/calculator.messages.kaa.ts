@@ -202,7 +202,7 @@ export const kaa: CalcDict = {
   calc_landing_faq_a_margin_roi: "Marja — satıw bahasınıń qansha bólegi payda ekenligi. ROI — ózindik qunǵa salınǵan pulǵa salıstırǵanda qansha payda qalǵanı. Kalkulyator ekewin de kórsetedi.",
   calc_landing_faq_q_which_marketplace: "Qaysı marketpleyste satıw paydalıraq?",
   calc_landing_faq_a_which_marketplace: "Universal juwap joq: komissiya hám logistika hár bir kategoriya hám ólshem ushın hár qıylı. Eń isenimli jol — bir ónimdi tórtewinde de esaplap kóriw.",
-  calc_landing_footer_tagline: "Robohub — marketpleys satıwshıları ushın birden-bir kabinet. Payda kalkulyatorı hámmege biypul.",
+  calc_landing_footer_tagline: "Robohub — marketpleyslerde, daǵaza platformalarında, superqosımshalarda hám jeke onlayn-dúkánlarda satıwdı basqarıw ushın birden-bir elektron sawda infrastrukturası.",
   calc_landing_footer_rights: "© {{year}} Robohub. Barlıq huqıqlar qorǵalǵan.",
   calculator_error_throttled: "Júdá kóp soraw jiberildi. {{seconds}} sekundtan keyin qaytadan urınıp kóriń.",
   calculator_dimensions_penalty: "Ólshemlerdi kiritiń — jetkerip beriw ~10 ese arzan bolıwı múmkin",

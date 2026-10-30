@@ -14,7 +14,7 @@
 //      maydon bo'yicha (kvadrat va cho'ziq logolar bir xil og'irlikda ko'rinadi), eni va bo'yi chegaralangan;
 //   4) shakl: kvadrat, cho'ziq logo (eni/bo'yi ≥ 2.6) — keng plitka, config.featured — katta karta.
 // Sozlamalar — config.json: featured (katta ko'rsatiladigan taniqli brendlar), names (chiroyli nom),
-// files (fayl bo'yicha: skip — chiqarilmaydi va sababi; mode/bg/trim/scale/wide — qo'lda sozlash).
+// files (fayl bo'yicha: skip — chiqarilmaydi va sababi; mode/bg/trim/scale/wide/ink — qo'lda sozlash).
 import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
@@ -66,6 +66,16 @@ function inkLum(R) {
 async function processOne(file, opt, outFile) {
   const src = path.join(SRC, file);
   let buf = await sharp(src).ensureAlpha().png().toBuffer();
+  // ink: "light" — to'q fondagi oq logo: yorqinlik shaffoflikka aylanadi (logo oq, fon — opt.bg)
+  if (opt.ink === "light") {
+    const R0 = await raw(buf);
+    const out = Buffer.alloc(R0.data.length);
+    for (let i = 0; i < R0.data.length; i += 4) {
+      out[i] = out[i + 1] = out[i + 2] = 255;
+      out[i + 3] = Math.round(lum({ r: R0.data[i], g: R0.data[i + 1], b: R0.data[i + 2] }) * R0.data[i + 3]);
+    }
+    buf = await sharp(out, { raw: { width: R0.w, height: R0.h, channels: 4 } }).png().toBuffer();
+  }
   try { buf = await sharp(buf).trim({ threshold: 1 }).png().toBuffer(); } catch { /* kesadigan joy yo'q */ }
   const R = await raw(buf);
   const ed = edges(R);

@@ -107,7 +107,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={m} style={{ "--a": `${-90 + i * (360 / MARKETPLACES.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className={`orbit__tile orbit__tile--mp${m.startsWith("/marketplaces/") ? " orbit__tile--shadow" : ""}`}>
-                        <img src={m} alt={MP_NAME[m] ?? ""} {...imgSize(m)} fetchPriority="low" />
+                        <img src={m} alt={`${MP_NAME[m]} + Robohub`} title={`${MP_NAME[m]} + Robohub`} {...imgSize(m)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>
@@ -118,7 +118,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={s.name} style={{ "--a": `${-70 + i * (360 / SYSTEMS.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className="orbit__tile">
-                        <img src={s.logo} alt={s.name} title={s.name} {...imgSize(s.logo)} fetchPriority="low" />
+                        <img src={s.logo} alt={`${s.name} + Robohub`} title={`${s.name} + Robohub`} {...imgSize(s.logo)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>

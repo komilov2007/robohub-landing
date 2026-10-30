@@ -5,7 +5,8 @@ import { permanentRedirect, redirect } from "next/navigation";
 import { getLocale } from "@/i18n/server";
 import { getLessonBySlug, getTopic, LESSON_ROUTES, TOPIC_ROUTES } from "../../lib/academy";
 import { yt } from "../../lib/youtube";
-import { academyHref, languageAlternates, lessonHref, lessonPath, topicHref } from "../../lib/links";
+import { localeUrl } from "@/i18n/config";
+import { academyHref, languageAlternates, lessonPath, topicHref } from "../../lib/links";
 import StageSkeleton from "../components/stage/stage-skeleton";
 import TopicView, {
   lessonDescription,
@@ -35,7 +36,7 @@ export async function generateMetadata({
   const images = [
     { url: yt.thumb(lesson.youtubeId), width: 1280, height: 720 },
   ];
-  const url = lessonHref(locale, topic.slug, lesson.n);
+  const url = localeUrl(locale, lessonPath(topic.slug, lesson.n));
   return {
     title: lesson.title,
     description,

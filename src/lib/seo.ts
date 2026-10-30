@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { defaultLocale, localeHref, locales, type Locale } from "@/i18n/config";
+import { defaultLocale, localeHref, locales, localeUrl, ROBOHUB_UZ, type Locale } from "@/i18n/config";
 import { EMAIL, INSTAGRAM_URL, OFFICE_ADDRESS, OFFICE_MAP_URL, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
 // SEO — har landing uchun bir xil to'liq teglar: canonical, hreflang (+ x-default), Open Graph va Twitter kartasi, ulashish rasmi.
 // Manzillar doim asosiy domen bilan (metadataBase): sahifa vercel.app'da ochilsa ham Google asl manzilni ko'radi.
-export const ROBOHUB_ORIGIN = "https://robohub.uz";
+// Qozoqcha sahifalar — robohub.kz (i18n/config.ts: localeUrl); Organization, logo va h.k. — robohub.uz.
+export const ROBOHUB_ORIGIN = ROBOHUB_UZ;
 // Robosell o'z domeni ulanganda shu yerda almashtiriladi
 export const ROBOSELL_ORIGIN = "https://robosell-landing.vercel.app";
 // Brend yozilishi — title, OG, schema'da bir xil
@@ -43,10 +44,12 @@ type PageSeo = {
 
 export function pageMetadata({ origin, locale, path, title, description, siteName, image, translated = locales }: PageSeo): Metadata {
   const own = translated.includes(locale) ? locale : defaultLocale;
-  const canonical = localeHref(own, path);
+  // Robohub sahifalari — har til o'z domenida (kk → robohub.kz), shuning uchun to'liq manzil; Robosell — o'z domenida
+  const href = (l: Locale) => (origin === ROBOHUB_ORIGIN ? localeUrl(l, path) : localeHref(l, path));
+  const canonical = href(own);
   const languages: Record<string, string> = {};
-  for (const l of translated) languages[l] = localeHref(l, path);
-  languages["x-default"] = localeHref(defaultLocale, path);
+  for (const l of translated) languages[l] = href(l);
+  languages["x-default"] = href(defaultLocale);
   const images = [{ url: image.replace("{locale}", OG_IMAGE_LOCALE[own]), width: 1200, height: 630, alt: title }];
   return {
     metadataBase: new URL(origin),

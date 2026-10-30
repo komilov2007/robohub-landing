@@ -64,7 +64,7 @@ const Tile = ({ c }: { c: Company }) => {
   const [w, h] = SIZE[c.shape];
   return (
     <span className={`trust__tile trust__tile--${c.shape}`} style={{ background: c.bg }}>
-      <img src={c.logo} alt="" width={w} height={h} loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
+      <img src={c.logo} alt={`${c.name} + Robohub`} title={`${c.name} + Robohub`} width={w} height={h} loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
     </span>
   );
 };
@@ -138,7 +138,7 @@ export default async function Trust() {
             <span className="trust__reach-k">{t.mps}</span>
             <span className="trust__reach-logos" aria-label={MARKETPLACES.map((m) => m.name).join(", ")} role="img">
               {MARKETPLACES.map((m) => (
-                <img loading="lazy" decoding="async" key={m.name} src={m.logo} alt="" title={m.name} width="22" height="22" />
+                <img loading="lazy" decoding="async" key={m.name} src={m.logo} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} width="22" height="22" />
               ))}
             </span>
           </li>
