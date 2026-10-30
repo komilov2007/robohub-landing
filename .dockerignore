@@ -1,3 +1,19 @@
 .git
 node_modules
 build
+.next
+out
+coverage
+
+# lokal maxfiy fayllar image'ga tushmasin (CI'dagi .env / .env.production esa o'tadi)
+.env*.local
+
+.github
+.kube
+Dockerfile
+.dockerignore
+*.md
+.DS_Store
+.vercel
+*.tsbuildinfo
+/*.html

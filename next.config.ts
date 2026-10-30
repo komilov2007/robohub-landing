@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Docker (k8s) uchun: .next/standalone — faqat kerakli fayllar va minimal server.js (Dockerfile'ga qarang)
+  output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
   // 404 — app/global-not-found.tsx (Robohub va Robosell uchun alohida). Root layout [locale] ichida bo'lgani uchun
