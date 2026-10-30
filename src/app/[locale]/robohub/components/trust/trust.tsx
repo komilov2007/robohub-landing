@@ -92,7 +92,9 @@ export default async function Trust() {
 
         {/* Logotiplar devori — bezak. Keng ekranda butun section kengligida, matn ostida (section boʻyicha absolute),
             telefonda sarlavha ostida. Oʻrtadagi qator — taniqli brendlar, katta kartalarda.
-            Har qator 2–3 nusxada chiziladi (--n): lenta bir nusxaga surilganda ulanish joyi bilinmaydi. */}
+            Har qator 2–3 nusxada aylanadi (--n): lenta bir nusxaga surilganda ulanish joyi bilinmaydi.
+            Serverda faqat bitta nusxa chiziladi — qolganlarini trust.script.js devor ekranga kirganda qo'shadi
+            (sahifa ochilishida ~1300 ta ortiqcha element HTML, RSC va birinchi layout'ga tushmaydi). */}
         <div className="trust__wall" aria-hidden="true">
           {ROWS.map((row, r) => {
             const units = rowUnits(row);
@@ -101,7 +103,7 @@ export default async function Trust() {
             return (
               <div className={"trust__row" + (r === FEATURED_AT ? " trust__row--featured" : "")} key={r} style={style}>
                 <ul className="trust__track">
-                  {Array.from({ length: n }, () => row).flat().map((c, i) => (
+                  {row.map((c, i) => (
                     <li className="trust__item" key={i}>
                       <Tile c={c} />
                     </li>

@@ -32,9 +32,12 @@ const nextConfig: NextConfig = {
       {
         // Robohub'ning vercel.app manzillari (robohub-landing.vercel.app, preview'lar) ochilaveradi, lekin qidiruvga tushmaydi.
         // Robosell (robosell-landing.vercel.app) — hozircha uning yagona manzili, shuning uchun istisno.
+        // robohub-landing.vercel.app (asosiy production manzili) ham istisno: aks holda Lighthouse/PageSpeed SEO'ni
+        // 69 ga tushiradi ("is-crawlable"). Dublikat bo'lmaydi — har sahifa canonical'i robohub.uz'ga ko'rsatadi.
+        // Preview'lar (robohub-landing-git-…, robohub-landing-<hash>-…) yopiqligicha qoladi.
         // robots.txt'da Disallow qilinmaydi — aks holda Google bu sarlavhani ko'rmay qoladi.
         source: "/:path*",
-        has: [{ type: "host", value: "^(?!robosell)[^.]+\\.vercel\\.app$" }],
+        has: [{ type: "host", value: "^(?!robosell)(?!robohub-landing\\.vercel\\.app$)[^.]+\\.vercel\\.app$" }],
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
     ];

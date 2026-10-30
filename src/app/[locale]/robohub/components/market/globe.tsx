@@ -367,7 +367,7 @@ export default function Globe({ names, mps, soon }: { names: Record<CountryId, s
           >
             <i />
             <b>
-              <img src={`/flags/${c.id}.svg`} alt="" width="14" height="14" />
+              <img src={`/flags/${c.id}.svg`} alt="" width="14" height="14" loading="lazy" />
               {names[c.id]}
             </b>
             {/* telefonda: faol mamlakat nomi ostida — shu yerdagi marketpleyslar kartochkasi (robohub.css → .globe__card) */}

@@ -20,6 +20,9 @@ export default function ReviewsScroll() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const cleanups: (() => void)[] = [];
 
+    // Lentalar bo'lim ekranga yaqinlashgandagina sozlanadi: o'lchash (scrollWidth) sahifa ochilishida
+    // butun sahifa joylashuvini majburan hisoblatmasin (Lighthouse TBT / forced reflow).
+    const setup = () => {
     for (const { sel, speed } of LANES) {
       const el = sec.querySelector<HTMLElement>(sel);
       if (!el) continue;
@@ -112,6 +115,8 @@ export default function ReviewsScroll() {
       el.addEventListener("focusout", onLeave);
       const ro = new ResizeObserver(() => { measure(); pos = wrap(el.scrollLeft); });
       ro.observe(el);
+      // lenta (ul) ham: ikkinchi nusxa keyinroq chiziladi (use-near.ts) — kengaygach qayta o'lchanadi
+      if (el.firstElementChild) ro.observe(el.firstElementChild);
       const io = new IntersectionObserver(([e]) => {
         visible = e.isIntersecting;
         if (visible) start();
@@ -135,7 +140,20 @@ export default function ReviewsScroll() {
         el.removeEventListener("focusout", onLeave);
       });
     }
-    return () => cleanups.forEach((f) => f());
+    };
+    const near = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        near.disconnect();
+        setup();
+      },
+      { rootMargin: "800px 0px" },
+    );
+    near.observe(sec);
+    return () => {
+      near.disconnect();
+      cleanups.forEach((f) => f());
+    };
   }, []);
   return null;
 }

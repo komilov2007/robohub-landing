@@ -96,7 +96,7 @@ export default async function Hero() {
                 {MARKETPLACES.map((m, i) => (
                   <div className="orbit__item" key={m} style={{ "--a": `${-90 + i * (360 / MARKETPLACES.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
-                      <span className="orbit__tile orbit__tile--mp">
+                      <span className={`orbit__tile orbit__tile--mp${m.startsWith("/marketplaces/") ? " orbit__tile--shadow" : ""}`}>
                         <img src={m} alt="" {...imgSize(m)} />
                       </span>
                     </span>

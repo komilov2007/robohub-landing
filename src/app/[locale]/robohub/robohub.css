@@ -255,7 +255,8 @@
   position:relative;width:100%;max-width:580px;aspect-ratio:1;margin:0 auto;container-type:inline-size;
   animation:hero-pop 1000ms var(--ease-soft) 400ms backwards;
 }
-@keyframes hero-pop{from{opacity:0;transform:translate3d(0,22px,0) scale(.96)}}
+/* opacity 0 dan emas: orbitadagi logolar LCP nomzodi — birinchi chizishda ko'rinsin (aks holda LCP animatsiya oxiriga suriladi) */
+@keyframes hero-pop{from{transform:translate3d(0,22px,0) scale(.96)}}
 /* oq fonda yumshoq mint nur — sahnani sahifaga bog'laydi */
 .orbit::before{content:"";position:absolute;inset:4%;border-radius:50%;background:radial-gradient(closest-side,rgba(184,255,176,.85),rgba(184,255,176,.3) 50%,rgba(184,255,176,0) 76%);pointer-events:none}
 .orbit__line{position:absolute;left:50%;top:50%;border-radius:50%;border:1px dashed var(--line-strong);transform:translate(-50%,-50%)}
@@ -271,9 +272,12 @@
 .orbit__up{position:absolute;left:0;top:0;width:0;height:0;animation:orbit-spin var(--t) linear infinite reverse}
 .orbit__ring--in .orbit__up{animation-direction:normal}
 .orbit__tile{position:absolute;left:0;top:0;width:max-content;display:grid;justify-items:center;gap:6px;transform:translate(-50%,calc(var(--tile) / -2))}
-.orbit__tile img,.orbit__tile b{width:var(--tile);height:var(--tile);border-radius:28%;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(0,54,52,.28))}
+.orbit__tile img,.orbit__tile b{width:var(--tile);height:var(--tile);border-radius:28%;object-fit:contain}
+/* Uzum, Wildberries, Ozon, Yandex soyasi — rasmning o'zida (filter: drop-shadow) emas, alohida qatlamda:
+   filter rasmning "ko'rinadigan o'lchami"ni ~3 barobar kattalashtirib, uni sarlavha o'rniga LCP elementiga aylantirardi */
+.orbit__tile--shadow::before{content:"";position:absolute;z-index:-1;left:50%;top:0;width:var(--tile);height:var(--tile);margin-left:calc(var(--tile) / -2);border-radius:28%;box-shadow:0 12px 16px rgba(0,54,52,.28);pointer-events:none}
 /* Uzum, Wildberries, Ozon, Yandex (o'z rangli foni bor) — fonsiz; qolganlari (alif, Click, Zoomrad va hisob tizimlari) — oq ramkali plitkada */
-.orbit__tile img:not([src*="/marketplaces/"]){background:#fff;filter:none;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line),0 16px 28px -12px rgba(0,54,52,.45)}
+.orbit__tile img:not([src*="/marketplaces/"]){background:#fff;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line),0 16px 28px -12px rgba(0,54,52,.45)}
 /* alif, Click, Zoomrad — plitka o'lchami o'sha, logotip ichida biroz kichikroq */
 .orbit__tile img[src*="/robosell/icons/"]{box-sizing:border-box;padding:15%}
 .orbit__tile b{display:grid;place-items:center;font-size:calc(var(--tile) * .42);font-weight:800;background:#E3EFEA;color:var(--brand)}
@@ -532,7 +536,9 @@
     linear-gradient(var(--bg),var(--bg)) 0 100% / calc(100% - var(--col) + var(--stats-w)) calc(150px + var(--low-h)) no-repeat;
   filter:blur(var(--soft));pointer-events:none;
 }
-.trust__track{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:trust-roll var(--dur,60s) linear infinite}
+.trust__track{display:flex;width:max-content;margin:0;padding:0;list-style:none}
+/* aylanish — qatorlar --n nusxagacha to'ldirilgach (trust.script.js) */
+.trust__wall.is-full .trust__track{animation:trust-roll var(--dur,60s) linear infinite}
 .trust__row:nth-child(even) .trust__track{animation-direction:reverse}
 .trust__row:hover .trust__track{animation-play-state:paused}
 @keyframes trust-roll{to{transform:translateX(calc(-100% / var(--n,3)))}}
@@ -589,7 +595,7 @@
   .trust__row:nth-child(1),.trust__row:nth-child(n+6){display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  .trust__track{animation:none}
+  .trust__wall.is-full .trust__track{animation:none}
 }
 
 /* ============================================================
@@ -1329,7 +1335,12 @@
 .how-card--help .how-card__ok{background:#fff;color:var(--brand)}
 
 /* yo'l yurayotganda: hali yetib kelinmagan qadamlar xira, yetib kelingani ko'tariladi */
-.how.is-live .how-card:not(.is-on){opacity:.42}
+/* Hali yetilmagan qadam: shaffoflik o'rniga rangsizlanadi va sarlavha xiralashadi — matn o'qiladigan
+   kontrastda qoladi (WCAG AA) */
+.how-card .mini{transition:filter 500ms var(--ease)}
+.how-card h3{transition:color 500ms var(--ease)}
+.how.is-live .how-card:not(.is-on) .mini{filter:grayscale(1)}
+.how.is-live .how-card:not(.is-on):not(.how-card--help) h3{color:var(--text-dim)}
 .how.is-live .how-card:not(.is-on) .how-card__ok{opacity:0;transform:scale(0)}
 .how.is-live .how-card.is-on{transform:translate3d(0,-8px,0);box-shadow:0 24px 50px rgba(0,54,52,.14);border-color:rgba(0,82,79,.28)}
 .how.is-live .how-card--help.is-on{border-color:transparent;box-shadow:0 24px 50px rgba(0,82,79,.22)}
@@ -1350,7 +1361,7 @@
   display:flex;align-items:center;gap:8px;height:38px;padding:0 11px;border-radius:11px;
   background:#fff;border:1px solid #D5E0DD;box-shadow:0 4px 12px rgba(0,54,52,.08);white-space:nowrap;
 }
-.mini__fld i{font-style:normal;color:#8A9C9A}
+.mini__fld i{font-style:normal;color:#5F706B}
 /* matn harflab yoziladi, oxirida kursor miltillaydi */
 .mini__type{display:inline-block;overflow:hidden;white-space:nowrap;width:var(--w);border-right:2px solid transparent;animation:mini-type 1.2s steps(var(--n)) 250ms backwards,mini-caret 500ms steps(1) 250ms 3}
 @keyframes mini-type{from{width:0}}
@@ -1737,15 +1748,15 @@
 .chat__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .chat__ava{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:#fff;font-size:13px;font-weight:800}
 .chat__who{display:grid;flex:1;min-width:0;line-height:1.2}
-.chat__who b{overflow:hidden;font-size:14.5px;font-weight:700;white-space:nowrap;text-overflow:ellipsis;color:#2A7BC0}
-.chat__who small{font-size:12px;color:#8A9A96}
+.chat__who b{overflow:hidden;font-size:14.5px;font-weight:700;white-space:nowrap;text-overflow:ellipsis;color:#2470B0}
+.chat__who small{font-size:12px;color:#5F706B}
 .chat__tg{flex:none;width:20px;height:20px;fill:#2AABEE}
 .chat__text{
   max-height:calc(1.45em * 6);overflow:hidden;font-size:14px;line-height:1.45;white-space:pre-line;
   display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;
 }
 .chat__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px}
-.chat__foot time{font-size:12px;color:#8A9A96}
+.chat__foot time{font-size:12px;color:#5F706B}
 .chat__more{padding:0;border:0;background:none;font:inherit;font-size:13px;font-weight:700;color:var(--brand);cursor:pointer}
 .chat__more:hover{text-decoration:underline}
 .chat__more:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
@@ -2308,7 +2319,7 @@ body:has(.feat__skip.is-on) .totop{opacity:0;visibility:hidden;transform:transla
   .reels .reels__card{border:0;border-radius:16px;background:#fff;box-shadow:0 10px 24px -10px rgba(0,30,28,.55),0 0 0 1px rgba(0,54,52,.12)}
   .reels .reels__poster,.reels .reels__frame{inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:13px;border:0}
   .reels .reels__bars,.reels .reels__cap{display:none}
-  .reels .reels__hide{top:-7px;right:-7px;width:22px;height:22px;border-width:1.5px}
+  .reels .reels__hide{top:-8px;right:-8px;width:24px;height:24px;border-width:1.5px}
   .reels .reels__hide svg{width:11px;height:11px}
   body:has(.mcta.is-on) .reels[data-corner^="b"]{bottom:calc(var(--gy) + 64px + env(safe-area-inset-bottom))}
 }

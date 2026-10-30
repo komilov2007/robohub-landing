@@ -27,7 +27,7 @@ export default function MobileCtaClient({ t, loginHref }: { t: T; loginHref: str
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    update();
+    raf = requestAnimationFrame(update); // birinchi o'lchov keyingi kadrda — gidratatsiya paytida majburiy reflow bo'lmasin
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

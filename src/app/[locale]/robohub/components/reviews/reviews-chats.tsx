@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Chat } from "./chats";
+import { useNear } from "./use-near";
 
 // Telegram'dagi fikrlar: bir xil o'lchamdagi kartalar bitta qatorda, o'zi sekin suriladi (sichqoncha ustida to'xtaydi).
 // Uzun xabar kartada qisqartiriladi — "To'liq o'qish" bosilsa to'liq matn oynada ochiladi.
 // Ro'yxat ikki marta chiziladi: lenta yarmiga surilganda ikkinchi nusxa birinchisining o'rnida turadi (ulanish bilinmaydi).
 type T = { anon: string; group: string; more: string; close: string };
 
-const COLORS = ["#7B6CF6", "#F0718A", "#3BA7E6", "#F29B38", "#41B883", "#9A6BE0", "#E2604F", "#2BB6A8"];
+// to'qroq tuslar: oq harf bilan kontrast >= 4.5:1 (WCAG AA)
+const COLORS = ["#7062E0", "#B65669", "#2B7AA8", "#A26826", "#2E835D", "#895FC7", "#C05243", "#1F8177"];
 const initials = (name: string) =>
   name
     .replace(/[^\p{L}\p{N}\s]/gu, "")
@@ -57,6 +59,8 @@ function Card({ c, i, t, onMore, hidden }: { c: Chat; i: number; t: T; onMore: (
 
 export default function ReviewsChats({ chats, t }: { chats: Chat[]; t: T }) {
   const [open, setOpen] = useState<number | null>(null);
+  // ikkinchi nusxa — bo'lim ekranga yaqinlashganda (sahifa ochilishida ortiqcha element chizilmaydi)
+  const copies = useNear("reviews") ? [0, 1] : [0];
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -78,7 +82,7 @@ export default function ReviewsChats({ chats, t }: { chats: Chat[]; t: T }) {
     <>
       <div className="revs__marquee">
         <ul className="revs__chats">
-          {[0, 1].map((copy) =>
+          {copies.map((copy) =>
             chats.map((c, i) => <Card key={`${copy}-${i}`} c={c} i={i} t={t} hidden={copy === 1} onMore={() => setOpen(i)} />),
           )}
         </ul>

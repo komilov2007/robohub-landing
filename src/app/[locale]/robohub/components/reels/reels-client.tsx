@@ -315,7 +315,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          aria-label={`${t.open}: ${t.title}`}
+          aria-label={`${t.title} ${reel.name ?? t.client} — ${t.open}`} // ko'rinadigan yozuv nom boshida (WCAG 2.5.3)
           title={t.drag}
         >
           <img className="reels__poster" src={smallPoster(reel.id, reel.wide)} {...imgSize(smallPoster(reel.id, reel.wide))} alt="" draggable={false} />

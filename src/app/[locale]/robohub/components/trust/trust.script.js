@@ -5,9 +5,48 @@
 // Logotiplar devoridagi xira parda teshigi kursorga ergashadi (veil).
 // Tozalash funksiyasini qaytaradi.
 export function init() {
+  var stopCopies = copies();
   var stopVeil = veil();
   var stopCount = count();
-  return function () { stopVeil(); stopCount(); };
+  return function () { stopCopies(); stopVeil(); stopCount(); };
+}
+
+// Logotiplar lentasi: serverda har qator bitta nusxada keladi (trust.tsx). Devor ekranga kirganda qatorlar
+// --n nusxagacha to'ldiriladi va shundan keyingina aylana boshlaydi (.trust__wall.is-full, robohub.css).
+// Bitta nusxa har qanday ekrandan uzun — to'ldirilguncha ham bo'sh joy ko'rinmaydi.
+function copies() {
+  var wall = document.querySelector("#trust .trust__wall");
+  if (!wall) return function () {};
+  var added = [];
+  function fill() {
+    wall.querySelectorAll(".trust__row").forEach(function (row) {
+      var track = row.querySelector(".trust__track");
+      var n = Number(getComputedStyle(row).getPropertyValue("--n")) || 1;
+      var items = Array.prototype.slice.call(track.children);
+      var frag = document.createDocumentFragment();
+      for (var k = 1; k < n; k++) {
+        items.forEach(function (li) {
+          var c = li.cloneNode(true);
+          added.push(c);
+          frag.appendChild(c);
+        });
+      }
+      track.appendChild(frag);
+    });
+    wall.classList.add("is-full");
+  }
+  var io = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    fill();
+  });
+  io.observe(wall);
+  return function () {
+    io.disconnect();
+    wall.classList.remove("is-full");
+    added.forEach(function (c) { c.remove(); });
+    added = [];
+  };
 }
 
 // Parda teshigi kursorga ergashadi: --mx/--my devorga nisbatan (px). Faqat sichqonchali qurilmalarda.

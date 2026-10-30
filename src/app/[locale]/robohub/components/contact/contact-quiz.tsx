@@ -35,7 +35,7 @@ export default function ContactQuiz({ t, id, reveal = false }: { t: T; id: strin
         {/* oxirgi qadam (telefon): mamlakat kodi — inputdan alohida, o'chirib bo'lmaydi; bosilsa ro'yxat ochiladi (contact.script.js) */}
         <div className="contact__cc" id={`${id}-cc`} hidden>
           <button type="button" className="contact__cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-label={q.country}>
-            <img src={PHONE_COUNTRIES[0].flag} alt="" width={20} height={20} />
+            <img src={PHONE_COUNTRIES[0].flag} alt="" width={20} height={20} loading="lazy" />
             <span>+{PHONE_COUNTRIES[0].code}</span>
             <svg viewBox="0 0 12 12" aria-hidden="true">
               <path d="M3 4.5 6 7.5 9 4.5" />

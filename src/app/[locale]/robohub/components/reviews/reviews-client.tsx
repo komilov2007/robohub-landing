@@ -3,6 +3,7 @@
 import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
 import { OPEN_EVENT } from "../reels/reels-client";
+import { useNear } from "./use-near";
 
 // Videosharhlar: ekran kengligidagi lenta, o'zi sekin suriladi va cheksiz takrorlanadi (sichqoncha ustida to'xtaydi).
 // Videolar kam bo'lsa ham ekran to'lishi uchun ro'yxat REPEAT marta ketma-ket chiziladi, so'ng butun bo'lak
@@ -16,7 +17,8 @@ const poster = (id: string, wide?: boolean) => `https://i.ytimg.com/vi/${id}/${w
 
 export default function ReviewsVideos({ videos, t }: { videos: Video[]; t: T }) {
   const half = Array.from({ length: REPEAT }, () => videos).flat();
-  const all = [...half, ...half];
+  // ikkinchi nusxa — bo'lim ekranga yaqinlashganda (useNear): sahifa ochilishida ortiqcha element chizilmaydi
+  const all = useNear("reviews") ? [...half, ...half] : half;
   return (
     <div className="revs__videos" data-sr="" style={{ "--d": "200ms" } as CSSProperties}>
       <h3 className="revs__sub">{t.title}</h3>

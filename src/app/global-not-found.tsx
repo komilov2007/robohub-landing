@@ -6,7 +6,6 @@ import Robohub404 from "@/components/robohub-404/robohub-404";
 import { messages as robohubMessages } from "@/components/robohub-404/robohub-404.i18n";
 import { defaultLocale, hasLocale, LOCALE_HEADER, type Locale } from "@/i18n/config";
 import { siteFromHost, type Site } from "@/lib/site-host";
-import Robosell404 from "./[locale]/robosell/components/not-found/not-found";
 import { messages as robosellMessages } from "./[locale]/robosell/components/not-found/not-found.i18n";
 import { manrope, unbounded } from "./fonts";
 
@@ -35,9 +34,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function GlobalNotFound() {
   const { site, locale } = await context();
+  // Robosell 404 — dinamik import: statik import qilinsa, uning Onest shrifti (preload) va CSS'i
+  // Robohub'ning barcha sahifalariga ham tushib qolardi
+  const Robosell404 =
+    site === "robosell" ? (await import("./[locale]/robosell/components/not-found/not-found")).default : null;
   return (
     <html lang={locale} className={`${unbounded.variable} ${manrope.variable}`}>
-      <body>{site === "robosell" ? <Robosell404 locale={locale} /> : <Robohub404 site={site} locale={locale} />}</body>
+      <body>{site === "robosell" && Robosell404 ? <Robosell404 locale={locale} /> : site !== "robosell" && <Robohub404 site={site} locale={locale} />}</body>
     </html>
   );
 }

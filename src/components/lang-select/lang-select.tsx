@@ -116,7 +116,8 @@ export default function LangSelect({ locale, label, path = "/" }: Props) {
         ref={buttonRef}
         className="lang-select__btn"
         type="button"
-        aria-label={`${label}: ${current.label}`}
+        // ko'rinib turgan matn (EN) nom boshida bo'lishi kerak — ovozli boshqaruv uchun (WCAG 2.5.3)
+        aria-label={`${current.short} — ${label}: ${current.label}`}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}

@@ -380,7 +380,8 @@
 .acx-badge--mp::after{display:none} /* yaltirash kapsuladan chiqib ketmasin (overflow ochiq — logolar kattalashadi) */
 .acx-mps{display:inline-flex;align-items:center;padding:2px 0}
 .acx-mps__item{
-  position:relative;display:block;width:26px;height:26px;margin-right:-5px;padding:0;border-radius:8px;
+  /* margin -2px: qo'shni logo ustiga ko'pi bilan 2px chiqadi — har tugmaning ochiq qismi >= 24px (WCAG 2.5.8) */
+  position:relative;display:block;width:26px;height:26px;margin-right:-2px;padding:0;border-radius:8px;
   box-shadow:0 0 0 2px #00211F;cursor:pointer;
   transition:margin 450ms cubic-bezier(.3,1.4,.5,1),transform 400ms cubic-bezier(.3,1.6,.5,1),box-shadow 250ms;
 }
