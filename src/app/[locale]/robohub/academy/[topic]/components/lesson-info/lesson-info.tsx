@@ -69,22 +69,22 @@ export default function LessonInfo({ topic, lessonPage = false }: { topic: Topic
           </header>
 
           {/* 2. Nazariy qism — maqola: qisqa xulosa, "Bu nima?", "Nega kerak?", videoda ko'rsatiladiganlar, maslahat */}
-          <article className="acx-read" aria-label={t.theory}>
+          <article className="acx-read" aria-label={`${t.theory}: ${lesson.title}`}>
             <p className="acx-read__lead">{lesson.summary}</p>
             {note && (
               <>
-                <section className="acx-read__row">
+                <section className="acx-read__row" aria-label={`${t.what} — ${lesson.title}`} title={`${t.what} — ${lesson.title}`}>
                   <h3>{t.what}</h3>
                   <p>{note.concept}</p>
                 </section>
-                <section className="acx-read__row">
+                <section className="acx-read__row" aria-label={`${t.why} — ${lesson.title}`} title={`${t.why} — ${lesson.title}`}>
                   <h3>{t.why}</h3>
                   <p>{note.why}</p>
                 </section>
               </>
             )}
             {lesson.points.length > 0 && (
-              <section className="acx-read__row">
+              <section className="acx-read__row" aria-label={`${t.inVideo}: ${lesson.title}`} title={`${t.inVideo}: ${lesson.title}`}>
                 <h3>{t.inVideo}</h3>
                 <ul className="acx-read__list">
                   {lesson.points.map((p, i) => (
@@ -97,7 +97,7 @@ export default function LessonInfo({ topic, lessonPage = false }: { topic: Topic
               </section>
             )}
             {note?.tip && (
-              <aside className="acx-read__tip">
+              <aside className="acx-read__tip" aria-label={`${t.tip} ${lesson.title}`}>
                 <span aria-hidden="true">
                   <Icon
                     d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"

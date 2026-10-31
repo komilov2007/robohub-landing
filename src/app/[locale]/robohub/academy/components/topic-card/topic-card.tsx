@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { lessonsByTopic, topicMinutes, type Topic } from "../../lib/academy";
+import { lessonsByTopic, topicMinutes, type Topic, lessonNo } from "../../lib/academy";
 import { fmt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
 import TopicProgress from "./topic-progress";
@@ -45,7 +45,7 @@ export default async function TopicCard({ topic, index, featured = false }: { to
           {shown.map((l, i) => (
             <Link key={l.n} href={lessonHref(locale, topic.slug, l.n)} className="acx-tcard__lesson" style={{ "--j": i } as CSSProperties}>
               <b>
-                <span>{l.n}</span>
+                <span>{lessonNo(l.n)}</span>
                 <PlayGlyph size={10} />
               </b>
               <span>{l.title}</span>

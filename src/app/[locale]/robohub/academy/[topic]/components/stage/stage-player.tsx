@@ -7,6 +7,7 @@ import {
   lessonsByTopic,
   nextTopic,
   type Topic,
+  lessonNo,
 } from "../../../lib/academy";
 import { lessonHref, topicHref } from "../../../lib/links";
 import { useWatched } from "../../../lib/progress";
@@ -17,6 +18,7 @@ import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
 import { common } from "../../../lib/common.i18n";
 import { useAcademyLocale } from "../../../components/locale/locale";
 import { messages } from "./stage.i18n";
+import { imgAlt } from "@/lib/img-alt";
 
 // Hero'dagi pleyer qismlari (YouTube kabi: pleyer va pleylist). Tanlangan dars — URL yo'lida (/academy/{mavzu}/{dars}, player-context).
 
@@ -55,8 +57,8 @@ export function HeroScreen() {
         onPlay={() => play(lesson.n, "section")}
         badge={
           lesson.n === mainLesson
-            ? t.mainBadge(lesson.n)
-            : common[locale].lessonN(lesson.n)
+            ? t.mainBadge(lessonNo(lesson.n))
+            : common[locale].lessonN(lessonNo(lesson.n))
         }
         // ijro paytida sahifaning qolgan qismi xiralashadi (topic.css → .acx-cinema)
         onPlayingChange={setCinema}
@@ -146,7 +148,7 @@ export function Playlist({ topic }: { topic: Topic }) {
                     src={yt.thumbMq(l.youtubeId)}
                     width={320}
                     height={180}
-                    alt=""
+                    alt={imgAlt(locale, "lesson", l.title)}
                     loading="lazy"
                     decoding="async"
                   />
@@ -155,7 +157,7 @@ export function Playlist({ topic }: { topic: Topic }) {
                 <span className="acx-pl__text">
                   <span className="acx-pl__title">{l.title}</span>
                   <span className="acx-pl__sub">
-                    {c.lessonN(l.n)}
+                    {c.lessonN(lessonNo(l.n))}
                     {watched.has(l.n) && <em className="is-done">{c.watched}</em>}
                     {!watched.has(l.n) && l.n === mainLesson && <em>{t.main}</em>}
                   </span>

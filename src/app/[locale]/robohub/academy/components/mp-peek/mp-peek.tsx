@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { lessonsByTopic } from "../../lib/academy";
+import { lessonsByTopic, lessonNo } from "../../lib/academy";
 import { fmt, yt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
 import { lessonHref, topicHref } from "../../lib/links";
@@ -112,7 +112,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
               <img loading="lazy" decoding="async" src={`/marketplaces/${mp.logo}.svg`} alt="" width={18} height={18} />
               {mp.name}
               <span>
-                {c.lessonN(lesson.n)} · {fmt(lesson.durationSec)}
+                {c.lessonN(lessonNo(lesson.n))} · {fmt(lesson.durationSec)}
               </span>
             </span>
             <span className="acx-mppop__thumb">

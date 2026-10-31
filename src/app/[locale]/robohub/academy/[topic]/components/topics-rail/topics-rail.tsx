@@ -8,6 +8,7 @@ import { yt } from "../../../lib/youtube";
 import { topicHref } from "../../../lib/links";
 import Swiper from "../../../components/swiper/swiper";
 import Icon, { ICONS } from "../../../components/svg-icon/svg-icon";
+import { imgAlt } from "@/lib/img-alt";
 
 // "Mavzular" — alohida bo'lim (to'liq kenglikdagi och neytral fon, katta sarlavha): barcha mavzular bitta qatorda,
 // swiper'da. Kartochka — mavzu kartochkasi (video emas): ikon va hajmi, nom, qisqa tavsif, pastda darslarning
@@ -55,7 +56,7 @@ export default async function TopicsRail({ topic }: { topic: Topic }) {
                   <span className="acx-tc__foot">
                     <span className="acx-tc__stack" aria-hidden="true">
                       {ls.slice(0, STACK).map((l, k) => (
-                        <img key={l.n} src={yt.thumbMq(l.youtubeId)} width={96} height={54} alt="" loading="lazy" decoding="async" style={{ "--k": k } as CSSProperties} />
+                        <img key={l.n} src={yt.thumbMq(l.youtubeId)} width={96} height={54} alt={imgAlt(locale, "lesson", l.title)} loading="lazy" decoding="async" style={{ "--k": k } as CSSProperties} />
                       ))}
                       {more > 0 && <b>+{more}</b>}
                     </span>

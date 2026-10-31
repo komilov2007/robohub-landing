@@ -3,7 +3,7 @@
 import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
-import { getLessonsSorted, TOTAL_LESSONS, getTopic, type Lesson } from "../../lib/academy";
+import { getLessonsSorted, TOTAL_LESSONS, getTopic, type Lesson, lessonNo } from "../../lib/academy";
 import { useWatched } from "../../lib/progress";
 import { fmt, yt } from "../../lib/youtube";
 import { PlayGlyph } from "../svg-icon/svg-icon";
@@ -51,7 +51,7 @@ function Row({ lessons, reverse, watched, locale }: { lessons: Lesson[]; reverse
                   <span className="acx-lc__dur">{fmt(l.durationSec)}</span>
                 </span>
                 <span className="acx-lc__meta">
-                  {c.lessonN(l.n)} · {getTopic(l.topic, locale)?.name}
+                  {c.lessonN(lessonNo(l.n))} · {getTopic(l.topic, locale)?.name}
                   {watched.has(l.n) && <em>{c.watched}</em>}
                 </span>
                 <span className="acx-lc__title">{l.title}</span>

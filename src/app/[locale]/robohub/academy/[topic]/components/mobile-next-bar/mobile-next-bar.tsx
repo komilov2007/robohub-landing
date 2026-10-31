@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { nextLesson } from "../../../lib/academy";
+import { nextLesson, lessonNo } from "../../../lib/academy";
 import { usePlayer } from "../../../components/player/player-context";
 import { PlayGlyph } from "../../../components/svg-icon/svg-icon";
 import { lessonHref } from "../../../lib/links";
@@ -41,7 +41,7 @@ export default function MobileNextBar() {
   return (
     <div className={`acx-nextbar${hidden ? " is-hidden" : ""}`} data-theme="dark" inert={hidden}>
       <div className="acx-nextbar__text">
-        <span>{t.next(next.n)}</span>
+        <span>{t.next(lessonNo(next.n))}</span>
         <strong>{next.title}</strong>
       </div>
       {sameTopic ? (

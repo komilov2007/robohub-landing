@@ -6,17 +6,18 @@ import { warmYoutube, yt } from "../../lib/youtube";
 import { PlayGlyph } from "../svg-icon/svg-icon";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./video-player.i18n";
+import { imgAlt } from "@/lib/img-alt";
 
 // Muqova: telefonda (≤767px) 480px hqdefault webp — LCP uchun yengil; kattada webp maxres → jpg maxres;
 // xato bo'lsa — hqdefault. key={vid} — dars almashsa holat yangilanadi.
-function Cover({ vid, eager }: { vid: string; eager: boolean }) {
+function Cover({ vid, eager, alt }: { vid: string; eager: boolean; alt: string }) {
   const [failed, setFailed] = useState(false);
   const img = (
     <img
       src={failed ? yt.thumbHq(vid) : yt.thumb(vid)}
       width={1280}
       height={720}
-      alt=""
+      alt={alt}
       loading={eager ? "eager" : "lazy"}
       fetchPriority={eager ? "high" : "auto"}
       decoding="async"
@@ -55,7 +56,8 @@ export default function VideoPlayer({
   // iframe ichidagi video haqiqatan o'ynayaptimi (true) yoki pauza/tugadi (false) — YouTube postMessage orqali
   onPlayingChange?: (playing: boolean) => void;
 }) {
-  const t = messages[useAcademyLocale()];
+  const locale = useAcademyLocale();
+  const t = messages[locale];
   const { youtubeId: vid, title } = lesson;
   const frameRef = useRef<HTMLIFrameElement>(null);
   const cbRef = useRef(onPlayingChange);
@@ -155,7 +157,7 @@ export default function VideoPlayer({
           onPointerEnter={warmYoutube}
           onFocus={warmYoutube}
         >
-          <Cover key={vid} vid={vid} eager={eager} />
+          <Cover key={vid} vid={vid} eager={eager} alt={imgAlt(locale, "lesson", title)} />
           <span className="ac-play" aria-hidden="true">
             <PlayGlyph size={30} />
           </span>

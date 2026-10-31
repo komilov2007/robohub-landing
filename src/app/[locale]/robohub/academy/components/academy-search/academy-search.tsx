@@ -3,7 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { Locale } from "@/i18n/config";
-import { getLessonsSorted, getTopic, normalize, type Lesson } from "../../lib/academy";
+import { getLessonsSorted, getTopic, normalize, type Lesson, lessonNo } from "../../lib/academy";
 import Icon, { ICONS } from "../svg-icon/svg-icon";
 import { lessonHref } from "../../lib/links";
 import { useAcademyLocale } from "../locale/locale";
@@ -202,7 +202,7 @@ export default function AcademySearch() {
                     }}
                     onMouseEnter={() => setActive(i)}
                   >
-                    <span className="ac-search__n">{r.lesson.n}</span>
+                    <span className="ac-search__n">{lessonNo(r.lesson.n)}</span>
                     <span className="ac-search__text">
                       <strong>{r.lesson.title}</strong>
                       <span>{r.topicName}</span>

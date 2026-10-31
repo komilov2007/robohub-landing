@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
-import { START_TOPICS, TOTAL_LESSONS, getLesson, getTopic, lessonsByTopic, nextLesson, type Lesson } from "../../lib/academy";
+import { TOTAL_LESSONS, getLesson, getLessonsSorted, getTopic, nextLesson, type Lesson, lessonNo } from "../../lib/academy";
 import { useLastLesson, useWatched } from "../../lib/progress";
 import { fmt, yt } from "../../lib/youtube";
 import Icon, { ICONS, PlayGlyph } from "../svg-icon/svg-icon";
@@ -31,7 +31,8 @@ export default function ContinueCard() {
   const watched = useWatched();
   const href = (l: Lesson) => lessonHref(locale, l.topic, l.n);
   const lastLesson = last ? getLesson(last.n, locale) : undefined;
-  const lesson = lastLesson ?? lessonsByTopic(START_TOPICS[0], locale)[0];
+  // Birinchi kirishda — butun Akademiyaning 1-darsi (mavzudan qat'i nazar); keyin — oxirgi ko'rilgan dars
+  const lesson = lastLesson ?? getLessonsSorted(locale)[0];
   const next = upNext(lesson.n, 3, locale);
 
   return (
@@ -60,7 +61,7 @@ export default function ContinueCard() {
             </span>
             <span className="acx-cc__info">
               <small>
-                {getTopic(lesson.topic, locale)?.name} · {c.lessonN(lesson.n)}
+                {getTopic(lesson.topic, locale)?.name} · {c.lessonN(lessonNo(lesson.n))}
               </small>
               <strong>{lesson.title}</strong>
             </span>
@@ -74,7 +75,7 @@ export default function ContinueCard() {
                   <li key={l.n} style={{ "--i": i } as CSSProperties}>
                     <Link href={href(l)}>
                       <span className={`acx-cc__n${watched.has(l.n) ? " is-done" : ""}`}>
-                        {watched.has(l.n) ? <Icon d={ICONS.check} size={14} /> : l.n}
+                        {watched.has(l.n) ? <Icon d={ICONS.check} size={14} /> : lessonNo(l.n)}
                       </span>
                       <span className="acx-cc__title">{l.title}</span>
                       <em>{fmt(l.durationSec)}</em>

@@ -1343,6 +1343,13 @@ export function getLessonBySlug(topic: string, slug: string, locale: Locale): Le
   return getLessons(locale).find((l) => l.topic === topic && l.slug === slug);
 }
 
+// Mavzu ichidagi tartib raqami — har mavzu 1 dan: "Buyurtmalar"dagi 9-dars → 1, "Integratsiya"dagi 22-dars → 1.
+// Faqat ko'rsatish uchun; dars identifikatori (n) va manzillar o'zgarmaydi.
+export function lessonNo(n: number): number {
+  const l = LESSONS_UZ.find((x) => x.n === n);
+  return l ? LESSONS_UZ.filter((x) => x.topic === l.topic && x.n <= n).length : n;
+}
+
 export function lessonsByTopic(slug: TopicSlug, locale: Locale): Lesson[] {
   return getLessonsSorted(locale).filter((l) => l.topic === slug);
 }
