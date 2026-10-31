@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
 import { fill } from "../../ai-studio.content";
 import { getC } from "../../content.server";
+import { imgAlt } from "@/lib/img-alt";
 import { getLesson } from "../../../robohub/academy/lib/academy";
 import { lessonUrl } from "../../../robohub/academy/lib/links";
 import { yt } from "../../../robohub/academy/lib/youtube";
@@ -32,7 +33,7 @@ export default async function Academy() {
               <li key={l.n} style={{ "--k": i } as CSSProperties}>
                 <a href={l.href} target="_blank" rel="noopener" className="as-am__item">
                   <span className="as-am__cover">
-                    <img src={l.img} alt="" loading="lazy" width={320} height={180} />
+                    <img src={l.img} alt={imgAlt(locale, "lesson", l.title)} loading="lazy" width={320} height={180} />
                     <span className="as-am__play" aria-hidden="true">
                       <svg viewBox="0 0 24 24">
                         <path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l10.6-6.8a1 1 0 0 0 0-1.72L9.5 4.34A1 1 0 0 0 8 5.2z" />
@@ -77,7 +78,7 @@ export default async function Academy() {
               <li key={l.n} className="as-lesson" style={{ "--k": i } as CSSProperties}>
                 <a href={l.href} target="_blank" rel="noopener" className="as-lesson__link">
                   <span className="as-lesson__cover">
-                    <img src={l.img} alt="" loading="lazy" width={320} height={180} />
+                    <img src={l.img} alt={imgAlt(locale, "lesson", l.title)} loading="lazy" width={320} height={180} />
                     <span className="as-lesson__play" aria-hidden="true">
                       <svg viewBox="0 0 24 24">
                         <path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l10.6-6.8a1 1 0 0 0 0-1.72L9.5 4.34A1 1 0 0 0 8 5.2z" />

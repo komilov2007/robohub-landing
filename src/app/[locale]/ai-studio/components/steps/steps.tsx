@@ -4,13 +4,14 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
 import { plural, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { useC } from "../../content-context";
+import { srcAlt } from "@/lib/img-alt";
 
 const STEP_MS = 1800;   // qadamlar orasidagi vaqt (tez almashadi)
 const FORMATS = ["JPG", "PNG", "WEBP", "HEIC"];
 
 // 1 — yuklash oynasi: fayllar tushadi, progress to'ladi, Ctrl+V tugmasi bosiladi
 function UploadMock() {
-  const { VARIANTS, STEPS_SECTION } = useC();
+  const { VARIANTS, STEPS_SECTION, locale } = useC();
   return (
     <div className="as-mk as-mk--upload">
       <div className="as-drop">
@@ -23,9 +24,9 @@ function UploadMock() {
         </span>
       </div>
       <div className="as-files">
-        {[VARIANTS[0].img, "/ai/base_cosmetics.webp"].map((src, i) => (
+        {[VARIANTS[0].img, "/ai/krem-ishodnoe-foto.webp"].map((src, i) => (
           <span className="as-file" key={src} style={{ "--k": i } as CSSProperties}>
-            <img src={src} alt="" />
+            <img src={src} alt={srcAlt(locale, src)} />
             <i className="as-file__bar" />
           </span>
         ))}
@@ -92,7 +93,7 @@ function PromptMock({ active }: { active: boolean }) {
 
 // 4 — generatsiya: tugma → halqa to'ladi → natijalar paydo bo'ladi
 function GenerateMock() {
-  const { VARIANTS, STEPS_SECTION } = useC();
+  const { VARIANTS, STEPS_SECTION, locale } = useC();
   return (
     <div className="as-mk as-mk--gen">
       <span className="as-gen__btn">
@@ -102,7 +103,7 @@ function GenerateMock() {
       </span>
       <div className="as-gen__grid">
         {VARIANTS.map((v, i) => (
-          <img key={v.id} src={v.img} alt="" style={{ "--k": i } as CSSProperties} />
+          <img key={v.id} src={v.img} alt={srcAlt(locale, v.img)} style={{ "--k": i } as CSSProperties} />
         ))}
         <span className="as-gen__dl" style={{ "--k": 3 } as CSSProperties}>
           <Icon name="arrow" />

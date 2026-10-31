@@ -50,7 +50,7 @@ export default function Header({ nav, ui, locale }: { nav: Content["NAV"]; ui: C
   return (
     <header className={`as-header${stuck ? " is-stuck" : ""}${open ? " is-open" : ""}`}>
       <div className="as-wrap as-header__inner">
-        <a href="#top" className="as-header__logo" aria-label={ui.home}>
+        <a href="#top" className="as-header__logo" aria-label={`Robohub ${ui.tag} — ${ui.home}`}>
           <Logo tag={ui.tag} />
         </a>
         <nav className="as-nav" aria-label={ui.mainMenu}>

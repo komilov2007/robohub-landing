@@ -13,7 +13,7 @@ type Product = { img: string; name: string; price: string; cat: string };
 const PRODUCTS: Product[] = [
   { img: "/categories/shoes.webp", name: "Krossovka White Glitter", price: "690 000", cat: "Poyabzal" },
   { img: "/categories/accessories.webp", name: "Soat U-Boat Classic", price: "1 250 000", cat: "Aksessuarlar" },
-  { img: "/ai/cosmetics_composition.webp", name: "Namlovchi krem, 50 ml", price: "149 000", cat: "Go‘zallik" },
+  { img: "/ai/krem-infografika-sostav.webp", name: "Namlovchi krem, 50 ml", price: "149 000", cat: "Go‘zallik" },
   { img: "/categories/electronics.webp", name: "Quloqchin Koss Porta", price: "420 000", cat: "Elektronika" },
   { img: "/categories/home.webp", name: "Kreslo Retro", price: "2 900 000", cat: "Uy uchun" },
 ];

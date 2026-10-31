@@ -9,6 +9,7 @@ import { lessonHref, topicHref } from "../../lib/links";
 import { common } from "../../lib/common.i18n";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./mp-peek.i18n";
+import { logoAlt } from "@/lib/img-alt";
 
 // Bosh sahifa hero kapsulasi: "Robohub Academy · marketpleys sotuvchilari uchun" va ustma-ust 4 marketpleys logosi.
 // Logolar ustiga kelinsa — ular yoyiladi; bittasiga kelinsa (yoki klaviatura fokusi) — tagida kichik ko'rinish oynasi:
@@ -90,7 +91,7 @@ export default function MpPeek({ style }: { style?: CSSProperties }) {
               onPointerEnter={(e) => e.pointerType === "mouse" && show(i)}
               onFocus={() => show(i)}
             >
-              <img loading="lazy" decoding="async" src={`/marketplaces/${m.logo}.svg`} alt="" width={24} height={24} />
+              <img loading="lazy" decoding="async" src={`/marketplaces/${m.logo}.svg`} alt={logoAlt(locale, `/marketplaces/${m.logo}.svg`)} width={24} height={24} />
             </Link>
           ))}
         </span>

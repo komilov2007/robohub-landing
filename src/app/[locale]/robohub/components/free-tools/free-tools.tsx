@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
+import { logoAlt } from "@/lib/img-alt";
 import { localeHref, localeUrl } from "@/i18n/config";
 import { aiImage } from "@/lib/ai-images";
 import FreeToolsScript from "./free-tools-script";
@@ -57,19 +58,19 @@ export default async function FreeTools() {
                 </div>{" "}
                 <p className="calc__mps" aria-hidden="true">
                   <span className="is-on">
-                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/uzum.svg" alt={logoAlt(locale, "/marketplaces/uzum.svg")} width="16" height="16" />
                     Uzum Market
                   </span>{" "}
                   <span>
-                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/yandex.svg" alt={logoAlt(locale, "/marketplaces/yandex.svg")} width="16" height="16" />
                     Yandex Market
                   </span>{" "}
                   <span>
-                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/wildberries.svg" alt={logoAlt(locale, "/marketplaces/wildberries.svg")} width="16" height="16" />
                     Wildberries
                   </span>{" "}
                   <span>
-                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="16" height="16" />
+                    <img loading="lazy" decoding="async" className="mp-ico" src="/marketplaces/ozon.svg" alt={logoAlt(locale, "/marketplaces/ozon.svg")} width="16" height="16" />
                     Ozon
                   </span>
                 </p>{" "}
@@ -301,7 +302,7 @@ export default async function FreeTools() {
                   </ol>{" "}
                   <div className="ai__stage">
                     <figure className="ai__src">
-                      <img src="/ai/old-iphone.jpg" alt={t.ai.srcAlt} width="360" height="480" loading="lazy" />{" "}
+                      <img src="/ai/iphone-ishodnoe-foto.jpg" alt={t.ai.srcAlt} width="360" height="480" loading="lazy" />{" "}
                       <figcaption>{t.ai.yourPhoto}</figcaption>
                     </figure>{" "}
                     <span className="ai__arrow" aria-hidden="true">{" "}
@@ -314,10 +315,10 @@ export default async function FreeTools() {
                       <div className="ai__shot">
                         <span className="ai__ring" aria-hidden="true" />{" "}
                         <div className="cmp" id="cmp">
-                          <img src="/ai/old-iphone.jpg" alt="" width="360" height="480" loading="lazy" />{" "}
+                          <img src="/ai/iphone-ishodnoe-foto.jpg" alt={t.ai.srcAlt} width="360" height="480" loading="lazy" />{" "}
                           <span className="cmp__tag cmp__tag--l">{t.ai.yourPhoto}</span>{" "}
                           <div className="cmp__after">
-                            <img id="cmp-result" src="/ai/iphone1.webp" alt={t.ai.resultAlt} width="360" height="480" loading="lazy" />{" "}
+                            <img id="cmp-result" src="/ai/iphone-foto-na-stole-ai.webp" alt={t.ai.resultAlt} width="360" height="480" loading="lazy" />{" "}
                             <span className="cmp__tag cmp__tag--r">{" "}
                               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z" />
@@ -350,20 +351,20 @@ export default async function FreeTools() {
                   </div>{" "}
                   <p className="ai__label">{t.ai.chooseStyle}</p>{" "}
                   <div className="ai__styles" role="group" aria-label={t.ai.chooseStyle}>
-                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/iphone1.webp">
-                      <img src="/ai/iphone1.webp" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style is-on" type="button" aria-pressed="true" data-img="/ai/iphone-foto-na-stole-ai.webp" aria-label={t.ai.styles[0]}>
+                      <img src="/ai/iphone-foto-na-stole-ai.webp" alt={`${t.ai.resultAlt} — ${t.ai.styles[0]}`} width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[0]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone3.webp">
-                      <img src="/ai/iphone3.webp" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone-lifestyle-foto-ai.webp" aria-label={t.ai.styles[1]}>
+                      <img src="/ai/iphone-lifestyle-foto-ai.webp" alt={`${t.ai.resultAlt} — ${t.ai.styles[1]}`} width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[1]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone4.webp">
-                      <img src="/ai/iphone4.webp" alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img="/ai/iphone-foto-v-kafe-ai.webp" aria-label={t.ai.styles[2]}>
+                      <img src="/ai/iphone-foto-v-kafe-ai.webp" alt={`${t.ai.resultAlt} — ${t.ai.styles[2]}`} width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[2]}</span>
                     </button>{" "}
-                    <button className="ai__style" type="button" aria-pressed="false" data-img={phoneInfographic}>
-                      <img src={phoneInfographic} alt="" width="360" height="480" loading="lazy" />
+                    <button className="ai__style" type="button" aria-pressed="false" data-img={phoneInfographic} aria-label={t.ai.styles[3]}>
+                      <img src={phoneInfographic} alt={`${t.ai.resultAlt} — ${t.ai.styles[3]}`} width="360" height="480" loading="lazy" />
                       <span>{t.ai.styles[3]}</span>
                     </button>
                   </div>

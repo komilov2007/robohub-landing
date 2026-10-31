@@ -3,6 +3,8 @@
 import { useState, type CSSProperties } from "react";
 import { CALCULATOR_MARKETPLACES, MARKETPLACE_META } from "../calculator/constants";
 import type { Content } from "../../calculator.content";
+import { imgAlt } from "@/lib/img-alt";
+import type { Locale } from "@/i18n/config";
 
 /** Namuna: bitta mahsulot to'rt joyda turlicha foyda qoldiradi — raqamsiz, faqat farqni ko'rsatish uchun. */
 const SAMPLE = [88, 66, 49, 31];
@@ -14,7 +16,9 @@ export default function Race({
   compare,
   race,
   who,
+  locale,
 }: {
+  locale: Locale;
   compare: Content["COMPARE"];
   race: Content["S"]["race"];
   who: Content["WHO"];
@@ -56,7 +60,7 @@ export default function Race({
               >
                 <span className="cx-lane__trail" aria-hidden="true" />
                 <span className="cx-lane__car">
-                  <img loading="lazy" decoding="async" src={MARKETPLACE_META[mp].icon} alt="" width={40} height={40} />
+                  <img loading="lazy" decoding="async" src={MARKETPLACE_META[mp].icon} alt={imgAlt(locale, "marketplace", MARKETPLACE_META[mp].label)} width={40} height={40} />
                   <span className="cx-lane__rank">{i + 1}</span>
                 </span>
                 <span className={SAMPLE[i] > 60 ? "cx-lane__name cx-lane__name--in" : "cx-lane__name"}>

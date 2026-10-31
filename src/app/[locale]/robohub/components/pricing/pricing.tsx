@@ -1,6 +1,7 @@
 import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt, logoAlt } from "@/lib/img-alt";
 import PricingScript from "./pricing-script";
 import { messages } from "./pricing.i18n";
 
@@ -18,6 +19,7 @@ const SOON: { name: string; logo?: string; wide?: boolean }[] = [
 
 export default async function Pricing() {
   const t = await getMessages(messages);
+  const locale = await getLocale();
   return (
     <>
       <section
@@ -137,7 +139,7 @@ export default async function Pricing() {
                     <img loading="lazy" decoding="async"
                       key={m}
                       src={`/marketplaces/${m}.svg`}
-                      alt=""
+                      alt={logoAlt(locale, `/marketplaces/${m}.svg`)}
                       width="38"
                       height="38"
                     />
@@ -151,10 +153,10 @@ export default async function Pricing() {
                       className={m.wide ? "is-wide" : undefined}
                     >
                       {m.wide ? (
-                        <img loading="lazy" decoding="async" src={m.logo} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} {...imgSize(m.logo ?? "")} />
+                        <img loading="lazy" decoding="async" src={m.logo} alt={imgAlt(locale, "soon", m.name)} title={m.name} {...imgSize(m.logo ?? "")} />
                       ) : (
                         m.logo && (
-                          <img loading="lazy" decoding="async" src={m.logo} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} width="16" height="16" />
+                          <img loading="lazy" decoding="async" src={m.logo} alt={imgAlt(locale, "soon", m.name)} title={m.name} width="16" height="16" />
                         )
                       )}
                       {!m.wide && m.name}

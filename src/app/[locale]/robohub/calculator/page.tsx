@@ -69,7 +69,7 @@ export default async function Page() {
         <Why why={c.WHY} receipt={c.HERO.receipt} />
         <CalculatorSection calc={c.CALC} dict={c.dict} locale={locale} />
         <Formula formula={c.S.formula} features={c.FEATURES} />
-        <Race compare={c.COMPARE} race={c.S.race} who={c.WHO} />
+        <Race compare={c.COMPARE} race={c.S.race} who={c.WHO} locale={locale} />
         <Journey steps={c.STEPS} demo={c.S.journey} cta={c.HERO.cta} />
         <Faq faq={c.FAQ} chat={c.S.chat} />
         <AcademyLinks locale={locale} />

@@ -119,7 +119,7 @@ const NEW: Record<Kind, ReactNode> = {
         <span className="rs-n-btn">+ Mahsulot qo‘shish</span>
       </div>
       {[
-        ["/ai/cosmetics_composition.webp", "Namlovchi krem, 50 ml", "149,000", 24],
+        ["/ai/krem-infografika-sostav.webp", "Namlovchi krem, 50 ml", "149,000", 24],
         ["/categories/accessories.webp", "Soat U-Boat Classic", "1,250,000", 12],
         ["/categories/shoes.webp", "Krossovka White Glitter", "690,000", 8],
       ].map(([im, n, p, q], i) => (
@@ -184,7 +184,7 @@ const NEW: Record<Kind, ReactNode> = {
       <div className="rs-n-top">
         <small>Top mahsulotlar</small>
         {[
-          ["/ai/cosmetics_composition.webp", "Namlovchi krem", "312 ta"],
+          ["/ai/krem-infografika-sostav.webp", "Namlovchi krem", "312 ta"],
           ["/categories/shoes.webp", "Krossovka", "198 ta"],
         ].map(([im, n, c], i) => (
           <span key={im} style={d(i + 3)}>

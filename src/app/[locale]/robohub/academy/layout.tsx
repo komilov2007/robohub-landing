@@ -19,43 +19,43 @@ export const messages = defineMessages({
   uz: {
     title: "Marketpleys sotuvchilariga video darslar | Robohub Academy",
     description:
-      "Robohub’ni qisqa darslarda o‘rganing: analitika, buyurtmalar, mahsulotlar, ombor, marketing va integratsiya. Har mavzuda matn, sxema va video.",
+      "Uzum, Wildberries va Ozon sotuvchilari uchun bepul video darslar: analitika, buyurtmalar, ombor, marketing va integratsiya. 30 dars — matn, sxema va video.",
     skip: "Asosiy kontentga o‘tish",
   },
   ru: {
     title: "Видеоуроки для продавцов маркетплейсов | Robohub Academy",
     description:
-      "Изучите Robohub в коротких уроках: аналитика, заказы, товары, склад, маркетинг, интеграции, коммуникации и управление. В каждой теме — текст, схема и видео.",
+      "Бесплатные видеоуроки для продавцов Uzum, Wildberries и Ozon: аналитика, заказы, склад, маркетинг и интеграции. 30 уроков — текст, схема и видео.",
     skip: "Перейти к основному содержанию",
   },
   en: {
     title: "Video lessons for marketplace sellers | Robohub Academy",
     description:
-      "Learn Robohub in short lessons: analytics, orders, products, warehouse, marketing and integrations. Every topic has text, diagrams and video.",
+      "Free video lessons for Uzum, Wildberries and Ozon sellers: analytics, orders, warehouse, marketing and integrations. 30 lessons with text, diagrams and video.",
     skip: "Skip to main content",
   },
   kk: {
     title: "Маркетплейс сатушыларына бейнесабақтар | Robohub Academy",
     description:
-      "Robohub-ты қысқа сабақтармен меңгеріңіз: аналитика, тапсырыстар, тауарлар, қойма, маркетинг және интеграциялар. Әр тақырыпта мәтін, сызба және бейне бар.",
+      "Uzum, Wildberries және Ozon сатушыларына тегін бейнесабақтар: аналитика, тапсырыстар, қойма, маркетинг, интеграциялар. 30 сабақ — мәтін, сызба, бейне.",
     skip: "Негізгі мазмұнға өту",
   },
   ky: {
     title: "Маркетплейс сатуучулары үчүн видеосабактар | Robohub Academy",
     description:
-      "Robohub-ту кыска сабактар аркылуу өздөштүрүңүз: аналитика, буйрутмалар, товарлар, кампа, маркетинг жана интеграциялар. Ар темада текст, схема жана видео бар.",
+      "Uzum, Wildberries жана Ozon сатуучулары үчүн акысыз видеосабактар: аналитика, буйрутмалар, кампа, маркетинг. 30 сабак — текст, схема жана видео.",
     skip: "Негизги мазмунга өтүү",
   },
   kaa: {
     title: "Marketpleys satıwshılarına video sabaqlar | Robohub Academy",
     description:
-      "Robohub’tı qısqa sabaqlarda úyreniń: analitika, buyırtpalar, ónimler, sklad, marketing hám integraciyalar. Hár bir temada tekst, sxema hám video bar.",
+      "Uzum, Wildberries hám Ozon satıwshıları ushın biypul video sabaqlar: analitika, buyırtpalar, sklad, marketing. 30 sabaq — tekst, sxema hám video.",
     skip: "Tiykarǵı mazmunǵa ótiw",
   },
   tg: {
     title: "Видеодарс барои фурӯшандагони маркетплейс | Robohub Academy",
     description:
-      "Robohub-ро дар дарсҳои кӯтоҳ омӯзед: аналитика, фармоишҳо, маҳсулот, анбор, маркетинг ва интегратсияҳо. Дар ҳар мавзӯъ матн, нақша ва видео ҳаст.",
+      "Дарсҳои видеоии ройгон барои фурӯшандагони Uzum, Wildberries ва Ozon: аналитика, фармоишҳо, анбор, маркетинг. 30 дарс — матн, нақша ва видео.",
     skip: "Гузариш ба мундариҷаи асосӣ",
   },
 });

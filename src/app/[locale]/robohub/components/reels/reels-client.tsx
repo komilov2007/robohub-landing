@@ -349,7 +349,7 @@ export default function ReelsClient({ t, reels }: { t: Texts; reels: Reel[] }) {
             </svg>
           </span>
           <span className="reels__cap">
-            <b>{t.title}</b>
+            <b>{t.title}</b>{" "}
             <small>{reel.name ?? t.client}</small>
           </span>
         </button>

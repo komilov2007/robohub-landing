@@ -1,6 +1,7 @@
 import { imgSize } from "@/lib/img-size";
 import { Fragment, type CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt, logoAlt } from "@/lib/img-alt";
 import { newTab, sellerUrl } from "@/lib/sites";
 import { messages } from "./hero.i18n";
 
@@ -42,7 +43,8 @@ const SYSTEMS: { name: string; logo: string }[] = [
 export default async function Hero() {
   const t = await getMessages(messages);
   // "Hozir boshlash" — sotuvchi kabinetida ro'yxatdan o'tish, joriy tilda (yangi oynada)
-  const register = sellerUrl(await getLocale());
+  const locale = await getLocale();
+  const register = sellerUrl(locale);
   return (
     <>
       <section className="hero" id="hero" data-theme="light" aria-labelledby="hero-title">
@@ -76,10 +78,10 @@ export default async function Hero() {
             <ul className="hero__facts hero__rise">
               <li>
                 <span className="hero__mps" aria-hidden="true">
-                  <img className="mp-ico" src="/marketplaces/uzum.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "760ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/wildberries.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "820ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/ozon.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "880ms" } as CSSProperties} />
-                  <img className="mp-ico" src="/marketplaces/yandex.svg" alt="" width="22" height="22" fetchPriority="low" style={{ "--d": "940ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/uzum.svg" alt={logoAlt(locale, "/marketplaces/uzum.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "760ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/wildberries.svg" alt={logoAlt(locale, "/marketplaces/wildberries.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "820ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/ozon.svg" alt={logoAlt(locale, "/marketplaces/ozon.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "880ms" } as CSSProperties} />
+                  <img className="mp-ico" src="/marketplaces/yandex.svg" alt={logoAlt(locale, "/marketplaces/yandex.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "940ms" } as CSSProperties} />
                 </span>
                 {t.facts.mps}
               </li>
@@ -107,7 +109,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={m} style={{ "--a": `${-90 + i * (360 / MARKETPLACES.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className={`orbit__tile orbit__tile--mp${m.startsWith("/marketplaces/") ? " orbit__tile--shadow" : ""}`}>
-                        <img src={m} alt={`${MP_NAME[m]} + Robohub`} title={`${MP_NAME[m]} + Robohub`} {...imgSize(m)} fetchPriority="low" />
+                        <img src={m} alt={imgAlt(locale, "marketplace", MP_NAME[m])} title={MP_NAME[m]} {...imgSize(m)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>
@@ -118,7 +120,7 @@ export default async function Hero() {
                   <div className="orbit__item" key={s.name} style={{ "--a": `${-70 + i * (360 / SYSTEMS.length)}deg` } as CSSProperties}>
                     <span className="orbit__up">
                       <span className="orbit__tile">
-                        <img src={s.logo} alt={`${s.name} + Robohub`} title={`${s.name} + Robohub`} {...imgSize(s.logo)} fetchPriority="low" />
+                        <img src={s.logo} alt={imgAlt(locale, s.name === "Retail CRM" ? "crm" : "stock", s.name)} title={s.name} {...imgSize(s.logo)} fetchPriority="low" />
                       </span>
                     </span>
                   </div>

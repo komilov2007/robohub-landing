@@ -1,14 +1,15 @@
 import type { CSSProperties } from "react";
 import IntegVideo from "./integ-video";
 import IntegModels from "./integ-models";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt } from "@/lib/img-alt";
 import { messages } from "./integrations.i18n";
 import { CRM, STOCK, type System } from "./integrations.data";
 
-const Chip = ({ name, logo, plate }: System) => (
+const Chip = ({ name, logo, plate, alt }: System & { alt: string }) => (
   <li className="integ-chip">
     {logo ? (
-      <img src={logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
+      <img src={logo} alt={alt} title={name} width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
     ) : (
       <i aria-hidden="true">{name[0]}</i>
     )}
@@ -18,6 +19,7 @@ const Chip = ({ name, logo, plate }: System) => (
 
 export default async function Integrations() {
   const t = await getMessages(messages);
+  const locale = await getLocale();
   return (
     <section className="integ" id="integrations" data-theme="brand" aria-labelledby="integ-title">
       <div className="container">
@@ -35,13 +37,13 @@ export default async function Integrations() {
               <div>
                 <h3 className="integ__label">{t.stock}</h3>
                 <ul className="integ__chips">
-                  {STOCK.map((s) => <Chip key={s.name} {...s} />)}
+                  {STOCK.map((s) => <Chip key={s.name} {...s} alt={imgAlt(locale, "stock", s.name)} />)}
                 </ul>
               </div>
               <div>
                 <h3 className="integ__label">{t.crm}</h3>
                 <ul className="integ__chips">
-                  {CRM.map((s) => <Chip key={s.name} {...s} />)}
+                  {CRM.map((s) => <Chip key={s.name} {...s} alt={imgAlt(locale, "crm", s.name)} />)}
                 </ul>
               </div>
             </div>

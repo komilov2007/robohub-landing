@@ -8,6 +8,9 @@ export function init() {
   var video = sec && sec.querySelector(".pain__media video");
   if (!video) return function () {};
 
+  // Telefonda portret video o'ynaydi — poster ham portret (HTML'dagisi keng video kadri)
+  if (video.dataset.posterMobile && matchMedia("(max-width: 600px)").matches) video.poster = video.dataset.posterMobile;
+
   // Vaqt jadvali — videoniki bilan bir xil (30 fps, takrorlanadi; video foni sahifa foni bilan bir rang).
   // Fon #06302E ↔ #B8FFB0, ikkala o'tish 0.5 s ease-in-out; oxirgi kadr = birinchi kadr.
   //   Kompyuter (robohub-13s-*.mp4, 13 s):     0–8 "Robohubsiz", 8–8.5 o'tish, 8.5–12.5 "Robohub bilan", 12.5–13 qaytish

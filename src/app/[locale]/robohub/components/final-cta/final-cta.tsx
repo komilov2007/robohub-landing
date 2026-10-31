@@ -1,4 +1,5 @@
 import { getLocale, getMessages } from "@/i18n/server";
+import { logoAlt } from "@/lib/img-alt";
 import { localeHref, localeUrl } from "@/i18n/config";
 import { newTab, POLICY_URL, sellerUrl } from "@/lib/sites";
 import { messages } from "./final-cta.i18n";
@@ -48,10 +49,10 @@ export default async function FinalCta() {
               </svg>{" "}
               <p className="foot__about">{t.about}</p>{" "}
               <p className="foot__mps" aria-hidden="true">
-                <img loading="lazy" decoding="async" src="/marketplaces/uzum.svg" alt="" width="30" height="30" />
-                <img loading="lazy" decoding="async" src="/marketplaces/yandex.svg" alt="" width="30" height="30" />
-                <img loading="lazy" decoding="async" src="/marketplaces/wildberries.svg" alt="" width="30" height="30" />
-                <img loading="lazy" decoding="async" src="/marketplaces/ozon.svg" alt="" width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/uzum.svg" alt={logoAlt(locale, "/marketplaces/uzum.svg")} width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/yandex.svg" alt={logoAlt(locale, "/marketplaces/yandex.svg")} width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/wildberries.svg" alt={logoAlt(locale, "/marketplaces/wildberries.svg")} width="30" height="30" />
+                <img loading="lazy" decoding="async" src="/marketplaces/ozon.svg" alt={logoAlt(locale, "/marketplaces/ozon.svg")} width="30" height="30" />
               </p>{" "}
               <FooterTrust />
             </div>{" "}

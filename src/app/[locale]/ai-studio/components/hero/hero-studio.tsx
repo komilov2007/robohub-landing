@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
 import { fill } from "../../ai-studio.content";
 import { useC } from "../../content-context";
+import { srcAlt } from "@/lib/img-alt";
 
 const AUTO_MS = 5200; // uslublar avtomatik almashish oralig'i (tab ostidagi chiziq shu vaqtda to'ladi)
 const STEP_COUNT = 4; // AI holati bosqichlari (matnlari — T.studio.steps)
@@ -16,7 +17,7 @@ const STEP_COUNT = 4; // AI holati bosqichlari (matnlari — T.studio.steps)
 //  • sichqoncha bilan yengil parallaks: ikki karta qarama-qarshi tomonga siljiydi.
 // Foydalanuvchi uslub tanlasa — avtomatik almashish to'xtaydi.
 export default function HeroStudio() {
-  const { STUDIO, T } = useC();
+  const { STUDIO, T, locale } = useC();
   const VARIANTS = STUDIO.styles;
   const S = T.studio;
   const [active, setActive] = useState(0);
@@ -72,7 +73,8 @@ export default function HeroStudio() {
                 key={x.id}
                 className={"as-after__img" + (i === active ? " is-active" : "")}
                 src={x.img}
-                alt={i === active ? fill(S.afterAlt, { name: x.name }) : ""}
+                // har bir natija rasmi tavsifli (Google Rasmlar); ko'rinmayotganlari aria-hidden — ekran o'quvchi faqat faolini o'qiydi
+                alt={srcAlt(locale, x.img) || fill(S.afterAlt, { name: x.name })}
                 aria-hidden={i !== active}
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : undefined}
@@ -115,7 +117,7 @@ export default function HeroStudio() {
             onClick={() => select(i, true)}
             title={x.name}
           >
-            <img src={x.img} alt="" width={28} height={37} loading="lazy" />
+            <img src={x.img} alt={srcAlt(locale, x.img)} width={28} height={37} loading="lazy" />
             <span className="as-vars__name">{x.name}</span>
             {auto && i === active && (
               <span

@@ -6,7 +6,9 @@
 export function init(msg) {
 return (function () {
   var MP = { u: "/marketplaces/uzum.svg", w: "/marketplaces/wildberries.svg", o: "/marketplaces/ozon.svg", y: "/marketplaces/yandex.svg" };
-  var mp = function (k) { return '<img class="mp" src="' + MP[k] + '" alt="">'; };
+  var MP_NAME = { u: "Uzum Market", w: "Wildberries", o: "Ozon", y: "Yandex Market" };
+  // alt — marketpleys nomi (karta ichidagi kichik logotip; brend nomi tarjima qilinmaydi)
+  var mp = function (k) { return '<img class="mp" src="' + MP[k] + '" alt="' + MP_NAME[k] + '">'; };
   var SPARK = '<svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6a3 3 0 0 0 1.9 1.9L21.4 11.4a.6.6 0 0 1 0 1.2l-5.6 1.9a3 3 0 0 0-1.9 1.9L12 22l-1.9-5.6a3 3 0 0 0-1.9-1.9L2.6 12.6a.6.6 0 0 1 0-1.2l5.6-1.9a3 3 0 0 0 1.9-1.9L12 2z"/></svg>';
   var row = function (inner, cls) { return '<div class="row' + (cls ? " " + cls : "") + '">' + inner + "</div>"; };
   var bar = function (w, warn) { return '<div class="bar"><i style="--w:' + w + "%" + (warn ? ";--c:#FACF00" : "") + '"></i></div>'; };
@@ -145,6 +147,9 @@ return (function () {
   function setActive(it, on) {
     if (on === it.act) return;
     it.act = on; it.card.classList.toggle("is-on", on); it.text.classList.toggle("is-on", on);
+    // markazdan chetdagi (xira) matn — faqat bezak: Tab va ekran o'quvchi uni o'tkazib yuboradi, kontrast tekshiruvi ham.
+    // Matn HTML'da qoladi — qidiruv tizimlari va AI-botlar o'qiydi.
+    it.text.inert = !on;
     if (on && !reduce) count(it.card);
     var v = it.card.querySelector("video");
     if (v) { if (on && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause(); }

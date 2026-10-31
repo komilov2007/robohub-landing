@@ -86,7 +86,8 @@ export default function Faq() {
                     id={`as-qb-${i}`}
                     onClick={() => setOpen(on ? -1 : i)}
                   >
-                    <span className="as-q__n">0{i + 1}</span>
+                    {/* raqam CSS orqali (data-n) — H3 matniga kirmaydi: Google savolni toza o'qiydi (TZ 2.4) */}
+                    <span className="as-q__n" data-n={`0${i + 1}`} aria-hidden="true" />
                     <span className="as-q__text">{it.q}</span>
                     <span className="as-q__plus" aria-hidden="true" />
                   </button>

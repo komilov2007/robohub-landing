@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 import "./hub-orbit.css";
+import { getLocale } from "@/i18n/server";
+import { logoAlt } from "@/lib/img-alt";
 
 // Yakuniy kartalardagi animatsiya (Robohub, Academy, AI Studio, Kalkulyator — bir xil):
 // markazda Robohub belgisi, atrofida bitta halqada marketpleyslar. Har 7 soniyada markazdan har bir
@@ -18,7 +20,9 @@ const MARKETPLACES = [
 const PLAIN = ["/robosell/icons/alif.svg", "/robosell/icons/click-outline.svg", "/robosell/icons/zoomrad.svg"];
 const START = -90; // birinchi logotip — tepada
 
-export default function HubOrbit({ className }: { className?: string }) {
+// Server komponent: alt joriy tilda (logotiplar Google Rasmlar uchun tavsif bilan)
+export default async function HubOrbit({ className }: { className?: string }) {
+  const locale = await getLocale();
   return (
     <div className={className ? `hub-orbit ${className}` : "hub-orbit"} aria-hidden="true">
       <span className="hub-orbit__ring">
@@ -27,7 +31,7 @@ export default function HubOrbit({ className }: { className?: string }) {
           return [
             // markazdan shu logotipgacha to'g'ri chiziq
             <i key={`l-${src}`} className="hub-orbit__spoke" style={style} />,
-            <img key={src} src={src} alt="" width="54" height="54" loading="lazy" className={PLAIN.includes(src) ? "is-plain" : undefined} style={style} />,
+            <img key={src} src={src} alt={logoAlt(locale, src)} width="54" height="54" loading="lazy" className={PLAIN.includes(src) ? "is-plain" : undefined} style={style} />,
           ];
         })}
       </span>

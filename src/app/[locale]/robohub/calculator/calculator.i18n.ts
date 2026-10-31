@@ -5,7 +5,7 @@ export const messages = defineMessages({
   uz: {
     metaTitle: "Marketpleys kalkulyatori: Uzum, Wildberries, Ozon | Robohub",
     metaDescription:
-      "Uzum, Yandex Market, Wildberries va Ozon'da sof foydani so'mda hisoblang: komissiya, yetkazish, soliq va tannarx. Bepul, ro'yxatdansiz.",
+      "Uzum, Yandex Market, Wildberries va Ozon'da sof foydani so'mda hisoblang: komissiya, yetkazish, soliq va tannarx. Bepul va ro'yxatdan o'tmasdan.",
     keywords: "marketpleys kalkulyatori, Uzum komissiya, Wildberries foyda, Ozon hisob, Yandex Market tarif",
     appName: "Robohub marketpleys kalkulyatori",
   },

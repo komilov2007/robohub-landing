@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getLocale, getMessages } from "@/i18n/server";
+import { logoAlt } from "@/lib/img-alt";
 import { localeUrl } from "@/i18n/config";
 import { ACADEMY_PATH, newTab, sellerUrl } from "@/lib/sites";
 import HowItWorksScript from "./how-it-works-script";
@@ -72,19 +73,19 @@ export default async function HowItWorks() {
                 </span>{" "}
                 <span className="mini__mps">{" "}
                   <span style={{ "--i": "0" } as CSSProperties}>
-                    <img loading="lazy" decoding="async" src="/marketplaces/uzum.svg" alt="" width="28" height="28" />
+                    <img loading="lazy" decoding="async" src="/marketplaces/uzum.svg" alt={logoAlt(locale, "/marketplaces/uzum.svg")} width="28" height="28" />
                     <b>✓</b>
                   </span>{" "}
                   <span style={{ "--i": "1" } as CSSProperties}>
-                    <img loading="lazy" decoding="async" src="/marketplaces/wildberries.svg" alt="" width="28" height="28" />
+                    <img loading="lazy" decoding="async" src="/marketplaces/wildberries.svg" alt={logoAlt(locale, "/marketplaces/wildberries.svg")} width="28" height="28" />
                     <b>✓</b>
                   </span>{" "}
                   <span style={{ "--i": "2" } as CSSProperties}>
-                    <img loading="lazy" decoding="async" src="/marketplaces/ozon.svg" alt="" width="28" height="28" />
+                    <img loading="lazy" decoding="async" src="/marketplaces/ozon.svg" alt={logoAlt(locale, "/marketplaces/ozon.svg")} width="28" height="28" />
                     <b>✓</b>
                   </span>{" "}
                   <span style={{ "--i": "3" } as CSSProperties}>
-                    <img loading="lazy" decoding="async" src="/marketplaces/yandex.svg" alt="" width="28" height="28" />
+                    <img loading="lazy" decoding="async" src="/marketplaces/yandex.svg" alt={logoAlt(locale, "/marketplaces/yandex.svg")} width="28" height="28" />
                     <b>✓</b>
                   </span>{" "}
                 </span>

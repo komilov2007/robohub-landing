@@ -126,7 +126,7 @@ export default async function FooterTrust() {
           <li key={c.src}>
             <a className="ftrust__cert" href={c.src} target="_blank" rel="noopener" data-cert={c.src} data-cert-alt={t.alts[i]} title={t.alts[i]}>
               <span className="ftrust__paper">
-                <img src={c.src} alt="" width={c.w} height={c.h} loading="lazy" decoding="async" />
+                <img src={c.src} alt={t.alts[i]} width={c.w} height={c.h} loading="lazy" decoding="async" />
               </span>
               <span className="ftrust__name">{t.certs[i]}</span>
             </a>

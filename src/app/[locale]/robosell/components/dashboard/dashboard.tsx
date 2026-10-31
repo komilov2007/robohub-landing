@@ -31,7 +31,7 @@ const PAYS = [
   { icon: "", w: 0, h: 0, share: 12, color: "#E3EAE7", label: "Naqd" },
 ];
 const TOP = [
-  { img: "/ai/cosmetics_composition.webp", name: "Namlovchi krem", n: 312, w: 92 },
+  { img: "/ai/krem-infografika-sostav.webp", name: "Namlovchi krem", n: 312, w: 92 },
   { img: "/categories/shoes.webp", name: "Krossovka", n: 198, w: 64 },
   { img: "/categories/accessories.webp", name: "Soat U-Boat", n: 86, w: 34 },
 ];

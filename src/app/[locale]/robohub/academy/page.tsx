@@ -18,6 +18,7 @@ import MpPeek from "./components/mp-peek/mp-peek";
 import Icon, { ICONS } from "./components/svg-icon/svg-icon";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
 import "./home.css";
+import { logoAlt } from "@/lib/img-alt";
 
 // Academy bosh sahifasi ("tirik aurora" dizayni, uslublar — home.css):
 //   Hero — to'liq kenglikdagi to'q sahna: harakatlanuvchi aurora, oqib keluvchi to'r, kursor yorug'ligi;
@@ -128,7 +129,7 @@ export default async function AcademyHome() {
           <div className="acx-hero__visual">
             <span className="acx-orbit" aria-hidden="true">
               {MARKETPLACES.map((m, i) => (
-                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={52} height={52} style={{ "--i": i } as CSSProperties} />
+                <img key={m} src={`/marketplaces/${m}.svg`} alt={logoAlt(locale, `/marketplaces/${m}.svg`)} width={52} height={52} style={{ "--i": i } as CSSProperties} />
               ))}
             </span>
             <ContinueCard />

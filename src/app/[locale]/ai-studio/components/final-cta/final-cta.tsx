@@ -3,11 +3,12 @@ import Icon from "../icon/svg-icon";
 import { SIGNUP_HREF } from "../../ai-studio.content";
 import { getC } from "../../content.server";
 import HubOrbit from "@/components/hub-orbit/hub-orbit";
+import { srcAlt } from "@/lib/img-alt";
 
 // 10 — Yakuniy CTA: brend yashilidagi katta karta. O'ngda Robohub orbitasi (umumiy komponent —
 // Robohub yakuniy kartasidagi bilan bir xil), chapda sarlavha va tugma.
 export default async function FinalCta() {
-  const { FINAL_CTA, HERO, VARIANTS } = await getC();
+  const { FINAL_CTA, HERO, VARIANTS, locale } = await getC();
   return (
     <section className="as-final" id="start" aria-labelledby="as-final-title" data-pause>
       <div className="as-wrap">
@@ -16,7 +17,7 @@ export default async function FinalCta() {
           <span className="as-final__glow" aria-hidden="true" />
           <div className="as-fm-card__fan" aria-hidden="true">
             {VARIANTS.slice(0, 3).map((v, i) => (
-              <img key={v.id} src={v.img} alt="" loading="lazy" style={{ "--k": i - 1 } as CSSProperties} />
+              <img key={v.id} src={v.img} alt={srcAlt(locale, v.img)} loading="lazy" style={{ "--k": i - 1 } as CSSProperties} />
             ))}
             <span className="as-fm-card__badge">
               <Icon name="ai" />

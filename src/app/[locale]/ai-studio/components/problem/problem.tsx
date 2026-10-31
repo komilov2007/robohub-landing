@@ -2,6 +2,8 @@ import type { CSSProperties } from "react";
 import Icon, { type IconName } from "../icon/svg-icon";
 import { BEFORE_IMG, SIGNUP_HREF, fill, type Content } from "../../ai-studio.content";
 import { getC } from "../../content.server";
+import { srcAlt } from "@/lib/img-alt";
+import type { Locale } from "@/i18n/config";
 
 type Card = Content["PROBLEM"]["cards"][number];
 
@@ -59,13 +61,13 @@ function TimeViz({ c, day }: { c: Card; day: string }) {
 }
 
 // Ko'rinish: qidiruv natijalari — kursor oddiy fotolarni o'tib, infografikali kartochkani bosadi
-function CtrViz({ img }: { img: string }) {
+function CtrViz({ img, locale }: { img: string; locale: Locale }) {
   return (
     <div className="as-viz as-viz--ctr">
       <div className="as-serp">
         {[0, 1, 2].map((k) => (
           <span key={k} className={"as-serp__item" + (k === 1 ? " is-hero" : "")}>
-            <img src={k === 1 ? img : BEFORE_IMG} alt="" loading="lazy" />
+            <img src={k === 1 ? img : BEFORE_IMG} alt={srcAlt(locale, k === 1 ? img : BEFORE_IMG)} loading="lazy" />
             {k === 1 && (
               <>
                 <span className="as-serp__band" />
@@ -92,7 +94,7 @@ function CtrViz({ img }: { img: string }) {
 // Muammo → yechim: uchta "jonli" karta. Har birida — o'lchov, doimiy mini-animatsiya,
 // pastda muammo (ustidan chiziq tortiladi) va undan "o'sib chiqadigan" yechim.
 export default async function Problem() {
-  const { PROBLEM, VARIANTS } = await getC();
+  const { PROBLEM, VARIANTS, locale } = await getC();
   return (
     <section className="as-prob" id="features" aria-labelledby="as-prob-title" data-pause>
       <span className="as-prob__bg" aria-hidden="true" />
@@ -157,7 +159,7 @@ export default async function Problem() {
 
               {c.id === "price" && <PriceViz c={c} />}
               {c.id === "time" && <TimeViz c={c} day={PROBLEM.day} />}
-              {c.id === "ctr" && <CtrViz img={VARIANTS[0].img} />}
+              {c.id === "ctr" && <CtrViz locale={locale} img={VARIANTS[0].img} />}
 
               <div className="as-pc__story">
                 <div className="as-pc__prob">

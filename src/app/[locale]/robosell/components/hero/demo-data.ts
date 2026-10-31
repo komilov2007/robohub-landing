@@ -68,13 +68,13 @@ export const SHOP = {
     { img: "/categories/electronics.webp", price: 420000, name: "Quloqchin Koss Porta" },
     { img: "/categories/shoes.webp", price: 690000, name: "Krossovka White Glitter" },
   ],
-  promo: { tag: "Kuzgi chegirma", title: "−20% go‘zallik", img: "/ai/cosmetics_studio.webp" },
+  promo: { tag: "Kuzgi chegirma", title: "−20% go‘zallik", img: "/ai/krem-studiynoe-foto.webp" },
   collectionTitle: "Go‘zallik kolleksiyasi",
   collection: [
-    { img: "/ai/cosmetics_composition.webp", price: 149000, name: "Namlovchi krem, 50 ml" },
-    { img: "/ai/cosmetics_in_use.webp", price: 189000, name: "Tungi krem, 50 ml" },
+    { img: "/ai/krem-infografika-sostav.webp", price: 149000, name: "Namlovchi krem, 50 ml" },
+    { img: "/ai/krem-lifestyle-foto.webp", price: 189000, name: "Tungi krem, 50 ml" },
     { img: "/categories/beauty.webp", price: 215000, name: "Palitra Pro, 24 rang" },
-    { img: "/ai/base_cosmetics.webp", price: 99000, name: "Kunduzgi krem, 30 ml" },
+    { img: "/ai/krem-ishodnoe-foto.webp", price: 99000, name: "Kunduzgi krem, 30 ml" },
   ],
 };
 

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt } from "@/lib/img-alt";
 import Globe from "./globe";
 import Regions from "./regions";
 import { MP, ROWS, type MpId } from "./regions-data";
@@ -8,9 +9,14 @@ import { messages } from "./market.i18n";
 
 export default async function Market() {
   const t = await getMessages(messages);
+  const locale = await getLocale();
   // telefonda yer sharidagi faol mamlakat kartochkasi: ulangan va "tez kunda" marketpleyslar (logo + nom)
-  const mp = (id: MpId) => ({ name: id === "yandex" ? t.regions.yandex : MP[id].name, logo: MP[id].logo ?? "", wide: !!MP[id].wide });
-  const mps = Object.fromEntries(ROWS.map((r) => [r.id, { now: r.now.map(mp), soon: r.soon.map(mp) }])) as GlobeMps;
+  // alt — logotip Robohub'da nima ekanini tushuntiruvchi gap (lib/img-alt.ts)
+  const mp = (soon: boolean) => (id: MpId) => {
+    const name = id === "yandex" ? t.regions.yandex : MP[id].name;
+    return { name, logo: MP[id].logo ?? "", wide: !!MP[id].wide, alt: imgAlt(locale, soon ? "soon" : "marketplace", name) };
+  };
+  const mps = Object.fromEntries(ROWS.map((r) => [r.id, { now: r.now.map(mp(false)), soon: r.soon.map(mp(true)) }])) as GlobeMps;
   return (
     <section className="mkt" id="regions" data-theme="light" aria-labelledby="mkt-title">
       <div className="container mkt__grid">
@@ -24,7 +30,7 @@ export default async function Market() {
             {t.lead}
           </p>{" "}
           {/* har mamlakatdagi marketpleyslar: ulanganlari va tez kunda qo'shiladiganlari */}
-          <Regions t={t.regions} names={t.countries} />
+          <Regions t={t.regions} names={t.countries} locale={locale} />
         </div>{" "}
         <div className="mkt__map" data-theme="dark" data-sr="" style={{ "--d": "160ms" } as CSSProperties}>
           <p className="mkt__map-label">{t.mapLabel}</p>{" "}

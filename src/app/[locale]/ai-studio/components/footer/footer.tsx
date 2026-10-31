@@ -1,6 +1,7 @@
 import Logo from "../logo/logo";
 import FooterTrust from "@/components/footer-trust/footer-trust";
 import { getC } from "../../content.server";
+import { logoAlt } from "@/lib/img-alt";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import OfficeAddress from "@/components/office-address/office-address";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
@@ -27,7 +28,7 @@ async function Year() {
 // Footer — Robohub Academy footer'i bilan bir xil dizayn: to'q teal fon, logo + izoh + marketplace belgilari,
 // havola ustunlari (katta harfli sarlavhalar), ikonkali aloqa, pastda mualliflik qatori.
 export default async function Footer() {
-  const { FOOTER, T } = await getC();
+  const { FOOTER, T, locale } = await getC();
   return (
     <footer className="as-footer">
       <div className="as-wrap">
@@ -39,7 +40,7 @@ export default async function Footer() {
             <p>{FOOTER.about}</p>
             <p className="as-footer__mps" aria-hidden="true">
               {MARKETPLACES.map((m) => (
-                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
+                <img key={m} src={`/marketplaces/${m}.svg`} alt={logoAlt(locale, `/marketplaces/${m}.svg`)} width={30} height={30} loading="lazy" />
               ))}
             </p>
             <FooterTrust />

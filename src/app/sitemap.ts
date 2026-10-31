@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { officialOrigin, requestOrigin, siteFromHost } from "@/lib/site-host";
 import { ROBOHUB_ORIGIN, ROBOSELL_ORIGIN } from "@/lib/seo";
+import { LLMS_UPDATED } from "@/lib/llms";
 import { locales, localeUrl } from "@/i18n/config";
 import { LESSON_ROUTES, TOPIC_ROUTES } from "./[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/lib/links";
@@ -31,10 +32,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return locales.filter((l) => new URL(languages[l]).origin === official).map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));
   };
   return [
-    ...page("/", { changeFrequency: "weekly", priority: 1 }),
+    // lastmod — sahifa matni oxirgi yangilangan sana (llms.txt dagi "Updated" bilan bir xil: AI va qidiruv tizimlari uchun sanalar mos)
+    ...page("/", { lastModified: LLMS_UPDATED, changeFrequency: "weekly", priority: 1 }),
     ...page(ACADEMY_BASE, { lastModified: latest(LESSON_ROUTES.map((l) => l.uploadDate)), changeFrequency: "weekly", priority: 0.9 }),
-    ...page("/aistudio", { changeFrequency: "weekly", priority: 0.9 }),
-    ...page("/calculator", { changeFrequency: "weekly", priority: 0.9 }),
+    ...page("/aistudio", { lastModified: LLMS_UPDATED, changeFrequency: "weekly", priority: 0.9 }),
+    ...page("/calculator", { lastModified: LLMS_UPDATED, changeFrequency: "weekly", priority: 0.9 }),
     ...TOPIC_ROUTES.flatMap((t) =>
       page(topicPath(t.slug), {
         lastModified: latest(LESSON_ROUTES.filter((l) => l.topic === t.slug).map((l) => l.uploadDate)),

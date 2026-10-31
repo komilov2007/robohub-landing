@@ -8,6 +8,7 @@ import FooterTrust from "@/components/footer-trust/footer-trust";
 import ContactIcon, { type ContactIconName } from "@/components/contact-icon/contact-icon";
 import OfficeAddress from "@/components/office-address/office-address";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
+import { logoAlt } from "@/lib/img-alt";
 
 // Footer "Aloqa": ikon + oddiy matn (chegarasiz)
 const CONTACTS: { icon: ContactIconName; label: string; href: string; external?: boolean }[] = [
@@ -42,7 +43,7 @@ export default async function Footer() {
             <p>{t.about}</p>
             <p className="ac-footer__mps" aria-hidden="true">
               {MARKETPLACES.map((m) => (
-                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
+                <img key={m} src={`/marketplaces/${m}.svg`} alt={logoAlt(locale, `/marketplaces/${m}.svg`)} width={30} height={30} loading="lazy" />
               ))}
             </p>
             <FooterTrust />

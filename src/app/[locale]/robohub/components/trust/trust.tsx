@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt } from "@/lib/img-alt";
+import type { Locale } from "@/i18n/config";
 import { COMPANIES, ROWS, rowUnits, type Company } from "./companies";
 import TrustScript from "./trust-script";
 import { messages } from "./trust.i18n";
@@ -52,7 +54,7 @@ const REACH_ICONS = [
 // shuning uchun rasm plitkani to'liq egallaydi. bg — rasm yuklanguncha plitka foni.
 const SIZE: Record<Company["shape"], [number, number]> = { square: [144, 144], wide: [315, 144], featured: [274, 144] };
 
-const Tile = ({ c }: { c: Company }) => {
+const Tile = ({ c, locale }: { c: Company; locale: Locale }) => {
   if (!c.logo) {
     // logosi hali yo'q taniqli brend — nomi bilan matnli karta
     return (
@@ -64,13 +66,14 @@ const Tile = ({ c }: { c: Company }) => {
   const [w, h] = SIZE[c.shape];
   return (
     <span className={`trust__tile trust__tile--${c.shape}`} style={{ background: c.bg }}>
-      <img src={c.logo} alt={`${c.name} + Robohub`} title={`${c.name} + Robohub`} width={w} height={h} loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
+      <img src={c.logo} alt={imgAlt(locale, "client", c.name)} title={c.name} width={w} height={h} loading="lazy" decoding="async" fetchPriority="low" draggable={false} />
     </span>
   );
 };
 
 export default async function Trust() {
   const t = await getMessages(messages);
+  const locale = await getLocale();
   return (
     <section className="trust" id="trust" data-theme="dark" aria-labelledby="trust-title">
       <div className="container">
@@ -105,7 +108,7 @@ export default async function Trust() {
                 <ul className="trust__track">
                   {row.map((c, i) => (
                     <li className="trust__item" key={i}>
-                      <Tile c={c} />
+                      <Tile c={c} locale={locale} />
                     </li>
                   ))}
                 </ul>
@@ -138,7 +141,7 @@ export default async function Trust() {
             <span className="trust__reach-k">{t.mps}</span>
             <span className="trust__reach-logos" aria-label={MARKETPLACES.map((m) => m.name).join(", ")} role="img">
               {MARKETPLACES.map((m) => (
-                <img loading="lazy" decoding="async" key={m.name} src={m.logo} alt={`${m.name} + Robohub`} title={`${m.name} + Robohub`} width="22" height="22" />
+                <img loading="lazy" decoding="async" key={m.name} src={m.logo} alt={imgAlt(locale, "marketplace", m.name)} title={m.name} width="22" height="22" />
               ))}
             </span>
           </li>

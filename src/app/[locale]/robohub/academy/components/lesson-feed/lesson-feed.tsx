@@ -11,6 +11,7 @@ import { lessonHref } from "../../lib/links";
 import { common } from "../../lib/common.i18n";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./lesson-feed.i18n";
+import { imgAlt } from "@/lib/img-alt";
 
 // Barcha darslar — ikki qatorli "jonli" lenta: qatorlar qarama-qarshi tomonga sekin suriladi,
 // sichqoncha ustiga kelsa yoki klaviatura fokusida to'xtaydi. Davomiylik bo'yicha filtr.
@@ -43,7 +44,7 @@ function Row({ lessons, reverse, watched, locale }: { lessons: Lesson[]; reverse
             <li key={i} aria-hidden={copy || undefined}>
               <Link href={lessonHref(locale, l.topic, l.n)} className="acx-lc" tabIndex={copy ? -1 : undefined} draggable={false}>
                 <span className="acx-lc__thumb">
-                  <img src={yt.thumbMq(l.youtubeId)} width={320} height={180} alt="" loading="lazy" decoding="async" draggable={false} />
+                  <img src={yt.thumbMq(l.youtubeId)} width={320} height={180} alt={imgAlt(locale, "lesson", l.title)} loading="lazy" decoding="async" draggable={false} />
                   <span className="acx-lc__play" aria-hidden="true">
                     <PlayGlyph size={16} />
                   </span>

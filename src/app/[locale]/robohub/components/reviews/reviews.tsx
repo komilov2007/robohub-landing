@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { imgAlt } from "@/lib/img-alt";
 import { REELS } from "../reels/reels";
 import { messages as reelsMessages } from "../reels/reels.i18n";
 import { CHATS } from "./chats";
@@ -14,7 +15,9 @@ import { messages } from "./reviews.i18n";
 export default async function Reviews() {
   const t = await getMessages(messages);
   const rt = await getMessages(reelsMessages);
-  const videos = REELS.map((r) => ({ id: r.id, name: r.name ?? rt.client, lang: rt.langs[r.lang], flag: r.lang, wide: r.wide }));
+  const locale = await getLocale();
+  // alt — muqova rasmi uchun (Google Rasmlar): kim va nima haqida video
+  const videos = REELS.map((r) => ({ id: r.id, name: r.name ?? rt.client, lang: rt.langs[r.lang], flag: r.lang, wide: r.wide, alt: imgAlt(locale, "review", r.name ?? rt.client) }));
   return (
     <section className="revs" id="reviews" data-theme="dark" aria-labelledby="revs-title">
       <div className="container">

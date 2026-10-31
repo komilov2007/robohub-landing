@@ -11,6 +11,7 @@ import { lessonHref } from "../../lib/links";
 import { common } from "../../lib/common.i18n";
 import { useAcademyLocale } from "../locale/locale";
 import { messages } from "./continue-card.i18n";
+import { imgAlt } from "@/lib/img-alt";
 
 // Bosh sahifa hero'sidagi kartochka: oxirgi ko'rilgan dars ("Davom ettiring") yoki Boshlang'ich yo'lning
 // birinchi darsi ("Shu yerdan boshlang"), ostida keyingi 3 dars va umumiy progress.
@@ -43,7 +44,7 @@ export default function ContinueCard() {
             <span className="acx-cc__thumb">
               <picture>
                 <source srcSet={yt.thumbHqWebp(lesson.youtubeId)} type="image/webp" />
-                <img src={yt.thumbHq(lesson.youtubeId)} width={480} height={360} alt="" fetchPriority="high" decoding="async" />
+                <img src={yt.thumbHq(lesson.youtubeId)} width={480} height={360} alt={imgAlt(locale, "lesson", lesson.title)} fetchPriority="high" decoding="async" />
               </picture>
               <span className="acx-cc__scan" aria-hidden="true" />
               <span className="acx-cc__badge">

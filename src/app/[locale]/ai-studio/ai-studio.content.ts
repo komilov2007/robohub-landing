@@ -23,7 +23,7 @@ export const STUDIO_EMBED_URL = `${STUDIO_URL}?ai_topup=public-studio`;
 export const LOGIN_HREF = "https://seller.robohub.uz";
 export const EXAMPLES_HREF = "#examples";
 // oddiy krem fotosi — "Muammo" va "Qadamlar" bo'limlaridagi kichik vizuallar uchun (hero'da — iPhone, DATA.studio)
-export const BEFORE_IMG = "/ai/base_cosmetics.webp";
+export const BEFORE_IMG = "/ai/krem-ishodnoe-foto.webp";
 export const TOKENS_PER_IMAGE = 3;
 // Narx — bitta manba (backend: GET /api/billing/ai-tokens/). 1 token narxi Robohub obunasiga bog'liq:
 //   faol (to'langan) obuna bo'lsa — TOKEN_PRICE_SUB, aks holda (trial, muzlatilgan, obunasiz) — TOKEN_PRICE.
@@ -71,9 +71,9 @@ const DATA = {
   },
   // krem infografikasi — "Rejimlar", "Muammo" va "Qadamlar" bo'limlaridagi kichik vizuallar uchun
   variants: [
-    { id: "composition", img: "/ai/cosmetics_composition.webp" },
-    { id: "interior", img: "/ai/cosmetics_everyday.webp" },
-    { id: "lifestyle", img: "/ai/cosmetics_in_use.webp" },
+    { id: "composition", img: "/ai/krem-infografika-sostav.webp" },
+    { id: "interior", img: "/ai/krem-foto-interer.webp" },
+    { id: "lifestyle", img: "/ai/krem-lifestyle-foto.webp" },
   ],
   markets: [
     { name: "Uzum Market", icon: "/marketplaces/uzum.svg" },
@@ -120,9 +120,9 @@ const DATA = {
     { id: "infographic", tokens: 3, featured: true },
     { id: "pack", tokens: 15, featured: false },
   ] as const,
-  pack: ["/ai/cosmetics_studio.webp", "/ai/cosmetics_everyday.webp", "/ai/cosmetics_composition.webp", "/ai/cosmetics_in_use.webp", "/ai/base_cosmetics.webp"],
+  pack: ["/ai/krem-studiynoe-foto.webp", "/ai/krem-foto-interer.webp", "/ai/krem-infografika-sostav.webp", "/ai/krem-lifestyle-foto.webp", "/ai/krem-ishodnoe-foto.webp"],
   // Foto rejimining 4 uslubi — studiyadagi tartibda: ishlatilishda, muhitda, yaqin plan, katalog (nomlari — T.modes.styles)
-  photoStyles: ["/ai/cosmetics_in_use.webp", "/ai/cosmetics_everyday.webp", "/ai/cosmetics_composition.webp", "/ai/cosmetics_studio.webp"],
+  photoStyles: ["/ai/krem-lifestyle-foto.webp", "/ai/krem-foto-interer.webp", "/ai/krem-infografika-sostav.webp", "/ai/krem-studiynoe-foto.webp"],
   // Robohub Academy'dagi mos darslar (raqami — robohub/academy/lib/academy.ts dagi n): kartochka yaratish,
   // narxlarni yangilash, Uzum Market'ni ulash. Nomi, muqovasi va havolasi o'sha yerdan olinadi.
   calc: { min: 1, max: 500, initial: 40 },

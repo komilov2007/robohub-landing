@@ -16,7 +16,7 @@ import { lessonUrl, topicPath } from "@/app/[locale]/robohub/academy/lib/links";
 // sayt va llms.txt bir-biridan farq qilmasin. Matn o'zgarsa — bu yerga tegish shart emas.
 
 // Fayl yangilangan sana (llms.txt tepasida). Matn yoki tuzilish o'zgartirilganda — shu sanani yangilang.
-export const LLMS_UPDATED = "2026-10-30";
+export const LLMS_UPDATED = "2026-10-31";
 
 export type LlmsLang = Extract<Locale, "en" | "ru" | "uz">;
 export const LLMS_LANGS: LlmsLang[] = ["en", "ru", "uz"];

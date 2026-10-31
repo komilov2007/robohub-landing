@@ -2,6 +2,8 @@ import { imgSize } from "@/lib/img-size";
 import type { CSSProperties } from "react";
 import type { CountryId } from "./globe";
 import { MP, ROWS, type MpId } from "./regions-data";
+import { imgAlt } from "@/lib/img-alt";
+import type { Locale } from "@/i18n/config";
 
 // "Mamlakatlar" bo'limining chap tomoni: har mamlakatda qaysi marketpleyslarda sotish mumkin (ulangan)
 // va qaysilari tez orada qo'shiladi. Uslublar — robohub.css → "REGIONS".
@@ -18,17 +20,18 @@ const plural = (n: number, [one, few, many]: [string, string, string]) =>
   (n === 1 ? one : n >= 2 && n <= 4 ? few : many).replace("{n}", String(n));
 
 
-function Chip({ id, t, soon }: { id: MpId; t: RegionsText; soon?: boolean }) {
+function Chip({ id, t, soon, locale }: { id: MpId; t: RegionsText; soon?: boolean; locale: Locale }) {
   const mp = MP[id];
   const name = id === "yandex" ? t.yandex : mp.name;
+  const alt = imgAlt(locale, soon ? "soon" : "marketplace", name);
   return (
     <span
       className={`reg__mp${soon ? " reg__mp--soon" : ""}${mp.wide ? " reg__mp--wide" : ""}`}
     >
       {mp.wide ? (
-        <img src={mp.logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} {...imgSize(mp.logo ?? "")} loading="lazy" />
+        <img src={mp.logo} alt={alt} title={name} {...imgSize(mp.logo ?? "")} loading="lazy" />
       ) : mp.logo ? (
-        <img src={mp.logo} alt={`${name} + Robohub`} title={`${name} + Robohub`} width={20} height={20} loading="lazy" />
+        <img src={mp.logo} alt={alt} title={name} width={20} height={20} loading="lazy" />
       ) : (
         <b className="reg__mono" aria-hidden="true">
           {name[0]}
@@ -42,9 +45,11 @@ function Chip({ id, t, soon }: { id: MpId; t: RegionsText; soon?: boolean }) {
 export default function Regions({
   t,
   names,
+  locale,
 }: {
   t: RegionsText;
   names: Record<CountryId, string>;
+  locale: Locale;
 }) {
   return (
     <div className="reg">
@@ -72,13 +77,13 @@ export default function Regions({
             </span>
             <span className="reg__mps">
               {r.now.map((m) => (
-                <Chip key={m} id={m} t={t} />
+                <Chip key={m} id={m} t={t} locale={locale} />
               ))}
               {r.soon.length > 0 && (
                 <span className="reg__soon">
                   <em>{t.soon}</em>
                   {r.soon.map((m) => (
-                    <Chip key={m} id={m} t={t} soon />
+                    <Chip key={m} id={m} t={t} locale={locale} soon />
                   ))}
                 </span>
               )}

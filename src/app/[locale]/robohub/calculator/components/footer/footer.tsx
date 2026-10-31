@@ -5,6 +5,7 @@ import OfficeAddress from "@/components/office-address/office-address";
 import { ACADEMY_PATH } from "@/lib/sites";
 import { EMAIL, EMAIL_HREF, INSTAGRAM_URL, PHONE, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 import { localeHref, localeUrl, type Locale } from "@/i18n/config";
+import { logoAlt } from "@/lib/img-alt";
 import { type Content } from "../../calculator.content";
 import { sellerUrl } from "@/lib/sites";
 
@@ -52,13 +53,13 @@ export default function Footer({
       <div className="as-wrap">
         <div className="ac-footer__grid">
           <div className="ac-footer__about">
-            <a href="#top" className="ac-footer__logo" aria-label={home}>
+            <a href="#top" className="ac-footer__logo" aria-label={`Robohub ${tag} — ${home}`}>
               <Logo tag={tag} />
             </a>
             <p>{footer.about}</p>
             <p className="ac-footer__mps" aria-hidden="true">
               {MARKETPLACES.map((m) => (
-                <img key={m} src={`/marketplaces/${m}.svg`} alt="" width={30} height={30} loading="lazy" />
+                <img key={m} src={`/marketplaces/${m}.svg`} alt={logoAlt(locale, `/marketplaces/${m}.svg`)} width={30} height={30} loading="lazy" />
               ))}
             </p>
             <FooterTrust />

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react";
 import Icon from "../icon/svg-icon";
 import { SIGNUP_HREF, plural, type Content, TOKEN_PRICE, money } from "../../ai-studio.content";
 import { getC } from "../../content.server";
+import { srcAlt } from "@/lib/img-alt";
+import type { Locale } from "@/i18n/config";
 
 // Har rejimning o'z jonli vizuali:
 //  Foto — kamera "vizori": burchak qavslari nafas oladi, ustidan yorug'lik o'tadi;
@@ -10,11 +12,11 @@ import { getC } from "../../content.server";
 type PhotoStyles = Content["MODES"]["photoStyles"];
 
 // Foto: 4 uslub (studiyadagi kabi) navbat bilan almashadi — rasm va uning nomi; faqat CSS animatsiya (--k — tartib raqami)
-function PhotoViz({ styles }: { styles: PhotoStyles }) {
+function PhotoViz({ styles, locale }: { styles: PhotoStyles; locale: Locale }) {
   return (
     <div className="as-mv as-mv--photo">
       {styles.map((s, i) => (
-        <img key={s.img} className="as-ps" src={s.img} alt="" loading="lazy" style={{ "--k": i } as CSSProperties} />
+        <img key={s.img} className="as-ps" src={s.img} alt={srcAlt(locale, s.img)} loading="lazy" style={{ "--k": i } as CSSProperties} />
       ))}
       <span className="as-vf" aria-hidden="true">
         <i /><i /><i /><i />
@@ -43,10 +45,10 @@ function PhotoStyleList({ styles }: { styles: PhotoStyles }) {
   );
 }
 
-function InfoViz({ img, features }: { img: string; features: Content["PRODUCT"]["features"] }) {
+function InfoViz({ img, features, locale }: { img: string; features: Content["PRODUCT"]["features"]; locale: Locale }) {
   return (
     <div className="as-mv as-mv--info">
-      <img src={img} alt="" loading="lazy" />
+      <img src={img} alt={srcAlt(locale, img)} loading="lazy" />
       <ul className="as-callouts" aria-hidden="true">
         {features.map((f, i) => (
           <li key={f.text} style={{ "--k": i } as CSSProperties}>
@@ -63,11 +65,11 @@ function InfoViz({ img, features }: { img: string; features: Content["PRODUCT"][
   );
 }
 
-function PackViz({ pack }: { pack: string[] }) {
+function PackViz({ pack, locale }: { pack: string[]; locale: Locale }) {
   return (
     <div className="as-mv as-mv--pack">
       {pack.map((src, i) => (
-        <img key={src} src={src} alt="" loading="lazy" style={{ "--k": i - 2 } as CSSProperties} />
+        <img key={src} src={src} alt={srcAlt(locale, src)} loading="lazy" style={{ "--k": i - 2 } as CSSProperties} />
       ))}
       <span className="as-mv__count">×5</span>
     </div>
@@ -78,7 +80,7 @@ function PackViz({ pack }: { pack: string[] }) {
 // o'ngda Foto va 5 to'plam gorizontal kartalar. Sarlavha ikki tomonga bo'lingan.
 // Kirishda kartalar pastdan 3D "ko'tarilib" ochiladi.
 export default async function Modes() {
-  const { MODES, PRODUCT, VARIANTS, T } = await getC();
+  const { MODES, PRODUCT, VARIANTS, T, locale } = await getC();
   return (
     <section className="as-modes" id="modes" aria-labelledby="as-modes-title" data-pause>
       <div className="as-wrap">
@@ -106,9 +108,9 @@ export default async function Modes() {
               style={{ "--d": `${i * 100}ms` } as CSSProperties}
             >
               <div className="as-mm__viz">
-                {m.id === "photo" && <PhotoViz styles={MODES.photoStyles} />}
-                {m.id === "infographic" && <InfoViz img={VARIANTS[0].img} features={PRODUCT.features} />}
-                {m.id === "pack" && <PackViz pack={MODES.pack} />}
+                {m.id === "photo" && <PhotoViz locale={locale} styles={MODES.photoStyles} />}
+                {m.id === "infographic" && <InfoViz locale={locale} img={VARIANTS[0].img} features={PRODUCT.features} />}
+                {m.id === "pack" && <PackViz locale={locale} pack={MODES.pack} />}
               </div>
               <div className="as-mm__body">
                 {m.featured && (
@@ -154,9 +156,9 @@ export default async function Modes() {
                   {MODES.popular}
                 </span>
               )}
-              {m.id === "photo" && <PhotoViz styles={MODES.photoStyles} />}
-              {m.id === "infographic" && <InfoViz img={VARIANTS[0].img} features={PRODUCT.features} />}
-              {m.id === "pack" && <PackViz pack={MODES.pack} />}
+              {m.id === "photo" && <PhotoViz locale={locale} styles={MODES.photoStyles} />}
+              {m.id === "infographic" && <InfoViz locale={locale} img={VARIANTS[0].img} features={PRODUCT.features} />}
+              {m.id === "pack" && <PackViz locale={locale} pack={MODES.pack} />}
 
               <div className="as-mc__body">
                 <h3 className="as-mc__name">{m.name}</h3>

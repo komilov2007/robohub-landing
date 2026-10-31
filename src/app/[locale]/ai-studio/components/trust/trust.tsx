@@ -2,10 +2,11 @@ import type { CSSProperties } from "react";
 import CountUp from "../count-up/count-up";
 import Icon from "../icon/svg-icon";
 import { getC } from "../../content.server";
+import { imgAlt } from "@/lib/img-alt";
 
 // Ishonch bloki: to'q panel, marketplace nomlari cheksiz lenta bo'lib oqadi, ostida sanaladigan raqamlar.
 export default async function Trust() {
-  const { TRUST } = await getC();
+  const { TRUST, locale } = await getC();
   // lenta uzluksiz bo'lishi uchun ro'yxat ikki marta takrorlanadi (ikkinchisi ekran o'quvchidan yashirin)
   const loop = [...TRUST.markets, ...TRUST.markets];
   return (
@@ -19,7 +20,7 @@ export default async function Trust() {
               <li className="as-marquee__set" key={half} aria-hidden={half === 1}>
                 {loop.map((m, i) => (
                   <span className="as-mp" key={`${m.name}-${i}`}>
-                    <img src={m.icon} alt="" width={40} height={40} loading="lazy" />
+                    <img src={m.icon} alt={imgAlt(locale, "marketplace", m.name)} width={40} height={40} loading="lazy" />
                     {m.name}
                     <Icon name="ai" className="as-mp__sep" />
                   </span>

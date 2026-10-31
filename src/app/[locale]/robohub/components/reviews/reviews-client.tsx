@@ -9,7 +9,7 @@ import { useNear } from "./use-near";
 // Videolar kam bo'lsa ham ekran to'lishi uchun ro'yxat REPEAT marta ketma-ket chiziladi, so'ng butun bo'lak
 // ikki nusxada — lenta yarmiga surilganda ikkinchi nusxa birinchisining o'rnida turadi (ulanish bilinmaydi).
 // Karta bosilsa — burchakdagi reels pleyeri shu videodan to'liq ekranda ochiladi (OPEN_EVENT).
-type Video = { id: string; name: string; lang: string; flag: string; wide?: boolean };
+type Video = { id: string; name: string; lang: string; flag: string; wide?: boolean; alt: string };
 type T = { title: string; prev: string; next: string; watch: string };
 
 const REPEAT = 2;
@@ -36,7 +36,7 @@ export default function ReviewsVideos({ videos, t }: { videos: Video[]; t: T }) 
                   onClick={() => window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: i }))}
                   aria-label={`${t.watch}: ${v.name}`}
                 >
-                  <img src={poster(v.id, v.wide)} {...imgSize(poster(v.id, v.wide))} alt="" loading="lazy" draggable={false} />
+                  <img src={poster(v.id, v.wide)} {...imgSize(poster(v.id, v.wide))} alt={v.alt} loading="lazy" draggable={false} />
                   <span className="revs__play" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
                       <path d="M8 5.5v13l11-6.5z" />
