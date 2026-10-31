@@ -1,6 +1,6 @@
 import { officialOrigin, siteFromHost } from "@/lib/site-host";
 import { ogImageUrl, ROBOHUB_ORIGIN } from "@/lib/seo";
-import { locales, localeUrl, type Locale } from "@/i18n/config";
+import { locales, officialUrl, type Locale } from "@/i18n/config";
 import { aiImage, type AiProduct } from "@/lib/ai-images";
 import { getLessons, getTopics } from "../[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath } from "../[locale]/robohub/academy/lib/links";
@@ -24,7 +24,7 @@ const homeVideo = (l: Locale): Video => {
 };
 
 const abs = (src: string) => (src.startsWith("http") ? src : ROBOHUB_ORIGIN + src);
-const pageUrl = (locale: Locale, path: string) => localeUrl(locale, path);
+const pageUrl = (locale: Locale, path: string) => officialUrl(locale, path);
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 // Faqat shu domendagi sahifalar (official — robohub.kz, academy.robohub.uz …); rasmlar istalgan domenda bo'lishi mumkin

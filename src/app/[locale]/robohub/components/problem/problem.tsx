@@ -103,7 +103,7 @@ export default async function Problem() {
           <span className="pain__next-k">{t.next}</span>
           <ul>
             {NEXT.map((n) => (
-              <li key={n.name}>
+              <li key={n.name} aria-label={imgAlt(locale, "soon", n.name)} title={imgAlt(locale, "soon", n.name)}>
                 <img loading="lazy" decoding="async" src={n.logo} alt={imgAlt(locale, "soon", n.name)} width="22" height="22" />
                 {n.name}
               </li>

@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
+// "Bitta domen" rejimi (i18n/config.ts: SINGLE_DOMAIN): Vercel loyihasining asosiy manzili *.vercel.app bo'lsa
+// (robohub-landing.vercel.app) — havolalar shu domenda: /academy, /ai-studio, /calculator. Vercel bu o'zgaruvchini
+// build paytida o'zi beradi; robohub.uz build'ida (Docker / k8s) u yo'q — rejim o'chiq, subdomenlar avvalgidek.
+// Qo'lda boshqarish: NEXT_PUBLIC_SINGLE_DOMAIN=1 yoki 0.
+const SINGLE_DOMAIN =
+  process.env.NEXT_PUBLIC_SINGLE_DOMAIN ?? (/\.vercel\.app$/i.test(process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "") ? "1" : "0");
+
 const nextConfig: NextConfig = {
+  env: { NEXT_PUBLIC_SINGLE_DOMAIN: SINGLE_DOMAIN },
   // Docker (k8s) uchun: .next/standalone — faqat kerakli fayllar va minimal server.js (Dockerfile'ga qarang)
   output: "standalone",
   cacheComponents: true,

@@ -4,7 +4,7 @@ import { getLocale } from "@/i18n/server";
 import { getLessons, getTopics, TOTAL_LESSONS, TOTAL_TOPICS } from "./lib/academy";
 import { ACADEMY_BASE, PHONE, PHONE_TEL, robohubHome } from "./lib/links";
 import { BRAND, jsonLd, ogImageUrl, pageMetadata, ROBOHUB_ORG_REF, ROBOHUB_ORIGIN, ROBOHUB_WEBSITE_REF } from "@/lib/seo";
-import { localeUrl } from "@/i18n/config";
+import { officialUrl } from "@/i18n/config";
 import { messages as metaMessages } from "./layout";
 import { messages } from "./home.i18n";
 import AcademySearch from "./components/academy-search/academy-search";
@@ -55,7 +55,7 @@ export default async function AcademyHome() {
   ];
   // Qidiruv tizimlari uchun: Academy — mavzular to'plami; har mavzu — Course (o'z sahifasi, nomi va tavsifi sahifadagi matn),
   // tashkilot — Robohub (@id). Narx/davomiylik kontentda yo'q — offers/hasCourseInstance qo'shilmagan.
-  const url = localeUrl(locale, ACADEMY_BASE);
+  const url = officialUrl(locale, ACADEMY_BASE);
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -78,7 +78,7 @@ export default async function AcademyHome() {
               "@type": "Course",
               name: x.name,
               description: x.hero.subtitle,
-              url: localeUrl(locale, `${ACADEMY_BASE}/${x.slug}`),
+              url: officialUrl(locale, `${ACADEMY_BASE}/${x.slug}`),
               inLanguage: locale,
               provider: { ...ROBOHUB_ORG_REF, "@type": "Organization", name: BRAND, url: ROBOHUB_ORIGIN },
             },

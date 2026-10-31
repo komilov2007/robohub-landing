@@ -115,7 +115,7 @@ export default async function FooterTrust() {
       </p>
       <ul className="ftrust__logos">
         {LOGOS.map((l, i) => (
-          <li key={l.src}>
+          <li key={l.src} aria-label={`${t.roles[i]} — ${l.name}`} title={`${t.roles[i]} — ${l.name}`}>
             <img src={l.src} alt={`${t.roles[i]} — ${l.name}`} width={l.w} height={l.h} loading="lazy" />          </li>
         ))}
       </ul>

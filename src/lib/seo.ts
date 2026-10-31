@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { defaultLocale, localeHref, locales, localeUrl, ROBOHUB_UZ, type Locale } from "@/i18n/config";
+import { defaultLocale, localeHref, locales, officialUrl, ROBOHUB_UZ, type Locale } from "@/i18n/config";
 import { EMAIL, INSTAGRAM_URL, OFFICE_ADDRESS, OFFICE_MAP_URL, PHONE_HREF, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 
 // SEO — har landing uchun bir xil to'liq teglar: canonical, hreflang (+ x-default), Open Graph va Twitter kartasi, ulashish rasmi.
@@ -45,7 +45,7 @@ type PageSeo = {
 export function pageMetadata({ origin, locale, path, title, description, siteName, image, translated = locales }: PageSeo): Metadata {
   const own = translated.includes(locale) ? locale : defaultLocale;
   // Robohub sahifalari — har til o'z domenida (kk → robohub.kz), shuning uchun to'liq manzil; Robosell — o'z domenida
-  const href = (l: Locale) => (origin === ROBOHUB_ORIGIN ? localeUrl(l, path) : localeHref(l, path));
+  const href = (l: Locale) => (origin === ROBOHUB_ORIGIN ? officialUrl(l, path) : localeHref(l, path));
   const canonical = href(own);
   const languages: Record<string, string> = {};
   for (const l of translated) languages[l] = href(l);

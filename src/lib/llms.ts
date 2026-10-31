@@ -1,4 +1,4 @@
-import { localeUrl, type Locale } from "@/i18n/config";
+import { officialUrl, type Locale } from "@/i18n/config";
 import { ROBOHUB_DESCRIPTION_EN, ROBOHUB_ORIGIN } from "@/lib/seo";
 import { EMAIL, INSTAGRAM_URL, OFFICE_ADDRESS, PHONE, TELEGRAM_URL, YOUTUBE_URL } from "@/lib/contacts";
 import { messages as faqMessages, type Part } from "@/app/[locale]/robohub/components/faq/faq.i18n";
@@ -21,7 +21,7 @@ export const LLMS_UPDATED = "2026-10-31";
 export type LlmsLang = Extract<Locale, "en" | "ru" | "uz">;
 export const LLMS_LANGS: LlmsLang[] = ["en", "ru", "uz"];
 
-const url = (locale: Locale, path: string) => localeUrl(locale, path);
+const url = (locale: Locale, path: string) => officialUrl(locale, path);
 const plain = (parts: Part[]) => parts.map((p) => (typeof p === "string" ? p : p.b)).join("");
 const stat = (locale: Locale, i: number) => trustMessages[locale].stats[i];
 const marketsNow = [...new Set(ROWS.flatMap((r) => r.now))].map((id) => MP[id].name);

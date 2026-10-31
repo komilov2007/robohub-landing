@@ -10,7 +10,7 @@ export default async function MarketplacePick({ label }: { label: string }) {
       <span className="cc-pick__label">{label}</span>
       <ul className="cc-pick__list">
         {CALCULATOR_MARKETPLACES.map((mp) => (
-          <li key={mp} className="cc-pick__mp">
+          <li key={mp} className="cc-pick__mp" aria-label={imgAlt(locale, "marketplace", MARKETPLACE_META[mp].label)} title={imgAlt(locale, "marketplace", MARKETPLACE_META[mp].label)}>
             <img src={MARKETPLACE_META[mp].icon} alt={imgAlt(locale, "marketplace", MARKETPLACE_META[mp].label)} width={42} height={42} />
             <span className="cc-pick__name">{MARKETPLACE_META[mp].label}</span>
           </li>

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getLocale } from "@/i18n/server";
 import { getLesson, getTopic, TOPIC_ROUTES } from "../lib/academy";
 import { yt } from "../lib/youtube";
-import { localeUrl } from "@/i18n/config";
+import { officialUrl } from "@/i18n/config";
 import { academyHref, languageAlternates, topicPath } from "../lib/links";
 import StageSkeleton from "./components/stage/stage-skeleton";
 import TopicView from "./components/topic-view/topic-view";
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/robohub/
   if (!topic) return {};
   const cover = getLesson(topic.mainLesson, locale);
   const images = cover ? [{ url: yt.thumb(cover.youtubeId), width: 1280, height: 720 }] : undefined;
-  const url = localeUrl(locale, topicPath(topic.slug));
+  const url = officialUrl(locale, topicPath(topic.slug));
   return {
     title: topic.name,
     description: topic.hero.subtitle,

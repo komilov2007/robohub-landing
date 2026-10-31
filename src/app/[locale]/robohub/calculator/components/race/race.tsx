@@ -56,6 +56,7 @@ export default function Race({
               <li
                 key={mp}
                 className="cx-lane"
+                aria-label={imgAlt(locale, "marketplace", MARKETPLACE_META[mp].label)}
                 style={{ "--to": `${SAMPLE[i]}%`, "--k": i, "--dur": `${1.6 + i * 0.25}s` } as CSSProperties}
               >
                 <span className="cx-lane__trail" aria-hidden="true" />

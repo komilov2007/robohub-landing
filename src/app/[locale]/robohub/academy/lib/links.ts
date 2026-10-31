@@ -1,5 +1,5 @@
 // Havolalar — bitta joyda.
-import { locales, localeUrl, zoneHref, type Locale } from "@/i18n/config";
+import { locales, localeUrl, officialUrl, zoneHref, type Locale } from "@/i18n/config";
 import { getLesson, getTopic } from "./academy";
 
 // Academy — o'z subdomenida: academy.robohub.uz (/ru, /en …), academy.robohub.kz/kk, academy.robohub.kg/ky.
@@ -29,8 +29,8 @@ export const lessonUrl = (locale: Locale, topic: string, n: number) => localeUrl
 // <link rel="alternate" hreflang> uchun: tilsiz yo'l → har tildagi manzil (+ x-default — o'zbekcha)
 export function languageAlternates(path: string): Record<string, string> {
   const map: Record<string, string> = {};
-  for (const l of locales) map[l] = localeUrl(l, path); // to'liq manzil: qozoqcha — robohub.kz
-  map["x-default"] = localeUrl("uz", path);
+  for (const l of locales) map[l] = officialUrl(l, path); // to'liq manzil: qozoqcha — robohub.kz
+  map["x-default"] = officialUrl("uz", path);
   return map;
 }
 

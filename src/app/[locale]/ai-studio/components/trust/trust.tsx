@@ -19,7 +19,7 @@ export default async function Trust() {
             {[0, 1].map((half) => (
               <li className="as-marquee__set" key={half} aria-hidden={half === 1}>
                 {loop.map((m, i) => (
-                  <span className="as-mp" key={`${m.name}-${i}`}>
+                  <span className="as-mp" key={`${m.name}-${i}`} role="group" aria-label={imgAlt(locale, "marketplace", m.name)} title={imgAlt(locale, "marketplace", m.name)}>
                     <img src={m.icon} alt={imgAlt(locale, "marketplace", m.name)} width={40} height={40} loading="lazy" />
                     {m.name}
                     <Icon name="ai" className="as-mp__sep" />

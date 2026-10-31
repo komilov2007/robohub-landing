@@ -151,6 +151,9 @@ export default async function Pricing() {
                     <span
                       key={m.name}
                       className={m.wide ? "is-wide" : undefined}
+                      role="group"
+                      aria-label={imgAlt(locale, "soon", m.name)}
+                      title={imgAlt(locale, "soon", m.name)}
                     >
                       {m.wide ? (
                         <img loading="lazy" decoding="async" src={m.logo} alt={imgAlt(locale, "soon", m.name)} title={m.name} {...imgSize(m.logo ?? "")} />

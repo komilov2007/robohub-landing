@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, hasLocale, hostHref, hostZone, localeHref, LOCALE_HEADER, parseProdHost, SECTIONS, splitZone, TLD_LOCALE, type Locale } from "@/i18n/config";
+import { defaultLocale, hasLocale, hostHref, hostZone, localeHref, LOCALE_HEADER, parseProdHost, SECTIONS, splitZone, TLD_LOCALE, toSingle, type Locale } from "@/i18n/config";
 import { siteFromHost } from "@/lib/site-host";
 
 // Bitta loyiha — bir necha sayt, yetti til. Ichki manzil: /{til}/{sayt}{qolgan yo'l}.
@@ -26,10 +26,20 @@ function redirectTo(request: NextRequest, pathname: string) {
 }
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
   const host = request.headers.get("host") ?? "";
   const site = siteFromHost(host);
   const prod = parseProdHost(host); // rasmiy domen (robohub.uz, academy.robohub.kz, aistudio.robohub.kg …) yoki null
+  // Bitta domen — Vercel (robohub-landing.vercel.app): subdomenlar yo'q, bo'limlar yo'lda: /academy, /ai-studio, /calculator.
+  // AI Studio bu yerda /ai-studio (ichkarida — /aistudio); eski /aistudio → /ai-studio. Faqat *.vercel.app — boshqa
+  // domenlar (robohub.uz, localhost …) o'zgarmaydi. Havolalar ham shu sxemada (i18n/config.ts: SINGLE_DOMAIN).
+  const single = site === "robohub" && !prod && hostZone(host) === "main" && /\.vercel\.app$/i.test(host.split(":")[0]);
+  let { pathname } = request.nextUrl;
+  if (single) {
+    if (/^\/aistudio(\/|$)/.test(pathname)) return redirectTo(request, toSingle(pathname));
+    pathname = pathname.replace(/^\/ai-studio(?=\/|$)/, "/aistudio");
+  }
+  // yo'naltirish: bitta domenda AI Studio manzili — /ai-studio
+  const go = (path: string) => redirectTo(request, single ? toSingle(path) : path);
   // Domen tilni majburlamaydi — har domenda 7 til ham ochiladi. Faqat tilsiz manzil mamlakat tilida:
   // robohub.kz → /kk, robohub.kg → /ky. Shu sabab .kz/.kg da o'zbekcha prefiks bilan: /uz, /calculator/uz (i18n/config.ts).
   const tld = site === "robosell" ? "uz" : (prod?.tld ?? "uz");
@@ -45,7 +55,7 @@ export function proxy(request: NextRequest) {
     const at = first === "academy" ? 1 : hasLocale(first) && parts[2] === "academy" ? 2 : 0;
     if (at) {
       const kept = parts.filter((_, i) => i !== at).filter(Boolean);
-      return redirectTo(request, `/${kept.join("/")}`);
+      return go(`/${kept.join("/")}`);
     }
   } else if (site === "robohub") {
     // Eski manzillar → yangisi (bitta sahifaga bitta manzil, 308 — doimiy):
@@ -55,17 +65,17 @@ export function proxy(request: NextRequest) {
     const sec = OLD_SECTION[parts[at]] ?? parts[at];
     if (isSection(sec) && (lang || sec !== parts[at])) {
       const tail = parts.slice(at + 1).filter(Boolean).join("/");
-      return redirectTo(request, href(lang ?? defaultLocale, `/${sec}${tail ? `/${tail}` : ""}`));
+      return go(href(lang ?? defaultLocale, `/${sec}${tail ? `/${tail}` : ""}`));
     }
     // O'zbekcha prefikssiz: /academy/uz/order → /academy/order (.uz da; .kz/.kg da /academy/uz — o'zbekcha)
     if (!uzPrefixed && isSection(first) && parts[2] === defaultLocale) {
       const tail = parts.slice(3).filter(Boolean).join("/");
-      return redirectTo(request, `/${first}${tail ? `/${tail}` : ""}`);
+      return go(`/${first}${tail ? `/${tail}` : ""}`);
     }
   }
 
   // O'zbekcha prefikssiz: /uz/... → /... (bitta sahifaga ikki manzil bo'lmasligi uchun; .kz/.kg da /uz — o'zbekcha)
-  if (!uzPrefixed && first === defaultLocale) return redirectTo(request, pathname.slice(defaultLocale.length + 1) || "/");
+  if (!uzPrefixed && first === defaultLocale) return go(pathname.slice(defaultLocale.length + 1) || "/");
 
   let locale: Locale = defaultLocale;
   let rest = pathname;
@@ -81,7 +91,7 @@ export function proxy(request: NextRequest) {
 
   // .kz/.kg da tilsiz manzil: o'zbekcha tanlab kirgan bo'lsa (cookie) — o'zbekcha, aks holda mamlakat tili
   if (uzPrefixed && !explicit && site !== "robosell" && request.cookies.get(LANG_COOKIE)?.value !== defaultLocale) {
-    return redirectTo(request, href(TLD_LOCALE[tld], rest));
+    return go(href(TLD_LOCALE[tld], rest));
   }
 
   // Bo'limlar o'z subdomenida (shu mamlakat domenida): robohub.uz/academy/ru/order → academy.robohub.uz/ru/order,
@@ -97,7 +107,7 @@ export function proxy(request: NextRequest) {
 
   // Eski Academy domeni (robohub-academy…, robohub-academy-two…): bosh sahifa — yangi Academy
   if (host.toLowerCase().startsWith("robohub-academy") && (rest === "/" || rest === "")) {
-    return redirectTo(request, localeHref(locale, "/academy"));
+    return go(localeHref(locale, "/academy"));
   }
 
   // Brauzer tili bo'yicha birinchi kirish (faqat .uz va lokal): tilsiz (o'zbekcha) manzil ochilsa va tanlov hali bo'lmasa —
@@ -106,7 +116,7 @@ export function proxy(request: NextRequest) {
     const want = pickLocale(request.headers.get("accept-language"));
     if (want && want !== defaultLocale) {
       const url = request.nextUrl.clone();
-      url.pathname = localeHref(want, rest || "/");
+      url.pathname = single ? toSingle(localeHref(want, rest || "/")) : localeHref(want, rest || "/");
       const res = NextResponse.redirect(url, 307); // vaqtinchalik: Google tilsiz manzilni o'zbekcha sahifa sifatida saqlaydi
       res.headers.set("Cache-Control", "private, no-store");
       res.headers.set("Vary", "Accept-Language, Cookie");

@@ -76,7 +76,7 @@ export default async function Hero() {
               {t.lead}
             </p>
             <ul className="hero__facts hero__rise">
-              <li>
+              <li aria-label={`${t.facts.mps}: Uzum Market, Wildberries, Ozon, Yandex Market`}>
                 <span className="hero__mps" aria-hidden="true">
                   <img className="mp-ico" src="/marketplaces/uzum.svg" alt={logoAlt(locale, "/marketplaces/uzum.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "760ms" } as CSSProperties} />
                   <img className="mp-ico" src="/marketplaces/wildberries.svg" alt={logoAlt(locale, "/marketplaces/wildberries.svg")} width="22" height="22" fetchPriority="low" style={{ "--d": "820ms" } as CSSProperties} />

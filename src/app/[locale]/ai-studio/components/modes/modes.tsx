@@ -32,12 +32,12 @@ function PhotoViz({ styles, locale }: { styles: PhotoStyles; locale: Locale }) {
 }
 
 // Foto kartasi matni ostida — 4 uslubning hammasi (kichik rasm + nom); hozir ko'rinayotgani ajralib turadi
-function PhotoStyleList({ styles }: { styles: PhotoStyles }) {
+function PhotoStyleList({ styles, locale }: { styles: PhotoStyles; locale: Locale }) {
   return (
     <ul className="as-pstyles">
       {styles.map((s, i) => (
-        <li key={s.name} style={{ "--k": i } as CSSProperties}>
-          <img src={s.img} alt="" loading="lazy" width={28} height={28} />
+        <li key={s.name} style={{ "--k": i } as CSSProperties} aria-label={s.name} title={srcAlt(locale, s.img)}>
+          <img src={s.img} alt={srcAlt(locale, s.img)} loading="lazy" width={28} height={28} />
           {s.name}
         </li>
       ))}
@@ -163,7 +163,7 @@ export default async function Modes() {
               <div className="as-mc__body">
                 <h3 className="as-mc__name">{m.name}</h3>
                 <p className="as-mc__text">{m.text}</p>
-                {m.id === "photo" && <PhotoStyleList styles={MODES.photoStyles} />}
+                {m.id === "photo" && <PhotoStyleList locale={locale} styles={MODES.photoStyles} />}
                 <div className="as-mc__foot">
                   <span className="as-mc__price">
                     <span className="as-mc__coin">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type KeyboardEvent } from "react";
-import { hostHref, hostZone, localeMeta, locales, parseProdHost, splitZone, type Locale } from "@/i18n/config";
+import { hostHref, hostZone, localeMeta, locales, parseProdHost, SINGLE_DOMAIN, splitZone, toSingle, type Locale } from "@/i18n/config";
 
 // Til almashganda domen o'zgarmaydi: robohub.uz'da qozoqcha — robohub.uz/kk, robohub.kz'da o'zbekcha — robohub.kz/uz
 // (.kz/.kg da tilsiz manzil — mamlakat tili, shuning uchun o'zbekcha prefiks bilan; i18n/config.ts: hostHref).
@@ -12,7 +12,9 @@ const useHost = () => useSyncExternalStore(noop, () => window.location.hostname,
 function langHref(host: string, l: Locale, path: string) {
   const zone = hostZone(host);
   const logical = zone !== "main" && !path.startsWith(`/${zone}`) ? `/${zone}${path === "/" ? "" : path}` : path;
-  return hostHref(parseProdHost(host)?.tld ?? "uz", l, zone === "main" ? path : splitZone(logical).path);
+  const href = hostHref(parseProdHost(host)?.tld ?? "uz", l, zone === "main" ? path : splitZone(logical).path);
+  // bitta domen (robohub-landing.vercel.app): AI Studio — /ai-studio
+  return SINGLE_DOMAIN ? toSingle(href) : href;
 }
 import "./lang-select.css";
 

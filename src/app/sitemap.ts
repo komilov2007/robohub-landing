@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { officialOrigin, requestOrigin, siteFromHost } from "@/lib/site-host";
 import { ROBOHUB_ORIGIN, ROBOSELL_ORIGIN } from "@/lib/seo";
 import { LLMS_UPDATED } from "@/lib/llms";
-import { locales, localeUrl } from "@/i18n/config";
+import { locales, officialUrl } from "@/i18n/config";
 import { LESSON_ROUTES, TOPIC_ROUTES } from "./[locale]/robohub/academy/lib/academy";
 import { lessonPath, topicPath, ACADEMY_BASE } from "./[locale]/robohub/academy/lib/links";
 
@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Bosh sahifa "https://robohub.uz" (oxirida "/" siz) — canonical bilan aynan bir xil.
   const page = (path: string, entry: Omit<MetadataRoute.Sitemap[number], "url" | "alternates">): MetadataRoute.Sitemap => {
     const languages: Record<string, string> = {};
-    for (const l of locales) languages[l] = localeUrl(l, path);
+    for (const l of locales) languages[l] = officialUrl(l, path);
     languages["x-default"] = languages.uz;
     // Har domenning sitemap'ida — faqat o'z sahifalari (robohub.kz — qozoqcha, academy.robohub.uz — Academy …); hreflang esa hammasiga
     return locales.filter((l) => new URL(languages[l]).origin === official).map((l) => ({ ...entry, url: languages[l], alternates: { languages } }));

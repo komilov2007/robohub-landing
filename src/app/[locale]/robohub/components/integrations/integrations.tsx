@@ -7,7 +7,8 @@ import { messages } from "./integrations.i18n";
 import { CRM, STOCK, type System } from "./integrations.data";
 
 const Chip = ({ name, logo, plate, alt }: System & { alt: string }) => (
-  <li className="integ-chip">
+  // nom — butun chip uchun (ekran o'quvchi va DevTools "Name"), title — sichqoncha bilan ustiga borganda
+  <li className="integ-chip" aria-label={alt} title={alt}>
     {logo ? (
       <img src={logo} alt={alt} title={name} width="28" height="28" loading="lazy" className={plate ? "is-plate" : undefined} />
     ) : (

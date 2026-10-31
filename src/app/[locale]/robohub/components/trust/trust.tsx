@@ -136,7 +136,7 @@ export default async function Trust() {
 
         {/* qamrov: tepada marketpleys logotiplari, pastda 4 mamlakat · bitta kabinet — kartalar ostida, ramkasiz */}
         <ul className="trust__reach" data-sr="" style={{ "--d": "410ms" } as CSSProperties}>
-          <li className="trust__reach-mps">
+          <li className="trust__reach-mps" aria-label={`${t.mps}: ${MARKETPLACES.map((m) => m.name).join(", ")}`}>
             {/* yozuv — logotiplar marketpleyslar ekani tushunarli bo'lsin */}
             <span className="trust__reach-k">{t.mps}</span>
             <span className="trust__reach-logos" aria-label={MARKETPLACES.map((m) => m.name).join(", ")} role="img">

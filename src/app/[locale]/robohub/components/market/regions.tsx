@@ -27,6 +27,9 @@ function Chip({ id, t, soon, locale }: { id: MpId; t: RegionsText; soon?: boolea
   return (
     <span
       className={`reg__mp${soon ? " reg__mp--soon" : ""}${mp.wide ? " reg__mp--wide" : ""}`}
+      role="group"
+      aria-label={alt}
+      title={alt}
     >
       {mp.wide ? (
         <img src={mp.logo} alt={alt} title={name} {...imgSize(mp.logo ?? "")} loading="lazy" />
@@ -58,6 +61,7 @@ export default function Regions({
           <li
             key={r.id}
             className="reg__row"
+            aria-label={`${names[r.id]} — ${plural(r.now.length, t.count)}`}
             data-c={r.id}
             data-sr=""
             style={{ "--d": `${200 + i * 70}ms` } as CSSProperties}

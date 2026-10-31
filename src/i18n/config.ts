@@ -74,12 +74,28 @@ export function splitZone(path: string): { zone: Zone; path: string } {
   if (first === "academy" || first === "aistudio") return { zone: first, path: `/${rest.join("/")}` };
   return { zone: "main", path };
 }
+// "Bitta domen" rejimi — Vercel'dagi robohub-landing.vercel.app uchun. Subdomenlar yo'q, hamma bo'lim bitta domenda:
+//   robohub-landing.vercel.app/ (bosh sahifa), /academy, /ai-studio, /calculator (tillar: /academy/ru, /ai-studio/en …).
+// next.config.ts build paytida yoqadi: Vercel loyihasining asosiy manzili *.vercel.app bo'lsa. robohub.uz build'ida
+// (Docker / k8s) — o'chiq, havolalar subdomenlarga (academy.robohub.uz …) avvalgidek.
+// Faqat sahifadagi havolalar o'zgaradi; canonical, hreflang, sitemap va JSON-LD doim rasmiy domenda (officialUrl).
+export const SINGLE_DOMAIN = process.env.NEXT_PUBLIC_SINGLE_DOMAIN === "1";
+// Bitta domendagi yo'l: singleHref("ru", "/academy/order") → "/academy/ru/order", singleHref("en", "/aistudio") → "/ai-studio/en"
+// AI Studio bo'limi bitta domenda — /ai-studio: toSingle("/aistudio/ru") → "/ai-studio/ru"
+export const toSingle = (href: string) => href.replace(/^\/aistudio(?=\/|$)/, "/ai-studio");
+const singleHref = (locale: Locale, path: string) => toSingle(localeHref(locale, path));
 // Zona ichidagi yo'l joriy tilda: zoneHref("ru", "/academy/order") → "/ru/order" (academy subdomenidagi havola)
-export const zoneHref = (locale: Locale, path: string) => localeHref(locale, splitZone(path).path);
-// To'liq rasmiy manzil: localeUrl("uz", "/") → "https://robohub.uz", localeUrl("ru", "/aistudio") → "https://aistudio.robohub.uz/ru"
-export function localeUrl(locale: Locale, path = "/"): string {
+export const zoneHref = (locale: Locale, path: string) =>
+  SINGLE_DOMAIN ? singleHref(locale, path) : localeHref(locale, splitZone(path).path);
+// To'liq rasmiy manzil (SEO: canonical, hreflang, sitemap, JSON-LD, llms.txt):
+// officialUrl("uz", "/") → "https://robohub.uz", officialUrl("ru", "/aistudio") → "https://aistudio.robohub.uz/ru"
+export function officialUrl(locale: Locale, path = "/"): string {
   const z = splitZone(path);
   return zoneOrigin(z.zone, locale) + (z.path === "/" && locale === defaultLocale ? "" : localeHref(locale, z.path));
+}
+// Sahifadagi havola: odatda rasmiy to'liq manzil, "bitta domen" rejimida — shu domendagi yo'l
+export function localeUrl(locale: Locale, path = "/"): string {
+  return SINGLE_DOMAIN ? singleHref(locale, path) || "/" : officialUrl(locale, path);
 }
 
 // Domen tilni majburlamaydi: robohub.uz/kk ham, robohub.kz/ru ham ochiladi. Faqat tilsiz manzil — mamlakat tili
@@ -119,8 +135,9 @@ export function hostZone(host: string): Zone {
 }
 
 // Brauzer manzilidan tilsiz yo'l: "/academy/ru/order" → "/academy/order", "/ru" → "/", "/academy" → "/academy".
+// Statik (prerender) HTML'da usePathname ichki yo'lni beradi ("/ru/robohub/academy/analytics") — "/robohub" olib tashlanadi.
 export function stripLocale(pathname: string): string {
-  const parts = pathname.split("/").filter(Boolean);
+  const parts = pathname.replace(/^(\/[a-z]{2,3})?\/robohub(?=\/|$)/, "$1").split("/").filter(Boolean);
   if (hasLocale(parts[0])) parts.shift();
   else if ((SECTIONS as readonly string[]).includes(parts[0]) && hasLocale(parts[1])) parts.splice(1, 1);
   return `/${parts.join("/")}`;
